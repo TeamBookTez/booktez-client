@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Bookcase, Login, Main, SignUp } from "../pages";
 import { PeriRead, PostRead, PreRead } from "./main";
@@ -7,6 +7,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/main" />} />
         <Route path="/main/*" element={<Main />}>
           <Route path="pre" element={<PreRead />} />
           <Route path="peri" element={<PeriRead />} />
