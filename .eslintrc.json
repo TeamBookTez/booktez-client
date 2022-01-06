@@ -1,0 +1,70 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks",
+        "simple-import-sort",
+        "prettier",
+        "jsx-a11y",
+        "import",
+        "@typescript-eslint/eslint-plugin"
+    ],
+    "rules": {                                          // 0: off 1: warn 2: error 로 표기 가능
+        "indent": ["error", 2],                         // 들여쓰기 몇 칸?
+        "quotes": ["error", "double"],                  // 쌍따옴표가 아닌 홑따옴표를 사용
+        "semi": ["error", "always"],                    // semi colon을 강제함
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+        "comma-dangle": ["error", "always-multiline"],  // 두 줄 이상의 경우에는 후행 쉼표를 항상 사용, 한 개 일 때는 사용하지 않음
+        "object-curly-spacing": ["error", "always"],    // 객체 괄호 앞 뒤 공백 추가
+        "space-in-parens": ["error", "never"],          // 일반 괄호 앞 뒤 공백 추가
+        "computed-property-spacing": ["error", "never"],    // 대괄호 앞 뒤 공백 추가하지 않음
+        "comma-spacing": ["error", { "before": false, "after": true }], // 반점 앞 뒤 공백: 앞에는 없고, 뒤에는 있게
+        "eol-last": ["error", "never"],                // line의 가장 마지막 줄에는 개행 넣기
+        "no-tabs": ["error", { "allowIndentationTabs": true }], // \t의 사용을 금지하고 tab키의 사용은 허용
+        "object-shorthand": "error",                    // 객체의 간편 사용(es6)을 강제할 것인가? -> https://eslint.org/docs/rules/object-shorthand
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "return" },
+            { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+            { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
+          ],
+        // prev : 이전에 무엇이 왔을때 blankLine을 넣을것인가? // const,let,var, case
+        // next : 다음에 무엇이 왔을때 blankLine을 넣을 것인가?  // return
+        // 팀원들과 구체적으로 상의하기 - 근데 이거 너무 신경쓰지 않고 recommend 사용해도 될 듯!
+        "react-hooks/rules-of-hooks": "error",          // Checks rules of Hooks
+		"react-hooks/exhaustive-deps": "warn",          // Checks effect dependencies
+        "react/react-in-jsx-scope": "off",              // import React from "react"가 필수였던 시기에 필요한 규칙
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        // // eslint-plugin-import의 static analysis
+        // "import/named": 2,                              // export/import 이름을 정확하게 사용하고 있는지를 확인
+        // "import/namespace": 2,                          // 이미 존재하는 이름만 가져오도록 함
+        // "import/export": 2,                             // 이름이나 기본값의 반복적인 내보내기와 같은 내보내기와 관련된 것을 체크
+        // "import/no-absolute-path": 2,                   // 절대경로로 파일 불러오기 금지
+        // "import/no-relative-packages": 2,               // 상대경로로 패키지 불러오기 금지
+        // // eslint-plugin-import의 helpful warnings
+        // "import/default": 2,                            // default로 export된 아이들을 찾아서 가져옴
+        "import/no-named-as-default": 0                    // default로 정의되지 않은 아이들을 불러왔음을 알려줌
+        // "import/no-named-as-default-member": 2,         // default export의 속성으로 exported name의 사용을 보고
+        // // eslint-plugin-import의 style guide
+        // "import/no-duplicates": 2                       // 같은 모듈에서 다른 이름으로 불러오는 것을 막기 위함 (from mod.js와 from mod)
+    }
+}
