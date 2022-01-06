@@ -37,7 +37,7 @@
         "space-in-parens": ["error", "never"],          // 일반 괄호 앞 뒤 공백 추가
         "computed-property-spacing": ["error", "never"],    // 대괄호 앞 뒤 공백 추가하지 않음
         "comma-spacing": ["error", { "before": false, "after": true }], // 반점 앞 뒤 공백: 앞에는 없고, 뒤에는 있게
-        "eol-last": ["error", "never"],                // line의 가장 마지막 줄에는 개행 넣기
+        "eol-last": ["error", "always"],                // line의 가장 마지막 줄에는 개행 넣기
         "no-tabs": ["error", { "allowIndentationTabs": true }], // \t의 사용을 금지하고 tab키의 사용은 허용
         "object-shorthand": "error",                    // 객체의 간편 사용(es6)을 강제할 것인가? -> https://eslint.org/docs/rules/object-shorthand
         "padding-line-between-statements": [
