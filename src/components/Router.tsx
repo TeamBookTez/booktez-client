@@ -13,7 +13,11 @@ const Router = () => {
           <Route path="peri" element={<PeriRead />} />
           <Route path="post" element={<PostRead />} />
         </Route>
-        <Route path="/bookcase" element={<Bookcase />} />
+        <Route path="/bookcase/*" element={<Bookcase />}>
+          <Route path="pre" element={<PreRead />} />
+          <Route path="peri" element={<PeriRead />} />
+          <Route path="post" element={<PostRead />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/*" element={<div>404에러얍얍</div>} />
