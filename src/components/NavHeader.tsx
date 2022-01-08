@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-// import { ReactComponent as IcLogo } from "../../assets/icons/logoicon.svg";
+import { ReactComponent as IcLogo } from "../assets/icons/logoicon.svg";
 
-export default function Header() {
+export default function NavHeader() {
   return (
     <StHeader>
       <StLink to="/main">
-        {/* <StIcCool /> */}
+        <StIcCool />
         북스테어즈
       </StLink>
     </StHeader>
@@ -24,6 +24,7 @@ const StHeader = styled.header`
 
 const StLink = styled(Link)`
   display: flex;
+  align-items: center;
 
   font-size: 1.6rem;
   font-weight: 600;
@@ -31,4 +32,6 @@ const StLink = styled(Link)`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-// const StIcCool = styled(IcLogo)``;
+const StIcCool = styled(IcLogo)`
+  margin: 0 0.8rem 0 2rem;
+`;
