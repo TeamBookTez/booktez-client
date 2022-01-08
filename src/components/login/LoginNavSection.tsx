@@ -24,6 +24,12 @@ export default function SignupNav() {
 }
 
 const StSection = styled.section`
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 480px; // 임의 px
 
   background-color: ${({ theme }) => theme.colors.white500};
@@ -34,8 +40,6 @@ const StArticle = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  height: calc(100% - 9rem);
 `;
 
 const StH2 = styled.h2`

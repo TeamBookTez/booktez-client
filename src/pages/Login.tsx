@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import LoginForm from "../components/login/LoginForm";
-import SignupNav from "../components/login/SignupNav";
+import SignupNav from "../components/login/LoginNavSection";
 
 export default function Login() {
   return (

@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import { NavHeader } from ".";
 
 export default function NavWrapper() {
   return (
-    <section>
+    <StSection>
       <NavHeader />
       <nav>
         <ul>
@@ -22,6 +23,11 @@ export default function NavWrapper() {
           </li>
         </ul>
       </nav>
-    </section>
+    </StSection>
   );
 }
+
+const StSection = styled.section`
+  position: relative;
+  width: 17.5rem;
+`;
