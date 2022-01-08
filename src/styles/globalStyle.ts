@@ -21,6 +21,10 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
 
+  #root {
+    display: flex;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
