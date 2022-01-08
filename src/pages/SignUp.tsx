@@ -5,6 +5,7 @@ import FirstStep from "../components/signup/FirstStep";
 import LastStep from "../components/signup/LastStep";
 import SecondStep from "../components/signup/SecondStep";
 import ThirdStep from "../components/signup/ThirdStep";
+import { Logo } from "../assets/imgs";
 
 export default function Signup() {
   return (
