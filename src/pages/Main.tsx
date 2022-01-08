@@ -1,21 +1,31 @@
-// import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 export default function Main() {
   return (
-    <main>
-      <nav>
-        <section>
-          <img alt="프로필 사진" />
-          <h3>북스테어즈</h3>
-        </section>
-        <ol>
-          <li>홈</li>
-          <li>서재</li>
-          <li>마이페이지</li>
-          <li>곧 만나요</li>
-        </ol>
-      </nav>
+    <>
       <section>
+        <header>
+          <img alt="프로필 사진" />
+          <h1>북스테어즈</h1>
+        </header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="">홈</Link>
+            </li>
+            <li>
+              <Link to="">서재</Link>
+            </li>
+            <li>
+              <Link to="">마이페이지</Link>
+            </li>
+            <li>
+              <Link to="">곧 만나요</Link>
+            </li>
+          </ul>
+        </nav>
+      </section>
+      <main>
         <header>메인</header>
         <section>
           <h2>독서북 사용 가이드북</h2>
@@ -28,12 +38,20 @@ export default function Main() {
         </section>
         <section>
           <nav>
-            <ol>
-              <li>전체</li>
-              <li>독서 후</li>
-              <li>독서 중</li>
-              <li>독서 전</li>
-            </ol>
+            <ul>
+              <li>
+                <Link to="">전체</Link>
+              </li>
+              <li>
+                <Link to="">독서 후</Link>
+              </li>
+              <li>
+                <Link to="">독서 중</Link>
+              </li>
+              <li>
+                <Link to="">독서 전</Link>
+              </li>
+            </ul>
           </nav>
           <section>
             <article>
@@ -48,9 +66,9 @@ export default function Main() {
               <h5>데이빗 호킨스</h5>
             </article>
           </section>
-          {/* <Outlet /> */}
+          <Outlet />
         </section>
-      </section>
-    </main>
+      </main>
+    </>
   );
 }

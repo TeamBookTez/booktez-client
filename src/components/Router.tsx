@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { Bookcase, Login, Main, SignUp } from "../pages";
-import { PeriRead, PostRead, PreRead, Total } from "./main";
+import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 
 const Router = () => {
   return (
@@ -15,6 +15,7 @@ const Router = () => {
           <Route path="post" element={<PostRead />} />
         </Route>
         <Route path="/bookcase/*" element={<Bookcase />}>
+          <Route path="" element={<Total />} />
           <Route path="pre" element={<PreRead />} />
           <Route path="peri" element={<PeriRead />} />
           <Route path="post" element={<PostRead />} />
