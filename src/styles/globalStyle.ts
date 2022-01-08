@@ -18,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
   html {
     color: ${({ theme }) => theme.colors.gray100};
     font-family: NotoSansKR;
-    font-size: 10px;
+    font-size: 62.5%;
   }
 
   a {
