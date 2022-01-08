@@ -14,13 +14,13 @@ export default function FirstStep() {
         <div></div>
         <div>3</div>
       </StStep>
-      <h1>나만의 서재를 만드는 중이에요!</h1>
-      <h2>당신의 이메일을 입력해 주세요.</h2>
+      <h2>나만의 서재를 만드는 중이에요!</h2>
+      <p>당신의 이메일을 입력해 주세요.</p>
       <StForm>
         <input type="text" id="email" placeholder="이메일을 입력해주세요" />
         <label>
           <Alert />
-          <p>올바른 형식이 아닙니다.</p>
+          <strong>올바른 형식이 아닙니다.</strong>
         </label>
         <button>다음 단계</button>
       </StForm>
@@ -39,14 +39,14 @@ const StArticle = styled.article`
     align-items: center;
   }
 
-  & > h1 {
+  & > h2 {
     margin-bottom: 3.2rem;
     /* 임의 폰트 */
     font-size: 3rem;
     font-weight: 800;
   }
 
-  & > h2 {
+  & > p {
     margin-bottom: 5.2rem;
     /* 임의 폰트 */
     font-size: 2rem;
@@ -80,7 +80,7 @@ const StForm = styled.form`
     margin-right: 0.567rem;
   }
 
-  & > label > p {
+  & > label > strong {
     display: table-cell;
     vertical-align: middle;
     /* 임의 폰트 */
