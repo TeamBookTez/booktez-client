@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Logo } from "../assets/imgs";
+import { ImgLogo } from "../assets/imgs";
 import FirstStep from "../components/signup/FirstStep";
 import LastStep from "../components/signup/LastStep";
 import SecondStep from "../components/signup/SecondStep";
@@ -11,7 +11,7 @@ export default function Signup() {
     <>
       <StHeader>
         <a>
-          <img src={Logo} alt="홈페이지 로고 입니다. 클릭시 메인 페이지로 이동합니다" />
+          <img src={ImgLogo} alt="홈페이지 로고 입니다. 클릭시 메인 페이지로 이동합니다" />
           <p>북스테어즈</p>
         </a>
       </StHeader>

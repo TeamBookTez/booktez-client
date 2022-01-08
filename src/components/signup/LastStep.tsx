@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import { Graphic } from "../../assets/imgs";
+import { ImgGraphic } from "../../assets/imgs";
 
 export default function LastStep() {
   return (
     <StArticle>
       <h2>OOOOOOOOOO님!</h2>
       <h2>나만의 서재가 완성됐어요!</h2>
-      <img src={Graphic} alt="회원 가입 완료시 뜨는 그래픽 문구입니다" />
+      <img src={ImgGraphic} alt="회원 가입 완료시 뜨는 그래픽 문구입니다" />
       <button>홈 바로가기</button>
     </StArticle>
   );

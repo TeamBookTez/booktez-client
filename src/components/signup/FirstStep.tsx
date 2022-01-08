@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Alert } from "../../assets/icons";
+import { IcAlert } from "../../assets/icons";
 
 export default function FirstStep() {
   return (
@@ -19,7 +19,7 @@ export default function FirstStep() {
       <StForm>
         <input type="text" id="email" placeholder="이메일을 입력해주세요" />
         <label>
-          <Alert />
+          <IcAlert />
           <strong>올바른 형식이 아닙니다.</strong>
         </label>
         <button>다음 계단</button>
