@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Alert } from "../../assets/imgs";
+
 export default function FirstStep() {
   return (
     <StArticle>
@@ -7,24 +9,21 @@ export default function FirstStep() {
         <div>1</div>
         <div></div>
         <div></div>
+        <div>2</div>
+        <div></div>
+        <div></div>
         <div>3</div>
-        <div></div>
-        <div></div>
-        <div>5</div>
       </StStep>
       <h1>나만의 서재를 만드는 중이에요!</h1>
       <h2>당신의 이메일을 입력해 주세요.</h2>
-      <form>
-        <label></label>
-        <input />
-        <label></label>
-        <input />
-        <label></label>
-        <input />
-        <img alt="" />
-        <p>비밀번호가 다릅니다</p>
+      <StForm>
+        <input type="text" id="email" placeholder="이메일을 입력해주세요" />
+        <label>
+          <Alert />
+          <p>올바른 형식이 아닙니다.</p>
+        </label>
         <button>다음 단계</button>
-      </form>
+      </StForm>
     </StArticle>
   );
 }
@@ -48,6 +47,60 @@ const StArticle = styled.article`
   }
 
   & > h2 {
+    margin-bottom: 5.2rem;
+    /* 임의 폰트 */
+    font-size: 2rem;
+  }
+`;
+
+const StForm = styled.form`
+  & > input {
+    width: 46.4rem;
+    height: 5.4rem;
+    background-color: ${({ theme }) => theme.colors.white200};
+    border-radius: 1rem;
+    padding-left: 2rem;
+
+    /* 임의 폰트 */
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.white500};
+  }
+
+  & > label {
+    width: 100%;
+    height: 1.667rem;
+    margin: 1.8rem 0;
+    display: flex;
+  }
+
+  & > label > svg {
+    height: 100%;
+    width: auto;
+    margin-right: 0.567rem;
+  }
+
+  & > label > p {
+    display: table-cell;
+    vertical-align: middle;
+    /* 임의 폰트 */
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    color: ${({ theme }) => theme.colors.red100};
+  }
+
+  & > button {
+    width: 46.4rem;
+    height: 5.4rem;
+    background-color: ${({ theme }) => theme.colors.white400};
+    border-radius: 1rem;
+    margin-top: 5rem;
+
+    /* 임의 폰트 */
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.gray300};
   }
 `;
 
@@ -75,6 +128,7 @@ const StStep = styled.div`
     width: 4.3rem;
     height: 4.3rem;
     border-radius: 50%;
+    /* vertical-align: middle; */
 
     /* 임의 폰트 */
     font-size: 1.8rem;
