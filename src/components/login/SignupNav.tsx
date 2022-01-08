@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import Header from "../NavHeader";
+import { NavHeader } from "../common";
 
 export default function SignupNav() {
   return (
     <StSection>
-      <Header />
+      <NavHeader />
 
       <StArticle>
         <StH2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</StH2>
@@ -17,7 +17,7 @@ export default function SignupNav() {
         </StH3>
         {/* <img src="#" alt="북테즈 이미지" /> */}
         <StTempImg>이미지 칸</StTempImg>
-        <StLink to="/sign-up">회원가입</StLink>
+        <StLink to="/signup">회원가입</StLink>
       </StArticle>
     </StSection>
   );
