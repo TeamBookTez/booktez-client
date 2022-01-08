@@ -43,6 +43,10 @@ const StInput = styled.input`
 
   border: 2px solid ${({ theme }) => theme.colors.gray200};
   border-radius: 1rem;
+
+  font-size: 1.8rem;
+  letter-spacing: -0.1rem;
+  color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StPwdWrapper = styled.div`
