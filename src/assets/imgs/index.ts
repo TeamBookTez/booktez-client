@@ -1,2 +1,2 @@
-export { default as Graphic } from "./graphic.png";
-export { default as Logo } from "./Logo.png";
+export { default as ImgGraphic } from "./graphicImage.png";
+export { default as ImgLogo } from "./LogoImage.png";
