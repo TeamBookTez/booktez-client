@@ -1,4 +1,4 @@
-export default function SignUp() {
+export default function Signup() {
   return (
     <>
       <header>
