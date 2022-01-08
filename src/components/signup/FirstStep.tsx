@@ -22,7 +22,7 @@ export default function FirstStep() {
           <Alert />
           <strong>올바른 형식이 아닙니다.</strong>
         </label>
-        <button>다음 단계</button>
+        <button>다음 계단</button>
       </StForm>
     </StArticle>
   );

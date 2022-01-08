@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Alert } from "../../assets/imgs";
+
 export default function SecondStep() {
   return (
     <StArticle>
@@ -7,24 +9,21 @@ export default function SecondStep() {
         <div>1</div>
         <div></div>
         <div></div>
-        <div>3</div>
+        <div>2</div>
         <div></div>
         <div></div>
-        <div>5</div>
+        <div>2</div>
       </StStep>
-      <h1>나만의 서재를 만드는 중이에요!</h1>
-      <h2>제가 여러분을 어떻게 부르면 될까요?</h2>
-      <form>
-        <label></label>
-        <input />
-        <label></label>
-        <input />
-        <label></label>
-        <input />
-        <img alt="" />
-        <p>비밀번호가 다릅니다</p>
-        <button>다음 단계</button>
-      </form>
+      <h2>나만의 서재를 만드는 중이에요!</h2>
+      <p>제가 여러분을 어떻게 부르면 될까요?</p>
+      <StForm>
+        <input type="text" id="email" placeholder="닉네임을 입력해주세요" />
+        <label>
+          <Alert />
+          <strong>올바른 형식이 아닙니다.</strong>
+        </label>
+        <button>다음 계단</button>
+      </StForm>
     </StArticle>
   );
 }
@@ -40,14 +39,17 @@ const StArticle = styled.article`
     align-items: center;
   }
 
-  & > h1 {
+  & > h2 {
     margin-bottom: 3.2rem;
     /* 임의 폰트 */
     font-size: 3rem;
     font-weight: 800;
   }
 
-  & > h2 {
+  & > p {
+    margin-bottom: 5.2rem;
+    /* 임의 폰트 */
+    font-size: 2rem;
   }
 `;
 
@@ -84,5 +86,56 @@ const StStep = styled.div`
   & > div:not(:nth-child(3n + 1)) {
     width: 2.9rem;
     height: 0.4rem;
+  }
+`;
+
+const StForm = styled.form`
+  & > input {
+    width: 46.4rem;
+    height: 5.4rem;
+    background-color: ${({ theme }) => theme.colors.white200};
+    border-radius: 1rem;
+    padding-left: 2rem;
+
+    /* 임의 폰트 */
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.white500};
+  }
+
+  & > label {
+    width: 100%;
+    height: 1.667rem;
+    margin: 1.8rem 0;
+    display: flex;
+  }
+
+  & > label > svg {
+    height: 100%;
+    width: auto;
+    margin-right: 0.567rem;
+  }
+
+  & > label > strong {
+    display: table-cell;
+    vertical-align: middle;
+    /* 임의 폰트 */
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    color: ${({ theme }) => theme.colors.red100};
+  }
+
+  & > button {
+    width: 46.4rem;
+    height: 5.4rem;
+    background-color: ${({ theme }) => theme.colors.white400};
+    border-radius: 1rem;
+    margin-top: 5rem;
+
+    /* 임의 폰트 */
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.gray300};
   }
 `;
