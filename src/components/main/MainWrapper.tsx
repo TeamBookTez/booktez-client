@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../bookcase";
-import { Header } from "../common";
+import { MainHeader } from "../common";
 import { Banner } from ".";
 
-export default function MainContainer() {
+export default function MainWrapper() {
   return (
     <main>
-      <Header>메인</Header>
+      <MainHeader>메인</MainHeader>
       <Banner />
       <section>
         <Navigation />

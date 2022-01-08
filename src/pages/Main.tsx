@@ -1,11 +1,11 @@
-import { NavContainer } from "../components/common";
-import { MainContainer } from "../components/main";
+import { NavWrapper } from "../components/common";
+import { MainWrapper } from "../components/main";
 
 export default function Main() {
   return (
     <>
-      <NavContainer />
-      <MainContainer />
+      <NavWrapper />
+      <MainWrapper />
     </>
   );
 }

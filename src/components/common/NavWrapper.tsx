@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-import { LogoContainer } from ".";
+import { NavHeader } from ".";
 
-export default function NavContainer() {
+export default function NavWrapper() {
   return (
     <section>
-      <LogoContainer />
+      <NavHeader />
       <nav>
         <ul>
           <li>

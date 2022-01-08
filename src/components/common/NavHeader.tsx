@@ -1,4 +1,4 @@
-export default function LogoContainer() {
+export default function NavHeader() {
   return (
     <header>
       <img alt="프로필 사진" />
