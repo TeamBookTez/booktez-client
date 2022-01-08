@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as IcCool } from "../../assets/icons/coolicon.svg";
+import { IcCool } from "../../assets/icons";
 
 export default function LoginForm() {
   return (

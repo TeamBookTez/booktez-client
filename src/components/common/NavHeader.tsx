@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ReactComponent as IcLogo } from "../../assets/icons/logoicon.svg";
+import { IcLogo } from "../../assets/icons";
 
 export default function NavHeader() {
   return (
