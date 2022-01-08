@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { ReactComponent as IcCool } from "../../assets/icons/coolicon.svg";
 
 export default function LoginForm() {
-  console.log(IcCool);
-
   return (
     <StForm>
       <StLabel>이메일</StLabel>
       <StInput placeholder="이메일을 입력해 주세요" type="text" />
       <StLabel>비밀번호</StLabel>
-      <StInput placeholder="비밀번호를 입력해 주세요" type="password"></StInput>
-      <IcCool />
+      <StPwdWrapper>
+        <StInput placeholder="비밀번호를 입력해 주세요" type="password" />
+        <StIcCool />
+      </StPwdWrapper>
       <StBtn>로그인</StBtn>
     </StForm>
   );
@@ -34,6 +34,7 @@ const StLabel = styled.label`
 `;
 
 const StInput = styled.input`
+  width: 100%;
   height: 5.4rem;
   padding-left: 2rem;
   margin-bottom: 3.2rem;
@@ -42,8 +43,19 @@ const StInput = styled.input`
 
   border: 2px solid ${({ theme }) => theme.colors.gray200};
   border-radius: 1rem;
+`;
 
-  &::placeholder {
+const StPwdWrapper = styled.div`
+  position: relative;
+`;
+
+const StIcCool = styled(IcCool)`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
