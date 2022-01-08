@@ -18,8 +18,8 @@ export default function Signup() {
       <StMain>
         {/* <FirstStep /> */}
         {/* <SecondStep /> */}
-        <ThirdStep />
-        {/* <LastStep /> */}
+        {/* <ThirdStep /> */}
+        <LastStep />
       </StMain>
     </>
   );
