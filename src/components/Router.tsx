@@ -13,12 +13,14 @@ const Router = () => {
           <Route path="pre" element={<PreRead />} />
           <Route path="peri" element={<PeriRead />} />
           <Route path="post" element={<PostRead />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Route>
         <Route path="/bookcase/*" element={<Bookcase />}>
           <Route path="" element={<Total />} />
           <Route path="pre" element={<PreRead />} />
           <Route path="peri" element={<PeriRead />} />
           <Route path="post" element={<PostRead />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
