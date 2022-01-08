@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Alert } from "../../assets/imgs";
+import { Alert } from "../../assets/icons";
 
 export default function FirstStep() {
   return (
