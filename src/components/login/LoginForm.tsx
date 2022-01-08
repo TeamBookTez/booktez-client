@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
-// import { ReactComponent as IcCoolicon } from "../../assets/icons/coolicon.svg";
+import { ReactComponent as IcCool } from "../../assets/icons/coolicon.svg";
 
 export default function LoginForm() {
+  console.log(IcCool);
+
   return (
     <StForm>
       <StLabel>이메일</StLabel>
-      <StInput placeholder="이메일을 입력해 주세요" />
+      <StInput placeholder="이메일을 입력해 주세요" type="text" />
       <StLabel>비밀번호</StLabel>
-      <StInput placeholder="비밀번호를 입력해 주세요"></StInput>
-      {/* <IcCoolicon /> */}
+      <StInput placeholder="비밀번호를 입력해 주세요" type="password"></StInput>
+      <IcCool />
       <StBtn>로그인</StBtn>
     </StForm>
   );
