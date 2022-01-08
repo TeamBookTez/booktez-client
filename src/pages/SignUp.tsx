@@ -17,8 +17,8 @@ export default function Signup() {
       </StHeader>
       <StMain>
         {/* <FirstStep /> */}
-        <SecondStep />
-        {/* <ThirdStep /> */}
+        {/* <SecondStep /> */}
+        <ThirdStep />
         {/* <LastStep /> */}
       </StMain>
     </>

@@ -64,6 +64,10 @@ const StForm = styled.form`
     /* 임의 폰트 */
     font-size: 1.8rem;
     font-weight: 400;
+    color: ${({ theme }) => theme.colors.gray100};
+  }
+
+  & > input::placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
 
