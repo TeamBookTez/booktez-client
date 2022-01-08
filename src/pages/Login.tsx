@@ -35,5 +35,5 @@ const StPageWrapper = styled.div`
 `;
 
 const StMainWrapper = styled.main`
-  width: 960px;
+  width: 960px; //임의 px
 `;
