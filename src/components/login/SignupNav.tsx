@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import Header from "../../components/Header";
+
 export default function SignupNav() {
   return (
     <StSection>
-      <StHeader>
-        <a>로고</a>
-      </StHeader>
+      <Header />
+
       <StArticle>
         <StH2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</StH2>
         <StH3>
@@ -26,13 +27,6 @@ const StSection = styled.section`
   width: 480px; // 임의 px
 
   background-color: ${({ theme }) => theme.colors.white500};
-`;
-
-const StHeader = styled.header`
-  display: flex;
-  align-items: center;
-
-  height: 9rem;
 `;
 
 const StArticle = styled.article`
