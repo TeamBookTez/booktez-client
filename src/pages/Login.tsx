@@ -1,22 +1,12 @@
+import styled from "styled-components";
+
+import SignupNav from "../components/login/SignupNav";
+
 export default function Login() {
   return (
-    <>
-      <section>
-        <header>
-          <a>로고</a>
-        </header>
-        <section>
-          <h2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</h2>
-          <h3>
-            북테즈와 함께 똑또또칸 사람이 되어보아용
-            <br />
-            회원가입하시면~~~나만의 서~~
-          </h3>
-          <img src="#" alt="북테즈 이미지" />
-          <a>회원가입 버튼</a>
-        </section>
-      </section>
-      <main>
+    <StPageWrapper>
+      <SignupNav />
+      <StMainWrapper>
         <article>
           <h1>북스테어즈 로그인</h1>
           <h3>북테에 로그인 ~~~ 더 아랓난 독서법 ~~~ 즐기세요롱 오유유</h3>
@@ -33,7 +23,17 @@ export default function Login() {
             </p>
           </form>
         </article>
-      </main>
-    </>
+      </StMainWrapper>
+    </StPageWrapper>
   );
 }
+
+// root에 flex?
+const StPageWrapper = styled.div`
+  height: 100vh;
+  display: flex;
+`;
+
+const StMainWrapper = styled.main`
+  width: 960px;
+`;
