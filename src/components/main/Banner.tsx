@@ -25,6 +25,7 @@ const StWrapper = styled.section`
 
 const StTitle = styled.h3`
   margin-bottom: 1.6rem;
+
   font-size: 2.6rem;
   line-height: 1.3;
   letter-spacing: -0.1em;
@@ -33,6 +34,7 @@ const StTitle = styled.h3`
 const StContent = styled.p`
   margin-bottom: 3.3rem;
   width: 46.4rem;
+
   font-size: 2rem;
   line-height: 1.3;
   letter-spacing: -0.1em;
@@ -42,6 +44,7 @@ const StButton = styled.button`
   border-radius: 2.1rem;
   padding: 0.7rem 2.8rem;
   background-color: ${({ theme }) => theme.colors.orange100};
+
   color: ${({ theme }) => theme.colors.white};
   font-size: 1.4rem;
   line-height: 1.3;
