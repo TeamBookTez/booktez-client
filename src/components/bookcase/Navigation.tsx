@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -29,6 +28,7 @@ export default function Navigation() {
 const StNav = styled.nav`
   position: relative;
   width: 100%;
+  padding-left: 4rem;
 `;
 
 const StUl = styled.ul`

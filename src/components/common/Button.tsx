@@ -10,16 +10,17 @@ export default function Button(props: ButtonProps) {
   return <StButton>{children}</StButton>;
 }
 
-const StButton = styled.button`
+export const StButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 12.1rem;
+  width: 10rem;
   height: 3.2rem;
-  border-radius: 2.1rem;
+  border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.colors.orange100};
 
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   letter-spacing: -0.1rem;
   color: ${({ theme }) => theme.colors.white};
 `;
