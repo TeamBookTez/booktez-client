@@ -5,5 +5,9 @@ interface MainHeaderProps {
 export default function MainHeader(props: MainHeaderProps) {
   const children = props.children;
 
-  return <header>{children}</header>;
+  return (
+    <header>
+      <h2>{children}</h2>
+    </header>
+  );
 }
