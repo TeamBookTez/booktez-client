@@ -1,26 +1,36 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navigation() {
+  const [navIndex, setNavIndex] = useState<number>(0);
+
   return (
     <StNav>
       <StUl>
         <StList>
-          <StLink to="/bookcase/total">전체</StLink>
+          <StLink to="/bookcase/total" onClick={() => setNavIndex(0)}>
+            전체
+          </StLink>
         </StList>
         <StList>
-          <StLink to="/bookcase/pre">독서 전</StLink>
+          <StLink to="/bookcase/pre" onClick={() => setNavIndex(1)}>
+            독서 전
+          </StLink>
         </StList>
         <StList>
-          <StLink to="/bookcase/peri">독서 중</StLink>
+          <StLink to="/bookcase/peri" onClick={() => setNavIndex(2)}>
+            독서 중
+          </StLink>
         </StList>
         <StList>
-          <StLink to="/bookcase/post">독서 완료</StLink>
+          <StLink to="/bookcase/post" onClick={() => setNavIndex(3)}>
+            독서 완료
+          </StLink>
         </StList>
       </StUl>
       <StBottomLine>
-        <StOrangLine />
-        <span></span>
+        <StOrangLine index={navIndex} />
       </StBottomLine>
     </StNav>
   );
@@ -67,7 +77,7 @@ const StBottomLine = styled.div`
   background-color: ${({ theme }) => theme.colors.white200};
 `;
 
-const StOrangLine = styled.span`
+const StOrangLine = styled.span<{ index: number }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -76,4 +86,7 @@ const StOrangLine = styled.span`
   height: 0.3rem;
 
   background-color: ${({ theme }) => theme.colors.orange100};
+
+  transition: transform 250ms ease;
+  transform: translateX(${({ index }) => index * 8.8}rem);
 `;
