@@ -6,66 +6,52 @@ export default function BookCard() {
     <>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <img src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardHeader>조화로운 부</StCardHeader>
-        <StCardDesc>제임스 아세 러이</StCardDesc>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
     </>
   );
@@ -74,10 +60,14 @@ export default function BookCard() {
 const StBookCard = styled.article`
   display: flex;
   flex-direction: column;
+
   width: 24.5rem;
   height: 39.3rem;
+
   padding: 1.6rem 2rem;
+
   border-radius: 1.6rem;
+
   cursor: pointer;
 
   &:hover {
@@ -85,18 +75,19 @@ const StBookCard = styled.article`
   }
 `;
 
+export const StImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
 const StImgWrapper = styled.div`
   width: 20.5rem;
   height: 30rem;
-  margin-bottom: 1.6rem;
 
-  & > img {
-    width: 100%;
-    height: 100%;
-  }
+  margin-bottom: 1.6rem;
 `;
 
-const StCardHeader = styled.strong`
+const StCardTitle = styled.strong`
   font-size: 1.8rem;
   font-weight: bold;
   line-height: 130%;
@@ -104,7 +95,7 @@ const StCardHeader = styled.strong`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StCardDesc = styled.p`
+const StCardAuthor = styled.p`
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 130%;

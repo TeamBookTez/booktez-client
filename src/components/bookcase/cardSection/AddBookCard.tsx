@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Button from "../../common/Button";
+import { StImg } from "./BookCard";
 
 export default function AddBookCard() {
   return (
@@ -9,7 +10,7 @@ export default function AddBookCard() {
       <StAddCard>
         <StContent>
           <StImgWrapper>
-            <img src={require("../../../assets/imgs/addbooksimg.png")} alt="다음 책을 쌓아볼까요?" />
+            <StImg src={require("../../../assets/imgs/addbooksimg.png")} alt="다음 책을 쌓아볼까요?" />
           </StImgWrapper>
           <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
           <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>
@@ -44,11 +45,6 @@ const StImgWrapper = styled.div`
   width: 13.6rem;
   height: 9.6rem;
   margin-bottom: 2rem;
-
-  & > img {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 const StCardHeader = styled.h3`
