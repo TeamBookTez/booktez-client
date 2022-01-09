@@ -8,7 +8,7 @@ const colors = {
   white: "#FFFFFF",
   white200: "#F7F7F7",
   white300: "#EFEFEF",
-  white400: "#F7F7F7",
+  white400: "#DFDFDF",
   white500: "#C1C1C1",
   red100: "#CE2525",
 };
