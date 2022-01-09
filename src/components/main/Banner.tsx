@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Button } from "../common";
+
 export default function Banner() {
   return (
     <StWrapper>
@@ -40,7 +42,7 @@ const StContent = styled.p`
   letter-spacing: -0.1em;
 `;
 
-const StButton = styled.button`
+const StButton = styled(Button)`
   border-radius: 2.1rem;
   padding: 0.7rem 2.8rem;
   background-color: ${({ theme }) => theme.colors.orange100};
