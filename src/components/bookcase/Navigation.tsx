@@ -6,16 +6,16 @@ export default function Navigation() {
     <StNav>
       <StUl>
         <StList>
-          <StLink to="/total">전체</StLink>
+          <StLink to="/bookcase/total">전체</StLink>
         </StList>
         <StList>
-          <StLink to="/pre">독서 전</StLink>
+          <StLink to="/bookcase/pre">독서 전</StLink>
         </StList>
         <StList>
-          <StLink to="/peri">독서 중</StLink>
+          <StLink to="/bookcase/peri">독서 중</StLink>
         </StList>
         <StList>
-          <StLink to="/post">독서 완료</StLink>
+          <StLink to="/bookcase/post">독서 완료</StLink>
         </StList>
       </StUl>
       <StBottomLine>
