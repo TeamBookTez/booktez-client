@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ImgGraphic } from "../../assets/imgs";
+import { ImgGraphic } from "../../assets/images";
 
 export default function LastStep() {
   return (

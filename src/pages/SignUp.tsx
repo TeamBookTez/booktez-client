@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ImgLogo } from "../assets/imgs";
+import { ImgLogo } from "../assets/images";
 import FirstStep from "../components/signup/FirstStep";
 import LastStep from "../components/signup/LastStep";
 import SecondStep from "../components/signup/SecondStep";
