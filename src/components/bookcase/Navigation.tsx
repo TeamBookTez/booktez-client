@@ -28,6 +28,7 @@ export default function Navigation() {
 
 const StNav = styled.nav`
   position: relative;
+  width: 100%;
 `;
 
 const StUl = styled.ul`
@@ -41,11 +42,17 @@ const StList = styled.li`
     align-items: center;
     width: 8.8rem;
     height: 4.8rem;
+
     font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 600;
     line-height: 2.3rem;
+    letter-spacing: -0.1;
+    text-align: center;
     color: ${({ theme }) => theme.colors.gray100};
   }
 `;
+
 const StBottomLine = styled.div`
   position: absolute;
   bottom: 0;
