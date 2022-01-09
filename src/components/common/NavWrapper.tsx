@@ -7,7 +7,7 @@ import { NavHeader } from ".";
 export default function NavWrapper() {
   return (
     <StSection>
-      <NavHeader />
+      <NavHeader isCommon={true} />
       <StNav>
         <StUl>
           <StItem>
@@ -40,6 +40,7 @@ export default function NavWrapper() {
 
 const StSection = styled.section`
   position: relative;
+  background-color: ${({ theme }) => theme.colors.gray100};
   width: 17.5rem;
   color: ${({ theme }) => theme.colors.white500};
 `;
