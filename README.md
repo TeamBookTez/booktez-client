@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+![image](https://user-images.githubusercontent.com/73876068/148671692-f6cdd096-dab3-4d8e-9b51-443eb3b947ba.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📚 `북스테어즈`는 어떤 서비스인가요?
+진짜 독서가들의 독서법, 북스테어즈 💡
+<br/>
+북스테어즈는 여러분들의 보다 똑똑한 독서를 돕습니다!
+<br/>
+<br/>
 
-## Available Scripts
+## 🛠 기술 스택
+<img src="https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=flat" height=40>&nbsp;&nbsp;<img src="https://img.shields.io/badge/-Typescript-3074BF?logo=Typescript&logoColor=white&style=flat" height=40>&nbsp;&nbsp;
+```json
+"axios": "^0.24.0",
+"react": "^17.0.2",
+"react-dom": "^17.0.2",
+"react-router-dom": "^6.2.1",
+"recoil": "^0.5.2",
+"styled-components": "^5.3.3",
+"styled-reset": "^4.3.4",
+"typescript": "^4.5.4",
+```
+<br/>
 
-In the project directory, you can run:
+## 🗂 프로젝트 폴더 구조
+```
+.
+├── components
+│   ├── bookcase
+│   │   ├── BookcaseWrapper.tsx
+│   │   ├── Navigation.tsx
+│   │   ├── BookcaseWrapper.tsx
+│   │   ├── PeriRead.tsx
+│   │   ├── PostRead.tsx
+│   │   ├── PreRead.tsx
+│   │   ├── Total.tsx
+│   │   └── index.ts
+│   ├── common
+│   │   ├── Button.tsx
+│   │   ├── MainHeader.tsx
+│   │   ├── NavHeader.tsx
+│   │   ├── NavWrapper.tsx
+│   │   └── index.ts
+│   ├── login
+│   │   ├── LoginForm.tsx
+│   │   └── LoginNavSection.tsx
+│   ├── main
+│   │   ├── Banner.tsx
+│   │   ├── MainWrapper.tsx
+│   │   └── index.ts
+│   └── Router.tsx
+├── pages
+│   ├── Bookcase.tsx
+│   ├── Login.tsx
+│   ├── Main.tsx
+│   ├── Signup.tsx
+│   └── index.ts
+├── states
+│   └── index.ts
+├── styles
+│   ├── globalStyle.ts
+│   ├── styled.d.ts
+│   └── theme.ts
+├── utils
+│   └── api.ts
+└── tsconfig.json
+```
+<br />
 
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## ✉ 커밋 컨벤션
+|제목|내용|
+|------|---|
+|init|작업 세팅 커밋 (패키지 설치 등)|
+|feat|기능 추가 및 변경 (화면 영향 o)|
+|design|only css 변경|
+|fix|기존의 버그 수정|
+|refactor|더 좋은 코드 개선 (화면 영향 x)|
+|etc|문서 작성 or 그 외 커밋(주석, 개행 등)|
