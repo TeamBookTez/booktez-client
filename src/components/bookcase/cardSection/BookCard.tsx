@@ -1,54 +1,56 @@
 import React from "react";
 import styled from "styled-components";
 
+import { TempBookImg } from "../../../assets/imgs";
+
 export default function BookCard() {
   return (
     <>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
       <StBookCard>
         <StImgWrapper>
-          <StImg src={require("../../../assets/imgs/tempimg.png")} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={TempBookImg} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
