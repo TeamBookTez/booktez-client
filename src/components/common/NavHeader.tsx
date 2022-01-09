@@ -32,7 +32,7 @@ const StLink = styled(Link)`
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: -0.2rem;
-  color: ${({ theme }) => theme.colors.gray100};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 const StIcCool = styled(IcLogo)`
