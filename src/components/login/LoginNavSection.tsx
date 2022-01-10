@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { NavHeader } from "../common";
+import { Button, NavHeader } from "../common";
 
 interface SignupNav {
   isAni: boolean;
@@ -106,19 +106,13 @@ const StTempImg = styled.div`
   background-color: white;
 `;
 
-const StGoSignupBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+const StGoSignupBtn = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
 
-  background-color: ${({ theme }) => theme.colors.orange100};
   border-radius: 1rem;
 
   // 글꼴 설정
   font-size: 1.8rem;
   letter-spacing: -0.1rem;
-  color: ${({ theme }) => theme.colors.white};
 `;
