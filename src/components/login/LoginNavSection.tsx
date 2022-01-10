@@ -20,7 +20,7 @@ export default function SignupNav(props: SignupNav) {
 
   return (
     <StSection isAni={isAni}>
-      <NavHeader />
+      <NavHeader isCommon={false} />
       <StArticle>
         <StH2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</StH2>
         <StH3>
