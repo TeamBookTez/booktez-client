@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IcCool } from "../../assets/icons";
+import { IcSight } from "../../assets/icons";
 
 export default function LoginForm() {
   return (
@@ -53,7 +53,7 @@ const StPwdWrapper = styled.div`
   position: relative;
 `;
 
-const StIcCool = styled(IcCool)`
+const StIcCool = styled(IcSight)`
   position: absolute;
   top: 2rem;
   right: 2rem;
