@@ -1,3 +1,7 @@
 export default function AddBook() {
-  return <div></div>;
+  return (
+    <div>
+      <div> </div>
+    </div>
+  );
 }
