@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import theme from "../../styles/theme";
+
 interface MainHeaderProps {
   children: string;
   color?: string;
@@ -9,7 +11,7 @@ interface StHeaderProps {
   color: string;
 }
 
-export default function MainHeader({ children, color = "#242424" }: MainHeaderProps) {
+export default function MainHeader({ children, color = theme.colors.gray100 }: MainHeaderProps) {
   return (
     <StHeader color={color}>
       <h2>{children}</h2>

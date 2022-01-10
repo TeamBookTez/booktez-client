@@ -45,7 +45,7 @@ const InputSearch = styled.input`
   height: 1.8rem;
 
   &::placeholder {
-    /* font-family: pretendard; */
+    font-family: pretendard;
     font-weight: 400;
     font-size: 1.8rem;
     line-height: 2.34rem;
