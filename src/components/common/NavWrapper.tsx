@@ -7,7 +7,7 @@ import { NavHeader } from ".";
 export default function NavWrapper() {
   return (
     <StSection>
-      <NavHeader isCommon={true} />
+      <NavHeader logocolor={"#FFFFFFF"} />
       <StNav>
         <StUl>
           <StItem>
