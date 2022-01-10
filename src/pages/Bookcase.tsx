@@ -14,4 +14,5 @@ export default function Bookcase() {
 
 const StPageWrapper = styled.div`
   display: flex;
+  background-color: ${({ theme }) => theme.colors.gray100};
 `;

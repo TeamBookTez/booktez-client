@@ -15,5 +15,7 @@ export default function BookcaseWrapper() {
 }
 
 const StMainWrapper = styled.main`
+  border-radius: 2rem 0 0 2rem;
+  background-color: ${({ theme }) => theme.colors.white};
   width: 1264px; // 임의 px
 `;
