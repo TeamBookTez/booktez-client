@@ -1,12 +1,8 @@
 {
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-    },
-    "editor.formatOnSave": true,
-    "cSpell.words": [
-        "logoicon",
-        "Pretendard",
-        "signup"
-    ],
-    "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "cSpell.words": ["logocolor", "logoicon", "Pretendard", "signup"],
+  "editor.tabSize": 2
 }
