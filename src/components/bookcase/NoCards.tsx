@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { EmptyBookImg } from "../../assets/imgs";
+import { EmptyBookImg } from "../../assets/images";
 import { StButton } from "../../components/common/Button";
 
 export default function NoCards() {

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { AddBookImg } from "../../../assets/imgs";
+import { AddBookImg } from "../../../assets/images";
 import Button from "../../common/Button";
 import { StImg } from "./BookCard";
 

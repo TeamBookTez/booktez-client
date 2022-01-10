@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TempBookImg } from "../../../assets/imgs";
+import { TempBookImg } from "../../../assets/images";
 
 export default function BookCard() {
   return (
