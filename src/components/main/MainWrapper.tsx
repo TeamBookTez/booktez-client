@@ -18,7 +18,7 @@ export default function MainWrapper() {
   );
 }
 
-const StWrapper = styled.main`
+export const StWrapper = styled.main`
   flex: 1;
   border-radius: 2rem 0 0 2rem;
   background-color: ${({ theme }) => theme.colors.white};
