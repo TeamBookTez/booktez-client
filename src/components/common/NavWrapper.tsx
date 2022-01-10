@@ -12,24 +12,24 @@ export default function NavWrapper() {
         <StUl>
           <StItem>
             <StLink to="">
-              <IcHome />홈
+              <IcHome fill="#C1C1C1" />홈
             </StLink>
           </StItem>
           <StItem>
             <StLink to="">
-              <IcBookcase />
+              <IcBookcase fill="#C1C1C1" />
               서재
             </StLink>
           </StItem>
           <StItem>
             <StLink to="">
-              <IcMyPage />
+              <IcMyPage fill="#C1C1C1" />
               마이페이지
             </StLink>
           </StItem>
           <StItem>
             <StLink to="">
-              <IcToBe />곧 만나요
+              <IcToBe fill="#C1C1C1" />곧 만나요
             </StLink>
           </StItem>
         </StUl>
@@ -62,13 +62,21 @@ const StUl = styled.ul`
 const StItem = styled.li`
   display: flex;
   align-items: center;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.orange100};
+
+    svg {
+      fill: ${({ theme }) => theme.colors.orange100};
+    }
+  }
 `;
 
 const StLink = styled(Link)`
   display: flex;
   align-items: center;
-
-  & > svg {
-    margin-right: 1rem;
-  }
 `;
