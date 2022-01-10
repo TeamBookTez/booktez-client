@@ -7,6 +7,14 @@ export default function BookList() {
     <StListWrapper>
       {/* map으로 여러개 불러오기 */}
       <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
+      <BookInfoWrapper />
     </StListWrapper>
   );
 }

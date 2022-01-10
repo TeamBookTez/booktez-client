@@ -58,4 +58,8 @@ const StIcCancel = styled(IcCancel)`
   height: 2.7rem;
 
   margin-right: 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
