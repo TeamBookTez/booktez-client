@@ -1,13 +1,20 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import LoginForm from "../components/login/LoginForm";
 import SignupNav from "../components/login/LoginNavSection";
 
 export default function Login() {
+  const [isAni, setIsAni] = useState(false);
+
+  const handleAni = () => {
+    setIsAni(true);
+  };
+
   return (
     <StPageWrapper>
-      <SignupNav />
-      <StMainWrapper>
+      <SignupNav isAni={isAni} onAniChange={handleAni} />
+      <StMainWrapper isAni={isAni}>
         <StArticle>
           <StH2>북스테어즈 로그인</StH2>
           <StH3>북테에 로그인 ~~~ 더 아랓난 독서법 ~~~ 즐기세요롱 오유유</StH3>
@@ -29,12 +36,24 @@ const StPageWrapper = styled.div`
   display: flex;
 `;
 
-const StMainWrapper = styled.main`
+const StMainWrapper = styled.main<{ isAni: boolean }>`
   width: 960px; //임의 px
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ isAni }) => (isAni ? "animation: opentoright 1s ease-in-out;" : "")};
+  @keyframes opentoright {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(20em);
+    }
+  }
 `;
 
 const StArticle = styled.article`
