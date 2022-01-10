@@ -1,4 +1,5 @@
 import { MainHeader, MainLayout } from "../common";
+import BookList from "./BookList";
 import SearchBar from "./SearchBar";
 
 export default function AddBookWrapper() {
@@ -6,6 +7,7 @@ export default function AddBookWrapper() {
     <MainLayout>
       <MainHeader color="#FF4C00">책 추가</MainHeader>
       <SearchBar />
+      <BookList />
     </MainLayout>
   );
 }
