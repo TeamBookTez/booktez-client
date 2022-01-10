@@ -1,14 +1,13 @@
-import React from "react";
 import styled from "styled-components";
 
-import { EmptyBookImg } from "../../assets/images";
-import { StButton } from "../../components/common/Button";
+import { ImgEmptyBooks } from "../../assets/images";
+import { Button } from "../../components/common/Button";
 
 export default function NoCards() {
   return (
     <StSection>
       <StArticleWrapper>
-        <StImg src={EmptyBookImg} alt="아직 읽은 책이 없어요" />
+        <StImg src={ImgEmptyBooks} alt="아직 읽은 책이 없어요" />
         <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
         <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>
         <StMiddleButton>+ 책 추가</StMiddleButton>
@@ -59,7 +58,7 @@ const StCardDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
-const StMiddleButton = styled(StButton)`
+const StMiddleButton = styled(Button)`
   width: 17.5rem;
   height: 4.5rem;
 

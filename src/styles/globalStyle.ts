@@ -8,12 +8,12 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  /* @font-face {
-    font-family: "NotoSansKR-Regular";
+  @font-face {
+    font-family: "Pretendard";
     font-weight: normal;
     font-style: normal;
-    src: url("/fonts/NotoSansKR-Regular.otf") format("opentype");
-  } */
+    src: url("/fonts/PretendardVariable.woff2") format("woff2");
+  }
 
   html {
     color: ${({ theme }) => theme.colors.gray100};

@@ -13,6 +13,5 @@ export default function Bookcase() {
 }
 
 const StPageWrapper = styled.div`
-  height: 100vh;
   display: flex;
 `;

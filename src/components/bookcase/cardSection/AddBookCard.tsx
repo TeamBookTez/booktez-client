@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 
-import { AddBookImg } from "../../../assets/images";
-import Button from "../../common/Button";
+import { ImgAddBooks } from "../../../assets/images";
+import { Button } from "../../common/Button";
 import { StImg } from "./BookCard";
 
 export default function AddBookCard() {
@@ -11,7 +10,7 @@ export default function AddBookCard() {
       <StAddCard>
         <StContent>
           <StImgWrapper>
-            <StImg src={AddBookImg} alt="다음 책을 쌓아볼까요?" />
+            <StImg src={ImgAddBooks} alt="다음 책을 쌓아볼까요?" />
           </StImgWrapper>
           <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
           <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>

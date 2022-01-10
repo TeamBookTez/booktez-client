@@ -3,10 +3,16 @@ import styled from "styled-components";
 
 import { IcLogo } from "../../assets/icons";
 
-export default function NavHeader() {
+interface NavHeaderProps {
+  isCommon: boolean;
+}
+
+export default function NavHeader(props: NavHeaderProps) {
+  const { isCommon } = props;
+
   return (
     <StHeader>
-      <StLink to="/main">
+      <StLink to="/main" isWhite={isCommon}>
         <StIcCool />
         북스테어즈
       </StLink>
@@ -22,18 +28,17 @@ const StHeader = styled.header`
   display: flex;
   align-items: center;
 
-  width: 100%;
   height: 9rem;
 `;
 
-const StLink = styled(Link)`
+const StLink = styled(Link)<{ isWhite: boolean }>`
   display: flex;
   align-items: center;
 
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: -0.2rem;
-  color: ${({ theme }) => theme.colors.gray100};
+  color: ${({ isWhite, theme }) => (isWhite ? theme.colors.white : theme.colors.gray100)};
 `;
 
 const StIcCool = styled(IcLogo)`
