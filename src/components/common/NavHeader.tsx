@@ -4,15 +4,15 @@ import styled from "styled-components";
 import { IcLogo } from "../../assets/icons";
 
 interface NavHeaderProps {
-  isCommon: boolean;
+  logocolor: string;
 }
 
 export default function NavHeader(props: NavHeaderProps) {
-  const { isCommon } = props;
+  const { logocolor } = props;
 
   return (
     <StHeader>
-      <StLink to="/main" isWhite={isCommon}>
+      <StLink to="/main" logocolor={logocolor}>
         <StIcCool />
         북스테어즈
       </StLink>
@@ -31,14 +31,14 @@ const StHeader = styled.header`
   height: 9rem;
 `;
 
-const StLink = styled(Link)<{ isWhite: boolean }>`
+const StLink = styled(Link)<{ logocolor: string }>`
   display: flex;
   align-items: center;
 
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: -0.2rem;
-  color: ${({ isWhite, theme }) => (isWhite ? theme.colors.white : theme.colors.gray100)};
+  color: ${({ logocolor }) => logocolor};
 `;
 
 const StIcCool = styled(IcLogo)`
