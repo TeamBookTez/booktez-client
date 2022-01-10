@@ -24,7 +24,7 @@ const Router = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/addBook" element={<AddBook />} />
+        <Route path="/add-book" element={<AddBook />} />
         <Route path="/*" element={<div>404에러얍얍</div>} />
       </Routes>
     </BrowserRouter>
