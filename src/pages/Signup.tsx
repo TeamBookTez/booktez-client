@@ -18,7 +18,7 @@ export default function Signup() {
           <p>북스테어즈</p>
         </a>
       </StHeader>
-      <StMain isFromLogin={state === "ani"}>
+      <StMain isFromLogin={state === "fromlogin"}>
         <FirstStep />
         {/* <SecondStep /> */}
         {/* <ThirdStep /> */}
