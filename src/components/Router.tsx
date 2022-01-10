@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { Bookcase, Login, Main, Signup } from "../pages";
+import { AddBook, Bookcase, Login, Main, Signup } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 
 const Router = () => {
@@ -24,6 +24,7 @@ const Router = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/add-book" element={<AddBook />} />
         <Route path="/*" element={<div>404에러얍얍</div>} />
       </Routes>
     </BrowserRouter>
