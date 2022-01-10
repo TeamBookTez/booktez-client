@@ -2,19 +2,18 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import { Navigation } from "../bookcase";
-import { MainHeader } from "../common";
+import { MainHeader, MainLayout } from "../common";
 import { Banner } from ".";
-
 export default function MainWrapper() {
   return (
-    <StWrapper>
+    <MainLayout>
       <MainHeader>메인</MainHeader>
       <Banner />
       <section>
         <Navigation />
         <Outlet />
       </section>
-    </StWrapper>
+    </MainLayout>
   );
 }
 

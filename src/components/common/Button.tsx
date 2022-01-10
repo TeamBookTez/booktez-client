@@ -6,5 +6,7 @@ export const Button = styled.button`
   align-items: center;
 
   background-color: ${({ theme }) => theme.colors.orange100};
+
+  font-family: Pretendard;
   color: ${({ theme }) => theme.colors.white};
 `;
