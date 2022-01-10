@@ -1,35 +1,52 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcBookcase, IcHome, IcMyPage, IcToBe } from "../../assets/icons";
+import theme from "../../styles/theme";
 import { NavHeader } from ".";
 
 export default function NavWrapper() {
+  const { pathname } = useLocation();
+  const defaultColor: string = theme.colors.white500;
+  const highlightColor: string = theme.colors.orange100;
+
+  const getColor = (nav: string): string => {
+    let color;
+
+    if (pathname.startsWith(`/${nav}`)) {
+      color = highlightColor;
+    } else {
+      color = defaultColor;
+    }
+
+    return color;
+  };
+
   return (
     <StSection>
       <NavHeader logocolor={"#FFFFFFF"} />
       <StNav>
         <StUl>
-          <StItem>
+          <StItem color={getColor("main")}>
             <StLink to="">
-              <IcHome fill="#C1C1C1" />홈
+              <IcHome fill={getColor("main")} />홈
             </StLink>
           </StItem>
-          <StItem>
+          <StItem color={getColor("bookcase")}>
             <StLink to="">
-              <IcBookcase fill="#C1C1C1" />
+              <IcBookcase fill={getColor("bookcase")} />
               서재
             </StLink>
           </StItem>
-          <StItem>
+          <StItem color={getColor("mypage")}>
             <StLink to="">
-              <IcMyPage fill="#C1C1C1" />
+              <IcMyPage fill={getColor("mypage")} />
               마이페이지
             </StLink>
           </StItem>
-          <StItem>
+          <StItem color={getColor("to-be")}>
             <StLink to="">
-              <IcToBe fill="#C1C1C1" />곧 만나요
+              <IcToBe fill={getColor("to-be")} />곧 만나요
             </StLink>
           </StItem>
         </StUl>
@@ -46,6 +63,7 @@ const StSection = styled.section`
 `;
 
 const StNav = styled.nav`
+  position: fixed;
   margin-top: 12.3rem;
   padding-left: 2.2rem;
   font-size: 1.6rem;
@@ -59,9 +77,10 @@ const StUl = styled.ul`
   gap: 2.8rem;
 `;
 
-const StItem = styled.li`
+const StItem = styled.li<{ color: string }>`
   display: flex;
   align-items: center;
+  color: ${({ color }) => color};
 
   svg {
     margin-right: 1rem;
