@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AddBook, Bookcase, Login, Main, Signup } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { CommonLayout } from "./common";
-import { FirstStep, SecondStep, ThirdStep } from "./signup";
+import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
   return (
@@ -35,6 +35,7 @@ export default function Router() {
           <Route path="" element={<FirstStep />} />
           <Route path="2" element={<SecondStep />} />
           <Route path="3" element={<ThirdStep />} />
+          <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
         {/* <Route path="/*" element={<div>404에러얍얍</div>} /> */}
