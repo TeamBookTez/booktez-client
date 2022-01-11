@@ -7,11 +7,10 @@ export const client = axios.create({
   },
 });
 
-const KEY = "079ae5512bb109fcddd4026bc011f3e9";
 const Kakao = axios.create({
   baseURL: "https://dapi.kakao.com",
   headers: {
-    Authorization: `KakaoAK ${KEY}`,
+    Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
   },
 });
 
