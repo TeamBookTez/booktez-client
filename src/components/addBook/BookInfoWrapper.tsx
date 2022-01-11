@@ -13,7 +13,8 @@ export default function BookInfoWrapper() {
           북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
           북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
           북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈
-          화이팅북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
+          화이팅북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈
+          화이팅북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅
         </InfoSummary>
       </StInfoWrapper>
     </StArticle>
@@ -65,4 +66,7 @@ const InfoSummary = styled.p`
   font-size: 1.8rem;
   font-weight: 400;
   line-height: 2.34rem;
+
+  overflow: hidden;
+  max-height: 6.9rem;
 `;
