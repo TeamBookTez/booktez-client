@@ -1,12 +1,21 @@
-import { useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
 
 export default function FirstStep() {
-  const [setIsAni] = useOutletContext<[React.Dispatch<React.SetStateAction<boolean>>]>();
+  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+
+  const nav = useNavigate();
+
+  useEffect(() => {
+    handleIsAniTime(false);
+  }, []);
+
   const goNextStep = () => {
-    setIsAni(true);
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
   };
 
   return (
