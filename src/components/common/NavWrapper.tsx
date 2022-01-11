@@ -28,24 +28,24 @@ export default function NavWrapper() {
       <StNav>
         <StUl>
           <StItem color={getColor("main")}>
-            <StLink to="">
+            <StLink to="main">
               <IcHome fill={getColor("main")} />홈
             </StLink>
           </StItem>
           <StItem color={getColor("bookcase")}>
-            <StLink to="">
+            <StLink to="bookcase">
               <IcBookcase fill={getColor("bookcase")} />
               서재
             </StLink>
           </StItem>
           <StItem color={getColor("mypage")}>
-            <StLink to="">
+            <StLink to="my-page">
               <IcMyPage fill={getColor("mypage")} />
               마이페이지
             </StLink>
           </StItem>
           <StItem color={getColor("to-be")}>
-            <StLink to="">
+            <StLink to="to-be">
               <IcToBe fill={getColor("to-be")} />곧 만나요
             </StLink>
           </StItem>
