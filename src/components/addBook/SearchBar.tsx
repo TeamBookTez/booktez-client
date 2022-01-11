@@ -1,13 +1,20 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 
-export default function SearchBar() {
+export default function SearchBar({ setQuery }: any) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.value);
+    const text = e.currentTarget.value;
+
+    setQuery(text);
+  };
+
   return (
     <StSearchBar>
       <SearchBarWrapper>
         <StIcSearch />
-        <InputSearch type="text" placeholder="책 제목 또는 지은이를 입력해주세요." />
+        <InputSearch onChange={handleChange} type="text" placeholder="책 제목 또는 지은이를 입력해주세요." />
         <StIcCancel />
       </SearchBarWrapper>
     </StSearchBar>

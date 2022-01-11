@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import BookInfoWrapper from "./BookInfoWrapper";
