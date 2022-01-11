@@ -63,7 +63,7 @@ const StSection = styled.section`
 `;
 
 const StNav = styled.nav`
-  position: fixed;
+  position: absolute;
   margin-top: 12.3rem;
   padding-left: 2.2rem;
   font-size: 1.6rem;
