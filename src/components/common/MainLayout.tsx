@@ -13,4 +13,20 @@ const StWrapper = styled.main`
   border-radius: 2rem 0 0 2rem;
   background-color: ${({ theme }) => theme.colors.white};
   font-family: pretendard;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    height: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 100px;
+    border-radius: 16px;
+    background-color: ${({ theme }) => theme.colors.white500};
+  }
 `;
