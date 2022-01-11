@@ -9,22 +9,22 @@ export default function Navigation() {
     <StNav>
       <StUl>
         <StList>
-          <StLink to="/bookcase/total" onClick={() => setNavIndex(0)}>
+          <StLink to="" onClick={() => setNavIndex(0)}>
             전체
           </StLink>
         </StList>
         <StList>
-          <StLink to="/bookcase/pre" onClick={() => setNavIndex(1)}>
+          <StLink to="pre" onClick={() => setNavIndex(1)}>
             독서 전
           </StLink>
         </StList>
         <StList>
-          <StLink to="/bookcase/peri" onClick={() => setNavIndex(2)}>
+          <StLink to="peri" onClick={() => setNavIndex(2)}>
             독서 중
           </StLink>
         </StList>
         <StList>
-          <StLink to="/bookcase/post" onClick={() => setNavIndex(3)}>
+          <StLink to="post" onClick={() => setNavIndex(3)}>
             독서 완료
           </StLink>
         </StList>

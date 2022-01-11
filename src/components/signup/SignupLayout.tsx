@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { NavHeader } from "../components/common";
+import { NavHeader } from "../common";
 
 export default function Layout() {
   const { state } = useLocation();
