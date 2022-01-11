@@ -1,3 +1,4 @@
+export { default as AlertLabel } from "./AlertLabel";
 export { default as FirstStep } from "./FirstStep";
 export { default as LastStep } from "./LastStep";
 export { default as SecondStep } from "./SecondStep";
