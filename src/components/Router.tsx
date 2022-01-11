@@ -32,10 +32,10 @@ export default function Router() {
         <Route path="/login" element={<Login />} />
         {/* 회원가입 1,2,3 나눔 */}
         <Route path="/signup/*" element={<Signup />}>
-          <Route path="1" element={<FirstStep />} />
+          <Route path="" element={<FirstStep />} />
           <Route path="2" element={<SecondStep />} />
           <Route path="3" element={<ThirdStep />} />
-          <Route path="*" element={<Navigate to="1" />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Route>
         {/* <Route path="/*" element={<div>404에러얍얍</div>} /> */}
       </Routes>
