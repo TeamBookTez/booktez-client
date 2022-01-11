@@ -1,8 +1,15 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-import { IcSight } from "../../assets/icons";
+import { IcNoSight, IcSight } from "../../assets/icons";
 
 export default function LoginForm() {
+  const [sightPwd, setSightPwd] = useState<boolean>(false);
+
+  const toggleSightPwd = () => {
+    setSightPwd((sightPwd) => !sightPwd);
+  };
+
   return (
     <StForm>
       <StLabel>이메일</StLabel>
@@ -10,7 +17,7 @@ export default function LoginForm() {
       <StLabel>비밀번호</StLabel>
       <StPwdWrapper>
         <StInput placeholder="비밀번호를 입력해 주세요" type="password" />
-        <StIcCool />
+        {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
       <StBtn>로그인</StBtn>
     </StForm>
@@ -41,7 +48,7 @@ const StInput = styled.input`
 
   background-color: ${({ theme }) => theme.colors.white200};
 
-  border: 2px solid ${({ theme }) => theme.colors.gray200};
+  /* border: 2px solid ${({ theme }) => theme.colors.gray200}; */
   border-radius: 1rem;
 
   font-size: 1.8rem;
@@ -53,10 +60,20 @@ const StPwdWrapper = styled.div`
   position: relative;
 `;
 
-const StIcCool = styled(IcSight)`
+const StIcNoSight = styled(IcNoSight)`
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StIcSight = styled(IcSight)`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
 
   &:hover {
     cursor: pointer;
