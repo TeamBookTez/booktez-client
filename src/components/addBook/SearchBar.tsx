@@ -29,7 +29,8 @@ const SearchBarWrapper = styled.div`
 
   height: 5.6rem;
 
-  &:focus-within {
+  &:focus-within,
+  &:hover {
     border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
   }
 `;
