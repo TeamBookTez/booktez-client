@@ -45,8 +45,10 @@ const StIcSearch = styled(IcSearch)`
 const InputSearch = styled.input`
   background-color: ${({ theme }) => theme.colors.white200};
 
+  font-size: 1.8rem;
+
   width: 100%;
-  height: 1.8rem;
+  height: 100%;
 
   &::placeholder {
     font-family: pretendard;
