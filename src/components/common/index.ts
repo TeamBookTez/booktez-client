@@ -1,3 +1,4 @@
+export { default as AlertLabel } from "./AlertLabel";
 export { Button } from "./Button";
 export { default as CommonLayout } from "./CommonLayout";
 export { default as MainHeader } from "./MainHeader";

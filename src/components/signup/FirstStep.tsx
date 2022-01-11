@@ -1,7 +1,6 @@
-import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { AlertLabel } from ".";
+import { AlertLabel } from "../common";
 
 export default function FirstStep() {
   const [setIsAni] = useOutletContext<[React.Dispatch<React.SetStateAction<boolean>>]>();

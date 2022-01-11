@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { AlertLabel } from ".";
+import { AlertLabel } from "../common";
 
 export default function SecondStep() {
   return (
