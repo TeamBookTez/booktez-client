@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import { Button, NavHeader } from "../common";
 
-interface SignupNav {
+interface SignupNavProps {
   isAni: boolean;
   onAniChange: () => void;
 }
 
-export default function SignupNav(props: SignupNav) {
+export default function SignupNav(props: SignupNavProps) {
   const { isAni, onAniChange } = props;
 
   const nav = useNavigate();
