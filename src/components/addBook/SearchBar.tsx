@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 
@@ -28,6 +28,10 @@ const SearchBarWrapper = styled.div`
   border-radius: 1rem;
 
   height: 5.6rem;
+
+  &:focus-within {
+    border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
+  }
 `;
 
 const StIcSearch = styled(IcSearch)`
@@ -41,8 +45,10 @@ const StIcSearch = styled(IcSearch)`
 const InputSearch = styled.input`
   background-color: ${({ theme }) => theme.colors.white200};
 
+  font-size: 1.8rem;
+
   width: 100%;
-  height: 1.8rem;
+  height: 100%;
 
   &::placeholder {
     font-family: pretendard;
