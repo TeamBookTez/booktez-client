@@ -1,8 +1,14 @@
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
 
 export default function FirstStep() {
+  const [setIsAni] = useOutletContext<[React.Dispatch<React.SetStateAction<boolean>>]>();
+  const goNextStep = () => {
+    setIsAni(true);
+  };
+
   return (
     <StArticle>
       <StStepWrapper>
@@ -22,7 +28,9 @@ export default function FirstStep() {
           <IcAlert />
           <StStrong>올바른 형식이 아닙니다.</StStrong>
         </StLabelWrapper>
-        <StBtn>다음 계단</StBtn>
+        <StBtn type="button" onClick={goNextStep}>
+          다음 계단
+        </StBtn>
       </StFormWrapper>
     </StArticle>
   );
