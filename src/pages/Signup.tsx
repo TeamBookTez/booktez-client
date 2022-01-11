@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { NavHeader } from "../components/common";
+import theme from "../styles/theme";
 
 interface StMainProps {
   isrightpath: boolean;
@@ -19,7 +20,7 @@ export default function Layout() {
 
   return (
     <>
-      <NavHeader logocolor="#242424" />
+      <NavHeader logocolor={theme.colors.gray100} />
       <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
         <Outlet context={[isAniTime, setIsAniTime]} />
       </StMain>
