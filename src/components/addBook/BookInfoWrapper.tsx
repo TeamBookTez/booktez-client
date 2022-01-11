@@ -1,14 +1,41 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { ImgTemp } from "../../assets/images";
+import { BookProps } from "./BookList";
 
-export default function BookInfoWrapper({ bookInfo }: any) {
+export default function BookInfoWrapper({ book }: any) {
+  // console.log(book);
+  const [bookInfo, setBookInfo] = useState<BookProps>({
+    thumbnail: "",
+    title: "",
+    authors: [],
+    datetime: new Date(),
+    contents: "",
+  });
+  const { thumbnail, title, authors, datetime, contents }: BookProps = book;
+
+  useEffect(
+    () =>
+      setBookInfo((prev: any) => ({
+        ...prev,
+        thumbnail,
+        title,
+        authors,
+        datetime,
+        contents,
+      })),
+    [],
+  );
+
   return (
     <StArticle>
       <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
       <StInfoWrapper>
         <InfoTitle>{bookInfo.title}</InfoTitle>
-        <InfoAuthor>{bookInfo.authors}</InfoAuthor>
+        <InfoAuthor>
+          {bookInfo.authors}
+          {/* {bookInfo.datetime} */}
+        </InfoAuthor>
         <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>
     </StArticle>

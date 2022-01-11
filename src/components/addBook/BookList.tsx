@@ -1,30 +1,22 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-import { BookProps } from "./AddBookWrapper";
 import BookInfoWrapper from "./BookInfoWrapper";
 
-export default function BookList({ bookInfo }: any) {
-  // console.log(bookInfo);
-  // if (books.books.length > 0) {
-  //   const book1 = books.books[0];
-  //   const { thumbnail, title, authors, datetime, contents }: BookProps = book1;
+export interface BookProps {
+  thumbnail: string;
+  title: string;
+  authors: string[];
+  datetime: Date;
+  contents: string;
+}
 
-  //   setBookInfo((prev: any) => ({
-  //     ...prev,
-  //     thumbnail,
-  //     title,
-  //     authors,
-  //     datetime,
-  //     contents,
-  //   }));
-
-  //   console.log(bookInfo);
-  // }
-
+export default function BookList({ books }: any) {
   return (
     <StListWrapper>
-      {/* map으로 여러개 불러오기 */}
-      <BookInfoWrapper bookInfo={bookInfo} />
+      {books.map((book: any, idx: number) => (
+        <BookInfoWrapper key={idx} book={book} />
+      ))}
     </StListWrapper>
   );
 }
