@@ -37,11 +37,15 @@ export default function Navigation() {
 }
 
 const StNav = styled.nav`
-  position: relative;
+  position: sticky;
+  top: 0;
+
+  padding-top: 3.3rem;
+  padding-left: 4rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
 
   width: 100%;
-
-  padding-left: 4rem;
 `;
 
 const StUl = styled.ul`

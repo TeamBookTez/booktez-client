@@ -17,7 +17,7 @@ const StSection = styled.section`
   flex-wrap: wrap;
 
   width: 100%;
-  height: 83%;
+  /* height: 83%; */
 
   padding-top: 3.2rem;
   padding-left: 2rem;
