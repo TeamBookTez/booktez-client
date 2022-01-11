@@ -1,9 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AddBook, Bookcase, Login, Main } from "../pages";
+import { AddBook, Bookcase, Login, Main, Signup } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { CommonLayout } from "./common";
-import { FirstStep, SecondStep, SignupLayout, ThirdStep } from "./signup";
+import { FirstStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
   return (
@@ -31,7 +31,7 @@ export default function Router() {
         </Route>
         <Route path="/login" element={<Login />} />
         {/* 회원가입 1,2,3 나눔 */}
-        <Route path="/signup/*" element={<SignupLayout />}>
+        <Route path="/signup/*" element={<Signup />}>
           <Route path="1" element={<FirstStep />} />
           <Route path="2" element={<SecondStep />} />
           <Route path="3" element={<ThirdStep />} />

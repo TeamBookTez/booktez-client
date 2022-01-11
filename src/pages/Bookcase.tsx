@@ -1,10 +1,14 @@
-import { BookcaseWrapper } from "../components/bookcase";
+import { Outlet } from "react-router-dom";
+
+import { Navigation } from "../components/bookcase";
+import { MainHeader } from "../components/common";
 
 export default function Bookcase() {
-  return <BookcaseWrapper />;
+  return (
+    <>
+      <MainHeader>서재</MainHeader>
+      <Navigation />
+      <Outlet />
+    </>
+  );
 }
-
-// const StPageWrapper = styled.div`
-//   display: flex;
-//   background-color: ${({ theme }) => theme.colors.gray100};
-// `;

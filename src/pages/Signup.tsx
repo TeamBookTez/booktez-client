@@ -1,23 +1,16 @@
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { NavHeader } from "../components/common";
-import FirstStep from "../components/signup/FirstStep";
-import LastStep from "../components/signup/LastStep";
-import SecondStep from "../components/signup/SecondStep";
-import ThirdStep from "../components/signup/ThirdStep";
 
-export default function Signup() {
+export default function Layout() {
   const { state } = useLocation();
 
   return (
     <>
       <NavHeader logocolor="#242424" />
       <StMain isFromLogin={state === "fromlogin"}>
-        <FirstStep />
-        {/* <SecondStep /> */}
-        {/* <ThirdStep /> */}
-        {/* <LastStep /> */}
+        <Outlet />
       </StMain>
     </>
   );

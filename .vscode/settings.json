@@ -3,6 +3,6 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": true,
-  "cSpell.words": ["logocolor", "logoicon", "Pretendard", "signup"],
+  "cSpell.words": ["fromlogin", "logocolor", "logoicon", "Pretendard", "signup"],
   "editor.tabSize": 2
 }
