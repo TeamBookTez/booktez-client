@@ -3,3 +3,4 @@ export { default as ImgEmptyBooks } from "./emptyBooksImage.png";
 export { default as ImgGraphic } from "./graphicImage.png";
 export { default as ImgLogo } from "./LogoImage.png";
 export { default as ImgTemp } from "./tempImage.png";
+export { default as ImgUser } from "./userImage.png";
