@@ -4,7 +4,6 @@ import { IcCancel, IcSearch } from "../../assets/icons";
 
 export default function SearchBar({ setQuery }: any) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
     const text = e.currentTarget.value;
 
     setQuery(text);

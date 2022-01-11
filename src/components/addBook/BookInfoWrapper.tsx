@@ -2,20 +2,14 @@ import styled from "styled-components";
 
 import { ImgTemp } from "../../assets/images";
 
-export default function BookInfoWrapper() {
+export default function BookInfoWrapper({ bookInfo }: any) {
   return (
     <StArticle>
-      <StImgTemp src={ImgTemp} alt="책 표지" />
+      <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
       <StInfoWrapper>
-        <InfoTitle>도서 제목</InfoTitle>
-        <InfoAuthor>저자명 | 출간일</InfoAuthor>
-        <InfoSummary>
-          북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
-          북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
-          북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈
-          화이팅북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈
-          화이팅북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅
-        </InfoSummary>
+        <InfoTitle>{bookInfo.title}</InfoTitle>
+        <InfoAuthor>{bookInfo.authors}</InfoAuthor>
+        <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>
     </StArticle>
   );
