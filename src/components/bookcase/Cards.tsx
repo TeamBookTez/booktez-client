@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import AddBookCard from "./cardSection/AddBookCard";
-import BookCard from "./cardSection/BookCard";
+import { AddBookCard, BookCard } from ".";
 
 export default function Cards() {
   return (

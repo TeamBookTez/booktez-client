@@ -38,9 +38,9 @@ export default function NavWrapper() {
               서재
             </StLink>
           </StItem>
-          <StItem color={getColor("mypage")}>
+          <StItem color={getColor("my-page")}>
             <StLink to="my-page">
-              <IcMyPage fill={getColor("mypage")} />
+              <IcMyPage fill={getColor("my-page")} />
               마이페이지
             </StLink>
           </StItem>
