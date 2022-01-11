@@ -16,7 +16,7 @@ export default function LoginForm() {
       <StInput placeholder="이메일을 입력해 주세요" type="text" />
       <StLabel>비밀번호</StLabel>
       <StPwdWrapper>
-        <StInput placeholder="비밀번호를 입력해 주세요" type="password" />
+        <StInputPwd placeholder="비밀번호를 입력해 주세요" type="password" />
         {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
       <StBtn>로그인</StBtn>
@@ -52,8 +52,12 @@ const StInput = styled.input`
   border-radius: 1rem;
 
   font-size: 1.8rem;
-  letter-spacing: -0.1rem;
+  letter-spacing: -0.01rem;
   color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StInputPwd = styled(StInput)`
+  /* letter-spacing: 0.15rem; */
 `;
 
 const StPwdWrapper = styled.div`

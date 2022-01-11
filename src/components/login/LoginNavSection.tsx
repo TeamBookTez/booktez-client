@@ -60,6 +60,7 @@ const StSection = styled.section<{ isAniTime: boolean }>`
   width: 480px; // 임의 px
 
   background-color: ${({ theme }) => theme.colors.white500};
+  border-radius: 0px 20px 20px 0px;
 `;
 
 const StArticle = styled.article`
