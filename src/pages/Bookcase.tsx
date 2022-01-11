@@ -1,17 +1,14 @@
-import styled from "styled-components";
+import { Outlet } from "react-router-dom";
 
-import { BookcaseWrapper } from "../components/bookcase";
-import { NavWrapper } from "../components/common";
+import { Navigation } from "../components/bookcase";
+import { MainHeader } from "../components/common";
 
 export default function Bookcase() {
   return (
-    <StPageWrapper>
-      <NavWrapper />
-      <BookcaseWrapper />
-    </StPageWrapper>
+    <>
+      <MainHeader>서재</MainHeader>
+      <Navigation />
+      <Outlet />
+    </>
   );
 }
-
-const StPageWrapper = styled.div`
-  display: flex;
-`;

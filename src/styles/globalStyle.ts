@@ -17,12 +17,13 @@ export const GlobalStyle = createGlobalStyle`
 
   html {
     color: ${({ theme }) => theme.colors.gray100};
+    font-family: Pretendard;
     font-size: 62.5%;
   }
 
-  #root {
+  /* #root {
    display: flex;
-  }
+  } */
 
   a {
     text-decoration: none;
