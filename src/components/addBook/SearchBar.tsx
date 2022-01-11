@@ -1,21 +1,26 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 
 export default function SearchBar() {
   return (
-    <StSearchBar>
+    <StWrapper>
       <SearchBarWrapper>
         <StIcSearch />
         <InputSearch type="text" placeholder="책 제목 또는 지은이를 입력해주세요." />
         <StIcCancel />
       </SearchBarWrapper>
-    </StSearchBar>
+    </StWrapper>
   );
 }
 
-const StSearchBar = styled.section`
-  margin: 0 4rem;
+const StWrapper = styled.section`
+  position: sticky;
+  top: 0;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  padding-top: 3.1rem;
+  padding-bottom: 3.5rem;
 `;
 
 const SearchBarWrapper = styled.div`
@@ -23,15 +28,11 @@ const SearchBarWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  margin: 0 4rem;
+  border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
-  border-radius: 1rem;
-
   height: 5.6rem;
-
-  &:focus-within {
-    border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
-  }
 `;
 
 const StIcSearch = styled(IcSearch)`
@@ -45,10 +46,8 @@ const StIcSearch = styled(IcSearch)`
 const InputSearch = styled.input`
   background-color: ${({ theme }) => theme.colors.white200};
 
-  font-size: 1.8rem;
-
   width: 100%;
-  height: 100%;
+  height: 1.8rem;
 
   &::placeholder {
     font-family: pretendard;

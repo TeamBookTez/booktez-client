@@ -1,11 +1,13 @@
-import AddBookWrapper from "../components/addBook/AddBookWrapper";
-import { NavWrapper } from "../components/common";
+import BookList from "../components/addBook/BookList";
+import SearchBar from "../components/addBook/SearchBar";
+import { MainHeader } from "../components/common";
 
 export default function AddBook() {
   return (
     <>
-      <NavWrapper />
-      <AddBookWrapper />
+      <MainHeader>책 추가</MainHeader>
+      <SearchBar />
+      <BookList />
     </>
   );
 }

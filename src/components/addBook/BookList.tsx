@@ -20,5 +20,5 @@ export default function BookList() {
 }
 
 const StListWrapper = styled.section`
-  margin: 4.8rem 4rem 2.9rem 4rem;
+  margin: 0 4rem 2.9rem 4rem;
 `;

@@ -21,7 +21,6 @@ export default function Router() {
             <Route path="post" element={<PostRead />} />
             <Route path="*" element={<Navigate to="" />} />
           </Route>
-          {/* add-book */}
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}
           {/* <Route path="/my-page" element={<div>상언이의 마이페이지</div>} /> */}
@@ -38,7 +37,7 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        {/* <Route path="/*" element={<div>404에러얍얍</div>} /> */}
+        <Route path="/*" element={<div>404에러얍얍</div>} />
       </Routes>
     </BrowserRouter>
   );
