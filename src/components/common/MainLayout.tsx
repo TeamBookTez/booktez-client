@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export default function MainLayout({ children }: any) {
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function MainLayout({ children }: MainLayoutProps) {
   return <StWrapper>{children}</StWrapper>;
 }
 

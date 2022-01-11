@@ -1,8 +1,14 @@
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
 
 export default function FirstStep() {
+  const [setIsAni] = useOutletContext<[React.Dispatch<React.SetStateAction<boolean>>]>();
+  const goNextStep = () => {
+    setIsAni(true);
+  };
+
   return (
     <StArticle>
       <StStepWrapper>
@@ -22,7 +28,9 @@ export default function FirstStep() {
           <IcAlert />
           <StStrong>올바른 형식이 아닙니다.</StStrong>
         </StLabelWrapper>
-        <StBtn>다음 계단</StBtn>
+        <StBtn type="button" onClick={goNextStep}>
+          다음 계단
+        </StBtn>
       </StFormWrapper>
     </StArticle>
   );
@@ -109,14 +117,14 @@ const StInput = styled.input`
 
 const StLabelWrapper = styled.label`
   width: 100%;
-  height: 1.667rem;
-  margin: 1.8rem 0;
+  height: 2.4rem;
+  margin: 1.6rem 0;
   display: flex;
 
   & > svg {
     height: 100%;
     width: auto;
-    margin-right: 0.567rem;
+    margin-right: 0.4rem;
   }
 `;
 
@@ -134,8 +142,8 @@ const StBtn = styled.button`
 `;
 
 const StStrong = styled.strong`
-  display: table-cell;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
   /* 임의 폰트 */
   font-weight: 400;
   font-size: 1.4rem;

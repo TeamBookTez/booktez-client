@@ -3,23 +3,23 @@ import styled from "styled-components";
 
 import { Button, NavHeader } from "../common";
 
-interface SignupNav {
-  isAni: boolean;
+interface SignupNavProps {
+  isAniTime: boolean;
   onAniChange: () => void;
 }
 
-export default function SignupNav(props: SignupNav) {
-  const { isAni, onAniChange } = props;
+export default function SignupNav(props: SignupNavProps) {
+  const { isAniTime, onAniChange } = props;
 
   const nav = useNavigate();
 
   const handleGoSignupBtn = () => {
     onAniChange();
-    setTimeout(() => nav("/signup", { state: "fromlogin" }), 1000);
+    setTimeout(() => nav("/signup", { state: "ani" }), 1000);
   };
 
   return (
-    <StSection isAni={isAni}>
+    <StSection isAniTime={isAniTime}>
       <NavHeader logocolor={"#242424"} />
       <StArticle>
         <StH2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</StH2>
@@ -38,8 +38,8 @@ export default function SignupNav(props: SignupNav) {
   );
 }
 
-const StSection = styled.section<{ isAni: boolean }>`
-  ${({ isAni }) => (isAni ? "animation: opentoleft 1s ease-in-out;" : "")};
+const StSection = styled.section<{ isAniTime: boolean }>`
+  ${({ isAniTime }) => (isAniTime ? "animation: opentoleft 1s ease-in-out;" : "")};
 
   @keyframes opentoleft {
     0% {
@@ -60,6 +60,7 @@ const StSection = styled.section<{ isAni: boolean }>`
   width: 480px; // 임의 px
 
   background-color: ${({ theme }) => theme.colors.white500};
+  border-radius: 0px 20px 20px 0px;
 `;
 
 const StArticle = styled.article`
