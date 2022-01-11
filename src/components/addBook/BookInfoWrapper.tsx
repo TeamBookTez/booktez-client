@@ -22,9 +22,11 @@ export default function BookInfoWrapper() {
 
 const StArticle = styled.article`
   display: flex;
-  margin-bottom: 3.2rem;
+  padding: 1.6rem 8.1rem 1.6rem 1.6rem;
 
-  height: 16.9rem;
+  border-radius: 1.6rem;
+
+  height: 20.1rem;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.white300};
