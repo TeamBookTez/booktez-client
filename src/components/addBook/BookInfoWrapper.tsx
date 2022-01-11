@@ -25,6 +25,11 @@ const StArticle = styled.article`
   margin-bottom: 3.2rem;
 
   height: 16.9rem;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.white300};
+    cursor: pointer;
+  }
 `;
 
 const StImgTemp = styled.img`
