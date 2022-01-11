@@ -9,6 +9,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 }
 
 const StWrapper = styled.main`
+  position: relative;
   flex: 1;
   border-radius: 2rem 0 0 2rem;
   border: 0.1rem solid ${({ theme }) => theme.colors.white};
