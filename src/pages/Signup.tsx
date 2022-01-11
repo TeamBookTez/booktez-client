@@ -9,21 +9,21 @@ export default function Layout() {
   return (
     <>
       <NavHeader logocolor="#242424" />
-      <StMain isFromLogin={state === "fromlogin"}>
+      <StMain isrightpath={state === "ani"}>
         <Outlet />
       </StMain>
     </>
   );
 }
 
-const StMain = styled.main<{ isFromLogin: boolean }>`
+const StMain = styled.main<{ isrightpath: boolean }>`
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  ${({ isFromLogin }) => (isFromLogin ? "animation: fadein 1.5s ease-in-out;" : "")};
+  ${({ isrightpath }) => (isrightpath ? "animation: fadein 1s ease-in-out;" : "")};
 
   @keyframes fadein {
     0% {

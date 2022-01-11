@@ -4,22 +4,22 @@ import styled from "styled-components";
 import { Button, NavHeader } from "../common";
 
 interface SignupNavProps {
-  isAni: boolean;
+  isAniTime: boolean;
   onAniChange: () => void;
 }
 
 export default function SignupNav(props: SignupNavProps) {
-  const { isAni, onAniChange } = props;
+  const { isAniTime, onAniChange } = props;
 
   const nav = useNavigate();
 
   const handleGoSignupBtn = () => {
     onAniChange();
-    setTimeout(() => nav("/signup", { state: "fromlogin" }), 1000);
+    setTimeout(() => nav("/signup", { state: "ani" }), 1000);
   };
 
   return (
-    <StSection isAni={isAni}>
+    <StSection isAniTime={isAniTime}>
       <NavHeader logocolor={"#242424"} />
       <StArticle>
         <StH2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</StH2>
@@ -38,8 +38,8 @@ export default function SignupNav(props: SignupNavProps) {
   );
 }
 
-const StSection = styled.section<{ isAni: boolean }>`
-  ${({ isAni }) => (isAni ? "animation: opentoleft 1s ease-in-out;" : "")};
+const StSection = styled.section<{ isAniTime: boolean }>`
+  ${({ isAniTime }) => (isAniTime ? "animation: opentoleft 1s ease-in-out;" : "")};
 
   @keyframes opentoleft {
     0% {
