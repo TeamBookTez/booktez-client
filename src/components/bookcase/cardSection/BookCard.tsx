@@ -55,6 +55,97 @@ export default function BookCard() {
         <StCardTitle>조화로운 부</StCardTitle>
         <StCardAuthor>제임스 아세 러이</StCardAuthor>
       </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StCardTitle>조화로운 부</StCardTitle>
+        <StCardAuthor>제임스 아세 러이</StCardAuthor>
+      </StBookCard>
     </>
   );
 }

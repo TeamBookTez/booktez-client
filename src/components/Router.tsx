@@ -2,34 +2,44 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { AddBook, Bookcase, Login, Main, MyPage, Signup } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
+import { CommonLayout } from "./common";
+import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
-const Router = () => {
+export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/main" />} />
-        <Route path="/main/*" element={<Main />}>
-          <Route path="" element={<Total />} />
-          <Route path="pre" element={<PreRead />} />
-          <Route path="peri" element={<PeriRead />} />
-          <Route path="post" element={<PostRead />} />
+        <Route path="/*" element={<CommonLayout />}>
+          {/* /main */}
+          <Route path="main/" element={<Main />} />
+          {/* bookcase */}
+          <Route path="bookcase/*" element={<Bookcase />}>
+            <Route path="" element={<Total />} />
+            <Route path="pre" element={<PreRead />} />
+            <Route path="peri" element={<PeriRead />} />
+            <Route path="post" element={<PostRead />} />
+            <Route path="*" element={<Navigate to="" />} />
+          </Route>
+          {/* add-book */}
+          <Route path="add-book" element={<AddBook />} />
+          {/* my-page */}
+          <Route path="my-page" element={<MyPage />} />
+          {/* to-be */}
+          <Route path="to-be" element={<div>곧 만나용</div>} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route path="/bookcase/*" element={<Bookcase />}>
-          <Route path="" element={<Total />} />
-          <Route path="pre" element={<PreRead />} />
-          <Route path="peri" element={<PeriRead />} />
-          <Route path="post" element={<PostRead />} />
-          <Route path="*" element={<Navigate to="" />} />
-        </Route>
-        <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/add-book" element={<AddBook />} />
-        <Route path="/*" element={<div>404에러얍얍</div>} />
+        {/* 회원가입 1,2,3 나눔 */}
+        <Route path="/signup/*" element={<Signup />}>
+          <Route path="" element={<FirstStep />} />
+          <Route path="2" element={<SecondStep />} />
+          <Route path="3" element={<ThirdStep />} />
+          <Route path="4" element={<LastStep />} />
+          <Route path="*" element={<Navigate to="" />} />
+        </Route>
+        {/* <Route path="/*" element={<div>404에러얍얍</div>} /> */}
       </Routes>
     </BrowserRouter>
   );
-};
-
-export default Router;
+}

@@ -50,8 +50,8 @@ const StArticleWrapper = styled.div`
 `;
 
 const StServiceInfo = styled.article`
-  width: 57.2rem;
-  height: 13.6rem;
+  /* width: 57.2rem;
+  height: 13.6rem; */
 
   padding: 3.7rem 4.9rem;
 

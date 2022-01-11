@@ -5,6 +5,7 @@ export { ReactComponent as IcEditProfile } from "./editProfileIcon.svg";
 export { ReactComponent as IcHome } from "./homeIcon.svg";
 export { ReactComponent as IcLogo } from "./logoIcon.svg";
 export { ReactComponent as IcMyPage } from "./myPageIcon.svg";
+export { ReactComponent as IcNoSight } from "./noSightIcon.svg";
 export { ReactComponent as IcSearch } from "./searchIcon.svg";
 export { ReactComponent as IcSight } from "./sightIcon.svg";
 export { ReactComponent as IcToBe } from "./toBeIcon.svg";

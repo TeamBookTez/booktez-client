@@ -13,7 +13,8 @@ export default function BookInfoWrapper() {
           북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
           북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
           북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈
-          화이팅북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
+          화이팅북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈
+          화이팅북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅
         </InfoSummary>
       </StInfoWrapper>
     </StArticle>
@@ -22,9 +23,16 @@ export default function BookInfoWrapper() {
 
 const StArticle = styled.article`
   display: flex;
-  margin-bottom: 3.2rem;
+  padding: 1.6rem 8.1rem 1.6rem 1.6rem;
 
-  height: 16.9rem;
+  border-radius: 1.6rem;
+
+  height: 20.1rem;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.white300};
+    cursor: pointer;
+  }
 `;
 
 const StImgTemp = styled.img`
@@ -58,4 +66,7 @@ const InfoSummary = styled.p`
   font-size: 1.8rem;
   font-weight: 400;
   line-height: 2.34rem;
+
+  overflow: hidden;
+  max-height: 6.9rem;
 `;

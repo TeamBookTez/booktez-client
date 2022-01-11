@@ -21,7 +21,7 @@ export default function NavHeader(props: NavHeaderProps) {
 }
 
 const StHeader = styled.header`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
