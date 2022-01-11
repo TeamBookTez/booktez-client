@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AddBook, Bookcase, Login, Main, Signup } from "../pages";
+import { AddBook, Bookcase, Login, Main, MyPage, Signup } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
@@ -23,7 +23,7 @@ export default function Router() {
           </Route>
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}
-          {/* <Route path="/my-page" element={<div>상언이의 마이페이지</div>} /> */}
+          <Route path="my-page" element={<MyPage />} />
           {/* to-be */}
           <Route path="to-be" element={<div>곧 만나용</div>} />
           <Route path="*" element={<Navigate to="" />} />
