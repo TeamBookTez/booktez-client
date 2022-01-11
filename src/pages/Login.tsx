@@ -1,8 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import LoginForm from "../components/login/LoginForm";
-import SignupNav from "../components/login/LoginNavSection";
+import { LoginForm, LoginNavSection } from "../components/login";
 
 export default function Login() {
   const [isAni, setIsAni] = useState(false);
@@ -13,7 +12,7 @@ export default function Login() {
 
   return (
     <StPageWrapper>
-      <SignupNav isAni={isAni} onAniChange={handleAni} />
+      <LoginNavSection isAni={isAni} onAniChange={handleAni} />
       <StMainWrapper isAni={isAni}>
         <StArticle>
           <StH2>북스테어즈 로그인</StH2>
