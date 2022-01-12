@@ -27,15 +27,18 @@ export default function BookInfoWrapper({ book }: any) {
     [],
   );
 
+  console.log(bookInfo.datetime, typeof bookInfo.datetime);
+
   return (
     <StArticle>
       <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
       <StInfoWrapper>
         <InfoTitle>{bookInfo.title}</InfoTitle>
-        <InfoAuthor>
-          {bookInfo.authors}
-          {/* {bookInfo.datetime} */}
-        </InfoAuthor>
+        <div>
+          <InfoAuthor>{bookInfo.authors}</InfoAuthor>
+          <div>hi</div>
+          {/* <InfoAuthor>{bookInfo.datetime}</InfoAuthor> */}
+        </div>
         <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>
     </StArticle>
