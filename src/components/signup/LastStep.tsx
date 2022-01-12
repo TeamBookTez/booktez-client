@@ -1,14 +1,31 @@
+import { useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgGraphic } from "../../assets/images";
 
 export default function LastStep() {
+  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+
+  const nav = useNavigate();
+
+  useEffect(() => {
+    handleIsAniTime(false);
+  }, []);
+
+  const goNextStep = () => {
+    handleIsAniTime(true);
+    setTimeout(() => nav("/main", { state: "ani" }), 1000);
+  };
+
   return (
     <StArticle>
       <StHeading2>OOOOOOOOOO님!</StHeading2>
       <StHeading2>나만의 서재가 완성됐어요!</StHeading2>
       <img src={ImgGraphic} alt="회원 가입 완료시 뜨는 그래픽 문구입니다" />
-      <StBtn>홈 바로가기</StBtn>
+      <StBtn type="button" onClick={goNextStep}>
+        홈 바로가기
+      </StBtn>
     </StArticle>
   );
 }

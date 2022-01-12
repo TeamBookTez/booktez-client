@@ -1,8 +1,23 @@
+import { useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
 
 export default function ThirdStep() {
+  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+
+  const nav = useNavigate();
+
+  useEffect(() => {
+    handleIsAniTime(false);
+  }, []);
+
+  const goNextStep = () => {
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+  };
+
   return (
     <StArticle>
       <StStepWrapper>
@@ -29,7 +44,9 @@ export default function ThirdStep() {
           <IcAlert />
           <StStrong>비밀번호가 다릅니다.</StStrong>
         </StLabelWrapper>
-        <StBtn>다음 계단</StBtn>
+        <StBtn type="button" onClick={goNextStep}>
+          다음 계단
+        </StBtn>
       </StFormWrapper>
     </StArticle>
   );
