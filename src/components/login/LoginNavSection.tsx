@@ -57,10 +57,10 @@ const StSection = styled.section<{ isAniTime: boolean }>`
   justify-content: center;
   align-items: center;
 
-  width: 480px; // 임의 px
+  width: 960px; // 임의 px
 
   background-color: ${({ theme }) => theme.colors.white500};
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 0 2rem 2rem 0;
 `;
 
 const StArticle = styled.article`

@@ -36,7 +36,7 @@ const StContent = styled.div`
   width: 20.5rem;
   height: 30rem;
 
-  border: 2px solid ${({ theme }) => theme.colors.white400};
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
   background-color: ${({ theme }) => theme.colors.white200};
 `;

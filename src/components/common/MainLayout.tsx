@@ -19,7 +19,7 @@ const StWrapper = styled.main`
 
   &::-webkit-scrollbar {
     background-color: transparent;
-    width: 8px;
+    width: 0.8rem;
   }
 
   &::-webkit-scrollbar-track {
@@ -27,8 +27,8 @@ const StWrapper = styled.main`
   }
 
   &::-webkit-scrollbar-thumb {
-    height: 100px;
-    border-radius: 16px;
+    height: 10rem;
+    border-radius: 1.6rem;
     background-color: ${({ theme }) => theme.colors.white500};
   }
 `;

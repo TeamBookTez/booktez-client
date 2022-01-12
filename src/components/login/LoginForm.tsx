@@ -49,7 +49,7 @@ const StInput = styled.input`
 
   background-color: ${({ theme }) => theme.colors.white200};
 
-  /* border: 2px solid ${({ theme }) => theme.colors.gray200}; */
+  /* border: 0.2rem solid ${({ theme }) => theme.colors.gray200}; */
   border-radius: 1rem;
 
   font-size: 1.8rem;
