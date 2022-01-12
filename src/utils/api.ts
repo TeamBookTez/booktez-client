@@ -6,3 +6,21 @@ export const client = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+const Kakao = axios.create({
+  baseURL: "https://dapi.kakao.com",
+  headers: {
+    Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}`,
+  },
+});
+
+interface Params {
+  query: string;
+  sort: string;
+  size: number;
+}
+
+// search book api
+export const bookSearch = (params: Params) => {
+  return Kakao.get("/v3/search/book", { params });
+};

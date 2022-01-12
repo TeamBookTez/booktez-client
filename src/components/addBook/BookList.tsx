@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
+import { BookInfo } from "./AddBookWrapper";
 import BookInfoWrapper from "./BookInfoWrapper";
 
-export default function BookList() {
+interface BookListProps {
+  books: BookInfo[];
+}
+
+export default function BookList(props: BookListProps) {
+  const { books } = props;
+
   return (
     <StListWrapper>
-      {/* map으로 여러개 불러오기 */}
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
-      <BookInfoWrapper />
+      {books.map((book: BookInfo, idx: number) => (
+        <BookInfoWrapper key={idx} book={book} />
+      ))}
     </StListWrapper>
   );
 }

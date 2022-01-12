@@ -1,21 +1,57 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { ImgTemp } from "../../assets/images";
+import { BookInfo } from "./AddBookWrapper";
 
-export default function BookInfoWrapper() {
+export default function BookInfoWrapper(props: { book: BookInfo }) {
+  const { book } = props;
+
+  const [bookInfo, setBookInfo] = useState<BookInfo>({
+    thumbnail: "",
+    title: "",
+    authors: [],
+    datetime: "",
+    contents: "",
+  });
+
+  const { thumbnail, title, authors, datetime, contents }: BookInfo = book;
+
+  const dateTimeString = bookInfo.datetime.toString();
+
+  const publishDate = {
+    year: dateTimeString.slice(0, 4),
+    month: dateTimeString.slice(5, 7),
+    date: dateTimeString.slice(8, 10),
+  };
+
+  useEffect(
+    () =>
+      setBookInfo((prev: BookInfo) => ({
+        ...prev,
+        thumbnail,
+        title,
+        authors,
+        datetime,
+        contents,
+      })),
+    [],
+  );
+
+  // console.log(bookInfo.datetime, typeof bookInfo.datetime);
+
   return (
     <StArticle>
-      <StImgTemp src={ImgTemp} alt="책 표지" />
+      <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
       <StInfoWrapper>
-        <InfoTitle>도서 제목</InfoTitle>
-        <InfoAuthor>저자명 | 출간일</InfoAuthor>
-        <InfoSummary>
-          북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
-          북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅
-          북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈
-          화이팅북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈
-          화이팅북스테어즈 화이팅 북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅북스테어즈 화이팅
-        </InfoSummary>
+        <InfoTitle>{bookInfo.title}</InfoTitle>
+        <InfoDetailWrapper>
+          <InfoDetail>{bookInfo.authors}</InfoDetail>
+          <DivideLine></DivideLine>
+          <InfoDetail>
+            {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
+          </InfoDetail>
+        </InfoDetailWrapper>
+        <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>
     </StArticle>
   );
@@ -30,7 +66,7 @@ const StArticle = styled.article`
   height: 20.1rem;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.white300};
+    background-color: #fff1eb;
     cursor: pointer;
   }
 `;
@@ -47,7 +83,7 @@ const StInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  padding: 1.5rem 0;
+  padding-top: 1.5rem;
 `;
 
 const InfoTitle = styled.strong`
@@ -56,10 +92,27 @@ const InfoTitle = styled.strong`
   line-height: 3.12rem;
 `;
 
-const InfoAuthor = styled.p`
+const InfoDetailWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  height: 2.1rem;
+`;
+
+const InfoDetail = styled.p`
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 2.08rem;
+  text-align: center;
+`;
+
+const DivideLine = styled.div`
+  margin: 0 1.2rem;
+
+  background-color: ${({ theme }) => theme.colors.white500};
+
+  width: 0.1rem;
+  height: 1.1rem;
 `;
 
 const InfoSummary = styled.p`
