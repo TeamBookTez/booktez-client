@@ -20,7 +20,9 @@ const StWrapper = styled.section`
   align-items: flex-end;
 
   width: 100%;
-  height: 36.9rem; // 임시
+  height: 34.2rem; // 임시
+
+  margin-bottom: 5.3rem;
   padding: 0 4rem;
 `;
 
