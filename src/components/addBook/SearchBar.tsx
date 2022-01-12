@@ -59,9 +59,6 @@ const InputSearch = styled.input`
 `;
 
 const StIcCancel = styled(IcCancel)`
-  width: 2.7rem;
-  height: 2.7rem;
-
   margin-right: 1.5rem;
 
   &:hover {
