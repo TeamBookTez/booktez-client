@@ -43,20 +43,22 @@ export default function LoginForm() {
 
   return (
     <StForm>
-      <StLabel>이메일</StLabel>
+      <StLabel htmlFor="loginEmail">이메일</StLabel>
       <StInputEmail
         placeholder="이메일을 입력해 주세요"
         type="text"
+        id="loginEmail"
         isEmailEmpty={isEmailEmpty}
         isEmailError={isEmailError}
         onChange={checkIsEmailEmpty}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
-      <StLabelPwd>비밀번호</StLabelPwd>
+      <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <StPwdWrapper>
         <StInputPwd
           placeholder="비밀번호를 입력해 주세요"
           type="password"
+          id="loginPwd"
           isPwdEmpty={isPwdEmpty}
           isPwdError={isPwdError}
           onChange={checkIsPwdEmpty}
