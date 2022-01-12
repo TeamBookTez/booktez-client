@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { BookProps } from "./BookList";
 
 export default function BookInfoWrapper({ book }: any) {
-  // console.log(book);
   const [bookInfo, setBookInfo] = useState<BookProps>({
     thumbnail: "",
     title: "",
