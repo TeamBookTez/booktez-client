@@ -8,7 +8,7 @@ export default function SecondStep() {
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
       <StFormWrapper>
         <StInput type="text" id="email" placeholder="닉네임을 입력해주세요" />
-        <AlertLabel>올바른 형식이 아닙니다.</AlertLabel>
+        <AlertLabel isError={true}>올바른 형식이 아닙니다.</AlertLabel>
         <StBtn>다음 계단</StBtn>
       </StFormWrapper>
     </>

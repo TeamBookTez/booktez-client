@@ -14,7 +14,7 @@ export default function FirstStep() {
       <StParagraph>당신의 이메일을 입력해 주세요.</StParagraph>
       <StFormWrapper>
         <StInput type="text" id="email" placeholder="이메일을 입력해주세요" />
-        <AlertLabel>올바른 형식이 아닙니다.</AlertLabel>
+        <AlertLabel isError={true}>올바른 형식이 아닙니다.</AlertLabel>
         <StBtn type="button" onClick={goNextStep}>
           다음 계단
         </StBtn>

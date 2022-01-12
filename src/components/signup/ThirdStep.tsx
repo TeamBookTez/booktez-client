@@ -11,10 +11,10 @@ export default function ThirdStep() {
         <StLabelWrapper />
 
         <StInput type="text" id="email" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
-        <AlertLabel>비밀번호 형식 에러</AlertLabel>
+        <AlertLabel isError={true}>비밀번호 형식 에러</AlertLabel>
 
         <StInput type="text" id="email" placeholder="비밀번호를 확인해 주세요" />
-        <AlertLabel>비밀번호가 다릅니다.</AlertLabel>
+        <AlertLabel isError={true}>비밀번호가 다릅니다.</AlertLabel>
 
         <StBtn>다음 계단</StBtn>
       </StFormWrapper>

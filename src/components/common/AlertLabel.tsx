@@ -23,7 +23,7 @@ const StLabelWrapper = styled.label<{ isError: boolean }>`
   height: 2.4rem;
   margin-top: 1.6rem;
 
-  ${({ isError }) => (isError ? "display: none;" : "display: flex;")};
+  ${({ isError }) => (isError ? "display: flex;" : "display: none;")};
 `;
 
 const StAlert = styled(IcAlert)`
