@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 import { BookInfo } from "./AddBookWrapper";
 
-export default function BookInfoWrapper({ book }: any) {
+export default function BookInfoWrapper(props: { book: BookInfo }) {
+  const { book } = props;
   const [bookInfo, setBookInfo] = useState<BookInfo>({
     thumbnail: "",
     title: "",
@@ -17,7 +18,7 @@ export default function BookInfoWrapper({ book }: any) {
 
   useEffect(
     () =>
-      setBookInfo((prev: any) => ({
+      setBookInfo((prev: BookInfo) => ({
         ...prev,
         thumbnail,
         title,

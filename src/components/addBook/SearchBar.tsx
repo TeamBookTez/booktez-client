@@ -2,7 +2,11 @@ import styled from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 
-export default function SearchBar({ setQuery }: any) {
+interface SearchBarProps {
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+export default function SearchBar(props: SearchBarProps) {
+  const { setQuery } = props;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
