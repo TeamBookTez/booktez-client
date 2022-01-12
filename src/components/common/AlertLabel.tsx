@@ -20,7 +20,7 @@ export default function AlertLabel(props: Children) {
 const StLabelWrapper = styled.label`
   width: 100%;
   height: 2.4rem;
-  margin: 1.6rem 0;
+  margin-top: 1.6rem;
   display: flex;
 `;
 

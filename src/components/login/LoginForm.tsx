@@ -5,7 +5,13 @@ import { IcNoSight, IcSight } from "../../assets/icons";
 import { AlertLabel } from "../common";
 
 export default function LoginForm() {
+  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
+  const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [sightPwd, setSightPwd] = useState<boolean>(false);
+
+  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEmailEmpty(e.target.value === "");
+  };
 
   const toggleSightPwd = () => {
     setSightPwd((sightPwd) => !sightPwd);
@@ -14,7 +20,7 @@ export default function LoginForm() {
   return (
     <StForm>
       <StLabel>이메일</StLabel>
-      <StInput placeholder="이메일을 입력해 주세요" type="text" />
+      <StInput placeholder="이메일을 입력해 주세요" type="text" onChange={checkIsEmailEmpty} />
       <AlertLabel>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd>비밀번호</StLabelPwd>
       <StPwdWrapper>
@@ -35,7 +41,7 @@ const StForm = styled.form`
 `;
 
 const StLabel = styled.label`
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.8rem;
 
   // 글꼴 설정
   font-size: 1.8rem;
@@ -50,7 +56,7 @@ const StInput = styled.input`
 
   background-color: ${({ theme }) => theme.colors.white200};
 
-  /* border: 2px solid ${({ theme }) => theme.colors.gray200}; */
+  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
   border-radius: 1rem;
 
   font-size: 1.8rem;
@@ -59,7 +65,7 @@ const StInput = styled.input`
 `;
 
 const StLabelPwd = styled(StLabel)`
-  margin-top: 1.4rem;
+  margin: 3.2rem 0 1.2rem;
 `;
 
 const StInputPwd = styled(StInput)`
@@ -96,7 +102,7 @@ const StBtn = styled.button`
   align-items: center;
 
   height: 5.6rem;
-  margin-top: 3.4rem;
+  margin-top: 5.2rem;
 
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.orange100};
