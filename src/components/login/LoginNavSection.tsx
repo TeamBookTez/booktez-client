@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import { Button, NavHeader } from "../common";
 
@@ -38,10 +38,7 @@ export default function SignupNav(props: SignupNavProps) {
   );
 }
 
-const StSection = styled.section<{ isAniTime: boolean }>`
-  ${({ isAniTime }) => (isAniTime ? "animation: opentoleft 1s ease-in-out;" : "")};
-
-  @keyframes opentoleft {
+const opentoleft = keyframes`
     0% {
       opacity: 1;
       transform: translateX(0);
@@ -50,7 +47,16 @@ const StSection = styled.section<{ isAniTime: boolean }>`
       opacity: 0;
       transform: translateX(-20em);
     }
-  }
+`;
+
+const StSection = styled.section<{ isAniTime: boolean }>`
+  ${({ isAniTime }) =>
+    isAniTime
+      ? css`
+          animation: ${opentoleft} 1s ease-in-out;
+        `
+      : ""};
+
   position: relative;
 
   display: flex;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import { NavHeader } from "../components/common";
 
@@ -13,19 +13,37 @@ export default function Layout() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
   const { state } = useLocation();
 
-  useEffect(() => {
-    console.log("isAniTime", isAniTime);
-  }, [isAniTime]);
+  const handleIsAniTime = (isActive: boolean) => {
+    setIsAniTime(isActive);
+  };
 
   return (
     <>
       <NavHeader logocolor="#242424" />
       <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
-        <Outlet context={[isAniTime, setIsAniTime]} />
+        <Outlet context={[handleIsAniTime]} />
       </StMain>
     </>
   );
 }
+
+const fadein = keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+`;
+
+const fadeout = keyframes`
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+`;
 
 const StMain = styled.main<StMainProps>`
   width: 100%;
@@ -34,14 +52,16 @@ const StMain = styled.main<StMainProps>`
   align-items: center;
   justify-content: center;
 
-  ${({ isrightpath }) => (isrightpath ? "animation: fadein 1s ease-in-out;" : "")};
-  /* ${({ isAniTime }) => (isAniTime ? "animation: fadein 1s ease-in-out;" : "")} */
-  @keyframes fadein {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
+  ${({ isrightpath }) =>
+    isrightpath
+      ? css`
+          animation: ${fadein} 1s ease-in-out;
+        `
+      : ""};
+  ${({ isAniTime }) =>
+    isAniTime
+      ? css`
+          animation: ${fadeout} 1s ease-in-out;
+        `
+      : ""};
 `;

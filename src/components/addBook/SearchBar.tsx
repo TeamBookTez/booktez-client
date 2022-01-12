@@ -1,13 +1,23 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+export default function SearchBar(props: SearchBarProps) {
+  const { setQuery } = props;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const text = e.currentTarget.value;
+
+    setQuery(text);
+  };
+
   return (
     <StSearchBar>
       <SearchBarWrapper>
         <StIcSearch />
-        <InputSearch type="text" placeholder="책 제목 또는 지은이를 입력해주세요." />
+        <InputSearch onChange={handleChange} type="text" placeholder="책 제목 또는 지은이를 입력해주세요." />
         <StIcCancel />
       </SearchBarWrapper>
     </StSearchBar>
@@ -24,12 +34,13 @@ const SearchBarWrapper = styled.div`
   align-items: center;
 
   background-color: ${({ theme }) => theme.colors.white200};
-
+  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
   border-radius: 1rem;
 
   height: 5.6rem;
 
-  &:focus-within {
+  &:focus-within,
+  &:hover {
     border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
   }
 `;

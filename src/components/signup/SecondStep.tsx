@@ -1,9 +1,24 @@
+import { useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
 import { Button } from "../common";
 
 export default function SecondStep() {
+  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+
+  const nav = useNavigate();
+
+  useEffect(() => {
+    handleIsAniTime(false);
+  }, []);
+
+  const goNextStep = () => {
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
+  };
+
   return (
     <StArticle>
       <StStepWrapper>
@@ -23,7 +38,9 @@ export default function SecondStep() {
           <IcAlert />
           <StStrong>올바른 형식이 아닙니다.</StStrong>
         </StLabelWrapper>
-        <StNextStepBtn>다음 계단</StNextStepBtn>
+        <StNextStepBtn  type="button" onClick={goNextStep}>
+          다음 계단
+        </StNextStepBtn>
       </StFormWrapper>
     </StArticle>
   );
