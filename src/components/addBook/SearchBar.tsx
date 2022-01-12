@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
+import { LabelHidden } from "../common";
 
 export default function SearchBar() {
   return (
     <StWrapper>
       <SearchBarWrapper>
         <StIcSearch />
-        <InputSearch type="text" placeholder="책 제목 또는 지은이를 입력해주세요." />
+        <LabelHidden htmlFor="addBookSearch">검색</LabelHidden>
+        <InputSearch type="text" id="addBookSearch" placeholder="책 제목 또는 지은이를 입력해주세요." />
         <StIcCancel />
       </SearchBarWrapper>
     </StWrapper>

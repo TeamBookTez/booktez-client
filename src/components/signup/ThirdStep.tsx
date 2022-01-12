@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { AlertLabel, Input } from "../common";
+import { AlertLabel, Input, LabelHidden } from "../common";
 
 export default function ThirdStep() {
   return (
@@ -10,10 +10,12 @@ export default function ThirdStep() {
         <Input type="text" id="email" placeholder="blabla@google.com" />
         <StLabelWrapper />
 
-        <Input type="text" id="email" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
+        <LabelHidden htmlFor="signupPwd">이메일</LabelHidden>
+        <Input type="text" id="signupPwd" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
         <AlertLabel isError={true}>비밀번호 형식 에러</AlertLabel>
 
-        <Input type="text" id="email" placeholder="비밀번호를 확인해 주세요" />
+        <LabelHidden htmlFor="signupRePwd">이메일</LabelHidden>
+        <Input type="text" id="signupRePwd" placeholder="비밀번호를 확인해 주세요" />
         <AlertLabel isError={true}>비밀번호가 다릅니다.</AlertLabel>
 
         <StBtn>다음 계단</StBtn>

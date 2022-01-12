@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
-import { AlertLabel, Input } from "../common";
+import { AlertLabel, Input, LabelHidden } from "../common";
 
 export default function SecondStep() {
   return (
     <>
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
       <StFormWrapper>
-        <Input type="text" placeholder="닉네임을 입력해주세요" />
+        <LabelHidden htmlFor="signupNickname">닉네임</LabelHidden>
+        <Input type="text" id="signupNickname" placeholder="닉네임을 입력해주세요" />
         <AlertLabel isError={true}>올바른 형식이 아닙니다.</AlertLabel>
         <StBtn>다음 계단</StBtn>
       </StFormWrapper>
