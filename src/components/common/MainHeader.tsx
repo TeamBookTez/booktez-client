@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { Button } from "../common/styled/Button";
@@ -21,7 +21,9 @@ export default function MainHeader(props: MainHeaderProps) {
   return (
     <StHeader isBookcase={isBookcase}>
       <h2>{children}</h2>
-      <StLoginBtn isMypage={isMypage}>로그인</StLoginBtn>
+      <StLoginBtn isMypage={isMypage}>
+        <StLoginLink to="/login">로그인</StLoginLink>
+      </StLoginBtn>
     </StHeader>
   );
 }
@@ -50,4 +52,13 @@ const StLoginBtn = styled(Button)<{ isMypage: string }>`
 
   // 임의 색
   color: ${({ theme }) => theme.colors.white};
+`;
+
+export const StLoginLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
 `;
