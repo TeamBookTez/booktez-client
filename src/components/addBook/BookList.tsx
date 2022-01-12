@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { BookProps } from "./AddBookWrapper";
+import { BookInfo } from "./AddBookWrapper";
 import BookInfoWrapper from "./BookInfoWrapper";
 
-export default function BookList(props: { books: BookProps[] }) {
+export default function BookList(props: { books: BookInfo[] }) {
   const { books } = props;
 
   return (

@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { BookProps } from "./AddBookWrapper";
+import { BookInfo } from "./AddBookWrapper";
 
 export default function BookInfoWrapper({ book }: any) {
-  const [bookInfo, setBookInfo] = useState<BookProps>({
+  const [bookInfo, setBookInfo] = useState<BookInfo>({
     thumbnail: "",
     title: "",
     authors: [],
     datetime: "",
     contents: "",
   });
-  const { thumbnail, title, authors, datetime, contents }: BookProps = book;
+  const { thumbnail, title, authors, datetime, contents }: BookInfo = book;
 
   console.log(bookInfo);
 
