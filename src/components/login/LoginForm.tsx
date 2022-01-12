@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 
 import { IcNoSight, IcSight } from "../../assets/icons";
-import { AlertLabel } from "../common";
+import { AlertLabel, Input } from "../common";
 
 interface InputEmailProps {
   isEmailEmpty: boolean;
@@ -85,20 +85,7 @@ const StLabel = styled.label`
   letter-spacing: -0.1rem;
 `;
 
-const StInputEmail = styled.input<InputEmailProps>`
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-
-  font-size: 1.8rem;
-  letter-spacing: -0.01rem;
-  color: ${({ theme }) => theme.colors.gray100};
-
+const StInputEmail = styled(Input)<InputEmailProps>`
   ${({ isEmailEmpty }) =>
     isEmailEmpty
       ? ""
@@ -117,22 +104,7 @@ const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
 `;
 
-const StInputPwd = styled.input<InputPwdProps>`
-  /* 여기부터 */
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-
-  font-size: 1.8rem;
-  letter-spacing: -0.01rem;
-  color: ${({ theme }) => theme.colors.gray100};
-  /* 여기까지 StInputEmail 과 중복 */
-
+const StInputPwd = styled(Input)<InputPwdProps>`
   ${({ isPwdEmpty }) =>
     isPwdEmpty
       ? ""

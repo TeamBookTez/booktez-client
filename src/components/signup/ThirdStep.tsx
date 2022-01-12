@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
-import { AlertLabel } from "../common";
+import { AlertLabel, Input } from "../common";
 
 export default function ThirdStep() {
   return (
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StFormWrapper>
-        <StInput type="text" id="email" placeholder="blabla@google.com" />
+        <Input type="text" id="email" placeholder="blabla@google.com" />
         <StLabelWrapper />
 
-        <StInput type="text" id="email" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
+        <Input type="text" id="email" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
         <AlertLabel isError={true}>비밀번호 형식 에러</AlertLabel>
 
-        <StInput type="text" id="email" placeholder="비밀번호를 확인해 주세요" />
+        <Input type="text" id="email" placeholder="비밀번호를 확인해 주세요" />
         <AlertLabel isError={true}>비밀번호가 다릅니다.</AlertLabel>
 
         <StBtn>다음 계단</StBtn>
@@ -42,23 +42,6 @@ const StFormWrapper = styled.form`
   & > input:first-child::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
     font-weight: 400;
-  }
-`;
-
-const StInput = styled.input`
-  width: 46.4rem;
-  height: 5.4rem;
-  background-color: ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-  padding-left: 2rem;
-
-  /* 임의 폰트 */
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray100};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white500};
   }
 `;
 
