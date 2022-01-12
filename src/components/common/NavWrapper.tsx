@@ -10,10 +10,10 @@ export default function NavWrapper() {
   const defaultColor: string = theme.colors.white500;
   const highlightColor: string = theme.colors.orange100;
 
-  const getColor = (nav: string): string => {
+  const getColor = (nav: string, sub?: string): string => {
     let color;
 
-    if (pathname.startsWith(`/${nav}`)) {
+    if (pathname.startsWith(`/${nav}`) || pathname === sub) {
       color = highlightColor;
     } else {
       color = defaultColor;
@@ -32,15 +32,15 @@ export default function NavWrapper() {
               <IcHome fill={getColor("main")} />홈
             </StLink>
           </StItem>
-          <StItem color={getColor("bookcase")}>
+          <StItem color={getColor("bookcase", "/add-book")}>
             <StLink to="bookcase">
-              <IcBookcase fill={getColor("bookcase")} />
+              <IcBookcase fill={getColor("bookcase", "/add-book")} />
               서재
             </StLink>
           </StItem>
-          <StItem color={getColor("mypage")}>
+          <StItem color={getColor("my-page")}>
             <StLink to="my-page">
-              <IcMyPage fill={getColor("mypage")} />
+              <IcMyPage fill={getColor("my-page")} />
               마이페이지
             </StLink>
           </StItem>
@@ -63,7 +63,7 @@ const StSection = styled.section`
 `;
 
 const StNav = styled.nav`
-  position: fixed;
+  position: absolute;
   margin-top: 12.3rem;
   padding-left: 2.2rem;
   font-size: 1.6rem;

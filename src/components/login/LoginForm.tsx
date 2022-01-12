@@ -1,11 +1,41 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { IcNoSight, IcSight } from "../../assets/icons";
-import { Button } from "../common";
+import { AlertLabel, Button, Input } from "../common";
+
+interface InputEmailProps {
+  isEmailEmpty: boolean;
+  isEmailError: boolean;
+}
+
+interface InputPwdProps {
+  isPwdEmpty: boolean;
+  isPwdError: boolean;
+}
 
 export default function LoginForm() {
+  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
+  const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
+  const [isEmailError, setIsEmailError] = useState<boolean>(true);
+  const [isPwdError, setIsPwdError] = useState<boolean>(true);
   const [sightPwd, setSightPwd] = useState<boolean>(false);
+
+  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEmailEmpty(e.target.value === "");
+  };
+
+  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPwdEmpty(e.target.value === "");
+  };
+
+  const checkIsEmailError = () => {
+    setIsEmailError(true);
+  };
+
+  const checkIsPwdError = () => {
+    setIsPwdError(true);
+  };
 
   const toggleSightPwd = () => {
     setSightPwd((sightPwd) => !sightPwd);
@@ -13,14 +43,30 @@ export default function LoginForm() {
 
   return (
     <StForm>
-      <StLabel>이메일</StLabel>
-      <StInput placeholder="이메일을 입력해 주세요" type="text" />
-      <StLabel>비밀번호</StLabel>
+      <StLabel htmlFor="loginEmail">이메일</StLabel>
+      <StInputEmail
+        placeholder="이메일을 입력해 주세요"
+        type="text"
+        id="loginEmail"
+        isEmailEmpty={isEmailEmpty}
+        isEmailError={isEmailError}
+        onChange={checkIsEmailEmpty}
+      />
+      <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
+      <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <StPwdWrapper>
-        <StInputPwd placeholder="비밀번호를 입력해 주세요" type="password" />
+        <StInputPwd
+          placeholder="비밀번호를 입력해 주세요"
+          type="password"
+          id="loginPwd"
+          isPwdEmpty={isPwdEmpty}
+          isPwdError={isPwdError}
+          onChange={checkIsPwdEmpty}
+        />
         {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
       <StLoginBtn>로그인</StLoginBtn>
+      <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
     </StForm>
   );
 }
@@ -33,7 +79,7 @@ const StForm = styled.form`
 `;
 
 const StLabel = styled.label`
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.8rem;
 
   // 글꼴 설정
   font-size: 1.8rem;
@@ -41,23 +87,38 @@ const StLabel = styled.label`
   letter-spacing: -0.1rem;
 `;
 
-const StInput = styled.input`
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-  margin-bottom: 3.2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  /* border: 0.2rem solid ${({ theme }) => theme.colors.gray200}; */
-  border-radius: 1rem;
-
-  font-size: 1.8rem;
-  letter-spacing: -0.01rem;
-  color: ${({ theme }) => theme.colors.gray100};
+const StInputEmail = styled(Input)<InputEmailProps>`
+  ${({ isEmailEmpty }) =>
+    isEmailEmpty
+      ? ""
+      : css`
+          border-color: ${({ theme }) => theme.colors.gray200};
+        `};
+  ${({ isEmailError }) =>
+    isEmailError
+      ? css`
+          border-color: ${({ theme }) => theme.colors.red100};
+        `
+      : ""};
 `;
 
-const StInputPwd = styled(StInput)`
+const StLabelPwd = styled(StLabel)`
+  margin: 3.2rem 0 1.2rem;
+`;
+
+const StInputPwd = styled(Input)<InputPwdProps>`
+  ${({ isPwdEmpty }) =>
+    isPwdEmpty
+      ? ""
+      : css`
+          border-color: ${({ theme }) => theme.colors.gray200};
+        `};
+  ${({ isPwdError }) =>
+    isPwdError
+      ? css`
+          border-color: ${({ theme }) => theme.colors.red100};
+        `
+      : ""};
   /* letter-spacing: 0.15rem; */
 `;
 

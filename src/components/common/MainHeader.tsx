@@ -1,8 +1,7 @@
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import theme from "../../styles/theme";
-import { Button } from "../common/Button";
+import { Button } from "../common/styled/Button";
 
 interface MainHeaderProps {
   children: string;
@@ -10,17 +9,17 @@ interface MainHeaderProps {
 }
 
 interface StHeaderProps {
-  color: string;
   isBookcase: string;
 }
 
-export default function MainHeader({ children, color = theme.colors.gray100 }: MainHeaderProps) {
+export default function MainHeader(props: MainHeaderProps) {
+  const { children } = props;
   const { pathname } = useLocation();
   const isBookcase = pathname.startsWith("/bookcase") ? "0.4rem" : "3.5rem";
   const isMypage = pathname.startsWith("/my-page") ? "none" : "block";
 
   return (
-    <StHeader color={color} isBookcase={isBookcase}>
+    <StHeader isBookcase={isBookcase}>
       <h2>{children}</h2>
       <StLoginBtn isMypage={isMypage}>로그인</StLoginBtn>
     </StHeader>
@@ -36,7 +35,7 @@ const StHeader = styled.header<StHeaderProps>`
   font-size: 3rem;
   font-weight: bold;
   line-height: 4.3rem;
-  color: ${(props) => props.color};
+  color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StLoginBtn = styled(Button)<{ isMypage: string }>`
