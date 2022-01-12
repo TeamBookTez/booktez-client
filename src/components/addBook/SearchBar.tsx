@@ -34,7 +34,7 @@ const SearchBarWrapper = styled.div`
   align-items: center;
 
   background-color: ${({ theme }) => theme.colors.white200};
-
+  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
   border-radius: 1rem;
 
   height: 5.6rem;
