@@ -8,8 +8,8 @@ export default function TopContent() {
   return (
     <StWrapper>
       <TopBanner />
-      {/* <StLoginButton>로그인</StLoginButton> */}
-      <StLogoutBtn>로그아웃</StLogoutBtn>
+      <StLoginButton>로그인</StLoginButton>
+      {/* <StLogoutBtn>로그아웃</StLogoutBtn> */}
     </StWrapper>
   );
 }
@@ -24,18 +24,15 @@ const StWrapper = styled.section`
   padding: 0 4rem;
 `;
 
-// const StLoginButton = styled(Button)`
-//   width: 12rem;
-//   height: 4.6rem;
-
-//   border-radius: 0.8rem;
-// `;
-
-const StLogoutBtn = styled(Button)`
-  width: 13.5rem;
+const StLoginButton = styled(Button)`
   height: 4.6rem;
 
-  border-radius: 0.8rem;
+  padding: 0 3.75rem;
 
-  background-color: ${({ theme }) => theme.colors.gray300};
+  border-radius: 0.8rem;
 `;
+
+// 분기 처리 필요
+// const StLogoutBtn = styled(StLoginButton)`
+//   background-color: ${({ theme }) => theme.colors.gray300};
+// `;
