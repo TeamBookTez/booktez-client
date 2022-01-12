@@ -46,6 +46,27 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  input:focus::-webkit-input-placeholder, 
+  textarea:focus::-webkit-input-placeholder { 
+    /* WebKit browsers */ 
+    color:transparent; 
+  } 
+  input:focus:-moz-placeholder, 
+  textarea:focus:-moz-placeholder { 
+    /* Mozilla Firefox 4 to 18 */ 
+    color:transparent; 
+  } 
+  input:focus::-moz-placeholder, 
+  textarea:focus::-moz-placeholder { 
+    /* Mozilla Firefox 19+ */ 
+    color:transparent; 
+  } 
+  input:focus:-ms-input-placeholder, 
+  textarea:focus:-ms-input-placeholder {
+    /* Internet Explorer 10+ */ 
+    color:transparent; 
+  }
+
   button {
     padding: 0;
     cursor: pointer;
