@@ -10,7 +10,7 @@ export default function NoCards() {
         <StImg src={ImgEmptyBooks} alt="아직 읽은 책이 없어요" />
         <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
         <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>
-        <StMiddleButton>+ 책 추가</StMiddleButton>
+        <StAddBookBtn>+ 책 추가</StAddBookBtn>
       </StArticleWrapper>
     </StSection>
   );
@@ -58,9 +58,9 @@ const StCardDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
-const StMiddleButton = styled(Button)`
-  width: 17.5rem;
-  height: 4.5rem;
+const StAddBookBtn = styled(Button)`
+  width: 13.7rem;
+  height: 4.6rem;
 
-  font-size: 1.6rem;
+  border-radius: 1rem;
 `;

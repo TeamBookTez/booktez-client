@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
+import { Button } from "../common";
 
 export default function SecondStep() {
   return (
@@ -22,7 +23,7 @@ export default function SecondStep() {
           <IcAlert />
           <StStrong>올바른 형식이 아닙니다.</StStrong>
         </StLabelWrapper>
-        <StBtn>다음 계단</StBtn>
+        <StNextStepBtn>다음 계단</StNextStepBtn>
       </StFormWrapper>
     </StArticle>
   );
@@ -120,17 +121,13 @@ const StLabelWrapper = styled.label`
   }
 `;
 
-const StBtn = styled.button`
+const StNextStepBtn = styled(Button)`
   width: 46.4rem;
   height: 5.4rem;
-  background-color: ${({ theme }) => theme.colors.white400};
-  border-radius: 1rem;
+
   margin-top: 5rem;
 
-  /* 임의 폰트 */
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray300};
+  border-radius: 1rem;
 `;
 
 const StStrong = styled.strong`

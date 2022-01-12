@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcNoSight, IcSight } from "../../assets/icons";
+import { Button } from "../common";
 
 export default function LoginForm() {
   const [sightPwd, setSightPwd] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export default function LoginForm() {
         <StInputPwd placeholder="비밀번호를 입력해 주세요" type="password" />
         {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
-      <StBtn>로그인</StBtn>
+      <StLoginBtn>로그인</StLoginBtn>
     </StForm>
   );
 }
@@ -84,17 +85,13 @@ const StIcSight = styled(IcSight)`
   }
 `;
 
-const StBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+const StLoginBtn = styled(Button)`
+  width: 46.4rem;
   height: 5.6rem;
+
   margin-top: 2rem;
 
   border-radius: 1rem;
-  background-color: ${({ theme }) => theme.colors.orange100};
 
-  font-size: 1.8rem;
-  color: ${({ theme }) => theme.colors.white};
+  // background 색상은 active 여부에 따라 변경하면 됨.
 `;

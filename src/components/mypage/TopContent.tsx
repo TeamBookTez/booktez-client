@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Button } from "../common";
 import TopBanner from "./TopBanner";
 
 export default function TopContent() {
   return (
     <StWrapper>
       <TopBanner />
-      <StGrayButton>로그인</StGrayButton>
+      {/* <StLoginButton>로그인</StLoginButton> */}
+      <StLogoutBtn>로그아웃</StLogoutBtn>
     </StWrapper>
   );
 }
@@ -22,22 +24,18 @@ const StWrapper = styled.section`
   padding: 0 4rem;
 `;
 
-const StGrayButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const StLoginButton = styled(Button)`
+//   width: 12rem;
+//   height: 4.6rem;
 
-  width: 16.6rem;
-  height: 4.2rem;
+//   border-radius: 0.8rem;
+// `;
+
+const StLogoutBtn = styled(Button)`
+  width: 13.5rem;
+  height: 4.6rem;
 
   border-radius: 0.8rem;
 
   background-color: ${({ theme }) => theme.colors.gray300};
-
-  font-family: Pretendard;
-  font-size: 1.4rem;
-  font-weight: 700;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
-  color: ${({ theme }) => theme.colors.white};
 `;

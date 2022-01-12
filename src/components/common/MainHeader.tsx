@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
+import { Button } from "../common/Button";
 
 interface MainHeaderProps {
   children: string;
@@ -20,14 +21,31 @@ export default function MainHeader({ children, color = theme.colors.gray100 }: M
   return (
     <StHeader color={color} isBookcase={isBookcase}>
       <h2>{children}</h2>
+      <StLoginBtn>로그인</StLoginBtn>
     </StHeader>
   );
 }
 
 const StHeader = styled.header<StHeaderProps>`
+  display: flex;
+  justify-content: space-between;
+
   margin: 3.5rem 4rem ${(props) => props.isBookcase} 4rem;
+
   font-size: 3rem;
   font-weight: bold;
   line-height: 4.3rem;
   color: ${(props) => props.color};
+`;
+
+const StLoginBtn = styled(Button)`
+  width: 12rem;
+  height: 4.6rem;
+
+  background-color: ${({ theme }) => theme.colors.gray100};
+
+  border-radius: 1rem;
+
+  // 임의 색
+  color: ${({ theme }) => theme.colors.white};
 `;
