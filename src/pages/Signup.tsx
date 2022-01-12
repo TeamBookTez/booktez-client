@@ -13,8 +13,7 @@ interface StMainProps {
 
 export default function Layout() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
-  const location = useLocation();
-  const { state, pathname } = location;
+  const { state, pathname } = useLocation();
 
   let imgSrc;
 

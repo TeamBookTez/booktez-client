@@ -87,13 +87,3 @@ const StBtn = styled.button`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray300};
 `;
-
-const StStrong = styled.strong`
-  display: flex;
-  align-items: center;
-  /* 임의 폰트 */
-  font-weight: 400;
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  color: ${({ theme }) => theme.colors.red100};
-`;
