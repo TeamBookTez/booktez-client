@@ -2,13 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button } from "../common";
+import { StLoginLink } from "../common/MainHeader";
 import TopBanner from "./TopBanner";
 
 export default function TopContent() {
   return (
     <StWrapper>
       <TopBanner />
-      <StLoginButton>로그인</StLoginButton>
+      <StLoginButton>
+        <StLoginLink to="/login">로그인</StLoginLink>
+      </StLoginButton>
       {/* <StLogoutBtn>로그아웃</StLogoutBtn> */}
     </StWrapper>
   );
