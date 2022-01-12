@@ -18,7 +18,7 @@ export default function AlertLabel(props: AlertLabelProps) {
   );
 }
 
-const StLabelWrapper = styled.label<{ isError: boolean }>`
+const StLabelWrapper = styled.p<{ isError: boolean }>`
   width: 100%;
   height: 2.4rem;
   margin-top: 1.6rem;
