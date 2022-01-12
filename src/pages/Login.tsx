@@ -1,20 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import LoginForm from "../components/login/LoginForm";
-import SignupNav from "../components/login/LoginNavSection";
+import { LoginForm, LoginNavSection } from "../components/login";
 
 export default function Login() {
-  const [isAni, setIsAni] = useState(false);
+  const [isAniTime, setIsAniTime] = useState(false);
 
   const handleAni = () => {
-    setIsAni(true);
+    setIsAniTime(true);
   };
 
   return (
     <StPageWrapper>
-      <SignupNav isAni={isAni} onAniChange={handleAni} />
-      <StMainWrapper isAni={isAni}>
+      <LoginNavSection isAniTime={isAniTime} onAniChange={handleAni} />
+      <StMainWrapper isAniTime={isAniTime}>
         <StArticle>
           <StH2>북스테어즈 로그인</StH2>
           <StH3>북테에 로그인 ~~~ 더 아랓난 독서법 ~~~ 즐기세요롱 오유유</StH3>
@@ -36,14 +35,14 @@ const StPageWrapper = styled.div`
   display: flex;
 `;
 
-const StMainWrapper = styled.main<{ isAni: boolean }>`
+const StMainWrapper = styled.main<{ isAniTime: boolean }>`
   width: 960px; //임의 px
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  ${({ isAni }) => (isAni ? "animation: opentoright 1s ease-in-out;" : "")};
+  ${({ isAniTime }) => (isAniTime ? "animation: opentoright 1s ease-in-out;" : "")};
   @keyframes opentoright {
     0% {
       opacity: 1;
