@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import { LoginForm, LoginNavSection } from "../components/login";
 
@@ -35,6 +35,18 @@ const StPageWrapper = styled.div`
   display: flex;
 `;
 
+const opentoright = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20em);
+  }
+
+`;
+
 const StMainWrapper = styled.main<{ isAniTime: boolean }>`
   width: 960px; //임의 px
 
@@ -42,17 +54,12 @@ const StMainWrapper = styled.main<{ isAniTime: boolean }>`
   justify-content: center;
   align-items: center;
 
-  ${({ isAniTime }) => (isAniTime ? "animation: opentoright 1s ease-in-out;" : "")};
-  @keyframes opentoright {
-    0% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    100% {
-      opacity: 0;
-      transform: translateX(20em);
-    }
-  }
+  ${({ isAniTime }) =>
+    isAniTime
+      ? css`
+          animation: ${opentoright} 1s ease-in-out;
+        `
+      : ""};
 `;
 
 const StArticle = styled.article`
