@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { AlertLabel, Input, LabelHidden } from "../common";
 
 export default function ThirdStep() {
+  const tempEmail = "bookstairs@sopt.com";
+
   return (
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StFormWrapper>
-        <Input type="text" id="email" placeholder="blabla@google.com" />
+        <StEmailFixed>{tempEmail}</StEmailFixed>
         <StLabelWrapper />
 
         <LabelHidden htmlFor="signupPwd">이메일</LabelHidden>
@@ -45,6 +47,25 @@ const StFormWrapper = styled.form`
     color: ${({ theme }) => theme.colors.gray300};
     font-weight: 400;
   }
+`;
+
+const StEmailFixed = styled.article`
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 5.4rem;
+  padding-left: 2rem;
+
+  background-color: ${({ theme }) => theme.colors.white400};
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
+  border-radius: 1rem;
+
+  /* 폰트 설정 */
+  font-size: 1.8rem;
+  letter-spacing: -0.01rem;
+  color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StLabelWrapper = styled.label`
