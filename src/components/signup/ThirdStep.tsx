@@ -10,14 +10,13 @@ export default function ThirdStep() {
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StFormWrapper>
         <StEmailFixed>{tempEmail}</StEmailFixed>
-        <StLabelWrapper />
 
         <LabelHidden htmlFor="signupPwd">이메일</LabelHidden>
-        <Input type="text" id="signupPwd" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
+        <InputPwd type="text" id="signupPwd" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
         <AlertLabel isError={true}>비밀번호 형식 에러</AlertLabel>
 
-        <LabelHidden htmlFor="signupRePwd">이메일</LabelHidden>
-        <Input type="text" id="signupRePwd" placeholder="비밀번호를 확인해 주세요" />
+        <LabelHidden htmlFor="signupPwdRe">이메일</LabelHidden>
+        <InputPwdRe type="text" id="signupPwdRe" placeholder="비밀번호를 확인해 주세요" />
         <AlertLabel isError={true}>비밀번호가 다릅니다.</AlertLabel>
 
         <StBtn>다음 계단</StBtn>
@@ -68,17 +67,12 @@ const StEmailFixed = styled.article`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StLabelWrapper = styled.label`
-  width: 100%;
-  height: 2.4rem;
-  margin: 1.6rem 0;
-  display: flex;
+const InputPwd = styled(Input)`
+  margin-top: 5.2rem;
+`;
 
-  & > svg {
-    height: 100%;
-    width: auto;
-    margin-right: 0.4rem;
-  }
+const InputPwdRe = styled(Input)`
+  margin-top: 2.4rem;
 `;
 
 const StBtn = styled.button`
@@ -86,7 +80,7 @@ const StBtn = styled.button`
   height: 5.4rem;
   background-color: ${({ theme }) => theme.colors.white400};
   border-radius: 1rem;
-  margin-top: 5rem;
+  margin-top: 7.2rem;
 
   /* 임의 폰트 */
   font-size: 1.8rem;
