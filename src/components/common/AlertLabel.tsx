@@ -2,26 +2,28 @@ import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
 
-interface Children {
+interface AlertLabelProps {
   children: string;
+  isError: boolean;
 }
 
-export default function AlertLabel(props: Children) {
-  const { children } = props;
+export default function AlertLabel(props: AlertLabelProps) {
+  const { children, isError } = props;
 
   return (
-    <StLabelWrapper>
+    <StLabelWrapper isError={isError}>
       <StAlert />
       <StStrong>{children}</StStrong>
     </StLabelWrapper>
   );
 }
 
-const StLabelWrapper = styled.label`
+const StLabelWrapper = styled.label<{ isError: boolean }>`
   width: 100%;
   height: 2.4rem;
   margin-top: 1.6rem;
-  display: flex;
+
+  ${({ isError }) => (isError ? "display: none;" : "display: flex;")};
 `;
 
 const StAlert = styled(IcAlert)`
