@@ -5,12 +5,19 @@ import { bookSearch } from "../../utils/api";
 import { MainHeader, MainLayout } from "../common";
 import BookList from "./BookList";
 import SearchBar from "./SearchBar";
+export interface BookProps {
+  thumbnail: string;
+  title: string;
+  authors: string[];
+  datetime: Date | string;
+  contents: string;
+}
 
 export default function AddBookWrapper() {
   const headerColor = theme.colors.orange100;
 
-  const [books, setBooks] = useState<any[]>([]);
-  const [query, setQuery] = useState("");
+  const [books, setBooks] = useState<BookProps[]>([]);
+  const [query, setQuery] = useState<string>("");
 
   const bookSearchHandler = async (query: string, reset: boolean) => {
     const params = {

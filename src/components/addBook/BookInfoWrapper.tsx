@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { BookProps } from "./BookList";
+import { BookProps } from "./AddBookWrapper";
 
 export default function BookInfoWrapper({ book }: any) {
   const [bookInfo, setBookInfo] = useState<BookProps>({
     thumbnail: "",
     title: "",
     authors: [],
-    datetime: new Date(),
+    datetime: "",
     contents: "",
   });
   const { thumbnail, title, authors, datetime, contents }: BookProps = book;
+
+  console.log(bookInfo);
 
   useEffect(
     () =>
@@ -26,7 +28,7 @@ export default function BookInfoWrapper({ book }: any) {
     [],
   );
 
-  console.log(bookInfo.datetime, typeof bookInfo.datetime);
+  // console.log(bookInfo.datetime, typeof bookInfo.datetime);
 
   return (
     <StArticle>
@@ -36,7 +38,7 @@ export default function BookInfoWrapper({ book }: any) {
         <div>
           <InfoAuthor>{bookInfo.authors}</InfoAuthor>
           <div>hi</div>
-          {/* <InfoAuthor>{bookInfo.datetime}</InfoAuthor> */}
+          <InfoAuthor>{bookInfo.datetime.toString()}</InfoAuthor>
         </div>
         <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>

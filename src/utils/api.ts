@@ -14,7 +14,13 @@ const Kakao = axios.create({
   },
 });
 
+interface Params {
+  query: string;
+  sort: string;
+  size: number;
+}
+
 // search book api
-export const bookSearch = (params: any) => {
+export const bookSearch = (params: Params) => {
   return Kakao.get("/v3/search/book", { params });
 };

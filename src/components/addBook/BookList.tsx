@@ -1,17 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { BookProps } from "./AddBookWrapper";
 import BookInfoWrapper from "./BookInfoWrapper";
 
-export interface BookProps {
-  thumbnail: string;
-  title: string;
-  authors: string[];
-  datetime: Date;
-  contents: string;
-}
+export default function BookList(props: { books: BookProps[] }) {
+  const { books } = props;
 
-export default function BookList({ books }: any) {
   return (
     <StListWrapper>
       {books.map((book: any, idx: number) => (
