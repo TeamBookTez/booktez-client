@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcNoSight, IcSight } from "../../assets/icons";
+import { AlertLabel } from "../common";
 
 export default function LoginForm() {
   const [sightPwd, setSightPwd] = useState<boolean>(false);
@@ -14,11 +15,13 @@ export default function LoginForm() {
     <StForm>
       <StLabel>이메일</StLabel>
       <StInput placeholder="이메일을 입력해 주세요" type="text" />
-      <StLabel>비밀번호</StLabel>
+      <AlertLabel>이멜 에러 경고 표시</AlertLabel>
+      <StLabelPwd>비밀번호</StLabelPwd>
       <StPwdWrapper>
         <StInputPwd placeholder="비밀번호를 입력해 주세요" type="password" />
         {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
+      <AlertLabel>비번 에러 경고 표시</AlertLabel>
       <StBtn>로그인</StBtn>
     </StForm>
   );
@@ -44,7 +47,6 @@ const StInput = styled.input`
   width: 100%;
   height: 5.4rem;
   padding-left: 2rem;
-  margin-bottom: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.white200};
 
@@ -54,6 +56,10 @@ const StInput = styled.input`
   font-size: 1.8rem;
   letter-spacing: -0.01rem;
   color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StLabelPwd = styled(StLabel)`
+  margin-top: 1.4rem;
 `;
 
 const StInputPwd = styled(StInput)`
@@ -90,7 +96,7 @@ const StBtn = styled.button`
   align-items: center;
 
   height: 5.6rem;
-  margin-top: 2rem;
+  margin-top: 3.4rem;
 
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.orange100};
