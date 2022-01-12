@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Button } from "../common";
+import { Button } from "../common/Button";
 
 export default function Banner() {
   return (
@@ -10,7 +10,7 @@ export default function Banner() {
         북스테이즈만의 독서법을 사용하여 책을 더욱 효율적으로 체험해보며 내가 가지고 있는 지식을 한계단 아뉘면 두계단
       </StContent>
       {/* button 재사용에 대해서 고민하기 */}
-      <StButton>독서 체험</StButton>
+      <StExBtn>적용 사례</StExBtn>
       <img alt="일러스트" />
     </StWrapper>
   );
@@ -42,13 +42,15 @@ const StContent = styled.p`
   letter-spacing: -0.1em;
 `;
 
-const StButton = styled(Button)`
-  border-radius: 2.1rem;
-  padding: 0.7rem 2.8rem;
-  background-color: ${({ theme }) => theme.colors.orange100};
+const StExBtn = styled(Button)`
+  width: 13.7rem;
+  height: 4.6rem;
 
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 1.4rem;
-  line-height: 1.3;
-  letter-spacing: -0.1em;
+  border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
+  border-radius: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+
+  // 임의 색
+  color: ${({ theme }) => theme.colors.gray300};
 `;

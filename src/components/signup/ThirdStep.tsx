@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcAlert } from "../../assets/icons";
+import { Button } from "../common";
 
 export default function ThirdStep() {
   const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
@@ -44,9 +45,9 @@ export default function ThirdStep() {
           <IcAlert />
           <StStrong>비밀번호가 다릅니다.</StStrong>
         </StLabelWrapper>
-        <StBtn type="button" onClick={goNextStep}>
+        <StNextStepBtn type="button" onClick={goNextStep}>
           다음 계단
-        </StBtn>
+        </StNextStepBtn>
       </StFormWrapper>
     </StArticle>
   );
@@ -148,17 +149,13 @@ const StLabelWrapper = styled.label`
   }
 `;
 
-const StBtn = styled.button`
+const StNextStepBtn = styled(Button)`
   width: 46.4rem;
   height: 5.4rem;
-  background-color: ${({ theme }) => theme.colors.white400};
-  border-radius: 1rem;
+
   margin-top: 5rem;
 
-  /* 임의 폰트 */
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray300};
+  border-radius: 1rem;
 `;
 
 const StStrong = styled.strong`

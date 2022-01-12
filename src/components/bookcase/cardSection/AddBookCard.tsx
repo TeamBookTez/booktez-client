@@ -14,7 +14,7 @@ export default function AddBookCard() {
           </StImgWrapper>
           <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
           <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>
-          <StButton>+ 책 추가</StButton>
+          <StAddBookBtn>+ 책 추가</StAddBookBtn>
         </StContent>
       </StAddCard>
     </>
@@ -36,7 +36,7 @@ const StContent = styled.div`
   width: 20.5rem;
   height: 30rem;
 
-  border: 2px solid ${({ theme }) => theme.colors.white400};
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
   background-color: ${({ theme }) => theme.colors.white200};
 `;
@@ -67,12 +67,9 @@ const StCardDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
-const StButton = styled(Button)`
+const StAddBookBtn = styled(Button)`
   width: 10rem;
   height: 3.2rem;
-  border-radius: 0.8rem;
 
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: -0.1rem;
+  border-radius: 0.8rem;
 `;

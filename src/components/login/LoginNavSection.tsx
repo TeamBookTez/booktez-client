@@ -30,9 +30,9 @@ export default function SignupNav(props: SignupNavProps) {
         </StH3>
         {/* <img src="#" alt="북테즈 이미지" /> */}
         <StTempImg>이미지 칸</StTempImg>
-        <StGoSignupBtn type="button" onClick={handleGoSignupBtn}>
+        <StSignupBtn type="button" onClick={handleGoSignupBtn}>
           회원가입
-        </StGoSignupBtn>
+        </StSignupBtn>
       </StArticle>
     </StSection>
   );
@@ -63,10 +63,10 @@ const StSection = styled.section<{ isAniTime: boolean }>`
   justify-content: center;
   align-items: center;
 
-  width: 480px; // 임의 px
+  width: 960px; // 임의 px
 
   background-color: ${({ theme }) => theme.colors.white500};
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 0 2rem 2rem 0;
 `;
 
 const StArticle = styled.article`
@@ -113,13 +113,9 @@ const StTempImg = styled.div`
   background-color: white;
 `;
 
-const StGoSignupBtn = styled(Button)`
+const StSignupBtn = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
 
   border-radius: 1rem;
-
-  // 글꼴 설정
-  font-size: 1.8rem;
-  letter-spacing: -0.1rem;
 `;
