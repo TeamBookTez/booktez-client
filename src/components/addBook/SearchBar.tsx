@@ -11,17 +11,11 @@ export default function SearchBar(props: SearchBarProps) {
   const { setQuery } = props;
   const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
 
-  // const checkIsQueryEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setIsQueryEmpty(e.target.value === "");
-  // };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
     setQuery(text);
-    // checkIsQueryEmpty()
   };
-
-  // const cancelQuery = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
 
   return (
     <StWrapper>

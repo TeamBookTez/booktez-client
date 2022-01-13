@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Pretendard";
     font-weight: normal;
     font-style: normal;
-    src: url("/fonts/PretendardVariable.woff2") format("woff2");
+    src: local("/fonts/PretendardVariable.woff2") format("woff2");
   }
 
   html {
@@ -20,10 +20,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Pretendard;
     font-size: 62.5%;
   }
-
-  /* #root {
-   display: flex;
-  } */
 
   a {
     text-decoration: none;

@@ -98,4 +98,5 @@ const StItem = styled.li<{ color: string }>`
 const StLink = styled(Link)`
   display: flex;
   align-items: center;
+  ${({ theme }) => theme.fonts.body5};
 `;
