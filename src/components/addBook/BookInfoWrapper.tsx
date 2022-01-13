@@ -66,7 +66,7 @@ const StArticle = styled.article`
   height: 20.1rem;
 
   &:hover {
-    background-color: #fff1eb;
+    background-color: ${({ theme }) => theme.colors.orange200};
     cursor: pointer;
   }
 `;
