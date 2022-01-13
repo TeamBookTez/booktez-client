@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import { ImgNull } from "../../assets/images";
 import { BookInfo } from "./AddBookWrapper";
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
@@ -41,7 +42,11 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   return (
     <StArticle>
-      <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
+      {bookInfo.thumbnail ? (
+        <StThumbnail src={bookInfo.thumbnail} alt="책 표지" />
+      ) : (
+        <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+      )}
       <StInfoWrapper>
         <InfoTitle>{bookInfo.title}</InfoTitle>
         <InfoLabelWrapper>
@@ -71,11 +76,11 @@ const StArticle = styled.article`
   }
 `;
 
-const StImgTemp = styled.img`
+const StThumbnail = styled.img`
   margin-right: 1.6rem;
 
-  /* height: 100%; */
-  width: auto;
+  width: 12.1rem;
+  height: 16.9rem;
 `;
 
 const StInfoWrapper = styled.div`
