@@ -39,7 +39,6 @@ export default function InputPwd(props: InputPwdProps) {
 }
 
 const StPwdWrapper = styled.div`
-  width: 100%;
   position: relative;
 `;
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { AlertLabel, Button, Input, InputPwd, LabelHidden } from "../common";
+import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
 export default function ThirdStep() {
   const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();

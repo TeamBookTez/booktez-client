@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
 
@@ -30,6 +30,13 @@ export default function LoginForm() {
     setIsPwdSight((isPwdSight) => !isPwdSight);
   };
 
+  const handleLogin = () => {
+    if (isEmailEmpty || isPwdEmpty || isEmailError || isPwdError) return;
+    // 로그인 기능 구현 부분
+    // 메인에서 로그인 온 경우에는 메인으로,
+    // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
+  };
+
   return (
     <StForm>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
@@ -54,7 +61,12 @@ export default function LoginForm() {
         toggleSightPwd={toggleSightPwd}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
-      <StLoginBtn>로그인</StLoginBtn>
+      <StLoginBtn
+        type="button"
+        active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError}
+        onClick={handleLogin}>
+        로그인
+      </StLoginBtn>
     </StForm>
   );
 }
@@ -79,7 +91,7 @@ const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
 `;
 
-const StLoginBtn = styled(Button)`
+const StLoginBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.6rem;
 
@@ -87,5 +99,14 @@ const StLoginBtn = styled(Button)`
 
   border-radius: 1rem;
 
-  // background 색상은 active 여부에 따라 변경하면 됨.
+  ${({ active }) =>
+    active
+      ? ""
+      : css`
+          background-color: ${({ theme }) => theme.colors.white400}; // inactive
+          color: ${({ theme }) => theme.colors.gray300}; // inactive
+          &:hover {
+            cursor: default;
+          }
+        `}
 `;
