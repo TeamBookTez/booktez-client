@@ -87,18 +87,15 @@ const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
 `;
 
 const InputSearch = styled.input`
-  background-color: ${({ theme }) => theme.colors.white200};
-  color: ${({ theme }) => theme.colors.gray100};
-
   width: 100%;
   height: 100%;
 
+  background-color: ${({ theme }) => theme.colors.white200};
+
+  color: ${({ theme }) => theme.colors.gray100};
+  font: ${({ theme }) => theme.fonts.body3};
+
   &::placeholder {
-    /* 글꼴 설정 */
-    font-family: pretendard;
-    font-weight: 400;
-    font-size: 1.8rem;
-    line-height: 2.34rem;
     color: ${({ theme }) => theme.colors.gray400};
   }
 `;
