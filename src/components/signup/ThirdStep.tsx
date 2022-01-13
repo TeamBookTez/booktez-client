@@ -94,8 +94,8 @@ export default function ThirdStep() {
 
 const StParagraph = styled.p`
   margin-bottom: 5.2rem;
-  /* 임의 폰트 */
-  font-size: 2rem;
+
+  ${({ theme }) => theme.fonts.body0}
 `;
 
 const StFormWrapper = styled.form`
@@ -128,9 +128,7 @@ const StEmailFixed = styled.article`
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1rem;
 
-  /* 폰트 설정 */
-  font-size: 1.8rem;
-  letter-spacing: -0.01rem;
+  ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
@@ -152,6 +150,8 @@ const StNextStepBtn = styled(Button)<{ active: boolean }>`
   margin-top: 7.2rem;
 
   border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 
   ${({ active }) =>
     active

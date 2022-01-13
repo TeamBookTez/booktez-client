@@ -53,8 +53,8 @@ export default function SecondStep() {
 
 const StParagraph = styled.p`
   margin-bottom: 5.2rem;
-  /* 임의 폰트 */
-  font-size: 2rem;
+
+  ${({ theme }) => theme.fonts.body0}
 `;
 
 const StFormWrapper = styled.form`
@@ -70,6 +70,8 @@ const StNextStepBtn = styled(Button)<{ active: boolean }>`
   margin-top: 5rem;
 
   border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 
   ${({ active }) =>
     active

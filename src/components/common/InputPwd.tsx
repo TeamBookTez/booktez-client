@@ -52,8 +52,7 @@ const StInputPwd = styled.input<StInputPwdProps>`
   border: 0.2rem solid ${({ theme }) => theme.colors.white200};
   border-radius: 1rem;
 
-  font-size: 1.8rem;
-  letter-spacing: -0.01rem;
+  ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray100};
 
   ${({ ispwdempty }) =>

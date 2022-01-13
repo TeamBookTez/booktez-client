@@ -16,7 +16,11 @@ export default function Login() {
       <StMainWrapper isAniTime={isAniTime}>
         <StArticle>
           <StH2>북스테어즈 로그인</StH2>
-          <StH3>북테에 로그인 ~~~ 더 아랓난 독서법 ~~~ 즐기세요롱 오유유</StH3>
+          <StH3>
+            북테에 로그인 ~~~ 더 아랓난 독서법 ~~~
+            <br />
+            즐기세요롱 오유유
+          </StH3>
           <LoginForm />
           <StContact>
             이메일/비밀번호를 잊어버리셨나요?
@@ -76,24 +80,16 @@ const StH2 = styled.h2`
 
   text-align: center;
 
-  // 글꼴 설정
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.header0}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StH3 = styled.h3`
-  width: 33rem;
   margin-bottom: 5.2rem;
 
   text-align: center;
 
-  // 글꼴 설정
-  font-size: 1.8rem;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.body2}
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
@@ -102,9 +98,6 @@ const StContact = styled.p`
 
   text-align: center;
 
-  // 글꼴 설정
-  font-size: 1.6rem;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.body6}
   color: ${({ theme }) => theme.colors.gray100};
 `;

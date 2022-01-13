@@ -22,7 +22,10 @@ export default function SignupNav(props: SignupNavProps) {
     <StSection isAniTime={isAniTime}>
       <NavHeader logocolor={"#242424"} />
       <StArticle>
-        <StH2>북스테어즈에 오신 걸 환영합니다아ㅏㅇ</StH2>
+        <StH2>
+          북스테어즈에 오신 걸<br />
+          환영합니다아ㅏㅇ
+        </StH2>
         <StH3>
           북테즈와 함께 똑또또칸 사람이 되어보아용
           <br />
@@ -79,14 +82,8 @@ const StArticle = styled.article`
 const StH2 = styled.h2`
   margin-bottom: 1.6rem;
 
+  ${({ theme }) => theme.fonts.header0}
   text-align: center;
-
-  // 글꼴 설정
-  width: 23.7rem;
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
@@ -95,11 +92,7 @@ const StH3 = styled.h3`
 
   text-align: center;
 
-  // 글꼴 설정
-  width: 29.4rem;
-  font-size: 1.8rem;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.body2}
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
@@ -118,4 +111,6 @@ const StSignupBtn = styled(Button)`
   height: 5.6rem;
 
   border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 `;

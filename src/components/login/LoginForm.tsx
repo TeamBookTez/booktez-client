@@ -78,10 +78,7 @@ const StForm = styled.form`
 const StLabel = styled.label`
   margin-bottom: 1.8rem;
 
-  // 글꼴 설정
-  font-size: 1.8rem;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.body1}
 `;
 
 const StLabelPwd = styled(StLabel)`
@@ -95,6 +92,8 @@ const StLoginBtn = styled(Button)<{ active: boolean }>`
   margin-top: 5.6rem;
 
   border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 
   ${({ active }) =>
     active
