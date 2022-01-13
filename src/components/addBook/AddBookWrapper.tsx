@@ -20,14 +20,14 @@ export default function AddBookWrapper() {
   const [query, setQuery] = useState<string>("");
 
   const bookSearchHandler = async (query: string, reset: boolean) => {
-    const params = {
+    const paramsAPI = {
       query,
       sort: "accuracy",
       // page: 1,
       size: 15,
     };
 
-    const { data } = await bookSearch(params);
+    const { data } = await bookSearch(paramsAPI);
 
     if (reset) {
       setBooks(data.documents);
