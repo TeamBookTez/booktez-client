@@ -5,6 +5,7 @@ import { bookSearch } from "../../utils/api";
 import { MainHeader, MainLayout } from "../common";
 import BookList from "./BookList";
 import SearchBar from "./SearchBar";
+
 export interface BookInfo {
   thumbnail: string;
   title: string;
