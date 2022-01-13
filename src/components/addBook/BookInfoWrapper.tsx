@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
 import { BookInfo } from "../../pages/AddBook";
+import ModalBookInfo from "./ModalBookInfo";
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
@@ -14,10 +15,14 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     translators: [],
     datetime: "",
     contents: "",
+    isbn: "",
   });
 
-  const { thumbnail, title, authors, translators, datetime, contents }: BookInfo = book;
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
+
+  console.log(authors);
   const dateTimeString = bookInfo.datetime.toString();
 
   const publishDate = {
@@ -25,6 +30,10 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     month: dateTimeString.slice(5, 7),
     date: dateTimeString.slice(8, 10),
   };
+
+  const handleToggleModal = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal]);
 
   useEffect(
     () =>
@@ -42,23 +51,45 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
   // console.log(bookInfo.datetime, typeof bookInfo.datetime);
 
   return (
-    <StArticle>
-      {bookInfo.thumbnail ? (
-        <StThumbnail src={bookInfo.thumbnail} alt="책 표지" />
+    <StArticle onClick={handleToggleModal}>
+      {thumbnail ? (
+        <StThumbnail src={thumbnail} alt="책 표지" />
       ) : (
         <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
       )}
       <StInfoWrapper>
-        <InfoTitle>{bookInfo.title}</InfoTitle>
+        <InfoTitle>{title}</InfoTitle>
         <InfoLabelWrapper>
-          <InfoLabel>{bookInfo.authors}</InfoLabel>
+          <InfoLabel>{authors}</InfoLabel>
           <DivideLine></DivideLine>
           <InfoLabel>
             {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
           </InfoLabel>
         </InfoLabelWrapper>
-        <InfoSummary>{bookInfo.contents}</InfoSummary>
+        <InfoSummary>{contents}</InfoSummary>
       </StInfoWrapper>
+      {openModal && (
+        <ModalBookInfo handleToggleModal={handleToggleModal}>
+          {thumbnail ? (
+            <ModalThumbnail src={thumbnail} alt="책 표지" />
+          ) : (
+            <ModalThumbnail src={ImgNull} alt="책 표지" />
+          )}
+          <ModalTitle>{title}</ModalTitle>
+          <ModalLabelWrapper>
+            <ModalLabel>{authors} </ModalLabel>
+            {translators.length > 0 && (
+              <ModalLabel>
+                <span> | </span>
+                {translators}
+              </ModalLabel>
+            )}
+          </ModalLabelWrapper>
+          <ModalDate>
+            {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
+          </ModalDate>
+        </ModalBookInfo>
+      )}
     </StArticle>
   );
 }
@@ -127,4 +158,36 @@ const InfoSummary = styled.p`
 
   overflow: hidden;
   max-height: 8.1rem;
+`;
+
+const ModalThumbnail = styled.img`
+  width: 20.5rem;
+  height: 30rem;
+
+  margin-bottom: 3.5rem;
+`;
+
+const ModalTitle = styled.strong`
+  margin-bottom: 0.5rem;
+
+  font: ${({ theme }) => theme.fonts.header0};
+`;
+
+const ModalLabelWrapper = styled.div`
+  display: flex;
+  margin-bottom: 2.1rem;
+`;
+
+const ModalLabel = styled.p`
+  color: ${({ theme }) => theme.colors.gray400};
+  font: ${({ theme }) => theme.fonts.body0};
+
+  & > span {
+    margin-left: 0.2em;
+  }
+`;
+
+const ModalDate = styled.p`
+  color: ${({ theme }) => theme.colors.white500};
+  font: ${({ theme }) => theme.fonts.body2};
 `;

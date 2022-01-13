@@ -12,6 +12,7 @@ export interface BookInfo {
   translators: string[];
   datetime: Date | string;
   contents: string;
+  isbn: string;
 }
 
 export default function AddBook() {
