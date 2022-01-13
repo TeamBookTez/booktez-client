@@ -34,6 +34,8 @@ const StLoginButton = styled(Button)`
   padding: 0 3.75rem;
 
   border-radius: 0.8rem;
+
+  ${({ theme }) => theme.fonts.button2};
 `;
 
 // 분기 처리 필요

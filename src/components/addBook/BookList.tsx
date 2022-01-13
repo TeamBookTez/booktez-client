@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { BookInfo } from "./AddBookWrapper";
+import { BookInfo } from "../../pages/AddBook";
 import BookInfoWrapper from "./BookInfoWrapper";
 
 interface BookListProps {
