@@ -50,7 +50,7 @@
         // next : 다음에 무엇이 왔을때 blankLine을 넣을 것인가?  // return
         // 팀원들과 구체적으로 상의하기 - 근데 이거 너무 신경쓰지 않고 recommend 사용해도 될 듯!
         "react-hooks/rules-of-hooks": "error",          // Checks rules of Hooks
-		"react-hooks/exhaustive-deps": "warn",          // Checks effect dependencies
+		"react-hooks/exhaustive-deps": "off",          // Checks effect dependencies
         "react/react-in-jsx-scope": "off",              // import React from "react"가 필수였던 시기에 필요한 규칙
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",

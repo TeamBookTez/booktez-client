@@ -20,7 +20,7 @@ export default function MainHeader(props: MainHeaderProps) {
 
   return (
     <StHeader isBookcase={isBookcase}>
-      <h2>{children}</h2>
+      <StHeading2>{children}</StHeading2>
       <StLoginBtn isMypage={isMypage}>
         <StLoginLink to="/login">로그인</StLoginLink>
       </StLoginBtn>
@@ -33,11 +33,11 @@ const StHeader = styled.header<StHeaderProps>`
   justify-content: space-between;
 
   margin: 3.5rem 4rem ${(props) => props.isBookcase} 4rem;
-
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 4.3rem;
   color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StHeading2 = styled.h2`
+  ${({ theme }) => theme.fonts.header0}
 `;
 
 const StLoginBtn = styled(Button)<{ isMypage: string }>`
@@ -51,6 +51,7 @@ const StLoginBtn = styled(Button)<{ isMypage: string }>`
   border-radius: 1rem;
 
   // 임의 색
+  ${({ theme }) => theme.fonts.button}
   color: ${({ theme }) => theme.colors.white};
 `;
 
