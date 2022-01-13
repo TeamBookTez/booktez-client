@@ -9,9 +9,8 @@ export default function Banner() {
       <StContent>
         북스테이즈만의 독서법을 사용하여 책을 더욱 효율적으로 체험해보며 내가 가지고 있는 지식을 한계단 아뉘면 두계단
       </StContent>
-      {/* button 재사용에 대해서 고민하기 */}
       <StExBtn>적용 사례</StExBtn>
-      <img alt="일러스트" />
+      {/* <img alt="일러스트" /> */}
     </StWrapper>
   );
 }
@@ -19,8 +18,8 @@ export default function Banner() {
 const StWrapper = styled.section`
   margin: 0 4rem;
   border-radius: 2rem;
-  padding: 6rem 0 4.7rem 7.2rem;
-  background-color: #f7f5f3;
+  padding: 4.4rem 0 4rem 7.2rem;
+  background-color: ${({ theme }) => theme.colors.white200};
   /* width: 118.4rem;
   height: 27.4rem; */
 `;
