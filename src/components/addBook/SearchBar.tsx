@@ -58,7 +58,7 @@ const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
 
   &:focus-within,
   &:hover {
-    border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
+    border-color: ${({ theme }) => theme.colors.gray100};
   }
 
   ${({ isQueryEmpty }) =>
@@ -91,7 +91,7 @@ const InputSearch = styled.input`
   color: ${({ theme }) => theme.colors.gray100};
 
   width: 100%;
-  height: 1.8rem;
+  height: 100%;
 
   &::placeholder {
     /* 글꼴 설정 */
