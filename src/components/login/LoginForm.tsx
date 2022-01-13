@@ -61,10 +61,7 @@ export default function LoginForm() {
         toggleSightPwd={toggleSightPwd}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
-      <StLoginBtn
-        type="button"
-        active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError}
-        onClick={handleLogin}>
+      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError} onClick={handleLogin}>
         로그인
       </StLoginBtn>
     </StForm>

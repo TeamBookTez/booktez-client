@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
@@ -20,6 +20,7 @@ export default function ThirdStep() {
   }, []);
 
   const goNextStep = () => {
+    if (isPwdEmpty || isPwdReEmpty || isPwdError || isPwdReError) return;
     handleIsAniTime(true);
     setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
   };
@@ -80,7 +81,10 @@ export default function ThirdStep() {
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
-        <StNextStepBtn type="button" onClick={goNextStep}>
+        <StNextStepBtn
+          type="button"
+          active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError}
+          onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StFormWrapper>
@@ -141,12 +145,22 @@ const StInputPwdReWrapper = styled.div`
   margin-top: 2.4rem;
 `;
 
-const StNextStepBtn = styled(Button)`
+const StNextStepBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
-  background-color: ${({ theme }) => theme.colors.white400};
-  border-radius: 1rem;
+
   margin-top: 7.2rem;
 
   border-radius: 1rem;
+
+  ${({ active }) =>
+    active
+      ? ""
+      : css`
+          background-color: ${({ theme }) => theme.colors.white400}; // inactive
+          color: ${({ theme }) => theme.colors.gray300}; // inactive
+          &:hover {
+            cursor: default;
+          }
+        `}
 `;

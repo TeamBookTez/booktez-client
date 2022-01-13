@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
@@ -15,6 +15,8 @@ export default function SecondStep() {
   }, []);
 
   const goNextStep = () => {
+    if (isNicknameEmpty || isNicknameError) return;
+
     handleIsAniTime(true);
     setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
   };
@@ -41,7 +43,7 @@ export default function SecondStep() {
           checkIsEmpty={checkIsNicknameEmpty}
         />
         <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
-        <StNextStepBtn type="button" onClick={goNextStep}>
+        <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StFormWrapper>
@@ -61,11 +63,22 @@ const StFormWrapper = styled.form`
   align-items: center;
 `;
 
-const StNextStepBtn = styled(Button)`
+const StNextStepBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
   margin-top: 5rem;
 
   border-radius: 1rem;
+
+  ${({ active }) =>
+    active
+      ? ""
+      : css`
+          background-color: ${({ theme }) => theme.colors.white400}; // inactive
+          color: ${({ theme }) => theme.colors.gray300}; // inactive
+          &:hover {
+            cursor: default;
+          }
+        `}
 `;
