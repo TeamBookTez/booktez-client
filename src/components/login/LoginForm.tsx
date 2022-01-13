@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { IcNoSight, IcSight } from "../../assets/icons";
 import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
 
 export default function LoginForm() {
@@ -44,18 +43,16 @@ export default function LoginForm() {
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
-      <StPwdWrapper>
-        <InputPwd
-          whatPlaceholder="비밀번호를 입력해 주세요"
-          whatType={isPwdSight ? "text" : "password"}
-          whatId="loginPwd"
-          isEmpty={isPwdEmpty}
-          isError={isPwdError}
-          isPwdSight={isPwdSight}
-          checkIsEmpty={checkIsPwdEmpty}
-        />
-        {isPwdSight ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
-      </StPwdWrapper>
+      <InputPwd
+        whatPlaceholder="비밀번호를 입력해 주세요"
+        whatType={isPwdSight ? "text" : "password"}
+        whatId="loginPwd"
+        isEmpty={isPwdEmpty}
+        isError={isPwdError}
+        isPwdSight={isPwdSight}
+        checkIsEmpty={checkIsPwdEmpty}
+        toggleSightPwd={toggleSightPwd}
+      />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
       <StLoginBtn>로그인</StLoginBtn>
     </StForm>
@@ -80,30 +77,6 @@ const StLabel = styled.label`
 
 const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
-`;
-
-const StPwdWrapper = styled.div`
-  position: relative;
-`;
-
-const StIcNoSight = styled(IcNoSight)`
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const StIcSight = styled(IcSight)`
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const StLoginBtn = styled(Button)`

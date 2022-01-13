@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { AlertLabel, Button, Input, LabelHidden } from "../common";
+import { AlertLabel, Button, Input, InputEmail, LabelHidden } from "../common";
 
 export default function FirstStep() {
   const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
-
+  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
+  const [isEmailError, setIsEmailError] = useState<boolean>(true);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -18,13 +19,28 @@ export default function FirstStep() {
     setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
   };
 
+  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEmailEmpty(e.target.value === "");
+  };
+
+  const checkIsEmailError = () => {
+    setIsEmailError(true);
+  };
+
   return (
     <>
       <StParagraph>당신의 이메일을 입력해 주세요.</StParagraph>
       <StFormWrapper>
         <LabelHidden htmlFor="signupEmail">이메일</LabelHidden>
-        <Input type="text" id="signupEmail" placeholder="이메일을 입력해주세요" />
-        <AlertLabel isError={true}>올바른 형식이 아닙니다.</AlertLabel>
+        <InputEmail
+          whatPlaceholder="이메일을 입력해 주세요"
+          whatType="text"
+          whatId="signupEmail"
+          isEmpty={isEmailEmpty}
+          isError={isEmailError}
+          checkIsEmpty={checkIsEmailEmpty}
+        />
+        <AlertLabel isError={isEmailError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>

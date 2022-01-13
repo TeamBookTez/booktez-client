@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
-interface InputEmailProps {
+import { IcNoSight, IcSight } from "../../assets/icons";
+
+interface InputPwdProps {
   whatPlaceholder: string;
   whatType: string;
   whatId: string;
@@ -8,31 +10,40 @@ interface InputEmailProps {
   isError: boolean;
   isPwdSight: boolean;
   checkIsEmpty: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  toggleSightPwd: () => void;
 }
 
-interface StInputEmailProps {
+interface StInputPwdProps {
   ispwdempty: boolean;
   ispwderror: boolean;
   ispwdsight: boolean;
 }
 
-export default function InputEmail(props: InputEmailProps) {
-  const { whatPlaceholder, whatType, whatId, isEmpty, isError, isPwdSight, checkIsEmpty } = props;
+export default function InputPwd(props: InputPwdProps) {
+  const { whatPlaceholder, whatType, whatId, isEmpty, isError, isPwdSight, checkIsEmpty, toggleSightPwd } = props;
 
   return (
-    <StInputEmail
-      placeholder={whatPlaceholder}
-      type={whatType}
-      id={whatId}
-      ispwdempty={isEmpty}
-      ispwderror={isError}
-      ispwdsight={isPwdSight}
-      onChange={checkIsEmpty}
-    />
+    <StPwdWrapper>
+      <StInputPwd
+        placeholder={whatPlaceholder}
+        type={whatType}
+        id={whatId}
+        ispwdempty={isEmpty}
+        ispwderror={isError}
+        ispwdsight={isPwdSight}
+        onChange={checkIsEmpty}
+      />
+      {isPwdSight ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
+    </StPwdWrapper>
   );
 }
 
-const StInputEmail = styled.input<StInputEmailProps>`
+const StPwdWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const StInputPwd = styled.input<StInputPwdProps>`
   width: 100%;
   height: 5.4rem;
   padding-left: 2rem;
@@ -67,5 +78,25 @@ const StInputEmail = styled.input<StInputEmailProps>`
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray400};
+  }
+`;
+
+const StIcNoSight = styled(IcNoSight)`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StIcSight = styled(IcSight)`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  &:hover {
+    cursor: pointer;
   }
 `;

@@ -1,13 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { IcAlert } from "../../assets/icons";
-import { AlertLabel, Button, Input, LabelHidden } from "../common";
+import { AlertLabel, Button, Input, InputPwd, LabelHidden } from "../common";
 
 export default function ThirdStep() {
   const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
-
+  const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
+  const [isPwdReEmpty, setIsPwdReEmpty] = useState<boolean>(true);
+  const [isPwdError, setIsPwdError] = useState<boolean>(false);
+  const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
+  const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
+  const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
   const nav = useNavigate();
   const tempEmail = "bookstairs@sopt.com";
 
@@ -20,19 +24,62 @@ export default function ThirdStep() {
     setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
   };
 
+  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPwdEmpty(e.target.value === "");
+  };
+  const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPwdReEmpty(e.target.value === "");
+  };
+
+  const checkIsPwdError = () => {
+    setIsPwdError(true);
+  };
+  const checkIsPwdReError = () => {
+    setIsPwdReError(true);
+  };
+
+  const toggleSightPwd = () => {
+    setIsPwdSight((isPwdSight) => !isPwdSight);
+  };
+  const toggleSightRePwd = () => {
+    setIsPwdReSight((isPwdSight) => !isPwdSight);
+  };
+
   return (
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StFormWrapper>
         <StEmailFixed>{tempEmail}</StEmailFixed>
 
-        <LabelHidden htmlFor="signupPwd">이메일</LabelHidden>
-        <InputPwd type="text" id="signupPwd" placeholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요" />
-        <AlertLabel isError={true}>비밀번호 형식 에러</AlertLabel>
+        <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
+        <StInputPwdWrapper>
+          <InputPwd
+            whatPlaceholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요"
+            whatType={isPwdSight ? "text" : "password"}
+            whatId="signupPwd"
+            isEmpty={isPwdEmpty}
+            isError={isPwdError}
+            isPwdSight={isPwdSight}
+            checkIsEmpty={checkIsPwdEmpty}
+            toggleSightPwd={toggleSightPwd}
+          />
+        </StInputPwdWrapper>
+        <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
 
-        <LabelHidden htmlFor="signupPwdRe">이메일</LabelHidden>
-        <InputPwdRe type="text" id="signupPwdRe" placeholder="비밀번호를 확인해 주세요" />
-        <AlertLabel isError={true}>비밀번호가 다릅니다.</AlertLabel>
+        <LabelHidden htmlFor="signupPwdRe">비밀번호 확인</LabelHidden>
+        <StInputPwdReWrapper>
+          <InputPwd
+            whatPlaceholder="비밀번호를 확인해 주세요"
+            whatType={isPwdReSight ? "text" : "password"}
+            whatId="signupPwdRe"
+            isEmpty={isPwdReEmpty}
+            isError={isPwdReError}
+            isPwdSight={isPwdReSight}
+            checkIsEmpty={checkIsPwdReEmpty}
+            toggleSightPwd={toggleSightRePwd}
+          />
+        </StInputPwdReWrapper>
+        <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
         <StNextStepBtn type="button" onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
@@ -83,11 +130,14 @@ const StEmailFixed = styled.article`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const InputPwd = styled(Input)`
+const StInputPwdWrapper = styled.div`
+  width: 100%;
+
   margin-top: 5.2rem;
 `;
+const StInputPwdReWrapper = styled.div`
+  width: 100%;
 
-const InputPwdRe = styled(Input)`
   margin-top: 2.4rem;
 `;
 

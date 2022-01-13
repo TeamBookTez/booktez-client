@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { AlertLabel, Button, Input, LabelHidden } from "../common";
+import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function SecondStep() {
   const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
-
+  const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
+  const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -18,13 +19,28 @@ export default function SecondStep() {
     setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
   };
 
+  const checkIsNicknameEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsNicknameEmpty(e.target.value === "");
+  };
+
+  const checkIsNicknameError = () => {
+    setIsNicknameError(true);
+  };
+
   return (
     <>
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
       <StFormWrapper>
-        <LabelHidden htmlFor="signupNickname">닉네임</LabelHidden>
-        <Input type="text" id="signupNickname" placeholder="닉네임을 입력해주세요" />
-        <AlertLabel isError={true}>올바른 형식이 아닙니다.</AlertLabel>
+        <LabelHidden htmlFor="signupnickname">닉네임</LabelHidden>
+        <InputEmail
+          whatPlaceholder="닉네임을 입력해 주세요"
+          whatType="text"
+          whatId="signupnickname"
+          isEmpty={isNicknameEmpty}
+          isError={isNicknameError}
+          checkIsEmpty={checkIsNicknameEmpty}
+        />
+        <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
