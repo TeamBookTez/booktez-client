@@ -28,18 +28,14 @@ const StWrapper = styled.section`
 const StTitle = styled.h3`
   margin-bottom: 1.6rem;
 
-  font-size: 2.6rem;
-  line-height: 1.3;
-  letter-spacing: -0.1em;
+  ${({ theme }) => theme.fonts.header1}
 `;
 
 const StContent = styled.p`
   margin-bottom: 3.3rem;
   width: 46.4rem;
 
-  font-size: 2rem;
-  line-height: 1.3;
-  letter-spacing: -0.1em;
+  ${({ theme }) => theme.fonts.body2}
 `;
 
 const StExBtn = styled(Button)`
@@ -53,4 +49,5 @@ const StExBtn = styled(Button)`
 
   // 임의 색
   color: ${({ theme }) => theme.colors.gray300};
+  ${({ theme }) => theme.fonts.button2}
 `;
