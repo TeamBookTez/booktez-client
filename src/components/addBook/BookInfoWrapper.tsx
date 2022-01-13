@@ -44,13 +44,13 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
       <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
       <StInfoWrapper>
         <InfoTitle>{bookInfo.title}</InfoTitle>
-        <InfoDetailWrapper>
+        <InfoLabelWrapper>
           <InfoDetail>{bookInfo.authors}</InfoDetail>
           <DivideLine></DivideLine>
           <InfoDetail>
             {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
           </InfoDetail>
-        </InfoDetailWrapper>
+        </InfoLabelWrapper>
         <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>
     </StArticle>
@@ -92,7 +92,7 @@ const InfoTitle = styled.strong`
   line-height: 3.12rem;
 `;
 
-const InfoDetailWrapper = styled.div`
+const InfoLabelWrapper = styled.div`
   display: flex;
   align-items: center;
 
