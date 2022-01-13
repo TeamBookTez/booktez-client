@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { IcAlert } from "../../assets/icons";
 import { AlertLabel, Button, Input, LabelHidden } from "../common";
 
 export default function ThirdStep() {
