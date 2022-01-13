@@ -1,5 +1,6 @@
-import { useState } from "react";
-import styled, { css } from "styled-components";
+import _ from "lodash";
+import React, { useRef, useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common";
@@ -16,12 +17,20 @@ export default function SearchBar(props: SearchBarProps) {
 
     setIsQueryEmpty(text === "");
     setQuery(text);
+
+    // const test = useRef(_.debounce((text: string) => setQuery(text), 500)).current;
+
+    // const debouncedSearch = React.useRef(
+    //   debounce(async (criteria) => {
+    //     setCharacters(await search(criteria));
+    //   }, 300)
+    // ).current;
   };
 
   return (
     <StWrapper>
-      <SearchBarWrapper isQueryEmpty={isQueryEmpty}>
-        <StIcSearch isQueryEmpty={isQueryEmpty} />
+      <SearchBarWrapper isqueryempty={isQueryEmpty}>
+        <StIcSearch isqueryempty={isQueryEmpty} />
 
         <LabelHidden htmlFor="addBookSearch">검색</LabelHidden>
         <InputSearch
@@ -30,7 +39,7 @@ export default function SearchBar(props: SearchBarProps) {
           id="addBookSearch"
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
-        <StIcCancel isQueryEmpty={isQueryEmpty} />
+        <StIcCancel isqueryempty={isQueryEmpty} />
       </SearchBarWrapper>
     </StWrapper>
   );
@@ -45,7 +54,7 @@ const StWrapper = styled.section`
   padding-bottom: 3.5rem;
 `;
 
-const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
+const SearchBarWrapper = styled.div<{ isqueryempty: boolean }>`
   position: relative;
 
   display: flex;
@@ -59,8 +68,8 @@ const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
 
   height: 5.6rem;
 
-  ${({ isQueryEmpty }) =>
-    isQueryEmpty
+  ${({ isqueryempty }) =>
+    isqueryempty
       ? css`
           border: 0.2rem solid ${({ theme }) => theme.colors.white200};
         `
@@ -69,7 +78,7 @@ const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
         `}
 `;
 
-const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
+const StIcSearch = styled(IcSearch)<{ isqueryempty: boolean }>`
   position: absolute;
   top: 1.2rem;
   left: 1.2rem;
@@ -77,8 +86,8 @@ const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
   width: 3.2rem;
   height: 3.2rem;
 
-  ${({ isQueryEmpty }) =>
-    isQueryEmpty
+  ${({ isqueryempty }) =>
+    isqueryempty
       ? css`
           fill: ${({ theme }) => theme.colors.white500};
         `
@@ -101,10 +110,10 @@ const InputSearch = styled.input`
   }
 `;
 
-const StIcCancel = styled(IcCancel)<{ isQueryEmpty: boolean }>`
+const StIcCancel = styled(IcCancel)<{ isqueryempty: boolean }>`
   margin-right: 1.5rem;
 
-  ${({ isQueryEmpty }) => (isQueryEmpty ? "display: none;" : "")}
+  ${({ isqueryempty }) => (isqueryempty ? "display: none;" : "")}
 
   &:hover {
     cursor: pointer;
