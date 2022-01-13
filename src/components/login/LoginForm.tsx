@@ -17,8 +17,8 @@ interface InputPwdProps {
 export default function LoginForm() {
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
-  const [isEmailError, setIsEmailError] = useState<boolean>(true);
-  const [isPwdError, setIsPwdError] = useState<boolean>(true);
+  const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [sightPwd, setSightPwd] = useState<boolean>(false);
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,8 +65,8 @@ export default function LoginForm() {
         />
         {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
-      <StLoginBtn>로그인</StLoginBtn>
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
+      <StLoginBtn>로그인</StLoginBtn>
     </StForm>
   );
 }
@@ -150,7 +150,7 @@ const StLoginBtn = styled(Button)`
   width: 46.4rem;
   height: 5.6rem;
 
-  margin-top: 2rem;
+  margin-top: 5.6rem;
 
   border-radius: 1rem;
 

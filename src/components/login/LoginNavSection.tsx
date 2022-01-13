@@ -63,7 +63,7 @@ const StSection = styled.section<{ isAniTime: boolean }>`
   justify-content: center;
   align-items: center;
 
-  width: 960px; // 임의 px
+  width: 48rem;
 
   background-color: ${({ theme }) => theme.colors.white500};
   border-radius: 0 2rem 2rem 0;
