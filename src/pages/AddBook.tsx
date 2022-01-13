@@ -9,6 +9,7 @@ export interface BookInfo {
   thumbnail: string;
   title: string;
   authors: string[];
+  translators: string[];
   datetime: Date | string;
   contents: string;
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
-import { BookInfo } from "./AddBookWrapper";
+import { BookInfo } from "../../pages/AddBook";
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
@@ -11,11 +11,12 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     thumbnail: "",
     title: "",
     authors: [],
+    translators: [],
     datetime: "",
     contents: "",
   });
 
-  const { thumbnail, title, authors, datetime, contents }: BookInfo = book;
+  const { thumbnail, title, authors, translators, datetime, contents }: BookInfo = book;
 
   const dateTimeString = bookInfo.datetime.toString();
 
