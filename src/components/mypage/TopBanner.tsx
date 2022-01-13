@@ -92,18 +92,11 @@ const StProfileContent = styled.div`
 const StUserName = styled.h3`
   margin-bottom: 0.8rem;
 
-  font-family: Pretendard;
-  font-size: 2.2rem;
-  font-weight: 800;
-  line-height: 2.9rem;
-  letter-spacing: -0.01rem;
+  font: ${({ theme }) => theme.fonts.header3};
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StEmail = styled.p`
-  font-family: Pretendard;
-  font-size: 1.8rem;
-  line-height: 2.3rem;
-  letter-spacing: -0.01rem;
+  font: ${({ theme }) => theme.fonts.body2};
   color: #939393;
 `;

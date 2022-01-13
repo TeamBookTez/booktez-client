@@ -19,19 +19,19 @@ export default function BottomContent() {
       <StServiceWrapper>
         <StServiceInfo>
           <StInfoTitle>개인정보 처리 방침</StInfoTitle>
-          <StInfoDesc>개인정보 처리 방침 탭에서 확인 할 수 있는 정보를 쬐금 적으면 좋을 것</StInfoDesc>
+          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
         </StServiceInfo>
         <StServiceInfo>
           <StInfoTitle>문의하기</StInfoTitle>
-          <StInfoDesc>개인정보 처리 방침 탭에서 확인 할 수 있는 정보를 쬐금 적으면 좋을 것 </StInfoDesc>
+          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
         </StServiceInfo>
         <StServiceInfo>
           <StInfoTitle>북스테어즈 피드백 남기기</StInfoTitle>
-          <StInfoDesc>개인정보 처리 방침 탭에서 확인 할 수 있는 정보를 쬐금 적으면 좋을 것 </StInfoDesc>
+          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
         </StServiceInfo>
         <StServiceInfo>
           <StInfoTitle>북스테어즈를 만든 사람들</StInfoTitle>
-          <StInfoDesc>개인정보 처리 방침 탭에서 확인 할 수 있는 정보를 쬐금 적으면 좋을 것 </StInfoDesc>
+          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
         </StServiceInfo>
       </StServiceWrapper>
     </StWrapper>
@@ -41,13 +41,14 @@ export default function BottomContent() {
 const StWrapper = styled.section`
   display: flex;
 
-  width: 100%;
-  padding: 0 4rem 7rem 4rem;
+  width: 118rem;
+  height: 30.3rem;
+  margin: 0 4rem 7rem 4rem;
 `;
 
 // 로그인 여부에 따라 삼항연산자 분기 처리
 const StCountBook = styled.article`
-  width: 28rem;
+  width: 23.3rem;
 
   margin-right: 4rem;
 
@@ -67,19 +68,13 @@ const StContentWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding: 0 2.5rem 5rem 2.5rem;
+  padding: 0 2.2rem 5rem 2.2rem;
 `;
 
 const StBooksNum = styled.strong`
-  margin-right: 0.8rem;
-
   // 임시 폰트 설정
-  font-family: Pretendard;
-  font-size: 62px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 81px;
-  letter-spacing: -0.01em;
+  font: ${({ theme }) => theme.fonts.header2};
+  font-size: 6.2rem;
   color: #3d3d3d;
 `;
 
@@ -89,31 +84,30 @@ const StComment = styled.p`
   justify-content: center;
   /* align-items: center; */
 
-  // 임시 폰트 설정
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 26px;
-  letter-spacing: -1px;
+  margin-left: 0.8rem;
+
+  font: ${({ theme }) => theme.fonts.body0};
+  color: ${({ theme }) => theme.colors.gray200};
 
   & > span {
-    font-weight: 700;
+    font: ${({ theme }) => theme.fonts.header4};
   }
 `;
 
 const StServiceWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 3rem;
-  row-gap: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  width: 91rem;
 `;
 
 const StServiceInfo = styled.article`
-  /* width: 57.2rem;
-  height: 13.6rem; */
+  width: 44rem;
+  height: 13.6rem;
 
-  padding: 3.7rem 4.9rem;
+  margin-bottom: 3rem;
+  padding: 3.7rem 4.8rem;
 
   border-radius: 2rem;
 
@@ -123,20 +117,11 @@ const StServiceInfo = styled.article`
 const StInfoTitle = styled.h5`
   margin-bottom: 1.5rem;
 
-  font-family: Pretendard;
-  font-size: 2.2rem;
-  font-weight: 600;
-  line-height: 2.6rem;
-  letter-spacing: -0.01rem;
-  color: #3d3d3d;
+  font: ${({ theme }) => theme.fonts.header4};
+  color: ${({ theme }) => theme.colors.gray200};
 `;
 
 const StInfoDesc = styled.p`
-  font-family: Pretendard;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 2.1rem;
-  letter-spacing: -0.01rem;
-  color: #939393;
+  font: ${({ theme }) => theme.fonts.body6};
+  color: ${({ theme }) => theme.colors.gray400};
 `;
