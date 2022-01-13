@@ -45,11 +45,11 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
       <StInfoWrapper>
         <InfoTitle>{bookInfo.title}</InfoTitle>
         <InfoLabelWrapper>
-          <InfoDetail>{bookInfo.authors}</InfoDetail>
+          <InfoLabel>{bookInfo.authors}</InfoLabel>
           <DivideLine></DivideLine>
-          <InfoDetail>
+          <InfoLabel>
             {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
-          </InfoDetail>
+          </InfoLabel>
         </InfoLabelWrapper>
         <InfoSummary>{bookInfo.contents}</InfoSummary>
       </StInfoWrapper>
@@ -87,9 +87,7 @@ const StInfoWrapper = styled.div`
 `;
 
 const InfoTitle = styled.strong`
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 3.12rem;
+  font: ${({ theme }) => theme.fonts.header2};
 `;
 
 const InfoLabelWrapper = styled.div`
@@ -99,11 +97,12 @@ const InfoLabelWrapper = styled.div`
   height: 2.1rem;
 `;
 
-const InfoDetail = styled.p`
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 2.08rem;
-  text-align: center;
+const InfoLabel = styled.p`
+  color: ${({ theme }) => theme.colors.gray300};
+
+  font: ${({ theme }) => theme.fonts.body6};
+
+  vertical-align: middle; // p 태그의 수직 정렬 이렇게 하는 것으로 알고있는데 잘 먹지 않는 것 같아요.
 `;
 
 const DivideLine = styled.div`
@@ -116,10 +115,10 @@ const DivideLine = styled.div`
 `;
 
 const InfoSummary = styled.p`
-  font-size: 1.8rem;
-  font-weight: 400;
-  line-height: 2.34rem;
+  color: ${({ theme }) => theme.colors.gray300};
+
+  font: ${({ theme }) => theme.fonts.body4};
 
   overflow: hidden;
-  max-height: 6.9rem;
+  max-height: 8.1rem;
 `;
