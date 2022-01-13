@@ -12,6 +12,7 @@ interface InputEmailProps {
 interface InputPwdProps {
   isPwdEmpty: boolean;
   isPwdError: boolean;
+  isPwdSight: boolean;
 }
 
 export default function LoginForm() {
@@ -19,7 +20,7 @@ export default function LoginForm() {
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
-  const [sightPwd, setSightPwd] = useState<boolean>(false);
+  const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEmailEmpty(e.target.value === "");
@@ -38,7 +39,7 @@ export default function LoginForm() {
   };
 
   const toggleSightPwd = () => {
-    setSightPwd((sightPwd) => !sightPwd);
+    setIsPwdSight((isPwdSight) => !isPwdSight);
   };
 
   return (
@@ -57,13 +58,14 @@ export default function LoginForm() {
       <StPwdWrapper>
         <StInputPwd
           placeholder="비밀번호를 입력해 주세요"
-          type="password"
+          type={isPwdSight ? "text" : "password"}
           id="loginPwd"
           isPwdEmpty={isPwdEmpty}
           isPwdError={isPwdError}
+          isPwdSight={isPwdSight}
           onChange={checkIsPwdEmpty}
         />
-        {sightPwd ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
+        {isPwdSight ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
       <StLoginBtn>로그인</StLoginBtn>
@@ -119,7 +121,12 @@ const StInputPwd = styled(Input)<InputPwdProps>`
           border-color: ${({ theme }) => theme.colors.red100};
         `
       : ""};
-  /* letter-spacing: 0.15rem; */
+  ${({ isPwdEmpty, isPwdSight }) =>
+    !isPwdEmpty && !isPwdSight
+      ? css`
+          letter-spacing: 0.15rem;
+        `
+      : ""};
 `;
 
 const StPwdWrapper = styled.div`
