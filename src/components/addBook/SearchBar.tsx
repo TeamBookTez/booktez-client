@@ -14,6 +14,7 @@ export default function SearchBar(props: SearchBarProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
+    setIsQueryEmpty(text === "");
     setQuery(text);
   };
 
@@ -45,6 +46,8 @@ const StWrapper = styled.section`
 `;
 
 const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,25 +59,23 @@ const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
 
   height: 5.6rem;
 
-  &:focus-within,
-  &:hover {
-    border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
-  }
-
   ${({ isQueryEmpty }) =>
     isQueryEmpty
-      ? ""
+      ? css`
+          border: 0.2rem solid ${({ theme }) => theme.colors.white200};
+        `
       : css`
           border: 0.2rem solid ${({ theme }) => theme.colors.gray100};
         `}
 `;
 
 const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
-  margin-left: 1.5rem;
-  margin-right: 2.7rem;
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
 
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3.2rem;
+  height: 3.2rem;
 
   ${({ isQueryEmpty }) =>
     isQueryEmpty
@@ -87,18 +88,15 @@ const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
 `;
 
 const InputSearch = styled.input`
+  width: 100%;
+
+  padding-left: 6.4rem;
+
   background-color: ${({ theme }) => theme.colors.white200};
+  ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray100};
 
-  width: 100%;
-  height: 1.8rem;
-
   &::placeholder {
-    /* 글꼴 설정 */
-    font-family: pretendard;
-    font-weight: 400;
-    font-size: 1.8rem;
-    line-height: 2.34rem;
     color: ${({ theme }) => theme.colors.gray400};
   }
 `;
