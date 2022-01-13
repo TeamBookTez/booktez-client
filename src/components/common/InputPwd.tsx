@@ -9,7 +9,7 @@ interface InputPwdProps {
   isEmpty: boolean;
   isError: boolean;
   isPwdSight: boolean;
-  checkIsEmpty: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   toggleSightPwd: () => void;
 }
 
@@ -20,7 +20,7 @@ interface StInputPwdProps {
 }
 
 export default function InputPwd(props: InputPwdProps) {
-  const { whatPlaceholder, whatType, whatId, isEmpty, isError, isPwdSight, checkIsEmpty, toggleSightPwd } = props;
+  const { whatPlaceholder, whatType, whatId, isEmpty, isError, isPwdSight, handleOnChange, toggleSightPwd } = props;
 
   return (
     <StPwdWrapper>
@@ -31,7 +31,7 @@ export default function InputPwd(props: InputPwdProps) {
         ispwdempty={isEmpty}
         ispwderror={isError}
         ispwdsight={isPwdSight}
-        onChange={checkIsEmpty}
+        onChange={handleOnChange}
       />
       {isPwdSight ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
     </StPwdWrapper>

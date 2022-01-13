@@ -61,8 +61,8 @@ export default function ThirdStep() {
             isEmpty={isPwdEmpty}
             isError={isPwdError}
             isPwdSight={isPwdSight}
-            checkIsEmpty={checkIsPwdEmpty}
             toggleSightPwd={toggleSightPwd}
+            handleOnChange={checkIsPwdEmpty}
           />
         </StInputPwdWrapper>
         <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
@@ -76,8 +76,8 @@ export default function ThirdStep() {
             isEmpty={isPwdReEmpty}
             isError={isPwdReError}
             isPwdSight={isPwdReSight}
-            checkIsEmpty={checkIsPwdReEmpty}
             toggleSightPwd={toggleSightRePwd}
+            handleOnChange={checkIsPwdReEmpty}
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
