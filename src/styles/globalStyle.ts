@@ -9,49 +9,17 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   @font-face {
-    font-family: "PretendardBold";
+    font-family: "Pretendard";
     font-weight: normal;
     font-style: normal;
-    src: url("/fonts/Pretendard-Bold.ttf") format("truetype");
-  }
-
-  @font-face {
-    font-family: "PretendardExtraBold";
-    font-weight: normal;
-    font-style: normal;
-    src: url("/fonts/Pretendard-ExtraBold.ttf") format("truetype");
-  }
-
-  @font-face {
-    font-family: "PretendardMedium";
-    font-weight: normal;
-    font-style: normal;
-    src: url("/fonts/Pretendard-Medium.ttf") format("truetype");
-  }
-
-  @font-face {
-    font-family: "PretendardSemiBold";
-    font-weight: normal;
-    font-style: normal;
-    src: url("/fonts/Pretendard-SemiBold.ttf") format("truetype");
-  }
-
-  @font-face {
-    font-family: "PretendardRegular";
-    font-weight: normal;
-    font-style: normal;
-    src: url("/fonts/Pretendard-Regular.ttf") format("truetype");
+    src: local("/fonts/PretendardVariable.woff2") format("woff2");
   }
 
   html {
     color: ${({ theme }) => theme.colors.gray100};
-    font-family: PretendardRegular;
+    font-family: Pretendard;
     font-size: 62.5%;
   }
-
-  /* #root {
-   display: flex;
-  } */
 
   a {
     text-decoration: none;
