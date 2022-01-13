@@ -1,19 +1,8 @@
 import { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { IcNoSight, IcSight } from "../../assets/icons";
-import { AlertLabel, Button, Input } from "../common";
-
-interface InputEmailProps {
-  isEmailEmpty: boolean;
-  isEmailError: boolean;
-}
-
-interface InputPwdProps {
-  isPwdEmpty: boolean;
-  isPwdError: boolean;
-  isPwdSight: boolean;
-}
+import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
 
 export default function LoginForm() {
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
@@ -45,25 +34,25 @@ export default function LoginForm() {
   return (
     <StForm>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
-      <StInputEmail
-        placeholder="이메일을 입력해 주세요"
-        type="text"
-        id="loginEmail"
-        isEmailEmpty={isEmailEmpty}
-        isEmailError={isEmailError}
-        onChange={checkIsEmailEmpty}
+      <InputEmail
+        whatPlaceholder="이메일을 입력해 주세요"
+        whatType="text"
+        whatId="loginEmail"
+        isEmpty={isEmailEmpty}
+        isError={isEmailError}
+        checkIsEmpty={checkIsEmailEmpty}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <StPwdWrapper>
-        <StInputPwd
-          placeholder="비밀번호를 입력해 주세요"
-          type={isPwdSight ? "text" : "password"}
-          id="loginPwd"
-          isPwdEmpty={isPwdEmpty}
-          isPwdError={isPwdError}
+        <InputPwd
+          whatPlaceholder="비밀번호를 입력해 주세요"
+          whatType={isPwdSight ? "text" : "password"}
+          whatId="loginPwd"
+          isEmpty={isPwdEmpty}
+          isError={isPwdError}
           isPwdSight={isPwdSight}
-          onChange={checkIsPwdEmpty}
+          checkIsEmpty={checkIsPwdEmpty}
         />
         {isPwdSight ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
       </StPwdWrapper>
@@ -89,44 +78,8 @@ const StLabel = styled.label`
   letter-spacing: -0.1rem;
 `;
 
-const StInputEmail = styled(Input)<InputEmailProps>`
-  ${({ isEmailEmpty }) =>
-    isEmailEmpty
-      ? ""
-      : css`
-          border-color: ${({ theme }) => theme.colors.gray200};
-        `};
-  ${({ isEmailError }) =>
-    isEmailError
-      ? css`
-          border-color: ${({ theme }) => theme.colors.red100};
-        `
-      : ""};
-`;
-
 const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
-`;
-
-const StInputPwd = styled(Input)<InputPwdProps>`
-  ${({ isPwdEmpty }) =>
-    isPwdEmpty
-      ? ""
-      : css`
-          border-color: ${({ theme }) => theme.colors.gray200};
-        `};
-  ${({ isPwdError }) =>
-    isPwdError
-      ? css`
-          border-color: ${({ theme }) => theme.colors.red100};
-        `
-      : ""};
-  ${({ isPwdEmpty, isPwdSight }) =>
-    !isPwdEmpty && !isPwdSight
-      ? css`
-          letter-spacing: 0.15rem;
-        `
-      : ""};
 `;
 
 const StPwdWrapper = styled.div`
