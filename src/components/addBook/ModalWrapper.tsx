@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-interface ModalBookInfoProps {
+interface ModalWrapperProps {
   handleToggleModal: () => void;
   children: React.ReactNode;
 }
-export default function ModalBookInfo(props: ModalBookInfoProps) {
+export default function ModalWrapper(props: ModalWrapperProps) {
   const { handleToggleModal, children } = props;
 
   const preventMouseEvent = (e: React.MouseEvent) => {

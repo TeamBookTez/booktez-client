@@ -3,7 +3,14 @@ import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
 import { BookInfo } from "../../pages/AddBook";
-import ModalBookInfo from "./ModalBookInfo";
+import ModalWrapper from "./ModalWrapper";
+import ShowModal from "./ShowModal";
+
+export interface PublishDate {
+  year: string;
+  month: string;
+  date: string;
+}
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
@@ -25,7 +32,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
   console.log(authors);
   const dateTimeString = bookInfo.datetime.toString();
 
-  const publishDate = {
+  const publishDate: PublishDate = {
     year: dateTimeString.slice(0, 4),
     month: dateTimeString.slice(5, 7),
     date: dateTimeString.slice(8, 10),
@@ -69,26 +76,15 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         <InfoSummary>{contents}</InfoSummary>
       </StInfoWrapper>
       {openModal && (
-        <ModalBookInfo handleToggleModal={handleToggleModal}>
-          {thumbnail ? (
-            <ModalThumbnail src={thumbnail} alt="책 표지" />
-          ) : (
-            <ModalThumbnail src={ImgNull} alt="책 표지" />
-          )}
-          <ModalTitle>{title}</ModalTitle>
-          <ModalLabelWrapper>
-            <ModalLabel>{authors} </ModalLabel>
-            {translators.length > 0 && (
-              <ModalLabel>
-                <span> | </span>
-                {translators}
-              </ModalLabel>
-            )}
-          </ModalLabelWrapper>
-          <ModalDate>
-            {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
-          </ModalDate>
-        </ModalBookInfo>
+        <ModalWrapper handleToggleModal={handleToggleModal}>
+          <ShowModal
+            thumbnail={thumbnail}
+            title={title}
+            authors={authors}
+            translators={translators}
+            publishDate={publishDate}
+          />
+        </ModalWrapper>
       )}
     </StArticle>
   );
@@ -158,36 +154,4 @@ const InfoSummary = styled.p`
 
   overflow: hidden;
   max-height: 8.1rem;
-`;
-
-const ModalThumbnail = styled.img`
-  width: 20.5rem;
-  height: 30rem;
-
-  margin-bottom: 3.5rem;
-`;
-
-const ModalTitle = styled.strong`
-  margin-bottom: 0.5rem;
-
-  font: ${({ theme }) => theme.fonts.header0};
-`;
-
-const ModalLabelWrapper = styled.div`
-  display: flex;
-  margin-bottom: 2.1rem;
-`;
-
-const ModalLabel = styled.p`
-  color: ${({ theme }) => theme.colors.gray400};
-  font: ${({ theme }) => theme.fonts.body0};
-
-  & > span {
-    margin-left: 0.2em;
-  }
-`;
-
-const ModalDate = styled.p`
-  color: ${({ theme }) => theme.colors.white500};
-  font: ${({ theme }) => theme.fonts.body2};
 `;
