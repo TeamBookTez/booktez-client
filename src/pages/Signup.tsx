@@ -33,7 +33,7 @@ export default function Layout() {
       break;
     default:
       imgSrc = "";
-      headerText = "";
+      headerText = "OOOOOOOOOO님!\n나만의 서재가 완성됐어요!";
   }
 
   const handleIsAniTime = (isActive: boolean) => {
@@ -46,15 +46,7 @@ export default function Layout() {
       <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
         <StArticle>
           {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
-          {headerText ? (
-            <StHeading2>{headerText}</StHeading2>
-          ) : (
-            <StHeading2>
-              OOOOOOOOOO님!
-              <br />
-              나만의 서재가 완성됐어요!
-            </StHeading2>
-          )}
+          <StHeading2>{headerText}</StHeading2>
           <Outlet context={[handleIsAniTime]} />
         </StArticle>
       </StMain>
@@ -116,6 +108,7 @@ const StImage = styled.img`
 const StHeading2 = styled.h2`
   margin-bottom: 3.2rem;
 
+  white-space: pre-wrap;
   text-align: center;
   ${({ theme }) => theme.fonts.header0}
 `;
