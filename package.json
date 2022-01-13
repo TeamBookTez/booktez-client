@@ -19,6 +19,7 @@
     "recoil": "^0.5.2",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
+    "swr": "^1.1.2",
     "typescript": "^4.5.4",
     "web-vitals": "^2.1.0"
   },
