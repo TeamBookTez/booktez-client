@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { ImgSignupFirst, ImgSignupSecond, ImgSignupThird } from "../assets/images";
@@ -11,9 +11,21 @@ interface StMainProps {
   isAniTime: boolean;
 }
 
+export interface UserData {
+  email: string;
+  password: string;
+  nickname: string;
+}
+
 export default function Layout() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
   const { state, pathname } = useLocation();
+
+  const [userData, setUserData] = useState<UserData>({
+    email: "",
+    password: "",
+    nickname: "",
+  });
 
   let imgSrc = "";
   let headerText = "";
@@ -47,7 +59,7 @@ export default function Layout() {
         <StArticle>
           {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
           <StHeading2>{headerText}</StHeading2>
-          <Outlet context={[handleIsAniTime]} />
+          <Outlet context={[userData, setUserData, handleIsAniTime]} />
         </StArticle>
       </StMain>
     </>

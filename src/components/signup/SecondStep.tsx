@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
+import { isNickname } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function SecondStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
   const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
   const nav = useNavigate();
@@ -14,15 +17,23 @@ export default function SecondStep() {
     handleIsAniTime(false);
   }, []);
 
-  const goNextStep = () => {
-    if (isNicknameEmpty || isNicknameError) return;
+  useEffect(() => {
+    setIsNicknameError(false);
+  }, [userData]);
 
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
+  const goNextStep = () => {
+    if (isNicknameEmpty) return;
+    if (isNickname(userData["nickname"])) {
+      setIsNicknameError(true);
+    } else {
+      handleIsAniTime(true);
+      setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
+    }
   };
 
   const checkIsNicknameEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsNicknameEmpty(e.target.value === "");
+    setUserData((current) => ({ ...current, nickname: e.target.value }));
   };
 
   const checkIsNicknameError = () => {
