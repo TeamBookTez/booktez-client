@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { IcCancelBlack } from "../../assets/icons";
 import { ImgNull } from "../../assets/images";
 import { Button } from "../common";
 import { PublishDate } from "./BookInfoWrapper";
@@ -16,6 +17,7 @@ export default function ShowModal(props: ShowModalProps) {
 
   return (
     <>
+      <StIcCancel />
       {thumbnail ? <ModalThumbnail src={thumbnail} alt="책 표지" /> : <ModalThumbnail src={ImgNull} alt="책 표지" />}
       <ModalTitle>{title}</ModalTitle>
       <ModalLabelWrapper>
@@ -79,4 +81,13 @@ const StWriteBtn = styled(Button)`
   border-radius: 1rem;
 
   ${({ theme }) => theme.fonts.button};
+`;
+
+const StIcCancel = styled(IcCancelBlack)`
+  position: absolute;
+  top: 3.2rem;
+  left: 2.4rem;
+
+  width: 4.8rem;
+  height: 4.8rem;
 `;
