@@ -11,13 +11,14 @@ interface ShowModalProps {
   authors: string[];
   translators: string[];
   publishDate: PublishDate;
+  handleToggleModal: () => void;
 }
 export default function ShowModal(props: ShowModalProps) {
-  const { thumbnail, title, authors, translators, publishDate } = props;
+  const { thumbnail, title, authors, translators, publishDate, handleToggleModal } = props;
 
   return (
     <>
-      <StIcCancel />
+      <StIcCancel onClick={handleToggleModal} />
       {thumbnail ? <ModalThumbnail src={thumbnail} alt="책 표지" /> : <ModalThumbnail src={ImgNull} alt="책 표지" />}
       <ModalTitle>{title}</ModalTitle>
       <ModalLabelWrapper>
@@ -90,4 +91,8 @@ const StIcCancel = styled(IcCancelBlack)`
 
   width: 4.8rem;
   height: 4.8rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

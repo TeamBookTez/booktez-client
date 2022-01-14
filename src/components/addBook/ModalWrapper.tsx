@@ -2,22 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 interface ModalWrapperProps {
-  handleToggleModal: () => void;
   children: React.ReactNode;
 }
 export default function ModalWrapper(props: ModalWrapperProps) {
-  const { handleToggleModal, children } = props;
+  const { children } = props;
 
-  const preventMouseEvent = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const preventBubbleEvent = (e: React.MouseEvent) => {
+    e.stopPropagation();
   };
 
-  return <StModalWrapper onClick={preventMouseEvent}>{children}</StModalWrapper>;
+  return <StModalWrapper onClick={preventBubbleEvent}>{children}</StModalWrapper>;
 }
 
 const StModalWrapper = styled.div`
   width: 100%;
   height: 100%;
+
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  top: 0;
 
   display: flex;
   flex-direction: column;
@@ -26,8 +30,5 @@ const StModalWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.white};
 
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  top: 0;
+  cursor: default;
 `;

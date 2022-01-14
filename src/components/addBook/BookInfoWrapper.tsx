@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
@@ -29,7 +29,6 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
 
-  console.log(authors);
   const dateTimeString = bookInfo.datetime.toString();
 
   const publishDate: PublishDate = {
@@ -40,6 +39,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   const handleToggleModal = useCallback(() => {
     setOpenModal(!openModal);
+    // e.stopPropagation();
   }, [openModal]);
 
   useEffect(
@@ -54,8 +54,6 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
       })),
     [],
   );
-
-  // console.log(bookInfo.datetime, typeof bookInfo.datetime);
 
   return (
     <StArticle onClick={handleToggleModal}>
@@ -76,8 +74,9 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         <InfoSummary>{contents}</InfoSummary>
       </StInfoWrapper>
       {openModal && (
-        <ModalWrapper handleToggleModal={handleToggleModal}>
+        <ModalWrapper>
           <ShowModal
+            handleToggleModal={handleToggleModal}
             thumbnail={thumbnail}
             title={title}
             authors={authors}
