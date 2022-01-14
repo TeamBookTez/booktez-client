@@ -135,7 +135,7 @@ const InfoLabel = styled.p`
 
   ${({ theme }) => theme.fonts.body6};
 
-  vertical-align: middle; // p 태그의 수직 정렬 이렇게 하는 것으로 알고있는데 잘 먹지 않는 것 같아요.
+  line-height: 2.1rem; //감싸고 있는 부모의 div 높이인 2.1rem만큼 주어서 중앙에 오도록 설정(미세한 오차는 있음) - 씨에스에스 이주함 선생 -
 `;
 
 const DivideLine = styled.div`
