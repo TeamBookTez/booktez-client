@@ -1,8 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
-import { BookInfo } from "../../pages/AddBook";
 import { PublishDate } from "./BookInfoWrapper";
 
 interface ShowModalProps {
