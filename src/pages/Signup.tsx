@@ -15,17 +15,25 @@ export default function Layout() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
   const { state, pathname } = useLocation();
 
-  let imgSrc;
+  let imgSrc = "";
+  let headerText = "";
 
   switch (pathname) {
+    case "/signup":
+      imgSrc = ImgSignupFirst;
+      headerText = "나만의 서재를 만드는 중이에요!";
+      break;
     case "/signup/2":
       imgSrc = ImgSignupSecond;
+      headerText = "나만의 서재를 만드는 중이에요!";
       break;
     case "/signup/3":
       imgSrc = ImgSignupThird;
+      headerText = "나만의 서재를 만드는 중이에요!";
       break;
     default:
-      imgSrc = ImgSignupFirst;
+      imgSrc = "";
+      headerText = "OOOOOOOOOO님!\n나만의 서재가 완성됐어요!";
   }
 
   const handleIsAniTime = (isActive: boolean) => {
@@ -37,8 +45,8 @@ export default function Layout() {
       <NavHeader logocolor={theme.colors.gray100} />
       <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
         <StArticle>
-          <StImage src={imgSrc} alt="회원가입 첫 단계" />
-          <StHeading2>나만의 서재를 만드는 중이에요!</StHeading2>
+          {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
+          <StHeading2>{headerText}</StHeading2>
           <Outlet context={[handleIsAniTime]} />
         </StArticle>
       </StMain>
@@ -99,7 +107,8 @@ const StImage = styled.img`
 
 const StHeading2 = styled.h2`
   margin-bottom: 3.2rem;
-  /* 임의 폰트 */
-  font-size: 3rem;
-  font-weight: 800;
+
+  white-space: pre-wrap;
+  text-align: center;
+  ${({ theme }) => theme.fonts.header0}
 `;

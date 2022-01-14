@@ -1,7 +1,7 @@
 import { AxiosRequestHeaders } from "axios";
 import { useEffect } from "react";
 
-import { getData, postData } from "../utils/api";
+import { getData, postData } from "../utils/lib/fetcher";
 
 export default function Test() {
   // getAPI 사용방법

@@ -1,6 +1,8 @@
 import { AxiosRequestHeaders } from "axios";
 
-import { client, KAKAO } from "./client";
+import { client, KAKAO } from ".";
+
+// 파일명을 index.ts로 할까 시품
 
 interface Params {
   query: string;

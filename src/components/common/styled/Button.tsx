@@ -5,8 +5,8 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
 
-  background-color: ${({ theme }) => theme.colors.orange100};
+  background-color: ${({ theme }) => theme.colors.orange100}; // active
 
   font-family: Pretendard;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white}; // active
 `;

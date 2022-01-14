@@ -21,8 +21,6 @@ export default function LastStep() {
 
   return (
     <StArticle>
-      <StHeading2>OOOOOOOOOO님!</StHeading2>
-      <StHeading2>나만의 서재가 완성됐어요!</StHeading2>
       <img src={ImgGraphic} alt="회원 가입 완료시 뜨는 그래픽 문구입니다" />
       <StHomeBtn type="button" onClick={goNextStep}>
         홈 바로가기
@@ -44,14 +42,6 @@ const StArticle = styled.article`
   }
 `;
 
-const StHeading2 = styled.h2`
-  /* margin-bottom: 3.2rem; */
-  /* 임의 폰트 */
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 3.9rem;
-`;
-
 const StHomeBtn = styled(Button)`
   width: 46.4rem;
   height: 5.4rem;
@@ -59,4 +49,6 @@ const StHomeBtn = styled(Button)`
   margin-top: 5rem;
 
   border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 `;

@@ -1,7 +1,16 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { BookInfo } from "./AddBookWrapper";
+import { ImgNull } from "../../assets/images";
+import { BookInfo } from "../../pages/AddBook";
+import ModalWrapper from "./ModalWrapper";
+import ShowModal from "./ShowModal";
+
+export interface PublishDate {
+  year: string;
+  month: string;
+  date: string;
+}
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
@@ -10,19 +19,28 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     thumbnail: "",
     title: "",
     authors: [],
+    translators: [],
     datetime: "",
     contents: "",
+    isbn: "",
   });
 
-  const { thumbnail, title, authors, datetime, contents }: BookInfo = book;
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
+
+  console.log(authors);
   const dateTimeString = bookInfo.datetime.toString();
 
-  const publishDate = {
+  const publishDate: PublishDate = {
     year: dateTimeString.slice(0, 4),
     month: dateTimeString.slice(5, 7),
     date: dateTimeString.slice(8, 10),
   };
+
+  const handleToggleModal = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal]);
 
   useEffect(
     () =>
@@ -40,19 +58,34 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
   // console.log(bookInfo.datetime, typeof bookInfo.datetime);
 
   return (
-    <StArticle>
-      <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
+    <StArticle onClick={handleToggleModal}>
+      {thumbnail ? (
+        <StThumbnail src={thumbnail} alt="책 표지" />
+      ) : (
+        <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+      )}
       <StInfoWrapper>
-        <InfoTitle>{bookInfo.title}</InfoTitle>
-        <InfoDetailWrapper>
-          <InfoDetail>{bookInfo.authors}</InfoDetail>
+        <InfoTitle>{title}</InfoTitle>
+        <InfoLabelWrapper>
+          <InfoLabel>{authors}</InfoLabel>
           <DivideLine></DivideLine>
-          <InfoDetail>
+          <InfoLabel>
             {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
-          </InfoDetail>
-        </InfoDetailWrapper>
-        <InfoSummary>{bookInfo.contents}</InfoSummary>
+          </InfoLabel>
+        </InfoLabelWrapper>
+        <InfoSummary>{contents}</InfoSummary>
       </StInfoWrapper>
+      {openModal && (
+        <ModalWrapper handleToggleModal={handleToggleModal}>
+          <ShowModal
+            thumbnail={thumbnail}
+            title={title}
+            authors={authors}
+            translators={translators}
+            publishDate={publishDate}
+          />
+        </ModalWrapper>
+      )}
     </StArticle>
   );
 }
@@ -66,16 +99,16 @@ const StArticle = styled.article`
   height: 20.1rem;
 
   &:hover {
-    background-color: #fff1eb;
+    background-color: ${({ theme }) => theme.colors.orange200};
     cursor: pointer;
   }
 `;
 
-const StImgTemp = styled.img`
+const StThumbnail = styled.img`
   margin-right: 1.6rem;
 
-  /* height: 100%; */
-  width: auto;
+  width: 12.1rem;
+  height: 16.9rem;
 `;
 
 const StInfoWrapper = styled.div`
@@ -87,23 +120,22 @@ const StInfoWrapper = styled.div`
 `;
 
 const InfoTitle = styled.strong`
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 3.12rem;
+  font: ${({ theme }) => theme.fonts.header2};
 `;
 
-const InfoDetailWrapper = styled.div`
+const InfoLabelWrapper = styled.div`
   display: flex;
   align-items: center;
 
   height: 2.1rem;
 `;
 
-const InfoDetail = styled.p`
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 2.08rem;
-  text-align: center;
+const InfoLabel = styled.p`
+  color: ${({ theme }) => theme.colors.gray300};
+
+  font: ${({ theme }) => theme.fonts.body6};
+
+  vertical-align: middle; // p 태그의 수직 정렬 이렇게 하는 것으로 알고있는데 잘 먹지 않는 것 같아요.
 `;
 
 const DivideLine = styled.div`
@@ -116,10 +148,10 @@ const DivideLine = styled.div`
 `;
 
 const InfoSummary = styled.p`
-  font-size: 1.8rem;
-  font-weight: 400;
-  line-height: 2.34rem;
+  color: ${({ theme }) => theme.colors.gray300};
+
+  font: ${({ theme }) => theme.fonts.body4};
 
   overflow: hidden;
-  max-height: 6.9rem;
+  max-height: 8.1rem;
 `;
