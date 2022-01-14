@@ -1,12 +1,31 @@
 import styled from "styled-components";
 
+import { ImgTemp } from "../../assets/images";
 import { AddBookCard, BookCard } from ".";
 
 export default function Cards() {
+  const tempBookInfo = {
+    thumbnail: ImgTemp,
+    title: "조화로운 부",
+    authors: ["제임스 아세 러이", "령이"],
+  };
+
   return (
     <StSection>
       <AddBookCard />
-      <BookCard />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
+      <BookCard bookInfo={tempBookInfo} />
     </StSection>
   );
 }

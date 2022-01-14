@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AddBook, Bookcase, Login, Main, MyPage, Signup } from "../pages";
+import { AddBook, Bookcase, Login, Main, MyPage, Signup, Test } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
@@ -9,8 +9,8 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/main" />} />
         <Route path="/*" element={<CommonLayout />}>
+          <Route path="" element={<Navigate to="/main" />} />
           {/* /main */}
           <Route path="main/" element={<Main />} />
           {/* bookcase */}
@@ -37,7 +37,7 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route path="/*" element={<div>404에러얍얍</div>} />
+        <Route path="/error" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

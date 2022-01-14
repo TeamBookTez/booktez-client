@@ -102,7 +102,7 @@ const InputSearch = styled.input`
   padding-left: 6.4rem;
 
   background-color: ${({ theme }) => theme.colors.white200};
-  
+
   ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray100};
 
