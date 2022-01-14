@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
@@ -6,19 +5,19 @@ import { LabelHidden } from "../common";
 
 interface SearchBarProps {
   debounceQuery: string;
-  setDebounceQuery: React.Dispatch<React.SetStateAction<string>>;
+  onDebounceQuery: (tempQeury: string) => void;
 }
 export default function SearchBar(props: SearchBarProps) {
-  const { debounceQuery, setDebounceQuery } = props;
+  const { debounceQuery, onDebounceQuery } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
-    setDebounceQuery(text);
+    onDebounceQuery(text);
   };
 
   const handleCancel = () => {
-    setDebounceQuery("");
+    onDebounceQuery("");
   };
 
   return (

@@ -37,6 +37,10 @@ export default function AddBook() {
     }
   };
 
+  const handleDebounceQuery = (tempQuery: string) => {
+    setDebounceQuery(tempQuery);
+  };
+
   useEffect(() => {
     if (query.length > 0) {
       bookSearchHandler(query, true); // 컴포넌트 마운트 후에, 함수를 호출한다.
@@ -54,7 +58,7 @@ export default function AddBook() {
   return (
     <>
       <MainHeader>책 추가</MainHeader>
-      <SearchBar debounceQuery={debounceQuery} setDebounceQuery={setDebounceQuery} />
+      <SearchBar debounceQuery={debounceQuery} onDebounceQuery={handleDebounceQuery} />
       {debounceQuery ? <BookList books={books} /> : <></>}
     </>
   );
