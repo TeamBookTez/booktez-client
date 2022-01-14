@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
+import { Button } from "../common";
 import { PublishDate } from "./BookInfoWrapper";
 
 interface ShowModalProps {
@@ -29,6 +30,7 @@ export default function ShowModal(props: ShowModalProps) {
       <ModalDate>
         {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
       </ModalDate>
+      <StWriteBtn>독서 시작</StWriteBtn>
     </>
   );
 }
@@ -62,7 +64,19 @@ const ModalLabel = styled.p`
 const DivideLine = styled.span`
   margin: 0 0.5rem;
 `;
+
 const ModalDate = styled.p`
+  margin-bottom: 2.8rem;
+
   color: ${({ theme }) => theme.colors.white500};
   ${({ theme }) => theme.fonts.body2};
+`;
+
+const StWriteBtn = styled(Button)`
+  width: 16.6rem;
+  height: 5.6rem;
+
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button};
 `;
