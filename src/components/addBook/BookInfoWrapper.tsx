@@ -37,9 +37,8 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     date: dateTimeString.slice(8, 10),
   };
 
-  const handleToggleModal = useCallback(() => {
+  const onToggleModal = useCallback(() => {
     setOpenModal(!openModal);
-    // e.stopPropagation();
   }, [openModal]);
 
   useEffect(
@@ -57,7 +56,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   return (
     <>
-      <StArticle onClick={handleToggleModal}>
+      <StArticle onClick={onToggleModal}>
         {thumbnail ? (
           <StThumbnail src={thumbnail} alt="책 표지" />
         ) : (
@@ -78,7 +77,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
       {openModal && (
         <ModalWrapper>
           <ShowModal
-            handleToggleModal={handleToggleModal}
+            onToggleModal={onToggleModal}
             thumbnail={thumbnail}
             title={title}
             authors={authors}
