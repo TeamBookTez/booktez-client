@@ -54,8 +54,8 @@ export default function AddBook() {
   return (
     <>
       <MainHeader>책 추가</MainHeader>
-      <SearchBar setDebounceQuery={setDebounceQuery} />
-      <BookList books={books} />
+      <SearchBar debounceQuery={debounceQuery} setDebounceQuery={setDebounceQuery} />
+      {debounceQuery ? <BookList books={books} /> : <></>}
     </>
   );
 }

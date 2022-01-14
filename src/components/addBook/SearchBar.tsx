@@ -5,10 +5,11 @@ import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common";
 
 interface SearchBarProps {
+  debounceQuery: string;
   setDebounceQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 export default function SearchBar(props: SearchBarProps) {
-  const { setDebounceQuery } = props;
+  const { debounceQuery, setDebounceQuery } = props;
   const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +17,10 @@ export default function SearchBar(props: SearchBarProps) {
 
     setIsQueryEmpty(text === "");
     setDebounceQuery(text);
+  };
+
+  const handleCancel = () => {
+    setDebounceQuery("");
   };
 
   return (
@@ -27,10 +32,11 @@ export default function SearchBar(props: SearchBarProps) {
         <InputSearch
           onChange={handleChange}
           type="text"
+          value={debounceQuery}
           id="addBookSearch"
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
-        <StIcCancel isqueryempty={isQueryEmpty} />
+        <StIcCancel onClick={handleCancel} isqueryempty={isQueryEmpty} />
       </SearchBarWrapper>
     </StWrapper>
   );
