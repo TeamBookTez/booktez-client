@@ -18,6 +18,7 @@ export interface BookInfo {
 export default function AddBook() {
   const [books, setBooks] = useState<BookInfo[]>([]);
   const [query, setQuery] = useState<string>("");
+  const [debounceQuery, setDebounceQuery] = useState<string>("");
 
   const bookSearchHandler = async (query: string, reset: boolean) => {
     const paramsAPI = {
@@ -42,10 +43,18 @@ export default function AddBook() {
     }
   }, [query]);
 
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      return setQuery(debounceQuery);
+    }, 200);
+
+    return () => clearTimeout(debounce);
+  }, [debounceQuery]);
+
   return (
     <>
       <MainHeader>책 추가</MainHeader>
-      <SearchBar setQuery={setQuery} />
+      <SearchBar setDebounceQuery={setDebounceQuery} />
       <BookList books={books} />
     </>
   );

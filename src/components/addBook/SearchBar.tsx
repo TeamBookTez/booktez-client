@@ -1,4 +1,3 @@
-import { debounce } from "lodash";
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
@@ -6,19 +5,17 @@ import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common";
 
 interface SearchBarProps {
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  setDebounceQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 export default function SearchBar(props: SearchBarProps) {
-  const { setQuery } = props;
+  const { setDebounceQuery } = props;
   const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
-
-  const debouncingQuery = debounce((searchingText: string) => setQuery(searchingText), 500);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
     setIsQueryEmpty(text === "");
-    debouncingQuery(text);
+    setDebounceQuery(text);
   };
 
   return (
