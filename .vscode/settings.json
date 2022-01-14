@@ -3,6 +3,14 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": true,
-  "cSpell.words": ["fromlogin", "isrightpath", "logocolor", "logoicon", "Pretendard", "signup"],
+  "cSpell.words": [
+    "fromlogin",
+    "isrightpath",
+    "KAKAO",
+    "logocolor",
+    "logoicon",
+    "Pretendard",
+    "signup"
+  ],
   "editor.tabSize": 2
 }

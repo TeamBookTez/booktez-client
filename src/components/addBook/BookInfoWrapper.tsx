@@ -29,7 +29,6 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
 
-  console.log(authors);
   const dateTimeString = bookInfo.datetime.toString();
 
   const publishDate: PublishDate = {
@@ -54,8 +53,6 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
       })),
     [],
   );
-
-  // console.log(bookInfo.datetime, typeof bookInfo.datetime);
 
   return (
     <StArticle onClick={handleToggleModal}>

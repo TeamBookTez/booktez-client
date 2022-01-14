@@ -1,151 +1,25 @@
 import styled from "styled-components";
 
-import { ImgTemp } from "../../../assets/images";
+interface BookInfo {
+  thumbnail: string;
+  title: string;
+  authors: string[];
+}
+interface BookCardProps {
+  bookInfo: BookInfo;
+}
 
-export default function BookCard() {
+export default function BookCard(props: BookCardProps) {
+  const { thumbnail, title, authors } = props.bookInfo;
+
   return (
-    <>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-      <StBookCard>
-        <StImgWrapper>
-          <StImg src={ImgTemp} alt="다음 책을 쌓아볼까요?" />
-        </StImgWrapper>
-        <StCardTitle>조화로운 부</StCardTitle>
-        <StCardAuthor>제임스 아세 러이</StCardAuthor>
-      </StBookCard>
-    </>
+    <StBookCard>
+      <StImgWrapper>
+        <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
+      </StImgWrapper>
+      <StCardTitle>{title}</StCardTitle>
+      <StCardAuthor>{authors.join(", ")}</StCardAuthor>
+    </StBookCard>
   );
 }
 
@@ -163,7 +37,7 @@ const StBookCard = styled.article`
   cursor: pointer;
 
   &:hover {
-    background-color: #fff1eb;
+    background-color: ${({ theme }) => theme.colors.orange200};
   }
 `;
 
