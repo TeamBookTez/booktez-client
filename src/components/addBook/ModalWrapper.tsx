@@ -7,11 +7,7 @@ interface ModalWrapperProps {
 export default function ModalWrapper(props: ModalWrapperProps) {
   const { children } = props;
 
-  const preventBubbleEvent = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  return <StModalWrapper onClick={preventBubbleEvent}>{children}</StModalWrapper>;
+  return <StModalWrapper>{children}</StModalWrapper>;
 }
 
 const StModalWrapper = styled.div`
@@ -29,6 +25,4 @@ const StModalWrapper = styled.div`
   justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.white};
-
-  cursor: default;
 `;

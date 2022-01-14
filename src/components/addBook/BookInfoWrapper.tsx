@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
@@ -56,23 +56,25 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
   );
 
   return (
-    <StArticle onClick={handleToggleModal}>
-      {thumbnail ? (
-        <StThumbnail src={thumbnail} alt="책 표지" />
-      ) : (
-        <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
-      )}
-      <StInfoWrapper>
-        <InfoTitle>{title}</InfoTitle>
-        <InfoLabelWrapper>
-          <InfoLabel>{authors}</InfoLabel>
-          <DivideLine></DivideLine>
-          <InfoLabel>
-            {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
-          </InfoLabel>
-        </InfoLabelWrapper>
-        <InfoSummary>{contents}</InfoSummary>
-      </StInfoWrapper>
+    <>
+      <StArticle onClick={handleToggleModal}>
+        {thumbnail ? (
+          <StThumbnail src={thumbnail} alt="책 표지" />
+        ) : (
+          <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+        )}
+        <StInfoWrapper>
+          <InfoTitle>{title}</InfoTitle>
+          <InfoLabelWrapper>
+            <InfoLabel>{authors}</InfoLabel>
+            <DivideLine></DivideLine>
+            <InfoLabel>
+              {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
+            </InfoLabel>
+          </InfoLabelWrapper>
+          <InfoSummary>{contents}</InfoSummary>
+        </StInfoWrapper>
+      </StArticle>
       {openModal && (
         <ModalWrapper>
           <ShowModal
@@ -85,7 +87,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
           />
         </ModalWrapper>
       )}
-    </StArticle>
+    </>
   );
 }
 
