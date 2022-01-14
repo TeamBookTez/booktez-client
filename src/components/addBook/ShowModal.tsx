@@ -21,7 +21,7 @@ export default function ShowModal(props: ShowModalProps) {
         <ModalLabel>{authors} </ModalLabel>
         {translators.length > 0 && (
           <ModalLabel>
-            <span> | </span>
+            <DivideLine>|</DivideLine>
             {translators}
           </ModalLabel>
         )}
@@ -54,12 +54,11 @@ const ModalLabelWrapper = styled.div`
 const ModalLabel = styled.p`
   color: ${({ theme }) => theme.colors.gray400};
   ${({ theme }) => theme.fonts.body0};
-
-  & > span {
-    margin-left: 0.2em;
-  }
 `;
 
+const DivideLine = styled.span`
+  margin: 0 0.4rem;
+`;
 const ModalDate = styled.p`
   color: ${({ theme }) => theme.colors.white500};
   ${({ theme }) => theme.fonts.body2};
