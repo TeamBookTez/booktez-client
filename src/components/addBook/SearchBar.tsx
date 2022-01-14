@@ -1,6 +1,6 @@
-import _ from "lodash";
-import React, { useRef, useState } from "react";
-import styled, { css, keyframes } from "styled-components";
+import { debounce } from "lodash";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common";
@@ -12,19 +12,13 @@ export default function SearchBar(props: SearchBarProps) {
   const { setQuery } = props;
   const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
 
+  const debouncingQuery = debounce((searchingText: string) => setQuery(searchingText), 500);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
     setIsQueryEmpty(text === "");
-    setQuery(text);
-
-    // const test = useRef(_.debounce((text: string) => setQuery(text), 500)).current;
-
-    // const debouncedSearch = React.useRef(
-    //   debounce(async (criteria) => {
-    //     setCharacters(await search(criteria));
-    //   }, 300)
-    // ).current;
+    debouncingQuery(text);
   };
 
   return (
@@ -102,7 +96,7 @@ const InputSearch = styled.input`
   padding-left: 6.4rem;
 
   background-color: ${({ theme }) => theme.colors.white200};
-  
+
   ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray100};
 
