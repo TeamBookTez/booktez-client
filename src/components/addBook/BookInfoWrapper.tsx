@@ -105,10 +105,12 @@ const StArticle = styled.article`
 `;
 
 const StThumbnail = styled.img`
-  margin-right: 1.6rem;
-
   width: 12.1rem;
   height: 16.9rem;
+
+  margin-right: 1.6rem;
+
+  border-radius: 0.8rem;
 `;
 
 const StInfoWrapper = styled.div`

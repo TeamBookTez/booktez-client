@@ -38,6 +38,9 @@ const ModalThumbnail = styled.img`
   height: 30rem;
 
   margin-bottom: 3.5rem;
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
+  border-radius: 1.6rem;
 `;
 
 const ModalTitle = styled.strong`
