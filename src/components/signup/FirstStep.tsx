@@ -3,9 +3,8 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
+import { isEmail } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
-
-// type userDataType = (key: "email" | "password" | "nickname", value: string) => void;
 
 export default function FirstStep() {
   const [userData, setUserData, handleIsAniTime] =
@@ -19,20 +18,23 @@ export default function FirstStep() {
     handleIsAniTime(false);
   }, []);
 
-  const goNextStep = () => {
-    if (isEmailEmpty || isEmailError) return;
+  useEffect(() => {
+    setIsEmailError(false);
+  }, [userData]);
 
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
+  const goNextStep = () => {
+    if (isEmailEmpty) return;
+    if (!isEmail(userData["email"])) {
+      setIsEmailError(true);
+    } else {
+      handleIsAniTime(true);
+      setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
+    }
   };
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEmailEmpty(e.target.value === "");
     setUserData((current) => ({ ...current, email: e.target.value }));
-  };
-
-  const checkIsEmailError = () => {
-    setIsEmailError(true);
   };
 
   return (
