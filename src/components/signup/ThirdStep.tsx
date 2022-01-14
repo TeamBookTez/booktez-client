@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
+import { postSignUp } from "../../utils/auth.api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
 export default function ThirdStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isPwdReEmpty, setIsPwdReEmpty] = useState<boolean>(true);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
@@ -13,7 +16,6 @@ export default function ThirdStep() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
   const nav = useNavigate();
-  const tempEmail = "bookstairs@sopt.com";
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -21,12 +23,14 @@ export default function ThirdStep() {
 
   const goNextStep = () => {
     if (isPwdEmpty || isPwdReEmpty || isPwdError || isPwdReError) return;
+    postSignUp(userData);
     handleIsAniTime(true);
     setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
   };
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdEmpty(e.target.value === "");
+    setUserData((current) => ({ ...current, password: e.target.value }));
   };
   const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdReEmpty(e.target.value === "");
@@ -50,7 +54,7 @@ export default function ThirdStep() {
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StFormWrapper>
-        <StEmailFixed>{tempEmail}</StEmailFixed>
+        <StEmailFixed>{userData["email"]}</StEmailFixed>
 
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
         <StInputPwdWrapper>

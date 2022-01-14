@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
+// type userDataType = (key: "email" | "password" | "nickname", value: string) => void;
+
 export default function FirstStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -23,6 +28,7 @@ export default function FirstStep() {
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEmailEmpty(e.target.value === "");
+    setUserData((current) => ({ ...current, email: e.target.value }));
   };
 
   const checkIsEmailError = () => {

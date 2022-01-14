@@ -1,9 +1,7 @@
 import axios from "axios";
 
-import { getBaseURL } from "../restApi";
-
 export const loginAxios = axios.create({
-  baseURL: `${getBaseURL}`,
+  baseURL: `${process.env.REACT_APP_API_URI}`,
   headers: {
     "Content-Type": "application/json",
   },
