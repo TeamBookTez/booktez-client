@@ -18,11 +18,11 @@ export default function ShowModal(props: ShowModalProps) {
       {thumbnail ? <ModalThumbnail src={thumbnail} alt="책 표지" /> : <ModalThumbnail src={ImgNull} alt="책 표지" />}
       <ModalTitle>{title}</ModalTitle>
       <ModalLabelWrapper>
-        <ModalLabel>{authors} </ModalLabel>
+        <ModalLabel>{authors} 지음</ModalLabel>
         {translators.length > 0 && (
           <ModalLabel>
             <DivideLine>|</DivideLine>
-            {translators}
+            {translators} 옮김
           </ModalLabel>
         )}
       </ModalLabelWrapper>
@@ -60,7 +60,7 @@ const ModalLabel = styled.p`
 `;
 
 const DivideLine = styled.span`
-  margin: 0 0.4rem;
+  margin: 0 0.5rem;
 `;
 const ModalDate = styled.p`
   color: ${({ theme }) => theme.colors.white500};
