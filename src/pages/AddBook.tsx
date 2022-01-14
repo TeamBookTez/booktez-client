@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import BookList from "../components/addBook/BookList";
 import SearchBar from "../components/addBook/SearchBar";
 import { MainHeader } from "../components/common";
-import { bookSearch } from "../utils/lib/fetcher";
+import { bookSearch } from "../utils/lib/api";
 
 export interface BookInfo {
   thumbnail: string;
