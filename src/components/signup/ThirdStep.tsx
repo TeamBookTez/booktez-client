@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { postSignUp } from "../../utils/auth.api";
+import { isPwd } from "../../utils/check";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
 export default function ThirdStep() {
@@ -21,11 +22,19 @@ export default function ThirdStep() {
     handleIsAniTime(false);
   }, []);
 
+  useEffect(() => {
+    setIsPwdError(false);
+  }, [userData]);
+
   const goNextStep = () => {
-    if (isPwdEmpty || isPwdReEmpty || isPwdError || isPwdReError) return;
-    postSignUp(userData);
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+    if (isPwdEmpty || isPwdReEmpty) return;
+    if (!isPwd(userData["password"])) {
+      setIsPwdError(true);
+    } else {
+      postSignUp(userData);
+      handleIsAniTime(true);
+      setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+    }
   };
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
