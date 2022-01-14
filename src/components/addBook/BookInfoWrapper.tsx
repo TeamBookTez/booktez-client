@@ -120,7 +120,7 @@ const StInfoWrapper = styled.div`
 `;
 
 const InfoTitle = styled.strong`
-  font: ${({ theme }) => theme.fonts.header2};
+  ${({ theme }) => theme.fonts.header2};
 `;
 
 const InfoLabelWrapper = styled.div`
@@ -133,7 +133,7 @@ const InfoLabelWrapper = styled.div`
 const InfoLabel = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 
-  font: ${({ theme }) => theme.fonts.body6};
+  ${({ theme }) => theme.fonts.body6};
 
   vertical-align: middle; // p 태그의 수직 정렬 이렇게 하는 것으로 알고있는데 잘 먹지 않는 것 같아요.
 `;
@@ -150,7 +150,7 @@ const DivideLine = styled.div`
 const InfoSummary = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 
-  font: ${({ theme }) => theme.fonts.body4};
+  ${({ theme }) => theme.fonts.body4};
 
   overflow: hidden;
   max-height: 8.1rem;

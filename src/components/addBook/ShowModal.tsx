@@ -43,7 +43,7 @@ const ModalThumbnail = styled.img`
 const ModalTitle = styled.strong`
   margin-bottom: 0.5rem;
 
-  font: ${({ theme }) => theme.fonts.header0};
+  ${({ theme }) => theme.fonts.header0};
 `;
 
 const ModalLabelWrapper = styled.div`
@@ -53,7 +53,7 @@ const ModalLabelWrapper = styled.div`
 
 const ModalLabel = styled.p`
   color: ${({ theme }) => theme.colors.gray400};
-  font: ${({ theme }) => theme.fonts.body0};
+  ${({ theme }) => theme.fonts.body0};
 
   & > span {
     margin-left: 0.2em;
@@ -62,5 +62,5 @@ const ModalLabel = styled.p`
 
 const ModalDate = styled.p`
   color: ${({ theme }) => theme.colors.white500};
-  font: ${({ theme }) => theme.fonts.body2};
+  ${({ theme }) => theme.fonts.body2};
 `;
