@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
@@ -10,12 +10,10 @@ interface SearchBarProps {
 }
 export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, setDebounceQuery } = props;
-  const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
-    setIsQueryEmpty(text === "");
     setDebounceQuery(text);
   };
 
@@ -25,8 +23,8 @@ export default function SearchBar(props: SearchBarProps) {
 
   return (
     <StWrapper>
-      <SearchBarWrapper isqueryempty={isQueryEmpty}>
-        <StIcSearch isqueryempty={isQueryEmpty} />
+      <SearchBarWrapper isqueryempty={debounceQuery === ""}>
+        <StIcSearch isqueryempty={debounceQuery === ""} />
 
         <LabelHidden htmlFor="addBookSearch">검색</LabelHidden>
         <InputSearch
@@ -36,7 +34,7 @@ export default function SearchBar(props: SearchBarProps) {
           id="addBookSearch"
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
-        <StIcCancel onClick={handleCancel} isqueryempty={isQueryEmpty} />
+        <StIcCancel onClick={handleCancel} isqueryempty={debounceQuery === ""} />
       </SearchBarWrapper>
     </StWrapper>
   );
