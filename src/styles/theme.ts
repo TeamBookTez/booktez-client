@@ -5,7 +5,7 @@ const colors = {
   orange200: "#FFF1EB",
   gray100: "#242424",
   gray200: "#3D3D3D",
-  gray300: "#858585",
+  gray300: "#555555",
   gray400: "#6F6F6F",
   white: "#FFFFFF",
   white200: "#F7F7F7",
@@ -18,7 +18,7 @@ const colors = {
 const fonts = {
   header: `
     font-family: Pretendard;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 6.2rem;
     line-height: 1.3;
     letter-spacing: -0.1rem;

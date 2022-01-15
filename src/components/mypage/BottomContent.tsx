@@ -8,7 +8,7 @@ export default function BottomContent() {
           <img src="" alt="" />
         </StImgWrapper>
         <StContentWrapper>
-          <StBooksNum>8</StBooksNum>
+          <StBooksNum>10</StBooksNum>
           <StComment>
             지금까지
             <br />
@@ -41,14 +41,14 @@ export default function BottomContent() {
 const StWrapper = styled.section`
   display: flex;
 
-  width: 118rem;
-  height: 30.3rem;
-  margin: 0 4rem 7rem 4rem;
+  width: 100%;
+  height: 41%;
+  padding: 0 4rem 7rem 4rem;
 `;
 
 // 로그인 여부에 따라 삼항연산자 분기 처리
 const StCountBook = styled.article`
-  width: 23.3rem;
+  width: 25%;
 
   margin-right: 4rem;
 
@@ -66,16 +66,13 @@ const StImgWrapper = styled.div`
 
 const StContentWrapper = styled.div`
   display: flex;
-  justify-content: center;
 
-  padding: 0 2.2rem 5rem 2.2rem;
+  padding: 0 2.3rem 5rem 2.3rem;
 `;
 
 const StBooksNum = styled.strong`
-  // 임시 폰트 설정
-  ${({ theme }) => theme.fonts.header2};
-  font-size: 6.2rem;
-  color: #3d3d3d;
+  ${({ theme }) => theme.fonts.header};
+  color: ${({ theme }) => theme.colors.gray200};
 `;
 
 const StComment = styled.p`
@@ -84,7 +81,7 @@ const StComment = styled.p`
   justify-content: center;
   /* align-items: center; */
 
-  margin-left: 0.8rem;
+  margin-left: 1.2rem;
 
   ${({ theme }) => theme.fonts.body0};
   color: ${({ theme }) => theme.colors.gray200};
@@ -95,18 +92,18 @@ const StComment = styled.p`
 `;
 
 const StServiceWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3rem;
+  row-gap: 3rem;
 
-  width: 91rem;
+  width: 100%;
 `;
 
 const StServiceInfo = styled.article`
-  width: 44rem;
+  width: 100%;
   height: 13.6rem;
 
-  margin-bottom: 3rem;
   padding: 3.7rem 4.8rem;
 
   border-radius: 2rem;
