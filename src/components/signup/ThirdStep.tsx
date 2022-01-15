@@ -33,7 +33,7 @@ export default function ThirdStep() {
     } else {
       postSignUp(userData);
       handleIsAniTime(true);
-      setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+      setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
     }
   };
 
@@ -62,7 +62,7 @@ export default function ThirdStep() {
   return (
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
-      <StFormWrapper>
+      <StInputWrapper>
         <StEmailFixed>{userData["email"]}</StEmailFixed>
 
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
@@ -100,7 +100,7 @@ export default function ThirdStep() {
           onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
-      </StFormWrapper>
+      </StInputWrapper>
     </>
   );
 }
@@ -111,7 +111,7 @@ const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body0}
 `;
 
-const StFormWrapper = styled.form`
+const StInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
