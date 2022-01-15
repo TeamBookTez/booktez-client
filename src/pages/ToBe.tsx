@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { ImgDevice } from "../assets/images";
-import { Button, MainHeader } from "../components/common";
+import { MainHeader } from "../components/common";
 
 export default function ToBe() {
   return (
@@ -22,7 +22,9 @@ export default function ToBe() {
               북스테어즈는 꾸준히 달립니다.
             </StExplain>
           </div>
-          <StBtn>응원과 피드백 하러 가기</StBtn>
+          <StAnchor href="" target="_blank">
+            응원과 피드백 하러 가기
+          </StAnchor>
         </Starticle>
         <img src={ImgDevice} alt="기기 사진" width="618px" height="572px" />
       </StSection>
@@ -64,11 +66,17 @@ const StExplain = styled.p`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StBtn = styled(Button)`
+const StAnchor = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 32.5rem;
   height: 5.6rem;
 
   border-radius: 1rem;
 
+  background-color: ${({ theme }) => theme.colors.orange100};
+  color: ${({ theme }) => theme.colors.white};
   ${({ theme }) => theme.fonts.button}
 `;
