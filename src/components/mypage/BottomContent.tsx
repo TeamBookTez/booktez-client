@@ -1,6 +1,11 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 
+import BookComment from "./BookComment";
+
 export default function BottomContent() {
+  const [booksNum, setBooksNum] = useState<number>(10);
+
   return (
     <StWrapper>
       <StCountBook>
@@ -8,12 +13,8 @@ export default function BottomContent() {
           <img src="" alt="" />
         </StImgWrapper>
         <StContentWrapper>
-          <StBooksNum>10</StBooksNum>
-          <StComment>
-            지금까지
-            <br />
-            <span>권 책을 읽었어요</span>
-          </StComment>
+          <StBooksNum>{booksNum}</StBooksNum>
+          <BookComment booksNum={booksNum} />
         </StContentWrapper>
       </StCountBook>
       <StServiceWrapper>
@@ -66,29 +67,16 @@ const StImgWrapper = styled.div`
 
 const StContentWrapper = styled.div`
   display: flex;
+  justify-content: center;
 
-  padding: 0 2.3rem 5rem 2.3rem;
+  padding: 0 2rem 5rem 2rem;
 `;
 
 const StBooksNum = styled.strong`
+  margin-right: 1.2rem;
+
   ${({ theme }) => theme.fonts.header};
   color: ${({ theme }) => theme.colors.gray200};
-`;
-
-const StComment = styled.p`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* align-items: center; */
-
-  margin-left: 1.2rem;
-
-  ${({ theme }) => theme.fonts.body0};
-  color: ${({ theme }) => theme.colors.gray200};
-
-  & > span {
-    ${({ theme }) => theme.fonts.header4};
-  }
 `;
 
 const StServiceWrapper = styled.div`
