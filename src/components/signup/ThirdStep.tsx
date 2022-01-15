@@ -1,11 +1,23 @@
+import axios, { AxiosRequestHeaders } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
+import { isPwd } from "../../utils/check";
+// import { client } from "../../utils/lib";
+import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
+interface Body {
+  email: string;
+  password: string;
+  nickname?: string;
+}
+
 export default function ThirdStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isPwdReEmpty, setIsPwdReEmpty] = useState<boolean>(true);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
@@ -15,14 +27,34 @@ export default function ThirdStep() {
   const nav = useNavigate();
   const tempEmail = "bookstairs@sopt.com";
 
+  const signupHeader: AxiosRequestHeaders = {
+    "Content-Type": "application/json",
+  };
+  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
+    try {
+      const { data } = await postData(header, key, body);
+
+      localStorage.setItem("token", data.token);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
 
   const goNextStep = () => {
-    if (isPwdEmpty || isPwdReEmpty || isPwdError || isPwdReError) return;
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+    if (isPwdEmpty || isPwdReEmpty) return;
+    if (!isPwd(userData["password"])) {
+      setIsPwdError(true);
+    } else {
+      signup(signupHeader, "/auth/signup", userData);
+      handleIsAniTime(true);
+      setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+    }
   };
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
