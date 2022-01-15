@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { ImgDevice } from "../assets/images";
-import { MainHeader } from "../components/common";
+import { Button, MainHeader } from "../components/common";
 
 export default function ToBe() {
   return (
@@ -10,21 +10,21 @@ export default function ToBe() {
       <StSection>
         <Starticle>
           <div>
-            <p>ㅡ 다음 계단</p>
-            <h3>
+            <StPreface>ㅡ 다음 계단</StPreface>
+            <StH3>
               사용하시는 모든 기기에서
               <br />
               이용할 수 있도록 준비중이에요
-            </h3>
-            <p>
+            </StH3>
+            <StExplain>
               진짜 독서가들이 최적의 독서활동을 할 수 있도록,
               <br />
               북스테어즈는 꾸준히 달립니다.
-            </p>
+            </StExplain>
           </div>
-          <button>응원과 피드백 하러 가기</button>
+          <StBtn>응원과 피드백 하러 가기</StBtn>
         </Starticle>
-        <img src={ImgDevice} alt="기기 사진" />
+        <img src={ImgDevice} alt="기기 사진" width="618px" height="572px" />
       </StSection>
     </>
   );
@@ -43,4 +43,32 @@ const Starticle = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+const StPreface = styled.p`
+  ${({ theme }) => theme.fonts.header4}
+  color: ${({ theme }) => theme.colors.gray300};
+`;
+
+const StH3 = styled.h3`
+  margin-top: 6.4rem;
+
+  ${({ theme }) => theme.fonts.header0}
+  color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StExplain = styled.p`
+  margin-top: 3.2rem;
+
+  ${({ theme }) => theme.fonts.body6}
+  color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StBtn = styled(Button)`
+  width: 32.5rem;
+  height: 5.6rem;
+
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 `;
