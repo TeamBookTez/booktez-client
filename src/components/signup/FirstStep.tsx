@@ -22,6 +22,12 @@ export default function FirstStep() {
     setIsEmailError(false);
   }, [userData]);
 
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      goNextStep();
+    }
+  };
+
   const goNextStep = () => {
     if (isEmailEmpty) return;
     if (!isEmail(userData["email"])) {
@@ -49,6 +55,7 @@ export default function FirstStep() {
           isEmpty={isEmailEmpty}
           isError={isEmailError}
           checkIsEmpty={checkIsEmailEmpty}
+          onEnter={onKeyPress}
         />
         <AlertLabel isError={isEmailError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>

@@ -11,6 +11,7 @@ interface InputPwdProps {
   isPwdSight: boolean;
   handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   toggleSightPwd: () => void;
+  onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 interface StInputPwdProps {
@@ -20,7 +21,8 @@ interface StInputPwdProps {
 }
 
 export default function InputPwd(props: InputPwdProps) {
-  const { whatPlaceholder, whatType, whatId, isEmpty, isError, isPwdSight, handleOnChange, toggleSightPwd } = props;
+  const { whatPlaceholder, whatType, whatId, isEmpty, isError, isPwdSight, handleOnChange, toggleSightPwd, onEnter } =
+    props;
 
   return (
     <StPwdWrapper>
@@ -32,6 +34,7 @@ export default function InputPwd(props: InputPwdProps) {
         ispwderror={isError}
         ispwdsight={isPwdSight}
         onChange={handleOnChange}
+        onKeyDown={onEnter}
       />
       {isPwdSight ? <StIcSight onClick={toggleSightPwd} /> : <StIcNoSight onClick={toggleSightPwd} />}
     </StPwdWrapper>

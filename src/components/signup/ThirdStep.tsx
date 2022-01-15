@@ -26,6 +26,12 @@ export default function ThirdStep() {
     setIsPwdError(false);
   }, [userData]);
 
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      goNextStep();
+    }
+  };
+
   const goNextStep = () => {
     if (isPwdEmpty || isPwdReEmpty) return;
     if (!isPwd(userData["password"])) {
@@ -38,6 +44,7 @@ export default function ThirdStep() {
   };
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.dir(e.target);
     setIsPwdEmpty(e.target.value === "");
     setUserData((current) => ({ ...current, password: e.target.value }));
   };
@@ -76,6 +83,7 @@ export default function ThirdStep() {
             isPwdSight={isPwdSight}
             toggleSightPwd={toggleSightPwd}
             handleOnChange={checkIsPwdEmpty}
+            onEnter={onKeyPress}
           />
         </StInputPwdWrapper>
         <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
@@ -91,6 +99,7 @@ export default function ThirdStep() {
             isPwdSight={isPwdReSight}
             toggleSightPwd={toggleSightRePwd}
             handleOnChange={checkIsPwdReEmpty}
+            onEnter={onKeyPress}
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
