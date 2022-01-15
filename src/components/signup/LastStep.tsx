@@ -3,10 +3,12 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgGraphic } from "../../assets/images";
+import { UserData } from "../../pages/Signup";
 import { Button } from "../common";
 
 export default function LastStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
 
   const nav = useNavigate();
 
