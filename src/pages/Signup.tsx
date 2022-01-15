@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { ImgSignupFirst, ImgSignupSecond, ImgSignupThird } from "../assets/images";
@@ -55,13 +55,17 @@ export default function Layout() {
   return (
     <>
       <NavHeader logocolor={theme.colors.gray100} />
-      <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
-        <StArticle>
-          {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
-          <StHeading2>{headerText}</StHeading2>
-          <Outlet context={[userData, setUserData, handleIsAniTime]} />
-        </StArticle>
-      </StMain>
+      {state === "ani" ? (
+        <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
+          <StArticle>
+            {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
+            <StHeading2>{headerText}</StHeading2>
+            <Outlet context={[userData, setUserData, handleIsAniTime]} />
+          </StArticle>
+        </StMain>
+      ) : (
+        <div>404 에러</div>
+      )}
     </>
   );
 }
@@ -91,12 +95,7 @@ const StMain = styled.main<StMainProps>`
   align-items: center;
   justify-content: center;
 
-  ${({ isrightpath }) =>
-    isrightpath
-      ? css`
-          animation: ${fadein} 1s ease-in-out;
-        `
-      : ""};
+  animation: ${fadein} 1s ease-in-out;
   ${({ isAniTime }) =>
     isAniTime
       ? css`
