@@ -1,35 +1,39 @@
-import { useState } from "react";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common";
 
 interface SearchBarProps {
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  debounceQuery: string;
+  onDebounceQuery: (tempQeury: string) => void;
 }
 export default function SearchBar(props: SearchBarProps) {
-  const { setQuery } = props;
-  const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
+  const { debounceQuery, onDebounceQuery } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
-    setQuery(text);
+    onDebounceQuery(text);
+  };
+
+  const handleCancel = () => {
+    onDebounceQuery("");
   };
 
   return (
     <StWrapper>
-      <SearchBarWrapper isQueryEmpty={isQueryEmpty}>
-        <StIcSearch isQueryEmpty={isQueryEmpty} />
+      <SearchBarWrapper isqueryempty={debounceQuery === ""}>
+        <StIcSearch isqueryempty={debounceQuery === ""} />
 
         <LabelHidden htmlFor="addBookSearch">검색</LabelHidden>
         <InputSearch
           onChange={handleChange}
           type="text"
+          value={debounceQuery}
           id="addBookSearch"
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
-        <StIcCancel isQueryEmpty={isQueryEmpty} />
+        <StIcCancel onClick={handleCancel} isqueryempty={debounceQuery === ""} />
       </SearchBarWrapper>
     </StWrapper>
   );
@@ -44,7 +48,9 @@ const StWrapper = styled.section`
   padding-bottom: 3.5rem;
 `;
 
-const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
+const SearchBarWrapper = styled.div<{ isqueryempty: boolean }>`
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,28 +62,26 @@ const SearchBarWrapper = styled.div<{ isQueryEmpty: boolean }>`
 
   height: 5.6rem;
 
-  &:focus-within,
-  &:hover {
-    border: 0.2rem solid ${({ theme }) => theme.colors.gray100}; // border로 인해 크기변경 문제를 수정해야 함.
-  }
-
-  ${({ isQueryEmpty }) =>
-    isQueryEmpty
-      ? ""
+  ${({ isqueryempty }) =>
+    isqueryempty
+      ? css`
+          border: 0.2rem solid ${({ theme }) => theme.colors.white200};
+        `
       : css`
           border: 0.2rem solid ${({ theme }) => theme.colors.gray100};
         `}
 `;
 
-const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
-  margin-left: 1.5rem;
-  margin-right: 2.7rem;
+const StIcSearch = styled(IcSearch)<{ isqueryempty: boolean }>`
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
 
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3.2rem;
+  height: 3.2rem;
 
-  ${({ isQueryEmpty }) =>
-    isQueryEmpty
+  ${({ isqueryempty }) =>
+    isqueryempty
       ? css`
           fill: ${({ theme }) => theme.colors.white500};
         `
@@ -87,26 +91,24 @@ const StIcSearch = styled(IcSearch)<{ isQueryEmpty: boolean }>`
 `;
 
 const InputSearch = styled.input`
+  width: 100%;
+
+  padding-left: 6.4rem;
+
   background-color: ${({ theme }) => theme.colors.white200};
+
+  ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray100};
 
-  width: 100%;
-  height: 1.8rem;
-
   &::placeholder {
-    /* 글꼴 설정 */
-    font-family: pretendard;
-    font-weight: 400;
-    font-size: 1.8rem;
-    line-height: 2.34rem;
     color: ${({ theme }) => theme.colors.gray400};
   }
 `;
 
-const StIcCancel = styled(IcCancel)<{ isQueryEmpty: boolean }>`
+const StIcCancel = styled(IcCancel)<{ isqueryempty: boolean }>`
   margin-right: 1.5rem;
 
-  ${({ isQueryEmpty }) => (isQueryEmpty ? "display: none;" : "")}
+  ${({ isqueryempty }) => (isqueryempty ? "display: none;" : "")}
 
   &:hover {
     cursor: pointer;

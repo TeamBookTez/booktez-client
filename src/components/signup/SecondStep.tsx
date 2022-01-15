@@ -1,31 +1,60 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { AlertLabel, Button, Input, LabelHidden } from "../common";
+import { UserData } from "../../pages/Signup";
+import { isNickname } from "../../utils/check";
+import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function SecondStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
-
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
+  const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
   const nav = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
 
+  useEffect(() => {
+    setIsNicknameError(false);
+  }, [userData]);
+
   const goNextStep = () => {
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
+    if (isNicknameEmpty) return;
+    if (isNickname(userData["nickname"])) {
+      setIsNicknameError(true);
+    } else {
+      handleIsAniTime(true);
+      setTimeout(() => nav("/signup/3", { state: "ani" }), 1000);
+    }
+  };
+
+  const checkIsNicknameEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsNicknameEmpty(e.target.value === "");
+    setUserData((current) => ({ ...current, nickname: e.target.value }));
+  };
+
+  const checkIsNicknameError = () => {
+    setIsNicknameError(true);
   };
 
   return (
     <>
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
       <StFormWrapper>
-        <LabelHidden htmlFor="signupNickname">닉네임</LabelHidden>
-        <Input type="text" id="signupNickname" placeholder="닉네임을 입력해주세요" />
-        <AlertLabel isError={true}>올바른 형식이 아닙니다.</AlertLabel>
-        <StNextStepBtn type="button" onClick={goNextStep}>
+        <LabelHidden htmlFor="signupnickname">닉네임</LabelHidden>
+        <InputEmail
+          whatPlaceholder="닉네임을 입력해 주세요"
+          whatType="text"
+          whatId="signupnickname"
+          isEmpty={isNicknameEmpty}
+          isError={isNicknameError}
+          checkIsEmpty={checkIsNicknameEmpty}
+        />
+        <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
+        <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StFormWrapper>
@@ -35,8 +64,8 @@ export default function SecondStep() {
 
 const StParagraph = styled.p`
   margin-bottom: 5.2rem;
-  /* 임의 폰트 */
-  font-size: 2rem;
+
+  ${({ theme }) => theme.fonts.body0}
 `;
 
 const StFormWrapper = styled.form`
@@ -45,11 +74,24 @@ const StFormWrapper = styled.form`
   align-items: center;
 `;
 
-const StNextStepBtn = styled(Button)`
+const StNextStepBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
   margin-top: 5rem;
 
   border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
+
+  ${({ active }) =>
+    active
+      ? ""
+      : css`
+          background-color: ${({ theme }) => theme.colors.white400}; // inactive
+          color: ${({ theme }) => theme.colors.gray300}; // inactive
+          &:hover {
+            cursor: default;
+          }
+        `}
 `;

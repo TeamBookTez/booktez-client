@@ -1,7 +1,16 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { BookInfo } from "./AddBookWrapper";
+import { ImgNull } from "../../assets/images";
+import { BookInfo } from "../../pages/AddBook";
+import ModalWrapper from "./ModalWrapper";
+import ShowModal from "./ShowModal";
+
+export interface PublishDate {
+  year: string;
+  month: string;
+  date: string;
+}
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
@@ -10,19 +19,27 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     thumbnail: "",
     title: "",
     authors: [],
+    translators: [],
     datetime: "",
     contents: "",
+    isbn: "",
   });
 
-  const { thumbnail, title, authors, datetime, contents }: BookInfo = book;
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
 
   const dateTimeString = bookInfo.datetime.toString();
 
-  const publishDate = {
+  const publishDate: PublishDate = {
     year: dateTimeString.slice(0, 4),
     month: dateTimeString.slice(5, 7),
     date: dateTimeString.slice(8, 10),
   };
+
+  const onToggleModal = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal]);
 
   useEffect(
     () =>
@@ -37,23 +54,39 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     [],
   );
 
-  // console.log(bookInfo.datetime, typeof bookInfo.datetime);
-
   return (
-    <StArticle>
-      <StImgTemp src={bookInfo.thumbnail} alt="책 표지" />
-      <StInfoWrapper>
-        <InfoTitle>{bookInfo.title}</InfoTitle>
-        <InfoDetailWrapper>
-          <InfoDetail>{bookInfo.authors}</InfoDetail>
-          <DivideLine></DivideLine>
-          <InfoDetail>
-            {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
-          </InfoDetail>
-        </InfoDetailWrapper>
-        <InfoSummary>{bookInfo.contents}</InfoSummary>
-      </StInfoWrapper>
-    </StArticle>
+    <>
+      <StArticle onClick={onToggleModal}>
+        {thumbnail ? (
+          <StThumbnail src={thumbnail} alt="책 표지" />
+        ) : (
+          <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+        )}
+        <StInfoWrapper>
+          <InfoTitle>{title}</InfoTitle>
+          <InfoLabelWrapper>
+            <InfoLabel>{authors}</InfoLabel>
+            <DivideLine></DivideLine>
+            <InfoLabel>
+              {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
+            </InfoLabel>
+          </InfoLabelWrapper>
+          <InfoSummary>{contents}</InfoSummary>
+        </StInfoWrapper>
+      </StArticle>
+      {openModal && (
+        <ModalWrapper>
+          <ShowModal
+            onToggleModal={onToggleModal}
+            thumbnail={thumbnail}
+            title={title}
+            authors={authors}
+            translators={translators}
+            publishDate={publishDate}
+          />
+        </ModalWrapper>
+      )}
+    </>
   );
 }
 
@@ -66,16 +99,18 @@ const StArticle = styled.article`
   height: 20.1rem;
 
   &:hover {
-    background-color: #fff1eb;
+    background-color: ${({ theme }) => theme.colors.orange200};
     cursor: pointer;
   }
 `;
 
-const StImgTemp = styled.img`
+const StThumbnail = styled.img`
+  width: 12.1rem;
+  height: 16.9rem;
+
   margin-right: 1.6rem;
 
-  /* height: 100%; */
-  width: auto;
+  border-radius: 0.8rem;
 `;
 
 const StInfoWrapper = styled.div`
@@ -87,23 +122,22 @@ const StInfoWrapper = styled.div`
 `;
 
 const InfoTitle = styled.strong`
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 3.12rem;
+  ${({ theme }) => theme.fonts.header2};
 `;
 
-const InfoDetailWrapper = styled.div`
+const InfoLabelWrapper = styled.div`
   display: flex;
   align-items: center;
 
   height: 2.1rem;
 `;
 
-const InfoDetail = styled.p`
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 2.08rem;
-  text-align: center;
+const InfoLabel = styled.p`
+  color: ${({ theme }) => theme.colors.gray300};
+
+  ${({ theme }) => theme.fonts.body6};
+
+  line-height: 2.1rem; //감싸고 있는 부모의 div 높이인 2.1rem만큼 주어서 중앙에 오도록 설정(미세한 오차는 있음) - 씨에스에스 이주함 선생 -
 `;
 
 const DivideLine = styled.div`
@@ -116,10 +150,10 @@ const DivideLine = styled.div`
 `;
 
 const InfoSummary = styled.p`
-  font-size: 1.8rem;
-  font-weight: 400;
-  line-height: 2.34rem;
+  color: ${({ theme }) => theme.colors.gray300};
+
+  ${({ theme }) => theme.fonts.body4};
 
   overflow: hidden;
-  max-height: 6.9rem;
+  max-height: 8.1rem;
 `;
