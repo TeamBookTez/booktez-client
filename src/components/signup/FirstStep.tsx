@@ -2,31 +2,39 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
+import { isEmail } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function FirstStep() {
-  const [handleIsAniTime] = useOutletContext<[(isActive: boolean) => void]>();
+  const [userData, setUserData, handleIsAniTime] =
+    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+
   const nav = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
 
-  const goNextStep = () => {
-    if (isEmailEmpty || isEmailError) return;
+  useEffect(() => {
+    setIsEmailError(false);
+  }, [userData]);
 
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
+  const goNextStep = () => {
+    if (isEmailEmpty) return;
+    if (!isEmail(userData["email"])) {
+      setIsEmailError(true);
+    } else {
+      handleIsAniTime(true);
+      setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
+    }
   };
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEmailEmpty(e.target.value === "");
-  };
-
-  const checkIsEmailError = () => {
-    setIsEmailError(true);
+    setUserData((current) => ({ ...current, email: e.target.value }));
   };
 
   return (

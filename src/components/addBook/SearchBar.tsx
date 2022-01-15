@@ -1,45 +1,39 @@
-import _ from "lodash";
-import React, { useRef, useState } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common";
 
 interface SearchBarProps {
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  debounceQuery: string;
+  onDebounceQuery: (tempQeury: string) => void;
 }
 export default function SearchBar(props: SearchBarProps) {
-  const { setQuery } = props;
-  const [isQueryEmpty, setIsQueryEmpty] = useState<boolean>(true);
+  const { debounceQuery, onDebounceQuery } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
 
-    setIsQueryEmpty(text === "");
-    setQuery(text);
+    onDebounceQuery(text);
+  };
 
-    // const test = useRef(_.debounce((text: string) => setQuery(text), 500)).current;
-
-    // const debouncedSearch = React.useRef(
-    //   debounce(async (criteria) => {
-    //     setCharacters(await search(criteria));
-    //   }, 300)
-    // ).current;
+  const handleCancel = () => {
+    onDebounceQuery("");
   };
 
   return (
     <StWrapper>
-      <SearchBarWrapper isqueryempty={isQueryEmpty}>
-        <StIcSearch isqueryempty={isQueryEmpty} />
+      <SearchBarWrapper isqueryempty={debounceQuery === ""}>
+        <StIcSearch isqueryempty={debounceQuery === ""} />
 
         <LabelHidden htmlFor="addBookSearch">검색</LabelHidden>
         <InputSearch
           onChange={handleChange}
           type="text"
+          value={debounceQuery}
           id="addBookSearch"
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
-        <StIcCancel isqueryempty={isQueryEmpty} />
+        <StIcCancel onClick={handleCancel} isqueryempty={debounceQuery === ""} />
       </SearchBarWrapper>
     </StWrapper>
   );

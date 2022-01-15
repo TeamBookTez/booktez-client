@@ -5,7 +5,6 @@ import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { isPwd } from "../../utils/check";
-// import { client } from "../../utils/lib";
 import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
@@ -25,7 +24,6 @@ export default function ThirdStep() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
   const nav = useNavigate();
-  const tempEmail = "bookstairs@sopt.com";
 
   const signupHeader: AxiosRequestHeaders = {
     "Content-Type": "application/json",
@@ -46,6 +44,10 @@ export default function ThirdStep() {
     handleIsAniTime(false);
   }, []);
 
+  useEffect(() => {
+    setIsPwdError(false);
+  }, [userData]);
+
   const goNextStep = () => {
     if (isPwdEmpty || isPwdReEmpty) return;
     if (!isPwd(userData["password"])) {
@@ -59,17 +61,18 @@ export default function ThirdStep() {
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdEmpty(e.target.value === "");
+    setUserData((current) => ({ ...current, password: e.target.value }));
   };
   const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdReEmpty(e.target.value === "");
   };
 
-  const checkIsPwdError = () => {
-    setIsPwdError(true);
-  };
-  const checkIsPwdReError = () => {
-    setIsPwdReError(true);
-  };
+  // const checkIsPwdError = () => {
+  //   setIsPwdError(true);
+  // };
+  // const checkIsPwdReError = () => {
+  //   setIsPwdReError(true);
+  // };
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
@@ -82,7 +85,7 @@ export default function ThirdStep() {
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StFormWrapper>
-        <StEmailFixed>{tempEmail}</StEmailFixed>
+        <StEmailFixed>{userData["email"]}</StEmailFixed>
 
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
         <StInputPwdWrapper>

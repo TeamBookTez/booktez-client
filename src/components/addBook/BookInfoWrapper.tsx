@@ -29,7 +29,6 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
 
-  console.log(authors);
   const dateTimeString = bookInfo.datetime.toString();
 
   const publishDate: PublishDate = {
@@ -38,7 +37,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     date: dateTimeString.slice(8, 10),
   };
 
-  const handleToggleModal = useCallback(() => {
+  const onToggleModal = useCallback(() => {
     setOpenModal(!openModal);
   }, [openModal]);
 
@@ -55,29 +54,30 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     [],
   );
 
-  // console.log(bookInfo.datetime, typeof bookInfo.datetime);
-
   return (
-    <StArticle onClick={handleToggleModal}>
-      {thumbnail ? (
-        <StThumbnail src={thumbnail} alt="책 표지" />
-      ) : (
-        <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
-      )}
-      <StInfoWrapper>
-        <InfoTitle>{title}</InfoTitle>
-        <InfoLabelWrapper>
-          <InfoLabel>{authors}</InfoLabel>
-          <DivideLine></DivideLine>
-          <InfoLabel>
-            {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
-          </InfoLabel>
-        </InfoLabelWrapper>
-        <InfoSummary>{contents}</InfoSummary>
-      </StInfoWrapper>
+    <>
+      <StArticle onClick={onToggleModal}>
+        {thumbnail ? (
+          <StThumbnail src={thumbnail} alt="책 표지" />
+        ) : (
+          <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+        )}
+        <StInfoWrapper>
+          <InfoTitle>{title}</InfoTitle>
+          <InfoLabelWrapper>
+            <InfoLabel>{authors}</InfoLabel>
+            <DivideLine></DivideLine>
+            <InfoLabel>
+              {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
+            </InfoLabel>
+          </InfoLabelWrapper>
+          <InfoSummary>{contents}</InfoSummary>
+        </StInfoWrapper>
+      </StArticle>
       {openModal && (
-        <ModalWrapper handleToggleModal={handleToggleModal}>
+        <ModalWrapper>
           <ShowModal
+            onToggleModal={onToggleModal}
             thumbnail={thumbnail}
             title={title}
             authors={authors}
@@ -86,7 +86,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
           />
         </ModalWrapper>
       )}
-    </StArticle>
+    </>
   );
 }
 
@@ -105,10 +105,12 @@ const StArticle = styled.article`
 `;
 
 const StThumbnail = styled.img`
-  margin-right: 1.6rem;
-
   width: 12.1rem;
   height: 16.9rem;
+
+  margin-right: 1.6rem;
+
+  border-radius: 0.8rem;
 `;
 
 const StInfoWrapper = styled.div`
@@ -120,7 +122,7 @@ const StInfoWrapper = styled.div`
 `;
 
 const InfoTitle = styled.strong`
-  font: ${({ theme }) => theme.fonts.header2};
+  ${({ theme }) => theme.fonts.header2};
 `;
 
 const InfoLabelWrapper = styled.div`
@@ -133,9 +135,9 @@ const InfoLabelWrapper = styled.div`
 const InfoLabel = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 
-  font: ${({ theme }) => theme.fonts.body6};
+  ${({ theme }) => theme.fonts.body6};
 
-  vertical-align: middle; // p 태그의 수직 정렬 이렇게 하는 것으로 알고있는데 잘 먹지 않는 것 같아요.
+  line-height: 2.1rem; //감싸고 있는 부모의 div 높이인 2.1rem만큼 주어서 중앙에 오도록 설정(미세한 오차는 있음) - 씨에스에스 이주함 선생 -
 `;
 
 const DivideLine = styled.div`
@@ -150,7 +152,7 @@ const DivideLine = styled.div`
 const InfoSummary = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 
-  font: ${({ theme }) => theme.fonts.body4};
+  ${({ theme }) => theme.fonts.body4};
 
   overflow: hidden;
   max-height: 8.1rem;

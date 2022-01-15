@@ -11,9 +11,21 @@ interface StMainProps {
   isAniTime: boolean;
 }
 
+export interface UserData {
+  email: string;
+  password: string;
+  nickname: string;
+}
+
 export default function Layout() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
   const { state, pathname } = useLocation();
+
+  const [userData, setUserData] = useState<UserData>({
+    email: "",
+    password: "",
+    nickname: "",
+  });
 
   let imgSrc = "";
   let headerText = "";
@@ -43,13 +55,17 @@ export default function Layout() {
   return (
     <>
       <NavHeader logocolor={theme.colors.gray100} />
-      <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
-        <StArticle>
-          {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
-          <StHeading2>{headerText}</StHeading2>
-          <Outlet context={[handleIsAniTime]} />
-        </StArticle>
-      </StMain>
+      {state === "ani" ? (
+        <StMain isrightpath={state === "ani"} isAniTime={isAniTime}>
+          <StArticle>
+            {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
+            <StHeading2>{headerText}</StHeading2>
+            <Outlet context={[userData, setUserData, handleIsAniTime]} />
+          </StArticle>
+        </StMain>
+      ) : (
+        <div>404 에러</div>
+      )}
     </>
   );
 }
@@ -79,12 +95,7 @@ const StMain = styled.main<StMainProps>`
   align-items: center;
   justify-content: center;
 
-  ${({ isrightpath }) =>
-    isrightpath
-      ? css`
-          animation: ${fadein} 1s ease-in-out;
-        `
-      : ""};
+  animation: ${fadein} 1s ease-in-out;
   ${({ isAniTime }) =>
     isAniTime
       ? css`
