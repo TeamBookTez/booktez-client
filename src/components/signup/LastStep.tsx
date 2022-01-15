@@ -16,7 +16,7 @@ export default function LastStep() {
 
   const goNextStep = () => {
     handleIsAniTime(true);
-    setTimeout(() => nav("/main", { state: "ani" }), 1000);
+    setTimeout(() => nav("/main", { state: "rightpath" }), 1000);
   };
 
   return (

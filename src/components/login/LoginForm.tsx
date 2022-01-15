@@ -37,8 +37,12 @@ export default function LoginForm() {
     // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <StForm>
+    <StForm onSubmit={handleSubmit}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
       <InputEmail
         whatPlaceholder="이메일을 입력해 주세요"
