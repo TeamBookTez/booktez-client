@@ -11,6 +11,11 @@ export default function ModalWrapper(props: ModalWrapperProps) {
 }
 
 const StModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   height: 100%;
 
@@ -18,11 +23,6 @@ const StModalWrapper = styled.div`
   z-index: 99;
   left: 0;
   top: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
