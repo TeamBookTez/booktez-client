@@ -73,7 +73,7 @@ const StContentWrapper = styled.div`
 
 const StBooksNum = styled.strong`
   // 임시 폰트 설정
-  font: ${({ theme }) => theme.fonts.header2};
+  ${({ theme }) => theme.fonts.header2};
   font-size: 6.2rem;
   color: #3d3d3d;
 `;
@@ -86,11 +86,11 @@ const StComment = styled.p`
 
   margin-left: 0.8rem;
 
-  font: ${({ theme }) => theme.fonts.body0};
+  ${({ theme }) => theme.fonts.body0};
   color: ${({ theme }) => theme.colors.gray200};
 
   & > span {
-    font: ${({ theme }) => theme.fonts.header4};
+    ${({ theme }) => theme.fonts.header4};
   }
 `;
 
@@ -117,11 +117,11 @@ const StServiceInfo = styled.article`
 const StInfoTitle = styled.h5`
   margin-bottom: 1.5rem;
 
-  font: ${({ theme }) => theme.fonts.header4};
+  ${({ theme }) => theme.fonts.header4};
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
 const StInfoDesc = styled.p`
-  font: ${({ theme }) => theme.fonts.body6};
+  ${({ theme }) => theme.fonts.body6};
   color: ${({ theme }) => theme.colors.gray400};
 `;
