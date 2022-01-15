@@ -25,7 +25,7 @@ export function isNickname(value: string) {
 }
 
 export function isPwd(value: string) {
-  const passwordRegax = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const passwordRegax = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
   return passwordRegax.test(value);
 }

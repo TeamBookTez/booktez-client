@@ -15,7 +15,7 @@ export default function SignupNav(props: SignupNavProps) {
 
   const handleGoSignupBtn = () => {
     onAniChange();
-    setTimeout(() => nav("/signup", { state: "ani" }), 1000);
+    setTimeout(() => nav("/signup", { state: "rightpath" }), 1000);
   };
 
   return (
