@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
+import { UserInfo } from "../../pages/MyPage";
 import { Button } from "../common";
 import { StLoginLink } from "../common/MainHeader";
 import TopBanner from "./TopBanner";
 
-export default function TopContent() {
+export default function TopContent(props: { userInfo: UserInfo }) {
+  const { userInfo } = props;
+
   return (
     <StWrapper>
-      <TopBanner />
+      <TopBanner userInfo={userInfo} />
       <StLoginButton>
         <StLoginLink to="/login">로그인</StLoginLink>
       </StLoginButton>

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { UserInfo } from "../../pages/MyPage";
 import BookComment from "./BookComment";
 
-export default function BottomContent() {
-  const [booksNum, setBooksNum] = useState<number>(10);
+export default function BottomContent(props: { userInfo: UserInfo }) {
+  const { userInfo } = props;
 
   return (
     <StWrapper>
@@ -13,8 +14,8 @@ export default function BottomContent() {
           <img src="" alt="" />
         </StImgWrapper>
         <StContentWrapper>
-          <StBooksNum>{booksNum}</StBooksNum>
-          <BookComment booksNum={booksNum} />
+          <StBooksNum>{userInfo.reviewCount}</StBooksNum>
+          <BookComment booksNum={userInfo.reviewCount} />
         </StContentWrapper>
       </StCountBook>
       <StServiceWrapper>
