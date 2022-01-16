@@ -17,7 +17,6 @@ export default function PreNoteLayout(props: PreNoteLayoutProps) {
           {question}
           <StepUp />
         </StH3>
-
         <ExButton />
       </StHeader>
       <StArticle>{children}</StArticle>
