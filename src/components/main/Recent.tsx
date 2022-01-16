@@ -4,7 +4,13 @@ import styled from "styled-components";
 import { ImgTemp } from "../../assets/images";
 import { BookCard } from "../bookcase";
 import { Button } from "../common";
+import { Default } from ".";
 
+interface TempBookInfo {
+  thumbnail: string;
+  title: string;
+  authors: string[];
+}
 export default function Recent() {
   const tempBookInfo = {
     thumbnail: ImgTemp,
@@ -12,20 +18,23 @@ export default function Recent() {
     authors: ["제임스 아세 러이", "령이"],
   };
 
+  // 로그인 여부 맞춰서 아래 isDefault를 조작
+  const isDefault = true;
+
+  const tempBookList: TempBookInfo[] = [tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo];
+
   return (
     <section>
       <StHeader>
         <StHeading3>최근 작성한 북노트</StHeading3>
-        <StButton>
-          <Link to="/bookcase">전체보기</Link>
-        </StButton>
+        {!isDefault ? (
+          <StButton>
+            <Link to="/bookcase">전체보기</Link>
+          </StButton>
+        ) : null}
       </StHeader>
-      <StBookWrapper>
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
+      <StBookWrapper isdefault={isDefault}>
+        {isDefault ? <Default /> : tempBookList.map((tempInfo, idx) => <BookCard key={idx} bookInfo={tempInfo} />)}
       </StBookWrapper>
     </section>
   );
@@ -53,8 +62,10 @@ const StButton = styled(Button)`
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
-const StBookWrapper = styled.section`
+const StBookWrapper = styled.section<{ isdefault: boolean }>`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: ${({ isdefault }) => (isdefault ? "column" : "row")};
+  align-items: center;
   justify-content: center;
 `;
