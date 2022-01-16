@@ -8,7 +8,7 @@ import { patchData } from "../../utils/lib/api";
 
 export default function TopBanner() {
   const [userImg, setUserImg] = useState(ImgUser);
-
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const patchKey = "/user/img";
 
   const patchImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +20,7 @@ export default function TopBanner() {
       formData.append("img", imgFile);
 
       try {
-        const { data } = await patchData(`${process.env.REACT_APP_TEST_TOKEN}`, patchKey, formData);
+        const { data } = await patchData(token, patchKey, formData);
 
         console.log("data", data);
         if (data.success) {
