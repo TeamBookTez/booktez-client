@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const loginAxios = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URI}`,
+  baseURL: `${process.env.REACT_APP_BASE_URL}`,
   headers: {
     "Content-Type": "application/json",
   },
