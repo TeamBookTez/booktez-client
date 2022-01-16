@@ -9,6 +9,7 @@ import { Button } from "../common";
 export default function LastStep() {
   const [userData, setUserData, handleIsAniTime] =
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+
   const nav = useNavigate();
 
   useEffect(() => {

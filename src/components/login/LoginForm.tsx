@@ -9,6 +9,11 @@ export default function LoginForm() {
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      handleLogin();
+    }
+  };
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEmailEmpty(e.target.value === "");
@@ -51,6 +56,7 @@ export default function LoginForm() {
         isEmpty={isEmailEmpty}
         isError={isEmailError}
         checkIsEmpty={checkIsEmailEmpty}
+        onEnter={onKeyPress}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
@@ -63,6 +69,7 @@ export default function LoginForm() {
         isPwdSight={isPwdSight}
         toggleSightPwd={toggleSightPwd}
         handleOnChange={checkIsPwdEmpty}
+        onEnter={onKeyPress}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
       <StLoginBtn active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError} onClick={handleLogin}>

@@ -21,6 +21,12 @@ export default function SecondStep() {
     setIsNicknameError(false);
   }, [userData]);
 
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      goNextStep();
+    }
+  };
+
   const goNextStep = () => {
     if (isNicknameEmpty) return;
     if (isNickname(userData["nickname"])) {
@@ -36,10 +42,6 @@ export default function SecondStep() {
     setUserData((current) => ({ ...current, nickname: e.target.value }));
   };
 
-  // const checkIsNicknameError = () => {
-  //   setIsNicknameError(true);
-  // };
-
   return (
     <>
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
@@ -52,6 +54,7 @@ export default function SecondStep() {
           isEmpty={isNicknameEmpty}
           isError={isNicknameError}
           checkIsEmpty={checkIsNicknameEmpty}
+          onEnter={onKeyPress}
         />
         <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>

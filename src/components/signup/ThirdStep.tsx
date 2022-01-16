@@ -23,6 +23,8 @@ export default function ThirdStep() {
   const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
+  const [isPwdCurrent, setIsPwdCurrent] = useState<string>("");
+  const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
   const nav = useNavigate();
 
   const signupHeader: AxiosRequestHeaders = {
@@ -49,7 +51,20 @@ export default function ThirdStep() {
     setIsPwdError(false);
   }, [userData]);
 
+  useEffect(() => {
+    setIsPwdReError(false);
+  }, [isPwdReCurrent]);
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      goNextStep();
+    }
+  };
+
   const goNextStep = () => {
+    if (isPwdCurrent !== isPwdReCurrent) {
+      return setIsPwdReError(true);
+    }
     if (isPwdEmpty || isPwdReEmpty) return;
     if (!isPwd(userData["password"])) {
       setIsPwdError(true);
@@ -62,18 +77,13 @@ export default function ThirdStep() {
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdEmpty(e.target.value === "");
+    setIsPwdCurrent(e.target.value);
     setUserData((current) => ({ ...current, password: e.target.value }));
   };
   const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdReEmpty(e.target.value === "");
+    setIsPwdReCurrent(e.target.value);
   };
-
-  // const checkIsPwdError = () => {
-  //   setIsPwdError(true);
-  // };
-  // const checkIsPwdReError = () => {
-  //   setIsPwdReError(true);
-  // };
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
@@ -99,6 +109,7 @@ export default function ThirdStep() {
             isPwdSight={isPwdSight}
             toggleSightPwd={toggleSightPwd}
             handleOnChange={checkIsPwdEmpty}
+            onEnter={onKeyPress}
           />
         </StInputPwdWrapper>
         <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
@@ -114,6 +125,7 @@ export default function ThirdStep() {
             isPwdSight={isPwdReSight}
             toggleSightPwd={toggleSightRePwd}
             handleOnChange={checkIsPwdReEmpty}
+            onEnter={onKeyPress}
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
