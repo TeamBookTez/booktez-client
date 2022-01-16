@@ -22,13 +22,19 @@ export default function FirstStep() {
     setIsEmailError(false);
   }, [userData]);
 
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      goNextStep();
+    }
+  };
+
   const goNextStep = () => {
     if (isEmailEmpty) return;
     if (!isEmail(userData["email"])) {
       setIsEmailError(true);
     } else {
       handleIsAniTime(true);
-      setTimeout(() => nav("/signup/2", { state: "ani" }), 1000);
+      setTimeout(() => nav("/signup/2", { state: "rightpath" }), 1000);
     }
   };
 
@@ -40,7 +46,7 @@ export default function FirstStep() {
   return (
     <>
       <StParagraph>당신의 이메일을 입력해 주세요.</StParagraph>
-      <StFormWrapper>
+      <StInputWrapper>
         <LabelHidden htmlFor="signupEmail">이메일</LabelHidden>
         <InputEmail
           whatPlaceholder="이메일을 입력해 주세요"
@@ -49,12 +55,13 @@ export default function FirstStep() {
           isEmpty={isEmailEmpty}
           isError={isEmailError}
           checkIsEmpty={checkIsEmailEmpty}
+          onEnter={onKeyPress}
         />
         <AlertLabel isError={isEmailError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
-      </StFormWrapper>
+      </StInputWrapper>
     </>
   );
 }
@@ -65,7 +72,7 @@ const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body0}
 `;
 
-const StFormWrapper = styled.form`
+const StInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

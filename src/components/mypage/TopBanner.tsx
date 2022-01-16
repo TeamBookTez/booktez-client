@@ -92,11 +92,11 @@ const StProfileContent = styled.div`
 const StUserName = styled.h3`
   margin-bottom: 0.8rem;
 
-  font: ${({ theme }) => theme.fonts.header3};
+  ${({ theme }) => theme.fonts.header3};
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StEmail = styled.p`
-  font: ${({ theme }) => theme.fonts.body2};
+  ${({ theme }) => theme.fonts.body2};
   color: #939393;
 `;
