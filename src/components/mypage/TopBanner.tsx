@@ -1,54 +1,33 @@
-import axios from "axios";
-import { useState } from "react";
 import styled from "styled-components";
 
 import { IcEditProfile } from "../../assets/icons";
-import { ImgUser } from "../../assets/images";
-import { patchData } from "../../utils/lib/api";
+import { UserInfo } from "../../pages/MyPage";
 
-export default function TopBanner() {
-  const [userImg, setUserImg] = useState(ImgUser);
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
-  const patchKey = "/user/img";
+interface TopBannerProps {
+  userInfo: UserInfo;
+  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const patchImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formData = new FormData();
+export default function TopBanner(props: TopBannerProps) {
+  const { userInfo, onImageChange } = props;
 
-    if (e.target.files !== null) {
-      const imgFile = e.target.files[0];
-
-      formData.append("img", imgFile);
-
-      try {
-        const { data } = await patchData(token, patchKey, formData);
-
-        console.log("data", data);
-        if (data.success) {
-          setUserImg(data.img);
-        }
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.log("err", err.response?.data);
-        }
-      }
-    }
-  };
+  const { img, nickname, email } = userInfo;
 
   return (
     <StBanner>
       <StProfile>
         <StProfileImgBox>
           <StUserImgWrapper>
-            <img src={userImg} alt="유저 이미지" />
+            <img src={img} alt="유저 이미지" />
           </StUserImgWrapper>
           <StIcEditProfile htmlFor="input-file">
             <StIcEditProfileImg />
           </StIcEditProfile>
-          <StFileInput id="input-file" type="file" onChange={patchImage} accept="image/jpg, image/png, image/jpeg" />
+          <StFileInput id="input-file" type="file" onChange={onImageChange} accept="image/jpg, image/png, image/jpeg" />
         </StProfileImgBox>
         <StProfileContent>
-          <StUserName>석상언</StUserName>
-          <StEmail>tjr50999@naver.com</StEmail>
+          <StUserName>{nickname}</StUserName>
+          <StEmail>{email}</StEmail>
         </StProfileContent>
       </StProfile>
     </StBanner>
