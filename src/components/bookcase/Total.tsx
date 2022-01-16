@@ -1,3 +1,5 @@
+import { useOutletContext } from "react-router-dom";
+
 import Cards from "./Cards";
 
 export default function Total() {
