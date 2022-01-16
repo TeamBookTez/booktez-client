@@ -1,18 +1,42 @@
+import { AxiosRequestHeaders } from "axios";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
+import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      handleLogin();
+
+  const postLogin = async () => {
+    const loginHeader: AxiosRequestHeaders = {
+      "Content-Type": "application/json",
+    };
+    const loginBody = {
+      email: "book@email.com",
+      password: "!234qwer",
+    };
+
+    try {
+      const response = await postData(loginHeader, "/auth/login", loginBody);
+
+      console.log("nickname", response.data.data.nickname);
+      console.log("token", response.data.data.token);
+    } catch (e) {
+      console.log("e", e);
     }
+  };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    // if (e.code === "Enter") {
+    //   handleLogin();
+    // }
   };
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +61,7 @@ export default function LoginForm() {
 
   const handleLogin = () => {
     if (isEmailEmpty || isPwdEmpty || isEmailError || isPwdError) return;
+    postLogin();
     // 로그인 기능 구현 부분
     // 메인에서 로그인 온 경우에는 메인으로,
     // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
@@ -44,6 +69,7 @@ export default function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    handleLogin();
   };
 
   return (
