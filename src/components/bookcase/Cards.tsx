@@ -6,8 +6,8 @@ import { AddBookCard, BookCard } from ".";
 export default function Cards() {
   const tempBookInfo = {
     thumbnail: ImgTemp,
-    title: "조화로운 부",
-    authors: ["제임스 아세 러이", "령이"],
+    title: "석상한 귬",
+    authors: ["제임스 아세 함이", "령이"],
   };
 
   return (
