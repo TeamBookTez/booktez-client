@@ -24,7 +24,6 @@ export interface PatchBody {
   answerOne?: string;
   answerTwo?: string;
   answerThree?: AnswerThree;
-  questionList?: string[];
 }
 
 interface AnswerThree {
