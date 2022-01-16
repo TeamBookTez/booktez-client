@@ -16,7 +16,7 @@ export default function MainHeader(props: MainHeaderProps) {
   const { children } = props;
   const { pathname } = useLocation();
   const isBookcase = pathname.startsWith("/bookcase") ? "0.4rem" : "3.5rem";
-  const isMypage = pathname.startsWith("/my-page") ? "none" : "block";
+  const isMypage = pathname === "/my-page" || pathname === "/to-be" ? "none" : "block";
 
   return (
     <StHeader isBookcase={isBookcase}>

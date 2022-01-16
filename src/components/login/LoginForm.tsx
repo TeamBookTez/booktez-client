@@ -18,13 +18,13 @@ export default function LoginForm() {
     setIsPwdEmpty(e.target.value === "");
   };
 
-  const checkIsEmailError = () => {
-    setIsEmailError(true);
-  };
+  // const checkIsEmailError = () => {
+  //   setIsEmailError(true);
+  // };
 
-  const checkIsPwdError = () => {
-    setIsPwdError(true);
-  };
+  // const checkIsPwdError = () => {
+  //   setIsPwdError(true);
+  // };
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);

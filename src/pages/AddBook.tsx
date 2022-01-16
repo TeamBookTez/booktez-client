@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import BookList from "../components/addBook/BookList";
 import SearchBar from "../components/addBook/SearchBar";
 import { MainHeader } from "../components/common";
-import { bookSearch } from "../utils/lib/api";
+import { searchBook } from "../utils/lib/api";
 
 export interface BookInfo {
   thumbnail: string;
@@ -20,7 +20,7 @@ export default function AddBook() {
   const [query, setQuery] = useState<string>("");
   const [debounceQuery, setDebounceQuery] = useState<string>("");
 
-  const bookSearchHandler = async (query: string, reset: boolean) => {
+  const handleSearchBook = async (query: string, reset: boolean) => {
     const paramsAPI = {
       query,
       sort: "accuracy",
@@ -28,7 +28,7 @@ export default function AddBook() {
       size: 15,
     };
 
-    const { data } = await bookSearch(paramsAPI);
+    const { data } = await searchBook(paramsAPI);
 
     if (reset) {
       setBooks(data.documents);
@@ -43,7 +43,7 @@ export default function AddBook() {
 
   useEffect(() => {
     if (query.length > 0) {
-      bookSearchHandler(query, true); // 컴포넌트 마운트 후에, 함수를 호출한다.
+      handleSearchBook(query, true); // 컴포넌트 마운트 후에, 함수를 호출한다.
     }
   }, [query]);
 

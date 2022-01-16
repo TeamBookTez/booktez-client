@@ -36,9 +36,9 @@ export default function SecondStep() {
     setUserData((current) => ({ ...current, nickname: e.target.value }));
   };
 
-  const checkIsNicknameError = () => {
-    setIsNicknameError(true);
-  };
+  // const checkIsNicknameError = () => {
+  //   setIsNicknameError(true);
+  // };
 
   return (
     <>
