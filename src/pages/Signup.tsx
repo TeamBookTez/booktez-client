@@ -45,7 +45,7 @@ export default function Layout() {
       break;
     default:
       imgSrc = "";
-      headerText = "OOOOOOOOOO님!\n나만의 서재가 완성됐어요!";
+      headerText = `${userData["nickname"]}님!\n나만의 서재가 완성됐어요!`;
   }
 
   const handleIsAniTime = (isActive: boolean) => {
