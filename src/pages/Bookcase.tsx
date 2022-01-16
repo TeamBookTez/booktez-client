@@ -8,13 +8,16 @@ import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
-  state: number;
+  state?: number;
   thumbnail: string;
   title: string;
 }
 
 export default function Bookcase() {
-  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
+  const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
+  const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
+  const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
+  const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
   const infoHeaders: AxiosRequestHeaders = {
     "Content-Type": "application/json",
@@ -27,8 +30,7 @@ export default function Bookcase() {
     try {
       const { data } = await getData(headers, key);
 
-      console.log(data.data.books);
-      setBookcaseInfo(data.data.books);
+      setBookcaseTotal(data.data.books);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -44,7 +46,7 @@ export default function Bookcase() {
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[bookcaseInfo]} />
+      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost]} />
     </>
   );
 }

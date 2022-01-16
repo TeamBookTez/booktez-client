@@ -1,16 +1,11 @@
 import styled from "styled-components";
 
-interface BookInfo {
-  thumbnail: string;
-  title: string;
-  authors: string[];
-}
-interface BookCardProps {
-  bookInfo: BookInfo;
-}
+import { BookcaseInfo } from "../../../pages/Bookcase";
 
-export default function BookCard(props: BookCardProps) {
-  const { thumbnail, title, authors } = props.bookInfo;
+export default function BookCard(props: { bookcaseInfo: BookcaseInfo }) {
+  const { bookcaseInfo } = props;
+
+  const { thumbnail, title, author } = bookcaseInfo;
 
   return (
     <StBookCard>
@@ -18,7 +13,7 @@ export default function BookCard(props: BookCardProps) {
         <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
       </StImgWrapper>
       <StCardTitle>{title}</StCardTitle>
-      <StCardAuthor>{authors.join(", ")}</StCardAuthor>
+      <StCardAuthor>{author}</StCardAuthor>
     </StBookCard>
   );
 }

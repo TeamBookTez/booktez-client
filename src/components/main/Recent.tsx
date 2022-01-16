@@ -9,7 +9,7 @@ export default function Recent() {
   const tempBookInfo = {
     thumbnail: ImgTemp,
     title: "조화로운 부",
-    authors: ["제임스 아세 러이", "령이"],
+    author: ["제임스 아세 러이", "령이"],
   };
 
   return (
@@ -21,11 +21,11 @@ export default function Recent() {
         </StButton>
       </StHeader>
       <StBookWrapper>
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
-        <BookCard bookInfo={tempBookInfo} />
+        <BookCard bookcaseInfo={tempBookInfo} />
+        <BookCard bookcaseInfo={tempBookInfo} />
+        <BookCard bookcaseInfo={tempBookInfo} />
+        <BookCard bookcaseInfo={tempBookInfo} />
+        <BookCard bookcaseInfo={tempBookInfo} />
       </StBookWrapper>
     </section>
   );
