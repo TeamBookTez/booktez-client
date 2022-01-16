@@ -42,10 +42,6 @@ export default function SecondStep() {
     setUserData((current) => ({ ...current, nickname: e.target.value }));
   };
 
-  const checkIsNicknameError = () => {
-    setIsNicknameError(true);
-  };
-
   return (
     <>
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>

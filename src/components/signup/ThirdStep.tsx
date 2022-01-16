@@ -16,6 +16,8 @@ export default function ThirdStep() {
   const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
+  const [isPwdCurrent, setIsPwdCurrent] = useState<string>("");
+  const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
   const nav = useNavigate();
 
   useEffect(() => {
@@ -26,6 +28,10 @@ export default function ThirdStep() {
     setIsPwdError(false);
   }, [userData]);
 
+  useEffect(() => {
+    setIsPwdReError(false);
+  }, [isPwdReCurrent]);
+
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.code === "Enter") {
       goNextStep();
@@ -33,6 +39,9 @@ export default function ThirdStep() {
   };
 
   const goNextStep = () => {
+    if (isPwdCurrent !== isPwdReCurrent) {
+      return setIsPwdReError(true);
+    }
     if (isPwdEmpty || isPwdReEmpty) return;
     if (!isPwd(userData["password"])) {
       setIsPwdError(true);
@@ -44,19 +53,13 @@ export default function ThirdStep() {
   };
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.dir(e.target);
     setIsPwdEmpty(e.target.value === "");
+    setIsPwdCurrent(e.target.value);
     setUserData((current) => ({ ...current, password: e.target.value }));
   };
   const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdReEmpty(e.target.value === "");
-  };
-
-  const checkIsPwdError = () => {
-    setIsPwdError(true);
-  };
-  const checkIsPwdReError = () => {
-    setIsPwdReError(true);
+    setIsPwdReCurrent(e.target.value);
   };
 
   const toggleSightPwd = () => {

@@ -19,8 +19,6 @@ export const postSignUp = async (SignUpData: SignUp): Promise<boolean> => {
   try {
     const data = await loginAxios.post(`${PREFIX_URL}/signup`, SignUpData);
 
-    console.log(data);
-
     if (data !== undefined) {
       if (data.data.status === 201) return true;
     }
