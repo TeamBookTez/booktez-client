@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -8,10 +8,6 @@ import { patchData } from "../../utils/lib/api";
 
 export default function TopBanner() {
   const [userImg, setUserImg] = useState(ImgUser);
-  const patchHeader: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-    Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
-  };
 
   const patchKey = "/user/img";
 
@@ -22,11 +18,11 @@ export default function TopBanner() {
       const imgFile = e.target.files[0];
 
       formData.append("img", imgFile);
-      console.log("formData", formData);
 
       try {
-        const { data } = await patchData(patchHeader, patchKey, formData);
+        const { data } = await patchData(`${process.env.REACT_APP_TEST_TOKEN}`, patchKey, formData);
 
+        console.log("data", data);
         if (data.success) {
           setUserImg(data.img);
         }

@@ -33,7 +33,7 @@ export default function ThirdStep() {
 
   const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
     try {
-      const { data } = await postData(header, key, body);
+      const { data } = await postData(key, body);
 
       localStorage.setItem("token", data.token);
     } catch (err) {
