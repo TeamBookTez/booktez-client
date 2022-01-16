@@ -1,50 +1,7 @@
 import { AxiosRequestHeaders } from "axios";
 
+import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
-
-interface KAKAOParams {
-  query: string;
-  sort: string;
-  size: number;
-}
-
-interface PostBody {
-  email?: string;
-  password?: string;
-  nickname?: string;
-  isbn?: string;
-  thumbnail?: string;
-  title?: string;
-  author?: string[];
-  answerOne?: string;
-  answerTwo?: string;
-  answerThree?: AnswerThree;
-  questionList?: string[];
-  progress?: string;
-}
-
-interface PatchBody {
-  formData?: FormData;
-  answerOne?: string;
-  answerTwo?: string;
-  answerThree?: AnswerThree;
-  questionList?: string[];
-}
-
-interface AnswerThree {
-  root: Question[];
-}
-
-interface Answer {
-  text: string;
-  children: Question[];
-}
-
-interface Question {
-  depth: number;
-  question: string;
-  answer: Answer[];
-}
 
 export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
