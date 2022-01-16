@@ -1,11 +1,18 @@
+import axios, { AxiosRequestHeaders } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-import { postSignUp } from "../../utils/auth.api";
 import { isPwd } from "../../utils/check";
+import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
+
+interface Body {
+  email: string;
+  password: string;
+  nickname?: string;
+}
 
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =
@@ -19,6 +26,22 @@ export default function ThirdStep() {
   const [isPwdCurrent, setIsPwdCurrent] = useState<string>("");
   const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
   const nav = useNavigate();
+
+  const signupHeader: AxiosRequestHeaders = {
+    "Content-Type": "application/json",
+  };
+
+  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
+    try {
+      const { data } = await postData(header, key, body);
+
+      localStorage.setItem("token", data.token);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -46,7 +69,7 @@ export default function ThirdStep() {
     if (!isPwd(userData["password"])) {
       setIsPwdError(true);
     } else {
-      postSignUp(userData);
+      signup(signupHeader, "/auth/signup", userData);
       handleIsAniTime(true);
       setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
     }

@@ -3,9 +3,12 @@ import { DefaultTheme } from "styled-components";
 const colors = {
   orange100: "#FF4C00",
   orange200: "#FFF1EB",
+  orange300: "#FF7F49",
+  orange400: "#FFAD8A",
+  orange500: "#FFE9E0",
   gray100: "#242424",
   gray200: "#3D3D3D",
-  gray300: "#858585",
+  gray300: "#555555",
   gray400: "#6F6F6F",
   white: "#FFFFFF",
   white200: "#F7F7F7",
@@ -16,6 +19,13 @@ const colors = {
 };
 
 const fonts = {
+  header: `
+    font-family: Pretendard;
+    font-weight: 700;
+    font-size: 6.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
   header0: `
     font-family: Pretendard;
     font-weight: 800;
