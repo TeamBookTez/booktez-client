@@ -34,7 +34,7 @@ const DrawerWrapper = styled.section`
   border-radius: 2rem 0 0 2rem;
   box-shadow: 0 0 0.4rem rgba(0, 0, 0.17);
 
-  padding: 3.3rem 3.1rem 5.4rem 3.5rem;
+  padding: 3.3rem 3.3rem 5.4rem 3.3rem;
 
   & > svg {
     width: 4.4rem;
