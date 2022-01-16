@@ -4,10 +4,10 @@ interface InputEmailProps {
   whatPlaceholder: string;
   whatType: string;
   whatId: string;
+  whatValue: string;
   isEmpty: boolean;
   isError: boolean;
-  checkIsEmpty: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface StInputEmailProps {
@@ -16,17 +16,17 @@ interface StInputEmailProps {
 }
 
 export default function InputEmail(props: InputEmailProps) {
-  const { whatPlaceholder, whatType, whatId, isEmpty, isError, checkIsEmpty, onEnter } = props;
+  const { whatPlaceholder, whatType, whatId, whatValue, isEmpty, isError, handleOnChange } = props;
 
   return (
     <StInputEmail
       placeholder={whatPlaceholder}
       type={whatType}
       id={whatId}
+      value={whatValue}
       isemailempty={isEmpty}
       isemailerror={isError}
-      onChange={checkIsEmpty}
-      onKeyDown={onEnter}
+      onChange={handleOnChange}
     />
   );
 }
