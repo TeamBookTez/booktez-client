@@ -17,6 +17,7 @@ declare module "styled-components" {
       red100: string;
     };
     fonts: {
+      header: string;
       header0: string;
       header1: string;
       header2: string;

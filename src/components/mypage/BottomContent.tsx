@@ -1,6 +1,11 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 
+import BookComment from "./BookComment";
+
 export default function BottomContent() {
+  const [booksNum, setBooksNum] = useState<number>(10);
+
   return (
     <StWrapper>
       <StCountBook>
@@ -8,12 +13,8 @@ export default function BottomContent() {
           <img src="" alt="" />
         </StImgWrapper>
         <StContentWrapper>
-          <StBooksNum>8</StBooksNum>
-          <StComment>
-            지금까지
-            <br />
-            <span>권 책을 읽었어요</span>
-          </StComment>
+          <StBooksNum>{booksNum}</StBooksNum>
+          <BookComment booksNum={booksNum} />
         </StContentWrapper>
       </StCountBook>
       <StServiceWrapper>
@@ -41,14 +42,14 @@ export default function BottomContent() {
 const StWrapper = styled.section`
   display: flex;
 
-  width: 118rem;
-  height: 30.3rem;
-  margin: 0 4rem 7rem 4rem;
+  width: 100%;
+  height: 41%;
+  padding: 0 4rem 7rem 4rem;
 `;
 
 // 로그인 여부에 따라 삼항연산자 분기 처리
 const StCountBook = styled.article`
-  width: 23.3rem;
+  width: 25%;
 
   margin-right: 4rem;
 
@@ -68,45 +69,29 @@ const StContentWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding: 0 2.2rem 5rem 2.2rem;
+  padding: 0 2rem 5rem 2rem;
 `;
 
 const StBooksNum = styled.strong`
-  // 임시 폰트 설정
-  font: ${({ theme }) => theme.fonts.header2};
-  font-size: 6.2rem;
-  color: #3d3d3d;
-`;
+  margin-right: 1.2rem;
 
-const StComment = styled.p`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* align-items: center; */
-
-  margin-left: 0.8rem;
-
-  font: ${({ theme }) => theme.fonts.body0};
+  ${({ theme }) => theme.fonts.header};
   color: ${({ theme }) => theme.colors.gray200};
-
-  & > span {
-    font: ${({ theme }) => theme.fonts.header4};
-  }
 `;
 
 const StServiceWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3rem;
+  row-gap: 3rem;
 
-  width: 91rem;
+  width: 100%;
 `;
 
 const StServiceInfo = styled.article`
-  width: 44rem;
+  width: 100%;
   height: 13.6rem;
 
-  margin-bottom: 3rem;
   padding: 3.7rem 4.8rem;
 
   border-radius: 2rem;
@@ -117,11 +102,11 @@ const StServiceInfo = styled.article`
 const StInfoTitle = styled.h5`
   margin-bottom: 1.5rem;
 
-  font: ${({ theme }) => theme.fonts.header4};
+  ${({ theme }) => theme.fonts.header4};
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
 const StInfoDesc = styled.p`
-  font: ${({ theme }) => theme.fonts.body6};
+  ${({ theme }) => theme.fonts.body6};
   color: ${({ theme }) => theme.colors.gray400};
 `;

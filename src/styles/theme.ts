@@ -16,6 +16,13 @@ const colors = {
 };
 
 const fonts = {
+  header: `
+    font-family: Pretendard;
+    font-weight: 700;
+    font-size: 6.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
   header0: `
     font-family: Pretendard;
     font-weight: 800;
