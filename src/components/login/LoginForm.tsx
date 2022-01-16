@@ -1,18 +1,64 @@
+import axios, { AxiosRequestHeaders } from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      handleLogin();
+  const navigate = useNavigate();
+
+  const postLogin = async () => {
+    const loginHeader: AxiosRequestHeaders = {
+      "Content-Type": "application/json",
+    };
+    const loginBody = {
+      email: "book@email.com",
+      password: "!234qwers",
+    };
+
+    try {
+      const res = await postData(loginHeader, "/auth/login", loginBody);
+      const resData = res.data.data;
+
+      localStorage.setItem("booktez-token", resData.token);
+      localStorage.setItem("booktez-nickname", resData.nickname);
+
+      navigate("/");
+      // 메인에서 로그인 온 경우에는 메인으로,
+      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.log("e", e.response?.data);
+      }
+      // setError 분기 처리 후 넣어주기
+      setIsEmailError(true);
+      setIsPwdError(true);
     }
+  };
+
+  const handleLogin = () => {
+    if (isEmailEmpty || isPwdEmpty) return;
+    postLogin();
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    // if (e.code === "Enter") {
+    //   handleLogin();
+    // }
   };
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,27 +69,8 @@ export default function LoginForm() {
     setIsPwdEmpty(e.target.value === "");
   };
 
-  // const checkIsEmailError = () => {
-  //   setIsEmailError(true);
-  // };
-
-  // const checkIsPwdError = () => {
-  //   setIsPwdError(true);
-  // };
-
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
-  };
-
-  const handleLogin = () => {
-    if (isEmailEmpty || isPwdEmpty || isEmailError || isPwdError) return;
-    // 로그인 기능 구현 부분
-    // 메인에서 로그인 온 경우에는 메인으로,
-    // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
   };
 
   return (
