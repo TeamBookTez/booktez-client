@@ -14,7 +14,10 @@ export default function Drawer() {
       </StTitleWrapper>
       <StArticle>
         <StQuestionWrapper>1. 이 책에 어떤 기대를 하고 계씬가요?</StQuestionWrapper>
-        <StAnswerWrapper>상황에 따라 변하는</StAnswerWrapper>
+        <StAnswerWrapper>
+          상황에 따라 변하는 동기를 한 곳에 잡아 두고 싶고, 앞으로의 진행될 모든 업무에 대해 내가 이 일을 왜 하는지
+          명확하게 할 수 있는 힌트를 얻을 수 있다고 기대하고 있다.
+        </StAnswerWrapper>
       </StArticle>
     </DrawerWrapper>
   );
@@ -46,6 +49,8 @@ const StImg = styled.img`
   height: 11.9rem;
 
   margin-bottom: 3.8rem;
+
+  border-radius: 1.6rem;
 `;
 
 const StTitleWrapper = styled.header`
@@ -65,11 +70,29 @@ const StTitleWrapper = styled.header`
 
 const StArticle = styled.article`
   display: flex;
+  flex-direction: column;
 
   width: 32.4rem;
   height: 53.4rem;
+
+  padding: 3.2rem;
+  background-color: ${({ theme }) => theme.colors.white200};
+
+  box-shadow: 0 0 1.8rem 0.9rem rgba(117, 106, 90, 0.09);
+  border-radius: 2rem;
 `;
 
-const StQuestionWrapper = styled.h2``;
+const StQuestionWrapper = styled.h2`
+  ${({ theme }) => theme.fonts.body1}
 
-const StAnswerWrapper = styled.p``;
+  margin-bottom: 1.7rem;
+`;
+
+const StAnswerWrapper = styled.p`
+  display: flex;
+
+  ${({ theme }) => theme.fonts.body4};
+
+  border-top: 0.1rem solid ${({ theme }) => theme.colors.white400};
+  padding-top: 1.7rem;
+`;
