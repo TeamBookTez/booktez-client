@@ -15,7 +15,7 @@ export interface BookcaseInfo {
 
 export default function Bookcase() {
   const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
-  const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
+  const [bookcasePre, setBookcasePre] = useState<BookcaseInfo>();
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
@@ -31,6 +31,9 @@ export default function Bookcase() {
       const { data } = await getData(headers, key);
 
       setBookcaseTotal(data.data.books);
+      const pre = bookcaseTotal.filter((bookcaseInfo) => bookcaseInfo.state === 2);
+
+      console.log(pre);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
