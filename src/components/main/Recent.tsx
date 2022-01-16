@@ -15,7 +15,7 @@ export default function Recent() {
   return (
     <section>
       <StHeader>
-        <StHeading3>최근 펼쳐본 책이에요!</StHeading3>
+        <StHeading3>최근 작성한 북노트</StHeading3>
         <StButton>
           <Link to="/bookcase">전체보기</Link>
         </StButton>
