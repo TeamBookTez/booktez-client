@@ -45,12 +45,6 @@ export default function LoginForm() {
     }
   };
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    // if (e.code === "Enter") {
-    //   handleLogin();
-    // }
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

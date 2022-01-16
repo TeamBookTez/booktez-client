@@ -9,6 +9,7 @@ import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 export default function SecondStep() {
   const [userData, setUserData, handleIsAniTime] =
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [nickname, setNickname] = useState<string>("");
   const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
   const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
   const nav = useNavigate();
@@ -21,12 +22,6 @@ export default function SecondStep() {
     setIsNicknameError(false);
   }, [userData]);
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      goNextStep();
-    }
-  };
-
   const goNextStep = () => {
     if (isNicknameEmpty) return;
     if (isNickname(userData["nickname"])) {
@@ -37,30 +32,40 @@ export default function SecondStep() {
     }
   };
 
-  const checkIsNicknameEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsNicknameEmpty(e.target.value === "");
-    setUserData((current) => ({ ...current, nickname: e.target.value }));
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsNicknameEmpty(targetValue === "");
+    setNickname(targetValue);
+    setUserData((current) => ({ ...current, nickname: targetValue }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isNicknameEmpty) return;
+    goNextStep();
   };
 
   return (
     <>
       <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
-      <StInputWrapper>
+      <StForm onSubmit={handleSubmit}>
         <LabelHidden htmlFor="signupnickname">닉네임</LabelHidden>
         <InputEmail
           whatPlaceholder="닉네임을 입력해 주세요"
           whatType="text"
           whatId="signupnickname"
+          whatValue={nickname}
           isEmpty={isNicknameEmpty}
           isError={isNicknameError}
-          checkIsEmpty={checkIsNicknameEmpty}
-          onEnter={onKeyPress}
+          handleOnChange={handleOnChange}
         />
         <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
-      </StInputWrapper>
+      </StForm>
     </>
   );
 }
@@ -71,7 +76,7 @@ const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body0}
 `;
 
-const StInputWrapper = styled.div`
+const StForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
