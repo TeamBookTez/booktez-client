@@ -45,32 +45,39 @@ export default function LoginForm() {
     }
   };
 
-  const handleLogin = () => {
-    if (isEmailEmpty || isPwdEmpty) return;
-    postLogin();
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleLogin();
-  };
-
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     // if (e.code === "Enter") {
     //   handleLogin();
     // }
   };
 
-  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsEmailEmpty(e.target.value === "");
-  };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPwdEmpty(e.target.value === "");
+    if (isEmailEmpty || isPwdEmpty) return;
+    postLogin();
   };
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
+  };
+
+  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsEmailEmpty(targetValue === "");
+    setEmail(targetValue);
+  };
+
+  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsPwdEmpty(targetValue === "");
+    setPwd(targetValue);
+  };
+
+  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsPwdEmpty(e.target.value === "");
   };
 
   return (
@@ -80,10 +87,10 @@ export default function LoginForm() {
         whatPlaceholder="이메일을 입력해 주세요"
         whatType="text"
         whatId="loginEmail"
+        whatValue={email}
         isEmpty={isEmailEmpty}
         isError={isEmailError}
-        checkIsEmpty={checkIsEmailEmpty}
-        onEnter={onKeyPress}
+        handleOnChange={handleOnChangeEmail}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
