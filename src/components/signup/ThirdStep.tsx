@@ -27,19 +27,27 @@ export default function ThirdStep() {
   const [pwdRe, setPwdRe] = useState<string>("");
   const nav = useNavigate();
 
-  const signupHeader: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-  };
+  const postSignup = async () => {
+    const signupHeader: AxiosRequestHeaders = {
+      "Content-Type": "application/json",
+    };
 
-  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
     try {
-      const { data } = await postData(header, key, body);
+      const res = await postData(signupHeader, "/auth/signup", userData);
+      const resData = res.data.data;
 
-      localStorage.setItem("booktez-token", data.token);
+      localStorage.setItem("booktez-token", resData.token);
+
+      nav("/");
+      // 메인에서 로그인 온 경우에는 메인으로,
+      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
+      // setError 분기 처리 후 넣어주기
+      setIsPwdError(true);
+      setIsPwdReError(true);
     }
   };
 
@@ -64,7 +72,7 @@ export default function ThirdStep() {
       return setIsPwdError(true);
     }
 
-    signup(signupHeader, "/auth/signup", userData);
+    postSignup();
     handleIsAniTime(true);
     setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
   };

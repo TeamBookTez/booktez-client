@@ -14,7 +14,7 @@ export default function LoginForm() {
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const nav = useNavigate();
 
   const postLogin = async () => {
     const loginHeader: AxiosRequestHeaders = {
@@ -32,12 +32,12 @@ export default function LoginForm() {
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
 
-      navigate("/");
+      nav("/");
       // 메인에서 로그인 온 경우에는 메인으로,
       // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        console.log("e", e.response?.data);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
       }
       // setError 분기 처리 후 넣어주기
       setIsEmailError(true);
