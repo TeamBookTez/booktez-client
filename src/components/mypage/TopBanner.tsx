@@ -1,20 +1,54 @@
+import axios, { AxiosRequestHeaders } from "axios";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { IcEditProfile } from "../../assets/icons";
 import { ImgUser } from "../../assets/images";
+import { patchData } from "../../utils/lib/api";
 
 export default function TopBanner() {
+  const [userImg, setUserImg] = useState(ImgUser);
+  const patchHeader: AxiosRequestHeaders = {
+    "Content-Type": "application/json",
+    Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
+  };
+
+  const patchKey = "/user/img";
+
+  const patchImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+
+    if (e.target.files !== null) {
+      const imgFile = e.target.files[0];
+
+      formData.append("img", imgFile);
+      console.log("formData", formData);
+
+      try {
+        const { data } = await patchData(patchHeader, patchKey, formData);
+
+        if (data.success) {
+          setUserImg(data.img);
+        }
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          console.log("err", err.response?.data);
+        }
+      }
+    }
+  };
+
   return (
     <StBanner>
       <StProfile>
         <StProfileImgBox>
           <StUserImgWrapper>
-            <img src={ImgUser} alt="유저 이미지" />
+            <img src={userImg} alt="유저 이미지" />
           </StUserImgWrapper>
           <StIcEditProfile htmlFor="input-file">
             <StIcEditProfileImg />
           </StIcEditProfile>
-          <StFileInput id="input-file" type="file" accept="image/jpg, image/png, image/jpeg" />
+          <StFileInput id="input-file" type="file" onChange={patchImage} accept="image/jpg, image/png, image/jpeg" />
         </StProfileImgBox>
         <StProfileContent>
           <StUserName>석상언</StUserName>

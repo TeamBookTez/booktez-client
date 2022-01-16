@@ -21,6 +21,6 @@ export const postData = (headers: AxiosRequestHeaders, key: string, postBody: Po
   return client(headers).post(key, postBody);
 };
 
-export const patchData = (headers: AxiosRequestHeaders, key: string, patchBody: PatchBody) => {
+export const patchData = (headers: AxiosRequestHeaders, key: string, patchBody: PatchBody | FormData) => {
   return client(headers).patch(key, patchBody);
 };
