@@ -17,6 +17,7 @@ export default function BookCard(props: BookCardProps) {
       <StImgWrapper>
         <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
       </StImgWrapper>
+
       <StCardTitle>{title}</StCardTitle>
       <StCardAuthor>{authors.join(", ")}</StCardAuthor>
     </StBookCard>
@@ -54,17 +55,13 @@ const StImgWrapper = styled.div`
 `;
 
 const StCardTitle = styled.strong`
-  font-size: 1.8rem;
-  font-weight: bold;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  width: 16.8rem;
+  ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StCardAuthor = styled.p`
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  width: 16.8rem;
+  ${({ theme }) => theme.fonts.body6}
   color: ${({ theme }) => theme.colors.gray300};
 `;
