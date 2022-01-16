@@ -9,6 +9,11 @@ export default function LoginForm() {
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      handleLogin();
+    }
+  };
 
   const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEmailEmpty(e.target.value === "");
@@ -18,13 +23,13 @@ export default function LoginForm() {
     setIsPwdEmpty(e.target.value === "");
   };
 
-  const checkIsEmailError = () => {
-    setIsEmailError(true);
-  };
+  // const checkIsEmailError = () => {
+  //   setIsEmailError(true);
+  // };
 
-  const checkIsPwdError = () => {
-    setIsPwdError(true);
-  };
+  // const checkIsPwdError = () => {
+  //   setIsPwdError(true);
+  // };
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
@@ -37,8 +42,12 @@ export default function LoginForm() {
     // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <StForm>
+    <StForm onSubmit={handleSubmit}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
       <InputEmail
         whatPlaceholder="이메일을 입력해 주세요"
@@ -47,6 +56,7 @@ export default function LoginForm() {
         isEmpty={isEmailEmpty}
         isError={isEmailError}
         checkIsEmpty={checkIsEmailEmpty}
+        onEnter={onKeyPress}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
@@ -59,6 +69,7 @@ export default function LoginForm() {
         isPwdSight={isPwdSight}
         toggleSightPwd={toggleSightPwd}
         handleOnChange={checkIsPwdEmpty}
+        onEnter={onKeyPress}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
       <StLoginBtn active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError} onClick={handleLogin}>

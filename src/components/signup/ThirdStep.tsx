@@ -1,11 +1,18 @@
+import axios, { AxiosRequestHeaders } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-import { postSignUp } from "../../utils/auth.api";
 import { isPwd } from "../../utils/check";
+import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
+
+interface Body {
+  email: string;
+  password: string;
+  nickname?: string;
+}
 
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =
@@ -16,7 +23,25 @@ export default function ThirdStep() {
   const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
+  const [isPwdCurrent, setIsPwdCurrent] = useState<string>("");
+  const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
   const nav = useNavigate();
+
+  const signupHeader: AxiosRequestHeaders = {
+    "Content-Type": "application/json",
+  };
+
+  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
+    try {
+      const { data } = await postData(header, key, body);
+
+      localStorage.setItem("token", data.token);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -26,30 +51,38 @@ export default function ThirdStep() {
     setIsPwdError(false);
   }, [userData]);
 
+  useEffect(() => {
+    setIsPwdReError(false);
+  }, [isPwdReCurrent]);
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === "Enter") {
+      goNextStep();
+    }
+  };
+
   const goNextStep = () => {
+    if (isPwdCurrent !== isPwdReCurrent) {
+      return setIsPwdReError(true);
+    }
     if (isPwdEmpty || isPwdReEmpty) return;
     if (!isPwd(userData["password"])) {
       setIsPwdError(true);
     } else {
-      postSignUp(userData);
+      signup(signupHeader, "/auth/signup", userData);
       handleIsAniTime(true);
-      setTimeout(() => nav("/signup/4", { state: "ani" }), 1000);
+      setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
     }
   };
 
   const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdEmpty(e.target.value === "");
+    setIsPwdCurrent(e.target.value);
     setUserData((current) => ({ ...current, password: e.target.value }));
   };
   const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwdReEmpty(e.target.value === "");
-  };
-
-  const checkIsPwdError = () => {
-    setIsPwdError(true);
-  };
-  const checkIsPwdReError = () => {
-    setIsPwdReError(true);
+    setIsPwdReCurrent(e.target.value);
   };
 
   const toggleSightPwd = () => {
@@ -62,7 +95,7 @@ export default function ThirdStep() {
   return (
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
-      <StFormWrapper>
+      <StInputWrapper>
         <StEmailFixed>{userData["email"]}</StEmailFixed>
 
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
@@ -76,6 +109,7 @@ export default function ThirdStep() {
             isPwdSight={isPwdSight}
             toggleSightPwd={toggleSightPwd}
             handleOnChange={checkIsPwdEmpty}
+            onEnter={onKeyPress}
           />
         </StInputPwdWrapper>
         <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
@@ -91,6 +125,7 @@ export default function ThirdStep() {
             isPwdSight={isPwdReSight}
             toggleSightPwd={toggleSightRePwd}
             handleOnChange={checkIsPwdReEmpty}
+            onEnter={onKeyPress}
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
@@ -100,7 +135,7 @@ export default function ThirdStep() {
           onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
-      </StFormWrapper>
+      </StInputWrapper>
     </>
   );
 }
@@ -111,7 +146,7 @@ const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body0}
 `;
 
-const StFormWrapper = styled.form`
+const StInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
