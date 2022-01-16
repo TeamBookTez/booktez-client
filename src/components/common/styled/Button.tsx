@@ -7,6 +7,5 @@ export const Button = styled.button`
 
   background-color: ${({ theme }) => theme.colors.orange100}; // active
 
-  font-family: Pretendard;
   color: ${({ theme }) => theme.colors.white}; // active
 `;
