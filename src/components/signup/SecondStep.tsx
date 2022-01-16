@@ -42,8 +42,6 @@ export default function SecondStep() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (isNicknameEmpty) return;
     goNextStep();
   };
 

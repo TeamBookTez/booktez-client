@@ -21,8 +21,8 @@ export default function LoginForm() {
       "Content-Type": "application/json",
     };
     const loginBody = {
-      email: "book@email.com",
-      password: "!234qwers",
+      email,
+      password: pwd,
     };
 
     try {
@@ -52,9 +52,7 @@ export default function LoginForm() {
     postLogin();
   };
 
-  const toggleSightPwd = () => {
-    setIsPwdSight((isPwdSight) => !isPwdSight);
-  };
+  // --------------------------------------------------
 
   const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
@@ -63,15 +61,17 @@ export default function LoginForm() {
     setEmail(targetValue);
   };
 
+  // --------------------------------------------------
+
+  const toggleSightPwd = () => {
+    setIsPwdSight((isPwdSight) => !isPwdSight);
+  };
+
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
     setIsPwdEmpty(targetValue === "");
     setPwd(targetValue);
-  };
-
-  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPwdEmpty(e.target.value === "");
   };
 
   return (
@@ -92,15 +92,15 @@ export default function LoginForm() {
         whatPlaceholder="비밀번호를 입력해 주세요"
         whatType={isPwdSight ? "text" : "password"}
         whatId="loginPwd"
+        whatValue={pwd}
         isEmpty={isPwdEmpty}
         isError={isPwdError}
         isPwdSight={isPwdSight}
         toggleSightPwd={toggleSightPwd}
-        handleOnChange={checkIsPwdEmpty}
-        onEnter={onKeyPress}
+        handleOnChange={handleOnChangePwd}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
-      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError} onClick={handleLogin}>
+      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty} onClick={postLogin}>
         로그인
       </StLoginBtn>
     </StForm>
