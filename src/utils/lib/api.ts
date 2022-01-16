@@ -1,5 +1,3 @@
-import { AxiosRequestConfig } from "axios";
-
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
 
@@ -12,10 +10,6 @@ export const searchBook = (params: KAKAOParams) => {
 // "Content-Type": "multipart/form-data"
 // "Authorization": "토큰"
 
-interface GetBody {
-  email: string;
-}
-// 함수명 같이 논의해보기
 export const getData = (key: string, token?: string) => {
   return client(token).get(key);
 };
