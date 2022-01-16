@@ -1,20 +1,19 @@
 import styled from "styled-components";
 
 import { IcEditProfile } from "../../assets/icons";
-import { ImgUser } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
 
 export default function TopBanner(props: { userInfo: UserInfo }) {
   const { userInfo } = props;
 
-  console.log(userInfo);
+  const { img, nickname, email } = userInfo;
 
   return (
     <StBanner>
       <StProfile>
         <StProfileImgBox>
           <StUserImgWrapper>
-            <img src={userInfo.img} alt="유저 이미지" />
+            <img src={img} alt="유저 이미지" />
           </StUserImgWrapper>
           <StIcEditProfile htmlFor="input-file">
             <StIcEditProfileImg />
@@ -22,8 +21,8 @@ export default function TopBanner(props: { userInfo: UserInfo }) {
           <StFileInput id="input-file" type="file" accept="image/jpg, image/png, image/jpeg" />
         </StProfileImgBox>
         <StProfileContent>
-          <StUserName>{userInfo.nickname}</StUserName>
-          <StEmail>{userInfo.email}</StEmail>
+          <StUserName>{nickname}</StUserName>
+          <StEmail>{email}</StEmail>
         </StProfileContent>
       </StProfile>
     </StBanner>

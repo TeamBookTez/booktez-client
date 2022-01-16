@@ -6,6 +6,7 @@ import BookComment from "./BookComment";
 
 export default function BottomContent(props: { userInfo: UserInfo }) {
   const { userInfo } = props;
+  const { reviewCount } = userInfo;
 
   return (
     <StWrapper>
@@ -14,8 +15,8 @@ export default function BottomContent(props: { userInfo: UserInfo }) {
           <img src="" alt="" />
         </StImgWrapper>
         <StContentWrapper>
-          <StBooksNum>{userInfo.reviewCount}</StBooksNum>
-          <BookComment booksNum={userInfo.reviewCount} />
+          <StBooksNum>{reviewCount}</StBooksNum>
+          <BookComment booksNum={reviewCount} />
         </StContentWrapper>
       </StCountBook>
       <StServiceWrapper>
