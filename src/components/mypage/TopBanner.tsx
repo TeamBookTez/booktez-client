@@ -3,8 +3,13 @@ import styled from "styled-components";
 import { IcEditProfile } from "../../assets/icons";
 import { UserInfo } from "../../pages/MyPage";
 
-export default function TopBanner(props: { userInfo: UserInfo }) {
-  const { userInfo } = props;
+interface TopBannerProps {
+  userInfo: UserInfo;
+  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function TopBanner(props: TopBannerProps) {
+  const { userInfo, onImageChange } = props;
 
   const { img, nickname, email } = userInfo;
 
@@ -18,7 +23,7 @@ export default function TopBanner(props: { userInfo: UserInfo }) {
           <StIcEditProfile htmlFor="input-file">
             <StIcEditProfileImg />
           </StIcEditProfile>
-          <StFileInput id="input-file" type="file" accept="image/jpg, image/png, image/jpeg" />
+          <StFileInput id="input-file" type="file" onChange={onImageChange} accept="image/jpg, image/png, image/jpeg" />
         </StProfileImgBox>
         <StProfileContent>
           <StUserName>{nickname}</StUserName>

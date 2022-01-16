@@ -17,16 +17,13 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const postLogin = async () => {
-    const loginHeader: AxiosRequestHeaders = {
-      "Content-Type": "application/json",
-    };
     const loginBody = {
       email: "book@email.com",
       password: "!234qwers",
     };
 
     try {
-      const res = await postData(loginHeader, "/auth/login", loginBody);
+      const res = await postData("/auth/login", loginBody);
       const resData = res.data.data;
 
       localStorage.setItem("booktez-token", resData.token);

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -20,16 +20,13 @@ export default function Bookcase() {
     state: 0,
   });
 
-  const infoHeaders: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-    Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
-  };
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
 
   const infoKey = "/book";
 
-  const getBookcase = async (headers: AxiosRequestHeaders, key: string) => {
+  const getBookcase = async (token: string, key: string) => {
     try {
-      const { data } = await getData(headers, key);
+      const { data } = await getData(token, key);
 
       setBookcaseInfo(data.data.books);
       console.log(bookcaseInfo);
@@ -41,7 +38,7 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase(infoHeaders, infoKey);
+    getBookcase(token, infoKey);
   }, []);
 
   return (

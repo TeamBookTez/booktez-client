@@ -20,7 +20,6 @@ export interface PostBody {
 }
 
 export interface PatchBody {
-  formData?: FormData;
   answerOne?: string;
   answerTwo?: string;
   answerThree?: AnswerThree;
