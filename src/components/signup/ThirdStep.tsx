@@ -28,12 +28,8 @@ export default function ThirdStep() {
   const nav = useNavigate();
 
   const postSignup = async () => {
-    const signupHeader: AxiosRequestHeaders = {
-      "Content-Type": "application/json",
-    };
-
     try {
-      const res = await postData(signupHeader, "/auth/signup", userData);
+      const res = await postData("/auth/signup", userData);
       const resData = res.data.data;
 
       localStorage.setItem("booktez-token", resData.token);

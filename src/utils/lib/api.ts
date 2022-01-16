@@ -1,5 +1,3 @@
-import { AxiosRequestHeaders } from "axios";
-
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
 
@@ -12,15 +10,14 @@ export const searchBook = (params: KAKAOParams) => {
 // "Content-Type": "multipart/form-data"
 // "Authorization": "토큰"
 
-// 함수명 같이 논의해보기
-export const getData = (headers: AxiosRequestHeaders, key: string) => {
-  return client(headers).get(key);
+export const getData = (key: string, token?: string) => {
+  return client(token).get(key);
 };
 
-export const postData = (headers: AxiosRequestHeaders, key: string, postBody: PostBody) => {
-  return client(headers).post(key, postBody);
+export const postData = (key: string, postBody: PostBody, token?: string) => {
+  return client(token).post(key, postBody);
 };
 
-export const patchData = (headers: AxiosRequestHeaders, key: string, patchBody: PatchBody) => {
-  return client(headers).patch(key, patchBody);
+export const patchData = (token: string, key: string, patchBody: PatchBody | FormData) => {
+  return client(token).patch(key, patchBody);
 };
