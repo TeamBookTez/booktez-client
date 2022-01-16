@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AddBook, Bookcase, Login, Main, MyPage, Signup, Test } from "../pages";
 import ToBe from "../pages/ToBe";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
+import Drawer from "./bookNote/Drawer";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
@@ -39,6 +40,7 @@ export default function Router() {
           <Route path="*" element={<Navigate to="" />} />
         </Route>
         <Route path="/error" element={<Test />} />
+        <Route path="/test-drawer" element={<Drawer />} />
       </Routes>
     </BrowserRouter>
   );
