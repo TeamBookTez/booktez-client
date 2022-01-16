@@ -13,8 +13,7 @@ interface Body {
 export default function Test() {
   const header: AxiosRequestHeaders = {
     "Content-Type": "application/json",
-    Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxOX0sImlhdCI6MTY0MjI3NDQ5OCwiZXhwIjoxNjQzNDg0MDk4fQ.kqzXJ3Mq0gXeTYTcmu7r8OaCf5hwaIZkfp-e0CuxSBw",
+    Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
   };
 
   const handleFileChange = async (e: any) => {
