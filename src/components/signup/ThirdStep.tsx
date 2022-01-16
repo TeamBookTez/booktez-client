@@ -28,6 +28,7 @@ export default function ThirdStep() {
   const signupHeader: AxiosRequestHeaders = {
     "Content-Type": "application/json",
   };
+
   const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
     try {
       const { data } = await postData(header, key, body);

@@ -1,7 +1,8 @@
-import { AxiosRequestHeaders } from "axios";
-import { useEffect } from "react";
+import axios, { AxiosRequestHeaders } from "axios";
+import { useEffect, useState } from "react";
 
-import { postData } from "../utils/lib/api";
+import { client } from "../utils/lib";
+import { patchData, postData } from "../utils/lib/api";
 
 interface Body {
   email: string;
@@ -12,23 +13,102 @@ interface Body {
 export default function Test() {
   const header: AxiosRequestHeaders = {
     "Content-Type": "application/json",
+    Authorization:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxOX0sImlhdCI6MTY0MjI3NDQ5OCwiZXhwIjoxNjQzNDg0MDk4fQ.kqzXJ3Mq0gXeTYTcmu7r8OaCf5hwaIZkfp-e0CuxSBw",
   };
 
-  const body: Body = {
-    email: "test@booktez.com",
-    password: "test1",
-    nickname: "뀽",
+  const handleFileChange = async (e: any) => {
+    const formData = new FormData();
+    const imgFile = e.target.files[0];
+
+    formData.append("img", imgFile);
+    const d = formData.getAll("img");
+
+    const data = {
+      answerThree: {
+        root: [
+          {
+            depth: 1,
+            question: "오늘 뭐 먹었어?",
+            answer: [
+              {
+                text: "피자먹었어.",
+                children: [
+                  {
+                    depth: 2,
+                    question: "피자 맛있었어?",
+                    answer: [
+                      {
+                        text: "",
+                        children: [],
+                      },
+                    ],
+                  },
+                  {
+                    depth: 2,
+                    question: "콜라도 먹었어?",
+                    answer: [
+                      {
+                        text: "사이다로 했어.",
+                        children: [],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                text: "햄버거도 먹었다!",
+                children: [
+                  {
+                    depth: 2,
+                    question: "맥도날드?",
+                    answer: [
+                      {
+                        text: "아니 버거킹",
+                        children: [],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      progress: "3",
+    };
+
+    console.log(d);
+    try {
+      const res = await patchData(header, "/review/now/16", data);
+
+      console.log("res", res);
+    } catch (err) {
+      console.log("err", err);
+    }
   };
 
-  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
-    const { data } = await postData(header, key, body);
+  // const body: Body = {
+  //   email: "test@booktez.com",
+  //   password: "test1",
+  //   nickname: "뀽",
+  // };
 
-    console.log("data", data);
-  };
+  // const reviewId = 16;
 
-  useEffect(() => {
-    signup(header, "/auth/signup", body);
-  }, []);
+  // const signup = async (header: AxiosRequestHeaders, key: string) => {
+  //   const { data } = await getData(header, key);
 
-  return <div>Test</div>;
+  //   console.log("data", data);
+  // };
+
+  // useEffect(() => {
+  //   signup(header, `/review/${reviewId}`);
+  // }, []);
+
+  return (
+    <div>
+      <input type="file" onChange={handleFileChange} />
+    </div>
+  );
 }

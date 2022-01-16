@@ -2,21 +2,51 @@ import { AxiosRequestHeaders } from "axios";
 
 import { client, KAKAO } from ".";
 
-interface Params {
+interface KAKAOParams {
   query: string;
   sort: string;
   size: number;
 }
 
 interface PostBody {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   nickname?: string;
+  isbn?: string;
+  thumbnail?: string;
+  title?: string;
+  author?: string[];
+  answerOne?: string;
+  answerTwo?: string;
+  answerThree?: AnswerThree;
+  questionList?: string[];
+  progress?: string;
 }
 
-// search book api
-// 함수명을 searchBook으로?
-export const bookSearch = (params: Params) => {
+interface PatchBody {
+  formData?: FormData;
+  answerOne?: string;
+  answerTwo?: string;
+  answerThree?: AnswerThree;
+  questionList?: string[];
+}
+
+interface AnswerThree {
+  root: Question[];
+}
+
+interface Answer {
+  text: string;
+  children: Question[];
+}
+
+interface Question {
+  depth: number;
+  question: string;
+  answer: Answer[];
+}
+
+export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
 };
 
@@ -30,6 +60,10 @@ export const getData = (headers: AxiosRequestHeaders, key: string) => {
   return client(headers).get(key);
 };
 
-export const postData = (headers: AxiosRequestHeaders, key: string, body: PostBody) => {
-  return client(headers).post(key, body);
+export const postData = (headers: AxiosRequestHeaders, key: string, postBody: PostBody) => {
+  return client(headers).post(key, postBody);
+};
+
+export const patchData = (headers: AxiosRequestHeaders, key: string, patchBody: PatchBody) => {
+  return client(headers).patch(key, patchBody);
 };
