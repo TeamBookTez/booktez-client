@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-import { isNickname } from "../../utils/check";
+import { checkNicknameType } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function SecondStep() {
@@ -24,7 +24,7 @@ export default function SecondStep() {
 
   const goNextStep = () => {
     if (isNicknameEmpty) return;
-    if (isNickname(userData["nickname"])) {
+    if (checkNicknameType(userData["nickname"])) {
       setIsNicknameError(true);
     } else {
       handleIsAniTime(true);

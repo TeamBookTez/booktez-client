@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-import { isEmail } from "../../utils/check";
+import { checkEmailType } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function FirstStep() {
@@ -25,7 +25,7 @@ export default function FirstStep() {
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!isEmail(userData["email"])) {
+    if (!checkEmailType(userData["email"])) {
       setIsEmailError(true);
     } else {
       handleIsAniTime(true);

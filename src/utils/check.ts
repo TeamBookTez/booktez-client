@@ -1,11 +1,11 @@
-export function isEmail(value: string) {
+export function checkEmailType(value: string) {
   const emailRegax =
     /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
   return emailRegax.test(value); // 형식에 맞는 경우 true 리턴
 }
 
-export function isNickname(value: string) {
+export function checkNicknameType(value: string) {
   const specialCheck = /[`~!@#$%^&*|\\'";:/?]/gi;
 
   // 기호 포함 여부
