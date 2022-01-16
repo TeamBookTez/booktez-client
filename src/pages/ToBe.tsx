@@ -10,7 +10,9 @@ export default function ToBe() {
       <StSection>
         <Starticle>
           <div>
-            <StPreface>ㅡ 다음 계단</StPreface>
+            <StPreface>
+              <StLine></StLine> 다음 계단
+            </StPreface>
             <StH3>
               사용하시는 모든 기기에서
               <br />
@@ -38,7 +40,7 @@ const StSection = styled.section`
 
   height: 57.2rem;
 
-  margin: 5.2rem 0 0 11.6rem; ;
+  margin: 8.8rem 0 0 11.6rem; ;
 `;
 
 const Starticle = styled.article`
@@ -48,8 +50,22 @@ const Starticle = styled.article`
 `;
 
 const StPreface = styled.p`
+  display: flex;
+  align-items: center;
+
   ${({ theme }) => theme.fonts.header4}
   color: ${({ theme }) => theme.colors.gray300};
+`;
+
+const StLine = styled.div`
+  display: inline-block;
+
+  width: 1.9rem;
+
+  margin-right: 1.1rem;
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
+  border-radius: 0.2rem;
 `;
 
 const StH3 = styled.h3`
