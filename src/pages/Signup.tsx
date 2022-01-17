@@ -52,20 +52,16 @@ export default function Layout() {
     setIsAniTime(isActive);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
   return (
     <>
       <NavHeader logocolor={theme.colors.gray100} />
       {state === "rightpath" ? (
         <StMain isrightpath={state === "rightpath"} isAniTime={isAniTime}>
-          <StForm onSubmit={handleSubmit}>
+          <StFormWrapper>
             {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
             <StHeading2>{headerText}</StHeading2>
             <Outlet context={[userData, setUserData, handleIsAniTime]} />
-          </StForm>
+          </StFormWrapper>
         </StMain>
       ) : (
         <div>404 에러</div>
@@ -108,7 +104,7 @@ const StMain = styled.main<StMainProps>`
       : ""};
 `;
 
-const StForm = styled.form`
+const StFormWrapper = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;

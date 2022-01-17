@@ -4,7 +4,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-import { isPwd } from "../../utils/check";
+import { checkPwdType } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
 
@@ -23,23 +23,27 @@ export default function ThirdStep() {
   const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
-  const [isPwdCurrent, setIsPwdCurrent] = useState<string>("");
-  const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
+  const [pwdRe, setPwdRe] = useState<string>("");
   const nav = useNavigate();
 
-  const signupHeader: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-  };
-
-  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
+  const postSignup = async () => {
     try {
-      const { data } = await postData(header, key, body);
+      const res = await postData("/auth/signup", userData);
+      const resData = res.data.data;
 
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("booktez-token", resData.token);
+
+      nav("/");
+      // 메인에서 로그인 온 경우에는 메인으로,
+      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
+      // setError 분기 처리 후 넣어주기
+      setIsPwdError(true);
+      setIsPwdReError(true);
     }
   };
 
@@ -49,40 +53,39 @@ export default function ThirdStep() {
 
   useEffect(() => {
     setIsPwdError(false);
-  }, [userData]);
+  }, [pwd]);
 
   useEffect(() => {
     setIsPwdReError(false);
-  }, [isPwdReCurrent]);
-
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      goNextStep();
-    }
-  };
+  }, [pwdRe]);
 
   const goNextStep = () => {
-    if (isPwdCurrent !== isPwdReCurrent) {
+    if (pwd !== pwdRe) {
       return setIsPwdReError(true);
     }
     if (isPwdEmpty || isPwdReEmpty) return;
-    if (!isPwd(userData["password"])) {
-      setIsPwdError(true);
-    } else {
-      signup(signupHeader, "/auth/signup", userData);
-      handleIsAniTime(true);
-      setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
+    if (!checkPwdType(userData["password"])) {
+      return setIsPwdError(true);
     }
+
+    postSignup();
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
   };
 
-  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPwdEmpty(e.target.value === "");
-    setIsPwdCurrent(e.target.value);
-    setUserData((current) => ({ ...current, password: e.target.value }));
+  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsPwdEmpty(targetValue === "");
+    setPwd(targetValue);
+    setUserData((current) => ({ ...current, password: targetValue }));
   };
-  const checkIsPwdReEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPwdReEmpty(e.target.value === "");
-    setIsPwdReCurrent(e.target.value);
+
+  const handleOnChangePwdRe = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsPwdReEmpty(targetValue === "");
+    setPwdRe(targetValue);
   };
 
   const toggleSightPwd = () => {
@@ -92,10 +95,15 @@ export default function ThirdStep() {
     setIsPwdReSight((isPwdSight) => !isPwdSight);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    goNextStep();
+  };
+
   return (
     <>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
-      <StInputWrapper>
+      <StForm onSubmit={handleSubmit}>
         <StEmailFixed>{userData["email"]}</StEmailFixed>
 
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
@@ -104,12 +112,12 @@ export default function ThirdStep() {
             whatPlaceholder="영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요"
             whatType={isPwdSight ? "text" : "password"}
             whatId="signupPwd"
+            whatValue={pwd}
             isEmpty={isPwdEmpty}
             isError={isPwdError}
             isPwdSight={isPwdSight}
             toggleSightPwd={toggleSightPwd}
-            handleOnChange={checkIsPwdEmpty}
-            onEnter={onKeyPress}
+            handleOnChange={handleOnChangePwd}
           />
         </StInputPwdWrapper>
         <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
@@ -120,12 +128,12 @@ export default function ThirdStep() {
             whatPlaceholder="비밀번호를 확인해 주세요"
             whatType={isPwdReSight ? "text" : "password"}
             whatId="signupPwdRe"
+            whatValue={pwdRe}
             isEmpty={isPwdReEmpty}
             isError={isPwdReError}
             isPwdSight={isPwdReSight}
             toggleSightPwd={toggleSightRePwd}
-            handleOnChange={checkIsPwdReEmpty}
-            onEnter={onKeyPress}
+            handleOnChange={handleOnChangePwdRe}
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
@@ -135,7 +143,7 @@ export default function ThirdStep() {
           onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
-      </StInputWrapper>
+      </StForm>
     </>
   );
 }
@@ -146,7 +154,7 @@ const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body0}
 `;
 
-const StInputWrapper = styled.div`
+const StForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

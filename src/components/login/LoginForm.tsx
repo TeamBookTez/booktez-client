@@ -1,49 +1,74 @@
+import axios, { AxiosRequestHeaders } from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      handleLogin();
+  const nav = useNavigate();
+
+  const postLogin = async () => {
+    const loginBody = {
+      email,
+      password: pwd,
+    };
+
+    try {
+      const res = await postData("/auth/login", loginBody);
+      const resData = res.data.data;
+
+      localStorage.setItem("booktez-token", resData.token);
+      localStorage.setItem("booktez-nickname", resData.nickname);
+
+      nav("/");
+      // 메인에서 로그인 온 경우에는 메인으로,
+      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+      // setError 분기 처리 후 넣어주기
+      setIsEmailError(true);
+      setIsPwdError(true);
     }
   };
 
-  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsEmailEmpty(e.target.value === "");
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isEmailEmpty || isPwdEmpty) return;
+    postLogin();
   };
 
-  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPwdEmpty(e.target.value === "");
+  // --------------------------------------------------
+
+  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsEmailEmpty(targetValue === "");
+    setEmail(targetValue);
   };
 
-  // const checkIsEmailError = () => {
-  //   setIsEmailError(true);
-  // };
-
-  // const checkIsPwdError = () => {
-  //   setIsPwdError(true);
-  // };
+  // --------------------------------------------------
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
   };
 
-  const handleLogin = () => {
-    if (isEmailEmpty || isPwdEmpty || isEmailError || isPwdError) return;
-    // 로그인 기능 구현 부분
-    // 메인에서 로그인 온 경우에는 메인으로,
-    // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-  };
+  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    setIsPwdEmpty(targetValue === "");
+    setPwd(targetValue);
   };
 
   return (
@@ -53,10 +78,10 @@ export default function LoginForm() {
         whatPlaceholder="이메일을 입력해 주세요"
         whatType="text"
         whatId="loginEmail"
+        whatValue={email}
         isEmpty={isEmailEmpty}
         isError={isEmailError}
-        checkIsEmpty={checkIsEmailEmpty}
-        onEnter={onKeyPress}
+        handleOnChange={handleOnChangeEmail}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
@@ -64,15 +89,15 @@ export default function LoginForm() {
         whatPlaceholder="비밀번호를 입력해 주세요"
         whatType={isPwdSight ? "text" : "password"}
         whatId="loginPwd"
+        whatValue={pwd}
         isEmpty={isPwdEmpty}
         isError={isPwdError}
         isPwdSight={isPwdSight}
         toggleSightPwd={toggleSightPwd}
-        handleOnChange={checkIsPwdEmpty}
-        onEnter={onKeyPress}
+        handleOnChange={handleOnChangePwd}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
-      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError} onClick={handleLogin}>
+      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty} onClick={postLogin}>
         로그인
       </StLoginBtn>
     </StForm>
