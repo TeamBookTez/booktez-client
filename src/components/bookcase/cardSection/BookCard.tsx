@@ -1,19 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { BookcaseInfo } from "../../../pages/Bookcase";
 import { IcDelete } from "../../../assets/icons";
 
-interface BookInfo {
-  thumbnail: string;
-  title: string;
-  authors: string[];
-}
-interface BookCardProps {
-  bookInfo: BookInfo;
-}
+export default function BookCard(props: { bookcaseInfo: BookcaseInfo }) {
+  const { bookcaseInfo } = props;
 
-export default function BookCard(props: BookCardProps) {
-  const { thumbnail, title, authors } = props.bookInfo;
+  const { thumbnail, title, author } = bookcaseInfo;
 
   const handleDelete = () => {
     console.log("책 삭제");
@@ -27,7 +21,7 @@ export default function BookCard(props: BookCardProps) {
       <StTextWrapper>
         <StTitleWrapper>
           <StCardTitle>{title}</StCardTitle>
-          <StCardAuthor>{authors.join(", ")}</StCardAuthor>
+          <StCardAuthor>{author}</StCardAuthor>
         </StTitleWrapper>
         <StIcDelete onClick={handleDelete} />
       </StTextWrapper>

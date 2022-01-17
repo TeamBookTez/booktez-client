@@ -1,31 +1,17 @@
 import styled from "styled-components";
 
-import { ImgTemp } from "../../assets/images";
+import { BookcaseInfo } from "../../pages/Bookcase";
 import { AddBookCard, BookCard } from ".";
 
-export default function Cards() {
-  const tempBookInfo = {
-    thumbnail: ImgTemp,
-    title: "석상한 귬",
-    authors: ["제임스 아세 함이", "령이"],
-  };
+export default function Cards(props: { bookcaseInfo: BookcaseInfo[] }) {
+  const { bookcaseInfo } = props;
 
   return (
     <StSection>
       <AddBookCard />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
-      <BookCard bookInfo={tempBookInfo} />
+      {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
+        <BookCard key={idx} bookcaseInfo={bookcaseInfo} />
+      ))}
     </StSection>
   );
 }
