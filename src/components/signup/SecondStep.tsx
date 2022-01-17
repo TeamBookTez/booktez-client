@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { isNickname } from "../../utils/check";
+import { getNickname } from "../../utils/lib/auth.api";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function SecondStep() {
@@ -11,6 +12,8 @@ export default function SecondStep() {
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
   const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -19,6 +22,7 @@ export default function SecondStep() {
 
   useEffect(() => {
     setIsNicknameError(false);
+    setErrorMessage("");
   }, [userData]);
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -29,7 +33,8 @@ export default function SecondStep() {
 
   const goNextStep = () => {
     if (isNicknameEmpty) return;
-    if (isNickname(userData["nickname"])) {
+    if (isNickname(userData["nickname"]) || errorMessage === "") {
+      getNickname(userData["nickname"]).then((res) => setErrorMessage(res));
       setIsNicknameError(true);
     } else {
       handleIsAniTime(true);
@@ -56,7 +61,7 @@ export default function SecondStep() {
           checkIsEmpty={checkIsNicknameEmpty}
           onEnter={onKeyPress}
         />
-        <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
+        <AlertLabel isError={isNicknameError}>{errorMessage}</AlertLabel>
         <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
