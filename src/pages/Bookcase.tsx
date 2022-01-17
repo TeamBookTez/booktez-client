@@ -23,9 +23,9 @@ export default function Bookcase() {
 
   const infoKey = "/book";
 
-  const getBookcase = async (token: string, key: string) => {
+  const getBookcase = async (key: string, token: string) => {
     try {
-      const { data } = await getData(token, key);
+      const { data } = await getData(key, token);
 
       setBookcaseTotal(data.data.books);
 
@@ -45,7 +45,7 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase(token, infoKey);
+    getBookcase(infoKey, token);
   }, []);
 
   return (

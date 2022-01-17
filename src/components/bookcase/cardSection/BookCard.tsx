@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
 
-export default function BookCard(props: { bookcaseInfo: BookcaseInfo }) {
+interface BookCardProps {
+  bookcaseInfo: BookcaseInfo;
+}
+export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo } = props;
 
   const { thumbnail, title, author } = bookcaseInfo;
