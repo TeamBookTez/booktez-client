@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { PeriNoteExample } from "../components/bookNote";
 import { getData } from "../utils/lib/api";
 
 export default function Test() {
@@ -41,6 +42,7 @@ export default function Test() {
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
+      <PeriNoteExample />
     </div>
   );
 }
