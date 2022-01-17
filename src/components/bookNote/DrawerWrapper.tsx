@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { IcBooks, IcLeftArrow } from "../../../assets/icons";
-import { ImgGraphic } from "../../../assets/images";
+import { IcBooks, IcLeftArrow } from "../../assets/icons";
+import { ImgGraphic } from "../../assets/images";
 
 interface DrawerWrapperProps {
   children: React.ReactNode;

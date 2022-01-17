@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IcRightArrow } from "../../../assets/icons";
+import { IcRightArrow } from "../../assets/icons";
 
 export default function ExButton() {
   return (
