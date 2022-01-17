@@ -1,25 +1,28 @@
 import styled from "styled-components";
 
 import { Button } from "../../common";
-import { PreNoteForm, QuestionThree } from "..";
+import { DrawerWrapper, PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
   return (
-    <StNoteForm>
-      <StFormHead>독서 전 단계 어쩌구 해보세요</StFormHead>
-      <StFormWrapper>
-        <PreNoteForm question="익명의 독서가(비회원)/000님은 이 책에 어떤 기대를 하고 계신가요?">
-          <StTextarea placeholder="답변을 입력해주세요." />
-        </PreNoteForm>
-        <PreNoteForm question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 OOOOOOOOOO님의 기대를 만족시킬 수 있을까요?">
-          <StTextarea placeholder="답변을 입력해주세요." />
-        </PreNoteForm>
-        <QuestionThree />
-      </StFormWrapper>
+    <>
+      <StNoteForm>
+        <StFormHead>독서 전 단계 어쩌구 해보세요</StFormHead>
+        <StFormWrapper>
+          <PreNoteForm question="익명의 독서가(비회원)/000님은 이 책에 어떤 기대를 하고 계신가요?">
+            <StTextarea placeholder="답변을 입력해주세요." />
+          </PreNoteForm>
+          <PreNoteForm question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 OOOOOOOOOO님의 기대를 만족시킬 수 있을까요?">
+            <StTextarea placeholder="답변을 입력해주세요." />
+          </PreNoteForm>
+          <QuestionThree />
+        </StFormWrapper>
 
-      {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn>다음 계단</StNextBtn>
-    </StNoteForm>
+        {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
+        <StNextBtn>다음 계단</StNextBtn>
+      </StNoteForm>
+      <DrawerWrapper idx={3} />
+    </>
   );
 }
 

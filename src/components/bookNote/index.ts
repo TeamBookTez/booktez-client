@@ -1,6 +1,3 @@
-export { default as Drawer1 } from "./Drawer1";
-export { default as Drawer2 } from "./Drawer2";
-export { default as Drawer3 } from "./Drawer3";
 export { default as DrawerWrapper } from "./DrawerWrapper";
 export { default as ExButton } from "./ExButton";
 export { default as Navigator } from "./Navigator";
