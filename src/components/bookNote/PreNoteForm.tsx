@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 import { ExButton, StepUp } from ".";
 
-interface PreNoteLayoutProps {
+interface PreNoteFormProps {
   question: string;
   children: React.ReactNode;
 }
 
-export default function PreNoteLayout(props: PreNoteLayoutProps) {
+export default function PreNoteForm(props: PreNoteFormProps) {
   const { question, children } = props;
 
   return (

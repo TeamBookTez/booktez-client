@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { InputQuestion, PreNoteLayout } from ".";
+import { InputQuestion, PreNoteForm } from ".";
 
 export default function QuestionThree() {
-  const [inputList, setInputList] = useState<string[]>(["", "", ""]);
+  const [inputList, setInputList] = useState<string[]>([""]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     setInputList((current) => {
@@ -28,12 +28,12 @@ export default function QuestionThree() {
   };
 
   return (
-    <PreNoteLayout question="익명의 독서가(비회원) / OOO 독서가 님은 이 책에 어떤 기대를 하고 계신가요?">
+    <PreNoteForm question="익명의 독서가(비회원) / OOO 독서가 님은 이 책에 어떤 기대를 하고 계신가요?">
       {inputList.map((inputElem, idx) => (
         <InputQuestion key={idx} value={inputElem} idx={idx} onChangeValue={handleChange} onDelete={handleDelete} />
       ))}
       <StAddButton onClick={addInput}>+ 질문추가</StAddButton>
-    </PreNoteLayout>
+    </PreNoteForm>
   );
 }
 
