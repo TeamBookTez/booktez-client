@@ -49,7 +49,7 @@ const Starticle = styled.article`
   justify-content: space-between;
 `;
 
-const StPreface = styled.p`
+const StPreface = styled.div`
   display: flex;
   align-items: center;
 
