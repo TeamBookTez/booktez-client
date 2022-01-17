@@ -1,19 +1,27 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { IcGuide, IcRightArrow } from "../../assets/icons";
 import { getData } from "../../utils/lib/api";
+import QuestionForm from "./perinote/QuestionForm";
 
+export interface FormListInfo {
+  answer: any;
+  depth: number;
+  question: string;
+}
 export default function PeriNote() {
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/review/2";
+
+  const [questionFormList, setQuestionFormList] = useState<FormListInfo[]>([]);
 
   const getReview = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
 
-      console.log(data.data.answerThree);
+      setQuestionFormList(data.data.answerThree.root);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -33,6 +41,9 @@ export default function PeriNote() {
         <IcGuide />
         <IcRightArrow />
       </StHeadWrapper>
+      {questionFormList.map((formList: FormListInfo, idx: number) => (
+        <QuestionForm key={idx} formList={formList} />
+      ))}
       <StAddBtn>+ 질문 리스트 추가</StAddBtn>
       <StNextBtn>작성 완료</StNextBtn>
     </StNoteForm>
