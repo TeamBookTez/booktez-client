@@ -1,18 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcSave } from "../assets/icons";
-import { StModalWrapper } from "../components/addBook/ModalWrapper";
 import { StIcCancel } from "../components/addBook/ShowModal";
-import Navigater from "../components/bookNote/Navigater";
+import { Navigator } from "../components/bookNote";
 
 export default function BookNote() {
+  const navigate = useNavigate();
+
   return (
     <StNoteModalWrapper>
-      <StIcCancel />
+      <StIcCancel onClick={() => navigate(-1)} />
       <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
       <StNavWrapper>
-        <Navigater />
+        <Navigator />
         <IcSave />
       </StNavWrapper>
       <Outlet />
@@ -20,11 +21,10 @@ export default function BookNote() {
   );
 }
 
-const StNoteModalWrapper = styled(StModalWrapper)`
+const StNoteModalWrapper = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
 
   width: 100%;
 

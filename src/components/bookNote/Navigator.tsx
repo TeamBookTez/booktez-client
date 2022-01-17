@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-export default function Navigater() {
+export default function Navigator() {
   const [navIndex, setNavIndex] = useState<number>(0);
 
   return (
