@@ -39,11 +39,13 @@ export default function FirstStep() {
 
   useEffect(() => {
     setIsEmailError(false);
+    getEmail(userData["email"]);
   }, [userData]);
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!checkEmailType(userData["email"])) {
+    if (!checkEmailType(userData["email"]) || validEmail === false) {
+      getEmail(userData["email"]);
       setIsEmailError(true);
     } else {
       handleIsAniTime(true);
