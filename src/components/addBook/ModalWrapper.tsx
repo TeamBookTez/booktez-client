@@ -10,12 +10,12 @@ export default function ModalWrapper(props: ModalWrapperProps) {
   return <StModalWrapper>{children}</StModalWrapper>;
 }
 
-const StModalWrapper = styled.div`
+export const StModalWrapper = styled.div`
   width: 100%;
   height: 100%;
 
   position: fixed;
-  z-index: 99;
+  z-index: 10;
   left: 0;
   top: 0;
 
