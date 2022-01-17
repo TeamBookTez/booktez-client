@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcSave } from "../assets/icons";
@@ -6,9 +6,11 @@ import { StIcCancel } from "../components/addBook/ShowModal";
 import { Navigator } from "../components/bookNote";
 
 export default function BookNote() {
+  const navigate = useNavigate();
+
   return (
     <StNoteModalWrapper>
-      <StIcCancel />
+      <StIcCancel onClick={() => navigate(-1)} />
       <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
       <StNavWrapper>
         <Navigator />
