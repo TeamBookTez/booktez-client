@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ExButton, StepUp } from ".";
+import { ExButton, StepUp } from "..";
 
 interface PreNoteFormProps {
   question: string;
@@ -25,8 +25,15 @@ export default function PreNoteForm(props: PreNoteFormProps) {
 }
 
 const StSection = styled.section`
+  border: 0.1rem solid transparent;
+  border-radius: 1.6rem;
   padding: 2.1rem 3rem 2.6rem 3rem;
+  background-color: ${({ theme }) => theme.colors.white};
   width: 100%;
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.orange100};
+  }
 `;
 
 const StHeader = styled.header`

@@ -16,7 +16,7 @@ export default function TopContent(props: TopContentProps) {
   return (
     <StWrapper>
       <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
-      <StLoginButton>
+      <StLoginButton type="button">
         <StLoginLink to="/login">로그인</StLoginLink>
       </StLoginButton>
       {/* <StLogoutBtn>로그아웃</StLogoutBtn> */}

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IcDelete } from "../../assets/icons";
+import { IcDelete } from "../../../assets/icons";
 
 interface InputQuestionProps {
   idx: number;

@@ -13,7 +13,7 @@ export default function Default() {
         <br />
         지식을 얻고 독서의 매력을 느껴요
       </StNotice>
-      <StButton>+ 책 추가</StButton>
+      <StButton type="button">+ 책 추가</StButton>
     </>
   );
 }
