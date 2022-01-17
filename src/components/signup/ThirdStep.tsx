@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -7,12 +7,6 @@ import { UserData } from "../../pages/Signup";
 import { checkPwdType } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
-
-interface Body {
-  email: string;
-  password: string;
-  nickname?: string;
-}
 
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =
