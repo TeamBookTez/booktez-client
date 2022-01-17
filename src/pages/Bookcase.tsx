@@ -20,7 +20,6 @@ export default function Bookcase() {
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
-
   const infoKey = "/book";
 
   const getBookcase = async (key: string, token: string) => {

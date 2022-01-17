@@ -1,9 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { IcGuide, IcRightArrow } from "../../assets/icons";
+import { getData } from "../../utils/lib/api";
 
 export default function PeriNote() {
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const infoKey = "/review/2";
+
+  const getReview = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+
+      console.log(data.data.answerThree);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getReview(infoKey, token);
+  }, []);
+
   return (
     <StNoteForm>
       <StHeadWrapper>
