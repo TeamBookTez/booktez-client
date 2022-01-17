@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
+import PopUpLayout from "../components/common/PopUpDelete";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -53,6 +54,7 @@ export default function Bookcase() {
       <MainHeader>서재</MainHeader>
       <Navigation />
       <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost]} />
+      <PopUpLayout />
     </>
   );
 }
