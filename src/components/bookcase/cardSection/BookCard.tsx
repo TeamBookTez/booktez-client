@@ -1,10 +1,12 @@
-import { useState } from "react";
 import styled from "styled-components";
 
-import { BookcaseInfo } from "../../../pages/Bookcase";
 import { IcDelete } from "../../../assets/icons";
+import { BookcaseInfo } from "../../../pages/Bookcase";
 
-export default function BookCard(props: { bookcaseInfo: BookcaseInfo }) {
+interface BookCardProps {
+  bookcaseInfo: BookcaseInfo;
+}
+export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo } = props;
 
   const { thumbnail, title, author } = bookcaseInfo;

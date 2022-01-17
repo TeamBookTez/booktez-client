@@ -1,11 +1,10 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcSave } from "../assets/icons";
 import { StModalWrapper } from "../components/addBook/ModalWrapper";
 import { StIcCancel } from "../components/addBook/ShowModal";
-import Navigater from "../components/booknote/Navigater";
+import Navigater from "../components/bookNote/Navigater";
 
 export default function BookNote() {
   return (

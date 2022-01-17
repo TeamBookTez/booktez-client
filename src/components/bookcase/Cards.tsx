@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { AddBookCard, BookCard } from ".";
 
-export default function Cards(props: { bookcaseInfo: BookcaseInfo[] }) {
+interface CardsProps {
+  bookcaseInfo: BookcaseInfo[];
+}
+export default function Cards(props: CardsProps) {
   const { bookcaseInfo } = props;
 
   return (

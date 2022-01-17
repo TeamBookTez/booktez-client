@@ -4,8 +4,8 @@ import { AddBook, Bookcase, Login, Main, MyPage, Signup, Test } from "../pages";
 import BookNote from "../pages/BookNote";
 import ToBe from "../pages/ToBe";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
-import PeriNote from "./booknote/PeriNote";
-import PreNote from "./booknote/PreNote";
+import PeriNote from "./bookNote/PeriNote";
+import PreNote from "./bookNote/PreNote";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
