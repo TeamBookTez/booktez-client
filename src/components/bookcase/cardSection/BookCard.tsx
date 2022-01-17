@@ -1,24 +1,29 @@
 import styled from "styled-components";
 
-interface BookInfo {
-  thumbnail: string;
-  title: string;
-  authors: string[];
-}
-interface BookCardProps {
-  bookInfo: BookInfo;
-}
+import { IcBin } from "../../../assets/icons";
+import { BookcaseInfo } from "../../../pages/Bookcase";
 
-export default function BookCard(props: BookCardProps) {
-  const { thumbnail, title, authors } = props.bookInfo;
+export default function BookCard(props: { bookcaseInfo: BookcaseInfo }) {
+  const { bookcaseInfo } = props;
+
+  const { thumbnail, title, author } = bookcaseInfo;
+
+  const handleDelete = () => {
+    console.log("책 삭제");
+  };
 
   return (
     <StBookCard>
       <StImgWrapper>
         <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
       </StImgWrapper>
-      <StCardTitle>{title}</StCardTitle>
-      <StCardAuthor>{authors.join(", ")}</StCardAuthor>
+      <StTextWrapper>
+        <StTitleWrapper>
+          <StCardTitle>{title}</StCardTitle>
+          <StCardAuthor>{author}</StCardAuthor>
+        </StTitleWrapper>
+        <StIcBin onClick={handleDelete} />
+      </StTextWrapper>
     </StBookCard>
   );
 }
@@ -39,6 +44,12 @@ const StBookCard = styled.article`
   &:hover {
     background-color: ${({ theme }) => theme.colors.orange200};
   }
+  &:hover > div > header {
+    width: 16.8rem;
+  }
+  &:hover > div > svg {
+    display: inherit;
+  }
 `;
 
 export const StImg = styled.img`
@@ -53,18 +64,34 @@ const StImgWrapper = styled.div`
   margin-bottom: 1.6rem;
 `;
 
+const StTextWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StTitleWrapper = styled.header`
+  width: 100%;
+`;
+
 const StCardTitle = styled.strong`
-  font-size: 1.8rem;
-  font-weight: bold;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StCardAuthor = styled.p`
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  ${({ theme }) => theme.fonts.body6}
   color: ${({ theme }) => theme.colors.gray300};
+`;
+
+const StIcBin = styled(IcBin)`
+  display: none;
 `;

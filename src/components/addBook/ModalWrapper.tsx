@@ -10,7 +10,7 @@ export default function ModalWrapper(props: ModalWrapperProps) {
   return <StModalWrapper>{children}</StModalWrapper>;
 }
 
-const StModalWrapper = styled.div`
+export const StModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@ const StModalWrapper = styled.div`
   height: 100%;
 
   position: fixed;
-  z-index: 99;
+  z-index: 10;
   left: 0;
   top: 0;
 

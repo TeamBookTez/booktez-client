@@ -7,18 +7,17 @@ import { MainHeader } from "../components/common";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
+  author: string[];
+  state?: number;
   thumbnail: string;
   title: string;
-  author: string;
-  state: number;
 }
+
 export default function Bookcase() {
-  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo>({
-    thumbnail: "",
-    title: "",
-    author: "",
-    state: 0,
-  });
+  const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
+  const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
+  const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
+  const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
 
@@ -28,8 +27,16 @@ export default function Bookcase() {
     try {
       const { data } = await getData(token, key);
 
-      setBookcaseInfo(data.data.books);
-      console.log(bookcaseInfo);
+      setBookcaseTotal(data.data.books);
+
+      //filter를 3번이나 갈겨주는데 더 좋은 방법이 있으면 수정 부탁드립니다
+      const pre = data.data.books.filter((books: BookcaseInfo) => books.state === 2);
+      const peri = data.data.books.filter((books: BookcaseInfo) => books.state === 3);
+      const post = data.data.books.filter((books: BookcaseInfo) => books.state === 4);
+
+      setBookcasePre(pre);
+      setBookcasePeri(peri);
+      setBookcasePost(post);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -45,7 +52,7 @@ export default function Bookcase() {
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet />
+      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost]} />
     </>
   );
 }

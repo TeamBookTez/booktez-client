@@ -9,13 +9,14 @@ import { Default } from ".";
 interface TempBookInfo {
   thumbnail: string;
   title: string;
-  authors: string[];
+  author: string[];
 }
+
 export default function Recent() {
   const tempBookInfo = {
     thumbnail: ImgTemp,
-    title: "조화로운 부",
-    authors: ["제임스 아세 러이", "령이"],
+    title: "석상한 귬",
+    author: ["제임스 아세 함이", "령이"],
   };
 
   // 로그인 여부 맞춰서 아래 isDefault를 조작
@@ -34,7 +35,7 @@ export default function Recent() {
         ) : null}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {isDefault ? <Default /> : tempBookList.map((tempInfo, idx) => <BookCard key={idx} bookInfo={tempInfo} />)}
+        {isDefault ? <Default /> : tempBookList.map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} />)}
       </StBookWrapper>
     </section>
   );
