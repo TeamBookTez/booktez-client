@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ExButton, StepUp } from ".";
+import { ExButton, StepUp } from "..";
 
 interface PreNoteFormProps {
   question: string;

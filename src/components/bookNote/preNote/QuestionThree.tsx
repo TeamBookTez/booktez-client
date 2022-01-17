@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { InputQuestion, PreNoteForm } from ".";
+import { InputQuestion, PreNoteForm } from "..";
 
 export default function QuestionThree() {
   const [inputList, setInputList] = useState<string[]>([""]);

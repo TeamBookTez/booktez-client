@@ -4,8 +4,8 @@ import { AddBook, Bookcase, Login, Main, MyPage, Signup } from "../pages";
 import BookNote from "../pages/BookNote";
 import ToBe from "../pages/ToBe";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
-import PeriNote from "./bookNote/PeriNote";
-import PreNote from "./bookNote/PreNote";
+import PeriNote from "./bookNote/periNote/PeriNote";
+import PreNote from "./bookNote/preNote/PreNote";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
@@ -31,6 +31,7 @@ export default function Router() {
           {/* to-be */}
           <Route path="to-be" element={<ToBe />} />
         </Route>
+        {/* book-note */}
         <Route path="book-note/*" element={<BookNote />}>
           <Route path="" element={<PreNote />} />
           <Route path="peri" element={<PeriNote />} />
