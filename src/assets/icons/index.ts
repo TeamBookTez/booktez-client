@@ -11,6 +11,7 @@ export { ReactComponent as IcLeftArrow } from "./leftArrowIcon.svg";
 export { ReactComponent as IcLogo } from "./logoIcon.svg";
 export { ReactComponent as IcMyPage } from "./myPageIcon.svg";
 export { ReactComponent as IcNoSight } from "./noSightIcon.svg";
+export { ReactComponent as IcSave } from "./saveIcon.svg";
 export { ReactComponent as IcRightArrow } from "./rightArrowIcon.svg";
 export { ReactComponent as IcSearch } from "./searchIcon.svg";
 export { ReactComponent as IcSight } from "./sightIcon.svg";
