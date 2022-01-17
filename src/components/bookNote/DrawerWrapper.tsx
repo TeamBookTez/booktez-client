@@ -71,7 +71,7 @@ const StDrawerWrapper = styled.section<{ isopen: boolean }>`
   ${({ isopen }) =>
     isopen
       ? css`
-          animation: ${opentoright} 1s linear;
+          animation: ${opentoright} 300ms linear;
         `
       : ""}
 
