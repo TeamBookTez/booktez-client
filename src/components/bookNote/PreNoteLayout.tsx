@@ -25,7 +25,7 @@ export default function PreNoteLayout(props: PreNoteLayoutProps) {
 }
 
 const StSection = styled.section`
-  padding: 2.1rem 2.8rem 2.6rem 2.8rem;
+  padding: 2.1rem 3rem 2.6rem 3rem;
   width: 100%;
 `;
 
