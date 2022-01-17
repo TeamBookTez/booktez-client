@@ -30,11 +30,11 @@ export default function Router() {
           <Route path="my-page" element={<MyPage />} />
           {/* to-be */}
           <Route path="to-be" element={<ToBe />} />
-          <Route path="book-note/*" element={<BookNote />}>
-            <Route path="" element={<PreNote />} />
-            <Route path="peri" element={<PeriNote />} />
-            <Route path="*" element={<Navigate to="" />} />
-          </Route>
+        </Route>
+        <Route path="book-note/*" element={<BookNote />}>
+          <Route path="" element={<PreNote />} />
+          <Route path="peri" element={<PeriNote />} />
+          <Route path="*" element={<Navigate to="" />} />
         </Route>
         <Route path="/login" element={<Login />} />
         {/* 회원가입 1,2,3 나눔 */}
