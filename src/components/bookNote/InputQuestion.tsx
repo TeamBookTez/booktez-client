@@ -1,8 +1,35 @@
 import styled from "styled-components";
 
-export default function InputQuestion() {
-  return <StInput placeholder="질문을 입력해주세요." />;
+import { IcDelete } from "../../assets/icons";
+
+interface InputQuestionProps {
+  idx: number;
+  value: string;
+  onChangeValue: (e: React.ChangeEvent<HTMLInputElement>, idx: number) => void;
+  onDelete: (idx: number) => void;
 }
+
+export default function InputQuestion(props: InputQuestionProps) {
+  const { idx, value, onChangeValue, onDelete } = props;
+
+  return (
+    <StWrapper>
+      <StInput placeholder="질문 입력" value={value} onChange={(e) => onChangeValue(e, idx)} />
+      <StIcon onClick={() => onDelete(idx)} />
+    </StWrapper>
+  );
+}
+
+const StWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StIcon = styled(IcDelete)`
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-left: 2.5rem;
+`;
 
 export const StInput = styled.input`
   margin-bottom: 1rem;
