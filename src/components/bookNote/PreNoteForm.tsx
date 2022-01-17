@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 import { ExButton, StepUp } from ".";
 
-interface PreNoteLayoutProps {
+interface PreNoteFormProps {
   question: string;
   children: React.ReactNode;
 }
 
-export default function PreNoteLayout(props: PreNoteLayoutProps) {
+export default function PreNoteForm(props: PreNoteFormProps) {
   const { question, children } = props;
 
   return (
@@ -17,7 +17,6 @@ export default function PreNoteLayout(props: PreNoteLayoutProps) {
           {question}
           <StepUp />
         </StH3>
-
         <ExButton />
       </StHeader>
       <StArticle>{children}</StArticle>
@@ -26,7 +25,7 @@ export default function PreNoteLayout(props: PreNoteLayoutProps) {
 }
 
 const StSection = styled.section`
-  padding: 2.1rem 2.8rem 2.6rem 2.8rem;
+  padding: 2.1rem 3rem 2.6rem 3rem;
   width: 100%;
 `;
 

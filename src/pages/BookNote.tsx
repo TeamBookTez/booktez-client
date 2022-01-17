@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IcSave } from "../assets/icons";
 import { StModalWrapper } from "../components/addBook/ModalWrapper";
 import { StIcCancel } from "../components/addBook/ShowModal";
-import Navigater from "../components/bookNote/Navigater";
+import Navigator from "../components/bookNote/Navigator";
 
 export default function BookNote() {
   return (
@@ -12,7 +12,7 @@ export default function BookNote() {
       <StIcCancel />
       <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
       <StNavWrapper>
-        <Navigater />
+        <Navigator />
         <IcSave />
       </StNavWrapper>
       <Outlet />
