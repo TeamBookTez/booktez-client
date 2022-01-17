@@ -19,6 +19,7 @@ export default function ThirdStep() {
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
   const [pwd, setPwd] = useState<string>("");
   const [pwdRe, setPwdRe] = useState<string>("");
+
   const nav = useNavigate();
 
   const postSignup = async () => {
@@ -35,9 +36,6 @@ export default function ThirdStep() {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
-      // setError 분기 처리 후 넣어주기
-      setIsPwdError(true);
-      setIsPwdReError(true);
     }
   };
 

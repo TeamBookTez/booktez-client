@@ -1,9 +1,11 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
+import { getData } from "../../utils/lib/api";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function FirstStep() {
@@ -13,8 +15,23 @@ export default function FirstStep() {
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [validEmail, setValidEmail] = useState<boolean>(true);
 
   const nav = useNavigate();
+
+  const getEmail = async (emailData: string) => {
+    try {
+      const res = await getData(`/auth/email?email=${emailData}`);
+      const resData = res.data;
+
+      setValidEmail(resData.data.isValid);
+      setErrorMessage(resData.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -22,7 +39,6 @@ export default function FirstStep() {
 
   useEffect(() => {
     setIsEmailError(false);
-    setErrorMessage("");
   }, [userData]);
 
   const goNextStep = () => {
