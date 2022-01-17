@@ -1,10 +1,11 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgGraphic } from "../../assets/images";
 
 interface DrawerWrapperProps {
   idx: number;
+  isOpen: boolean;
 }
 
 interface QaPair {
@@ -13,7 +14,7 @@ interface QaPair {
 }
 
 export default function DrawerWrapper(props: DrawerWrapperProps) {
-  const { idx } = props;
+  const { idx, isOpen } = props;
 
   const qaPair: QaPair = { question: "", answer: [""] };
 
@@ -43,7 +44,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   const { question, answer } = qaPair;
 
   return (
-    <StDrawerWrapper>
+    <StDrawerWrapper isopen={isOpen}>
       <IcLeftArrow />
       <StImg src={ImgGraphic} />
       <StTitleWrapper>
@@ -66,18 +67,39 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   );
 }
 
-const StDrawerWrapper = styled.section`
+const opentoright = keyframes`
+    0% {
+      opacity: 0;
+      /* transform: translateX(39rem); */
+      width: 0;
+    }
+    100% {
+      opacity: 1;
+      /* transform: translateX(0); */
+      width: 39rem;
+    }
+`;
+
+const StDrawerWrapper = styled.section<{ isopen: boolean }>`
+  ${({ isopen }) =>
+    isopen
+      ? css`
+          animation: ${opentoright} 1s linear;
+        `
+      : ""}
+
   display: flex;
   flex-direction: column;
   text-align: center;
 
-  width: 39rem;
-  height: 90rem;
-
   border-radius: 2rem 0 0 2rem;
-  box-shadow: 0 0 0.4rem rgba(0, 0, 0.17);
+  box-shadow: 0 0 0.4rem 0 rgba(0, 0, 0, 0.17);
 
   padding: 3.3rem 3.3rem 5.4rem 3.3rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+
+  height: 90rem;
 
   & > svg {
     width: 4.4rem;
@@ -115,14 +137,12 @@ const StArticle = styled.article`
   display: flex;
   flex-direction: column;
 
-  width: 32.4rem;
-  height: 53.4rem;
-
+  border-radius: 2rem;
   padding: 3.2rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
-  box-shadow: 0 0 1.8rem 0.9rem rgba(117, 106, 90, 0.09);
-  border-radius: 2rem;
+  width: 32.4rem;
+  height: 53.4rem;
 `;
 
 const StQuestionWrapper = styled.h2`

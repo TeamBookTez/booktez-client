@@ -1,36 +1,52 @@
+import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcSave } from "../assets/icons";
 import { StIcCancel } from "../components/addBook/ShowModal";
-import { Navigator } from "../components/bookNote";
+import { DrawerWrapper, Navigator } from "../components/bookNote";
 
 export default function BookNote() {
+  const [drawerIdx, setDrawerIdx] = useState(1);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleToggleDrawer = (i: number) => {
+    setIsDrawerOpen(true);
+    setDrawerIdx(i);
+  };
+
   return (
-    <StNoteModalWrapper>
-      <StIcCancel onClick={() => navigate(-1)} />
-      <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
-      <StNavWrapper>
-        <Navigator />
-        <IcSave />
-      </StNavWrapper>
-      <Outlet />
-    </StNoteModalWrapper>
+    <StWrapper>
+      <StNoteModalWrapper isopen={isDrawerOpen}>
+        <StIcCancel onClick={() => navigate(-1)} />
+        <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
+        <StNavWrapper>
+          <Navigator />
+          <IcSave />
+        </StNavWrapper>
+        <Outlet context={[handleToggleDrawer]} />
+      </StNoteModalWrapper>
+      {isDrawerOpen && <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} />}
+    </StWrapper>
   );
 }
 
-const StNoteModalWrapper = styled.main`
+const StWrapper = styled.main`
+  display: flex;
+  background-color: ${({ theme }) => theme.colors.white200};
+
+  overflow: hidden;
+`;
+
+const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
   width: 100%;
 
-  padding: 10rem 9.5rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
+  padding: 10rem ${({ isopen }) => (isopen ? "3.4rem" : "9.5rem")} 10rem 9.5rem;
 `;
 
 const StNavWrapper = styled.div`

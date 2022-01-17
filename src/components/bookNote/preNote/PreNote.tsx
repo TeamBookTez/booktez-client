@@ -1,28 +1,34 @@
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { Button } from "../../common";
-import { DrawerWrapper, PreNoteForm, QuestionThree } from "..";
+import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  return (
-    <>
-      <StNoteForm>
-        <StFormHead>독서 전 단계 어쩌구 해보세요</StFormHead>
-        <StFormWrapper>
-          <PreNoteForm question="익명의 독서가(비회원)/000님은 이 책에 어떤 기대를 하고 계신가요?">
-            <StTextarea placeholder="답변을 입력해주세요." />
-          </PreNoteForm>
-          <PreNoteForm question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 OOOOOOOOOO님의 기대를 만족시킬 수 있을까요?">
-            <StTextarea placeholder="답변을 입력해주세요." />
-          </PreNoteForm>
-          <QuestionThree />
-        </StFormWrapper>
+  const [handleToggleDrawer] = useOutletContext<[(i: number) => void]>();
 
-        {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-        <StNextBtn>다음 계단</StNextBtn>
-      </StNoteForm>
-      <DrawerWrapper idx={3} />
-    </>
+  return (
+    <StNoteForm>
+      <StFormHead>독서 전 단계 어쩌구 해보세요</StFormHead>
+      <StFormWrapper>
+        <PreNoteForm
+          question="익명의 독서가(비회원)/000님은 이 책에 어떤 기대를 하고 계신가요?"
+          idx={1}
+          onToggleDrawer={handleToggleDrawer}>
+          <StTextarea placeholder="답변을 입력해주세요." />
+        </PreNoteForm>
+        <PreNoteForm
+          question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
+          idx={2}
+          onToggleDrawer={handleToggleDrawer}>
+          <StTextarea placeholder="답변을 입력해주세요." />
+        </PreNoteForm>
+        <QuestionThree onToggleDrawer={handleToggleDrawer} />
+      </StFormWrapper>
+
+      {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
+      <StNextBtn>다음 계단</StNextBtn>
+    </StNoteForm>
   );
 }
 
@@ -34,6 +40,8 @@ const StNoteForm = styled.form`
   width: 100%;
 
   max-height: fit-content;
+
+  overflow-y: scroll;
 `;
 
 const StFormWrapper = styled.section`
