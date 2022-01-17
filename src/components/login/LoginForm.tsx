@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -14,30 +14,27 @@ export default function LoginForm() {
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const nav = useNavigate();
 
   const postLogin = async () => {
-    const loginHeader: AxiosRequestHeaders = {
-      "Content-Type": "application/json",
-    };
     const loginBody = {
-      email: "book@email.com",
-      password: "!234qwers",
+      email,
+      password: pwd,
     };
 
     try {
-      const res = await postData(loginHeader, "/auth/login", loginBody);
+      const res = await postData("/auth/login", loginBody);
       const resData = res.data.data;
 
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
 
-      navigate("/");
+      nav("/");
       // 메인에서 로그인 온 경우에는 메인으로,
       // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        console.log("e", e.response?.data);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
       }
       // setError 분기 처리 후 넣어주기
       setIsEmailError(true);
@@ -45,32 +42,33 @@ export default function LoginForm() {
     }
   };
 
-  const handleLogin = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (isEmailEmpty || isPwdEmpty) return;
     postLogin();
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleLogin();
+  // --------------------------------------------------
+
+  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsEmailEmpty(targetValue === "");
+    setEmail(targetValue);
   };
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    // if (e.code === "Enter") {
-    //   handleLogin();
-    // }
-  };
-
-  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsEmailEmpty(e.target.value === "");
-  };
-
-  const checkIsPwdEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPwdEmpty(e.target.value === "");
-  };
+  // --------------------------------------------------
 
   const toggleSightPwd = () => {
     setIsPwdSight((isPwdSight) => !isPwdSight);
+  };
+
+  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsPwdEmpty(targetValue === "");
+    setPwd(targetValue);
   };
 
   return (
@@ -80,10 +78,10 @@ export default function LoginForm() {
         whatPlaceholder="이메일을 입력해 주세요"
         whatType="text"
         whatId="loginEmail"
+        whatValue={email}
         isEmpty={isEmailEmpty}
         isError={isEmailError}
-        checkIsEmpty={checkIsEmailEmpty}
-        onEnter={onKeyPress}
+        handleOnChange={handleOnChangeEmail}
       />
       <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
@@ -91,15 +89,15 @@ export default function LoginForm() {
         whatPlaceholder="비밀번호를 입력해 주세요"
         whatType={isPwdSight ? "text" : "password"}
         whatId="loginPwd"
+        whatValue={pwd}
         isEmpty={isPwdEmpty}
         isError={isPwdError}
         isPwdSight={isPwdSight}
         toggleSightPwd={toggleSightPwd}
-        handleOnChange={checkIsPwdEmpty}
-        onEnter={onKeyPress}
+        handleOnChange={handleOnChangePwd}
       />
       <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
-      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty && !isEmailError && !isPwdError} onClick={handleLogin}>
+      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty} onClick={postLogin}>
         로그인
       </StLoginBtn>
     </StForm>

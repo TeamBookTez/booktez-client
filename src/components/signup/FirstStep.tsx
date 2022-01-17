@@ -3,12 +3,13 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-import { isEmail } from "../../utils/check";
+import { checkEmailType } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function FirstStep() {
   const [userData, setUserData, handleIsAniTime] =
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [email, setEmail] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
 
@@ -22,15 +23,9 @@ export default function FirstStep() {
     setIsEmailError(false);
   }, [userData]);
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === "Enter") {
-      goNextStep();
-    }
-  };
-
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!isEmail(userData["email"])) {
+    if (!checkEmailType(userData["email"])) {
       setIsEmailError(true);
     } else {
       handleIsAniTime(true);
@@ -38,30 +33,38 @@ export default function FirstStep() {
     }
   };
 
-  const checkIsEmailEmpty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsEmailEmpty(e.target.value === "");
-    setUserData((current) => ({ ...current, email: e.target.value }));
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value;
+
+    setIsEmailEmpty(targetValue === "");
+    setEmail(targetValue);
+    setUserData((current) => ({ ...current, email: targetValue }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    goNextStep();
   };
 
   return (
     <>
       <StParagraph>당신의 이메일을 입력해 주세요.</StParagraph>
-      <StInputWrapper>
+      <StForm onSubmit={handleSubmit}>
         <LabelHidden htmlFor="signupEmail">이메일</LabelHidden>
         <InputEmail
           whatPlaceholder="이메일을 입력해 주세요"
           whatType="text"
           whatId="signupEmail"
+          whatValue={email}
           isEmpty={isEmailEmpty}
           isError={isEmailError}
-          checkIsEmpty={checkIsEmailEmpty}
-          onEnter={onKeyPress}
+          handleOnChange={handleOnChange}
         />
         <AlertLabel isError={isEmailError}>올바른 형식이 아닙니다.</AlertLabel>
         <StNextStepBtn type="button" active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
-      </StInputWrapper>
+      </StForm>
     </>
   );
 }
@@ -72,7 +75,7 @@ const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body0}
 `;
 
-const StInputWrapper = styled.div`
+const StForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

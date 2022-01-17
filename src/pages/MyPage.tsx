@@ -1,10 +1,10 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
 import BottomContent from "../components/mypage/BottomContent";
 import TopContent from "../components/mypage/TopContent";
-import { getData } from "../utils/lib/api";
+import { getData, patchData } from "../utils/lib/api";
 
 export interface UserInfo {
   email: string;
@@ -12,6 +12,7 @@ export interface UserInfo {
   nickname: string;
   reviewCount: number;
 }
+
 export default function MyPage() {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     email: "",
@@ -20,17 +21,15 @@ export default function MyPage() {
     reviewCount: 0,
   });
 
-  const infoHeaders: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-    Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
-  };
-
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/user/myInfo";
+  const patchImgKey = "/user/img";
 
-  const getInfo = async (headers: AxiosRequestHeaders, key: string) => {
+  const getInfo = async (token: string, key: string) => {
     try {
-      const { data } = await getData(headers, key);
+      const { data } = await getData(key, token);
 
+      console.log("data", data);
       setUserInfo(data.data);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -39,14 +38,36 @@ export default function MyPage() {
     }
   };
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+
+    if (e.target.files !== null) {
+      const imgFile = e.target.files[0];
+
+      formData.append("img", imgFile);
+
+      try {
+        const { data } = await patchData(token, patchImgKey, formData);
+
+        if (data.success) {
+          setUserInfo((current) => ({ ...current, img: data.img }));
+        }
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          console.log("err", err.response?.data);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
-    getInfo(infoHeaders, infoKey);
+    getInfo(token, infoKey);
   }, []);
 
   return (
     <>
       <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} />
+      <TopContent userInfo={userInfo} onImageChange={handleImageChange} />
       <BottomContent userInfo={userInfo} />
     </>
   );

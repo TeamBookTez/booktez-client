@@ -84,10 +84,11 @@ const StWriteBtn = styled(Button)`
   ${({ theme }) => theme.fonts.button};
 `;
 
-const StIcCancel = styled(IcCancelBlack)`
+export const StIcCancel = styled(IcCancelBlack)`
   position: absolute;
   top: 3.2rem;
   left: 2.4rem;
+  z-index: 20;
 
   width: 4.8rem;
   height: 4.8rem;
