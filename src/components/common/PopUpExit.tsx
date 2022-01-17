@@ -7,7 +7,7 @@ const StTemp = styled.div`
   height: 16.1rem;
 `;
 
-export default function PopUpLayout() {
+export default function PopUpExit() {
   return (
     <StPopUpWrpper>
       <StPopUp>

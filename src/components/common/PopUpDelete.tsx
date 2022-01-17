@@ -7,7 +7,13 @@ const StTemp = styled.div`
   height: 16.1rem;
 `;
 
-export default function PopUpLayout() {
+interface PopUpDeleteProps {
+  onPopUp: () => void;
+}
+
+export default function PopUpDelete(props: PopUpDeleteProps) {
+  const { onPopUp } = props;
+
   return (
     <StPopUpWrpper>
       <StPopUp>
@@ -16,7 +22,9 @@ export default function PopUpLayout() {
         <StQuestion>삭제하시겠어요?</StQuestion>
         <StDetail>삭제한 기록은 복구가 어려워요!</StDetail>
         <StBtnWrapper>
-          <StBtnCancel type="button">취소</StBtnCancel>
+          <StBtnCancel type="button" onClick={onPopUp}>
+            취소
+          </StBtnCancel>
           <StBtnDelete type="button">삭제</StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
