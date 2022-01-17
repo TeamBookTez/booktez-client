@@ -6,6 +6,7 @@ export { ReactComponent as IcCancelBlack } from "./cancelIconBlack.svg";
 export { ReactComponent as IcCheck } from "./checkIcon.svg";
 export { ReactComponent as IcDelete } from "./deleteIcon.svg";
 export { ReactComponent as IcEditProfile } from "./editProfileIcon.svg";
+export { ReactComponent as IcGuide } from "./guideIcon.svg";
 export { ReactComponent as IcHome } from "./homeIcon.svg";
 export { ReactComponent as IcLeftArrow } from "./leftArrowIcon.svg";
 export { ReactComponent as IcLogo } from "./logoIcon.svg";
