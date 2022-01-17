@@ -4,10 +4,8 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function PreRead() {
-  const [bookcasePre] =
-    useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<BookcaseInfo[]>>, () => void]>();
-
-  console.log(bookcasePre);
+  const [bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost] =
+    useOutletContext<[BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], BookcaseInfo[]]>();
 
   return (
     <>

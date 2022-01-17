@@ -4,10 +4,8 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function PeriRead() {
-  const [bookcasePeri] =
-    useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<BookcaseInfo[]>>, () => void]>();
-
-  console.log(bookcasePeri);
+  const [bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost] =
+    useOutletContext<[BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], BookcaseInfo[]]>();
 
   return (
     <>
