@@ -13,8 +13,8 @@ export default function PopUpLayout() {
       <StPopUp>
         {/* 일러스트 div */}
         <StTemp></StTemp>
-        <StQuestion>삭제하시겠어요?</StQuestion>
-        <StDetail>삭제한 기록은 복구가 어려워요!</StDetail>
+        <StQuestion>현재 페이지에서 나가시겠어요?</StQuestion>
+        <StDetail>변경사항이 저장되지 않을 수도 있어요!</StDetail>
         <StBtnWrapper>
           <StBtnCancel type="button">취소</StBtnCancel>
           <StBtnDelete type="button">삭제</StBtnDelete>
