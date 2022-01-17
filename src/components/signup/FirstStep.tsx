@@ -1,11 +1,10 @@
-import axios, { AxiosRequestHeaders } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
-// import { checkEmail } from "../../utils/auth.api";
 import { isEmail } from "../../utils/check";
+import { getEmail } from "../../utils/lib/auth.api";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 
 export default function FirstStep() {
@@ -13,6 +12,7 @@ export default function FirstStep() {
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const nav = useNavigate();
 
@@ -22,6 +22,7 @@ export default function FirstStep() {
 
   useEffect(() => {
     setIsEmailError(false);
+    setErrorMessage("");
   }, [userData]);
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -32,7 +33,8 @@ export default function FirstStep() {
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!isEmail(userData["email"])) {
+    if (!isEmail(userData["email"]) || errorMessage === "") {
+      getEmail(userData["email"]).then((res) => setErrorMessage(res));
       setIsEmailError(true);
     } else {
       handleIsAniTime(true);
@@ -59,7 +61,7 @@ export default function FirstStep() {
           checkIsEmpty={checkIsEmailEmpty}
           onEnter={onKeyPress}
         />
-        <AlertLabel isError={isEmailError}>올바른 형식이 아닙니다.</AlertLabel>
+        <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StNextStepBtn type="button" active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>

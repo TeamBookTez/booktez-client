@@ -38,7 +38,7 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route path="/error" element={<Test />} />
+        {/* <Route path="/error" element={<Test />} /> */}
       </Routes>
     </BrowserRouter>
   );
