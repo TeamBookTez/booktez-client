@@ -39,12 +39,13 @@ export default function SecondStep() {
 
   useEffect(() => {
     setIsNicknameError(false);
-    setErrorMessage("");
+    getNickname(userData["nickname"]);
   }, [userData]);
 
   const goNextStep = () => {
     if (isNicknameEmpty) return;
-    if (checkNicknameType(userData["nickname"])) {
+    if (checkNicknameType(userData["nickname"]) || validNickname === false) {
+      getNickname(userData["nickname"]);
       setIsNicknameError(true);
     } else {
       handleIsAniTime(true);
