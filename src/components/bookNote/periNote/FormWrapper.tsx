@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 import { FormListInfo } from "./PeriNote";
 
-interface QuestionFormInfo {
+interface FormWrapperProps {
   formList: FormListInfo;
 }
-export default function QuestionForm(props: QuestionFormInfo) {
+export default function FormWrapper(props: FormWrapperProps) {
   const { formList } = props;
   const { question, answer, depth } = formList;
 
@@ -15,17 +15,17 @@ export default function QuestionForm(props: QuestionFormInfo) {
   console.log(answerChildren);
 
   return (
-    <QuestionFormWrapper>
+    <StFormWrapper>
       <StQuestion>{question}</StQuestion>
       <StAnswer>{answerText}</StAnswer>
       {answerChildren.map((child: FormListInfo, idx: number) => (
-        <QuestionForm formList={child} key={idx} />
+        <FormWrapper formList={child} key={idx} />
       ))}
-    </QuestionFormWrapper>
+    </StFormWrapper>
   );
 }
 
-const QuestionFormWrapper = styled.div`
+const StFormWrapper = styled.form`
   width: 100%;
 
   ${({ theme }) => theme.fonts.header4};

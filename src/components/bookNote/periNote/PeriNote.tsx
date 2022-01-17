@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { IcGuide, IcRightArrow } from "../../../assets/icons";
 import { getData } from "../../../utils/lib/api";
-import QuestionForm from "./QuestionForm";
+import { ExButton, StepUp } from "..";
+import QuestionForm from "./FormWrapper";
+import FormWrapper from "./FormWrapper";
 
 export interface FormListInfo {
   answer: any;
@@ -36,13 +37,14 @@ export default function PeriNote() {
   return (
     <StNoteForm>
       <StHeadWrapper>
-        <StHead>구조화된 질문과 답변을 만들어 우선순위 독서를 해보세요!</StHead>
-        {/* 밑에 두개는 소령이걸로 변경될 예정 */}
-        <IcGuide />
-        <IcRightArrow />
+        <StHead>
+          구조화된 질문과 답변을 만들어 우선순위 독서를 해보세요!
+          <StepUp />
+        </StHead>
+        <ExButton />
       </StHeadWrapper>
       {questionFormList.map((formList: FormListInfo, idx: number) => (
-        <QuestionForm key={idx} formList={formList} />
+        <FormWrapper key={idx} formList={formList} />
       ))}
       <StAddBtn>+ 질문 리스트 추가</StAddBtn>
       <StNextBtn>작성 완료</StNextBtn>
@@ -62,6 +64,8 @@ const StNoteForm = styled.form`
 
 const StHeadWrapper = styled.header`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   width: 100%;
 
@@ -70,7 +74,10 @@ const StHeadWrapper = styled.header`
   ${({ theme }) => theme.fonts.header3};
 `;
 
-const StHead = styled.h2``;
+const StHead = styled.label`
+  display: flex;
+  align-items: center;
+`;
 
 const StAddBtn = styled.button`
   width: 100%;
