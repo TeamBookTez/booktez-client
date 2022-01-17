@@ -2,6 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgGraphic } from "../../assets/images";
+import { DrawerPre } from ".";
 
 interface DrawerWrapperProps {
   idx: number;
@@ -38,10 +39,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
         "나 자신의 why를 발견하는 방법은 무엇일까?",
         "Why를 항상 살아있게 유지하려면 어떻게 해야할까?",
       ];
-      break;
   }
-
-  const { question, answer } = qaPair;
 
   return (
     <StDrawerWrapper isopen={isOpen}>
@@ -51,18 +49,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
         <IcBooks />
         나는 왜 이 일을 하는가? 2
       </StTitleWrapper>
-      <StArticle>
-        <StQuestionWrapper>{question}</StQuestionWrapper>
-        <StAnswerWrapper isQ3={idx === 3}>
-          {answer.map((answer, i) => {
-            if (idx === 3) {
-              return <StList key={`ex-answer-${i}`}>{answer}</StList>;
-            } else {
-              return answer;
-            }
-          })}
-        </StAnswerWrapper>
-      </StArticle>
+      <StArticle>{idx === 4 ? "" : <DrawerPre qaPair={qaPair} idx={idx} />}</StArticle>
     </StDrawerWrapper>
   );
 }
@@ -96,7 +83,6 @@ const StDrawerWrapper = styled.section<{ isopen: boolean }>`
   box-shadow: 0 0 0.4rem 0 rgba(0, 0, 0, 0.17);
 
   padding: 3.3rem 3.3rem 5.4rem 3.3rem;
-
   background-color: ${({ theme }) => theme.colors.white};
 
   height: 90rem;
@@ -114,16 +100,14 @@ const StImg = styled.img`
   height: 11.9rem;
 
   margin-bottom: 3.8rem;
-
   border-radius: 1.6rem;
 `;
 
 const StTitleWrapper = styled.header`
   display: flex;
+  margin-bottom: 2rem;
 
   ${({ theme }) => theme.fonts.header4};
-
-  margin-bottom: 2rem;
 
   & > svg {
     width: 2rem;
@@ -143,33 +127,4 @@ const StArticle = styled.article`
 
   width: 32.4rem;
   height: 53.4rem;
-`;
-
-const StQuestionWrapper = styled.h2`
-  text-align: left;
-
-  ${({ theme }) => theme.fonts.body1}
-
-  margin-bottom: 1.7rem;
-`;
-
-const StAnswerWrapper = styled.p<{ isQ3: boolean }>`
-  text-align: left;
-
-  ${({ theme }) => theme.fonts.body4};
-
-  border-top: 0.1rem solid ${({ theme }) => theme.colors.white400};
-  padding-top: 1.7rem;
-
-  ${({ isQ3 }) =>
-    isQ3
-      ? css`
-          list-style-type: square;
-        `
-      : css``}
-`;
-
-const StList = styled.li`
-  margin-left: 0.7rem;
-  text-align: start;
 `;

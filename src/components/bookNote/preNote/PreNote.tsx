@@ -38,9 +38,7 @@ const StNoteForm = styled.form`
   align-items: flex-end;
 
   width: 100%;
-
   max-height: fit-content;
-
   overflow-y: scroll;
 `;
 
@@ -53,9 +51,8 @@ const StFormWrapper = styled.section`
 `;
 
 const StFormHead = styled.h2`
-  width: 100%;
-
   padding: 4.5rem 0 4.5rem 2rem;
+  width: 100%;
 
   ${({ theme }) => theme.fonts.header3};
 `;
@@ -64,9 +61,7 @@ const StTextarea = styled.textarea`
   border: none;
   width: 100%;
   height: 15.4rem;
-
   color: ${({ theme }) => theme.colors.gray100};
-
   resize: none;
 
   &::placeholder {
