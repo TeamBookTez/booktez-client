@@ -3,27 +3,26 @@ import styled from "styled-components";
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgGraphic } from "../../assets/images";
 
-export default function Drawer() {
+interface DrawerWrapperProps {
+  children: React.ReactNode;
+}
+export default function DrawerWrapper(props: DrawerWrapperProps) {
+  const { children } = props;
+
   return (
-    <DrawerWrapper>
+    <StDrawerWrapper>
       <IcLeftArrow />
       <StImg src={ImgGraphic} />
       <StTitleWrapper>
         <IcBooks />
         나는 왜 이 일을 하는가? 2
       </StTitleWrapper>
-      <StArticle>
-        <StQuestionWrapper>1. 이 책에 어떤 기대를 하고 계씬가요?</StQuestionWrapper>
-        <StAnswerWrapper>
-          상황에 따라 변하는 동기를 한 곳에 잡아 두고 싶고, 앞으로의 진행될 모든 업무에 대해 내가 이 일을 왜 하는지
-          명확하게 할 수 있는 힌트를 얻을 수 있다고 기대하고 있다.
-        </StAnswerWrapper>
-      </StArticle>
-    </DrawerWrapper>
+      <StArticle>{children}</StArticle>
+    </StDrawerWrapper>
   );
 }
 
-const DrawerWrapper = styled.section`
+const StDrawerWrapper = styled.section`
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -80,19 +79,4 @@ const StArticle = styled.article`
 
   box-shadow: 0 0 1.8rem 0.9rem rgba(117, 106, 90, 0.09);
   border-radius: 2rem;
-`;
-
-const StQuestionWrapper = styled.h2`
-  ${({ theme }) => theme.fonts.body1}
-
-  margin-bottom: 1.7rem;
-`;
-
-const StAnswerWrapper = styled.p`
-  display: flex;
-
-  ${({ theme }) => theme.fonts.body4};
-
-  border-top: 0.1rem solid ${({ theme }) => theme.colors.white400};
-  padding-top: 1.7rem;
 `;
