@@ -7,14 +7,21 @@ export const KAKAO = axios.create({
   },
 });
 
-export const client = axios.create({
-  baseURL: `${process.env.REACT_APP_BASE_URL}`,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+// header에 맞춰서 axios를 만들어줌
+export const client = (token?: string) => {
+  let headers;
 
-export const auth = () => {
+  if (token) {
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: token,
+    };
+  } else {
+    headers = {
+      "Content-Type": "application/json",
+    };
+  }
+
   return axios.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,
     headers: {

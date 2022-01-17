@@ -1,14 +1,22 @@
 import styled from "styled-components";
 
+import { UserInfo } from "../../pages/MyPage";
 import { Button } from "../common";
 import { StLoginLink } from "../common/MainHeader";
-import TopBanner from "./TopBanner";
+import { TopBanner } from ".";
 
-export default function TopContent() {
+interface TopContentProps {
+  userInfo: UserInfo;
+  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function TopContent(props: TopContentProps) {
+  const { userInfo, onImageChange } = props;
+
   return (
     <StWrapper>
-      <TopBanner />
-      <StLoginButton>
+      <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
+      <StLoginButton type="button">
         <StLoginLink to="/login">로그인</StLoginLink>
       </StLoginButton>
       {/* <StLogoutBtn>로그아웃</StLogoutBtn> */}
