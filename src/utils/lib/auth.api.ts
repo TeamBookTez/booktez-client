@@ -24,13 +24,11 @@ export const postSignup = async (signupData: SignUp) => {
 
 export const getEmail = async (emailData: string) => {
   try {
-    const { data: response } = await client.get(`${PREFIX_URL}/email?email=${emailData}`);
+    const { data } = await client.get(`${PREFIX_URL}/email?email=${emailData}`);
 
-    if (response !== undefined) {
-      if (response.status === 200) {
-        // console.log(response.message);
-
-        return response.message;
+    if (data !== undefined) {
+      if (data.status === 200) {
+        return data.message;
       }
     }
   } catch (err) {
@@ -38,6 +36,20 @@ export const getEmail = async (emailData: string) => {
       console.log("err", err.response?.data);
     }
   }
+};
 
-  return console.log("딱 가져온나");
+export const getNickname = async (nicknameData: string) => {
+  try {
+    const { data } = await client.get(`${PREFIX_URL}/nickname?nickname=${nicknameData}`);
+
+    if (data !== undefined) {
+      if (data.status === 200) {
+        return data.message;
+      }
+    }
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.log("err", err.response?.data);
+    }
+  }
 };
