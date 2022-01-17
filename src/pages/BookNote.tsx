@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { IcSave } from "../assets/icons";
 import { StIcCancel } from "../components/addBook/ShowModal";
-import Navigator from "../components/bookNote/Navigator";
+import { Navigator } from "../components/bookNote";
 
 export default function BookNote() {
   return (
