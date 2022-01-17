@@ -31,6 +31,8 @@ export default function Bookcase() {
       const { data } = await getData(headers, key);
 
       setBookcaseTotal(data.data.books);
+
+      //filter를 3번이나 갈겨주는데 더 좋은 방법이 있으면 수정 부탁드립니다
       const pre = data.data.books.filter((books: any) => books.state === 2);
       const peri = data.data.books.filter((books: any) => books.state === 3);
       const post = data.data.books.filter((books: any) => books.state === 4);
