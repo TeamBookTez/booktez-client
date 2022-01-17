@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import DrawerWrapper from "./DrawerWrapper";
+import { DrawerWrapper } from "..";
 
 export default function Drawer2() {
   return (

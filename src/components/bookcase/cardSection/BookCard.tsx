@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IcDelete } from "../../../assets/icons";
+import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
 
 interface BookCardProps {
@@ -25,7 +25,7 @@ export default function BookCard(props: BookCardProps) {
           <StCardTitle>{title}</StCardTitle>
           <StCardAuthor>{author}</StCardAuthor>
         </StTitleWrapper>
-        <StIcDelete onClick={handleDelete} />
+        <StIcBin onClick={handleDelete} />
       </StTextWrapper>
     </StBookCard>
   );
@@ -95,6 +95,6 @@ const StCardAuthor = styled.p`
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
-const StIcDelete = styled(IcDelete)`
+const StIcBin = styled(IcBin)`
   display: none;
 `;

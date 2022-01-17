@@ -1,9 +1,27 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navigation() {
+  const { pathname } = useLocation();
   const [navIndex, setNavIndex] = useState<number>(0);
+
+  useEffect(() => {
+    switch (pathname) {
+      case "/bookcase/pre":
+        setNavIndex(1);
+        break;
+      case "bookcase/peri":
+        setNavIndex(2);
+        break;
+      case "bookcase/post":
+        setNavIndex(3);
+        break;
+      default:
+        setNavIndex(0);
+        break;
+    }
+  }, []);
 
   return (
     <StNav>
@@ -63,11 +81,7 @@ const StLink = styled(Link)`
   height: 4.8rem;
 
   text-align: center;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 2.3rem;
-  letter-spacing: -0.1;
+  ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
