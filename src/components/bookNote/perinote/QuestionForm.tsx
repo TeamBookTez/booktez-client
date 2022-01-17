@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { FormListInfo } from "../PeriNote";
+import { FormListInfo } from "./PeriNote";
 
 interface QuestionFormInfo {
   formList: FormListInfo;
