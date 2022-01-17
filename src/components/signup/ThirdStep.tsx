@@ -114,7 +114,7 @@ export default function ThirdStep() {
             handleOnChange={handleOnChangePwd}
           />
         </StInputPwdWrapper>
-        <AlertLabel isError={isPwdError}>비밀번호 형식 에러</AlertLabel>
+        <AlertLabel isError={isPwdError}>영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요.</AlertLabel>
 
         <LabelHidden htmlFor="signupPwdRe">비밀번호 확인</LabelHidden>
         <StInputPwdReWrapper>
