@@ -7,6 +7,8 @@ export default function PostRead() {
   const [bookcasePost] =
     useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<BookcaseInfo[]>>, () => void]>();
 
+  console.log(bookcasePost);
+
   return (
     <>
       <Cards bookcaseInfo={bookcasePost} />

@@ -7,6 +7,8 @@ export default function PreRead() {
   const [bookcasePre] =
     useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<BookcaseInfo[]>>, () => void]>();
 
+  console.log(bookcasePre);
+
   return (
     <>
       <Cards bookcaseInfo={bookcasePre} />

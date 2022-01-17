@@ -7,6 +7,8 @@ export default function PeriRead() {
   const [bookcasePeri] =
     useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<BookcaseInfo[]>>, () => void]>();
 
+  console.log(bookcasePeri);
+
   return (
     <>
       <Cards bookcaseInfo={bookcasePeri} />

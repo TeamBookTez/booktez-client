@@ -6,8 +6,6 @@ import { AddBookCard, BookCard } from ".";
 export default function Cards(props: { bookcaseInfo: BookcaseInfo[] }) {
   const { bookcaseInfo } = props;
 
-  console.log(bookcaseInfo);
-
   return (
     <StSection>
       <AddBookCard />
