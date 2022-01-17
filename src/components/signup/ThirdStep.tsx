@@ -1,18 +1,11 @@
-import axios, { AxiosRequestHeaders } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { isPwd } from "../../utils/check";
-import { postData } from "../../utils/lib/api";
+import { postSignup } from "../../utils/lib/auth.api";
 import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
-
-interface Body {
-  email: string;
-  password: string;
-  nickname?: string;
-}
 
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =
@@ -26,18 +19,6 @@ export default function ThirdStep() {
   const [isPwdCurrent, setIsPwdCurrent] = useState<string>("");
   const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
   const nav = useNavigate();
-
-  const signup = async (key: string, body: Body) => {
-    try {
-      const { data } = await postData(key, body);
-
-      localStorage.setItem("token", data.token);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
-    }
-  };
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -65,7 +46,7 @@ export default function ThirdStep() {
     if (!isPwd(userData["password"])) {
       setIsPwdError(true);
     } else {
-      signup("/auth/signup", userData);
+      postSignup(userData);
       handleIsAniTime(true);
       setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
     }

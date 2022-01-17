@@ -1,9 +1,3 @@
-import axios, { AxiosRequestHeaders } from "axios";
-import { useEffect, useState } from "react";
-
-import { client } from "../utils/lib";
-import { patchData, postData } from "../utils/lib/api";
-
 interface Body {
   email: string;
   password: string;
@@ -11,11 +5,6 @@ interface Body {
 }
 
 export default function Test() {
-  const header: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-    Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
-  };
-
   const handleFileChange = async (e: any) => {
     const formData = new FormData();
     const imgFile = e.target.files[0];
@@ -78,36 +67,37 @@ export default function Test() {
     };
 
     console.log(d);
-    try {
-      const res = await patchData("/review/now/16", data);
+    //   try {
+    //     const res = await patchData("/review/now/16", data);
 
-      console.log("res", res);
-    } catch (err) {
-      console.log("err", err);
-    }
+    //     console.log("res", res);
+    //   } catch (err) {
+    //     console.log("err", err);
+    //   }
+    // };
+
+    // const body: Body = {
+    //   email: "test@booktez.com",
+    //   password: "test1",
+    //   nickname: "뀽",
+    // };
+
+    // const reviewId = 16;
+
+    // const signup = async (header: AxiosRequestHeaders, key: string) => {
+    //   const { data } = await getData(header, key);
+
+    //   console.log("data", data);
+    // };
+
+    // useEffect(() => {
+    //   signup(header, `/review/${reviewId}`);
+    // }, []);
+
+    return (
+      <div>
+        <input type="file" onChange={handleFileChange} />
+      </div>
+    );
   };
-
-  // const body: Body = {
-  //   email: "test@booktez.com",
-  //   password: "test1",
-  //   nickname: "뀽",
-  // };
-
-  // const reviewId = 16;
-
-  // const signup = async (header: AxiosRequestHeaders, key: string) => {
-  //   const { data } = await getData(header, key);
-
-  //   console.log("data", data);
-  // };
-
-  // useEffect(() => {
-  //   signup(header, `/review/${reviewId}`);
-  // }, []);
-
-  return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-    </div>
-  );
 }
