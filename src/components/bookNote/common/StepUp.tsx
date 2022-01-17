@@ -4,7 +4,7 @@ import { IcCheck } from "../../../assets/icons";
 
 export default function StepUp() {
   return (
-    <StButton>
+    <StButton type="button">
       <StIcon />
       Step Up
     </StButton>

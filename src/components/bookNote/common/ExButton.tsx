@@ -4,7 +4,7 @@ import { IcRightArrow } from "../../../assets/icons";
 
 export default function ExButton() {
   return (
-    <StButton>
+    <StButton type="button">
       예시
       <StIcon />
     </StButton>
