@@ -27,13 +27,9 @@ export default function ThirdStep() {
   const [isPwdReCurrent, setIsPwdReCurrent] = useState<string>("");
   const nav = useNavigate();
 
-  const signupHeader: AxiosRequestHeaders = {
-    "Content-Type": "application/json",
-  };
-
-  const signup = async (header: AxiosRequestHeaders, key: string, body: Body) => {
+  const signup = async (key: string, body: Body) => {
     try {
-      const { data } = await postData(header, key, body);
+      const { data } = await postData(key, body);
 
       localStorage.setItem("token", data.token);
     } catch (err) {
@@ -69,7 +65,7 @@ export default function ThirdStep() {
     if (!isPwd(userData["password"])) {
       setIsPwdError(true);
     } else {
-      signup(signupHeader, "/auth/signup", userData);
+      signup("/auth/signup", userData);
       handleIsAniTime(true);
       setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
     }

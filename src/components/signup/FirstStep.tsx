@@ -1,8 +1,10 @@
+import axios, { AxiosRequestHeaders } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
+// import { checkEmail } from "../../utils/auth.api";
 import { isEmail } from "../../utils/check";
 import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
 

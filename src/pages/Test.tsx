@@ -79,7 +79,7 @@ export default function Test() {
 
     console.log(d);
     try {
-      const res = await patchData(header, "/review/now/16", data);
+      const res = await patchData("/review/now/16", data);
 
       console.log("res", res);
     } catch (err) {

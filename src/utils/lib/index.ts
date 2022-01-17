@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 
 export const KAKAO = axios.create({
   baseURL: "https://dapi.kakao.com",
@@ -8,9 +8,11 @@ export const KAKAO = axios.create({
 });
 
 // header에 맞춰서 axios를 만들어줌
-export const client = (headers: AxiosRequestHeaders) => {
+export const client = () => {
   return axios.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 };
