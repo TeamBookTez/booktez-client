@@ -23,16 +23,19 @@ export default function QuestionThree() {
     setInputList(newArray);
   };
 
-  const addInput = () => {
+  const addInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     setInputList((currentList) => [...currentList, ""]);
   };
 
   return (
-    <PreNoteForm question="익명의 독서가(비회원) / OOO 독서가 님은 이 책에 어떤 기대를 하고 계신가요?">
+    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!">
       {inputList.map((inputElem, idx) => (
         <InputQuestion key={idx} value={inputElem} idx={idx} onChangeValue={handleChange} onDelete={handleDelete} />
       ))}
-      <StAddButton onClick={addInput}>+ 질문추가</StAddButton>
+      <StAddButton type="button" onClick={addInput}>
+        + 질문추가
+      </StAddButton>
     </PreNoteForm>
   );
 }
