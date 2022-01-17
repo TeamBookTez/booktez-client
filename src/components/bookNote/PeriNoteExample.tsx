@@ -7,7 +7,7 @@ const DDDDDD = styled.div`
   width: 600px;
   padding: 33px;
   margin-top: 40px;
-  background-color: black;
+  background-color: #ebb1b1;
 `;
 
 export default function PeriNoteExample() {
@@ -74,51 +74,45 @@ export default function PeriNoteExample() {
 const StExampleWrapper = styled.article`
   width: 100%;
 
-  padding: 4rem 1.5rem;
+  padding: 1.6rem 1.5rem 4rem;
 
   border-radius: 2rem;
   box-shadow: 0 0 1.8rem 0.9rem rgba(117, 106, 90, 0.09);
   background-color: ${({ theme }) => theme.colors.white200};
 
-  margin:0;
-  padding:0;
-  position: relative;
-  &:before{
-      content:"";
-      display: inline-block;
-      width: 2px;
-      background: red;
-      position: absolute;
-      left:3px;
-      top:5px;
-      height: calc(100% - 10px );
+  /* 선 추가는 여기서 &:before {} 로 */
+  & article {
+    padding-left: 5.6rem;
+  }
 `;
 
 const StQuestion = styled.h5`
   margin-top: 2.4rem;
 
-  ${({ theme }) => theme.fonts.body2}
+  ${({ theme }) => theme.fonts.body2};
   line-height: 2.6rem;
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
 const StAnswer = styled.h6`
-  margin-top: 1.7rem;
-  ${({ theme }) => theme.fonts.body3}
-  color: ${({ theme }) => theme.colors.gray400}
-
   position: relative;
-  padding-left: 15px;
-  margin-bottom: 15px;
+
+  margin-top: 1.7rem;
+  padding-left: 5.7rem;
+
+  ${({ theme }) => theme.fonts.body3}
+  color: ${({ theme }) => theme.colors.gray400};
+
   &:before {
     content: "";
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: red;
     position: absolute;
-    left: 0;
-    top: 5px;
-    border-radius: 10px;
+    left: 3.4rem;
+    top: 0.82rem;
+
+    width: 0.7rem;
+    height: 0.7rem;
+
+    border-radius: 1rem;
+    background-color: ${({ theme }) => theme.colors.gray400};
   }
 `;
