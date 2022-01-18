@@ -80,7 +80,7 @@ const StExampleWrapper = styled.article`
   box-shadow: 0 0 1.8rem 0.9rem rgba(117, 106, 90, 0.09);
   background-color: ${({ theme }) => theme.colors.white200};
 
-  /* 선 추가는 여기서 &:before {} 로 */
+  /* 선 추가는 여기서 &::before {} 로 */
   & article {
     padding-left: 5.6rem;
   }
@@ -103,7 +103,7 @@ const StAnswer = styled.h6`
   ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray400};
 
-  &:before {
+  &::before {
     content: "";
     position: absolute;
     left: 3.4rem;
