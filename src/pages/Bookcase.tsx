@@ -21,8 +21,6 @@ export default function Bookcase() {
 
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
 
-  const infoKey = "/book";
-
   const getBookcase = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
@@ -45,7 +43,7 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase(infoKey, token);
+    getBookcase("/book", token);
   }, []);
 
   return (
