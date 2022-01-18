@@ -2,13 +2,13 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
-import { before1 } from "../../../utils/dataCarousel";
+import { before3 } from "../../../utils/dataCarousel";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
   onToggleModal: () => void;
 }
 
-export default function StepUpModal(props: StepUpProps) {
+export default function ModalBefore3(props: StepUpProps) {
   const { onToggleModal } = props;
   const [slideIndex, setSlideIndex] = useState<number>(1);
 
@@ -19,12 +19,12 @@ export default function StepUpModal(props: StepUpProps) {
         <StImgWrapper>
           <img src="" alt="" />
         </StImgWrapper>
-        <StLifeQuotes>{before1.lifeQuote}</StLifeQuotes>
-        <StPublic>{before1.public}</StPublic>
+        <StLifeQuotes>{before3.lifeQuote}</StLifeQuotes>
+        <StPublic>{before3.public}</StPublic>
       </StLeftWrapper>
       <StRightWrapper>
-        <StHeader>{before1.header}</StHeader>
-        {before1 && before1.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
+        <StHeader>{before3.header}</StHeader>
+        {before3 && before3.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
       </StRightWrapper>
       <CarouselDots slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
     </StModalBox>
