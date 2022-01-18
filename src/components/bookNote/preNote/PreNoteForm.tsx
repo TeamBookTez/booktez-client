@@ -33,7 +33,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
       </StSection>
       {openModal && (
         <StStepModalWrapper>
-          <StepUpModal />
+          <StepUpModal onToggleModal={onToggleModal} />
         </StStepModalWrapper>
       )}
     </>
@@ -72,6 +72,9 @@ const StArticle = styled.article`
 `;
 
 const StStepModalWrapper = styled(StModalWrapper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 20;
 
   background-color: rgba(55, 56, 62, 0.8);
