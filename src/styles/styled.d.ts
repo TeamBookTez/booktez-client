@@ -21,19 +21,24 @@ declare module "styled-components" {
     };
     fonts: {
       header: string;
+      header00: string;
+      header001: string;
       header0: string;
       header1: string;
       header2: string;
       header3: string;
       header4: string;
+      body00: string;
       body0: string;
       body1: string;
       body2: string;
       body3: string;
+      body35: string;
       body4: string;
       body5: string;
       body6: string;
       caption: string;
+      caption2: string;
       button: string;
       button2: string;
     };

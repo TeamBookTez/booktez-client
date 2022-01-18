@@ -7,11 +7,13 @@ import StepUpModal from "../stepUp/StepUpModal";
 
 interface PreNoteFormProps {
   question: string;
+  idx: number;
+  onToggleDrawer: (i: number) => void;
   children: React.ReactNode;
 }
 
 export default function PreNoteForm(props: PreNoteFormProps) {
-  const { question, children } = props;
+  const { question, idx, onToggleDrawer, children } = props;
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -27,7 +29,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
             {question}
             <StepUp onToggleModal={onToggleModal} />
           </StH3>
-          <ExButton />
+          <ExButton idx={idx} onToggleDrawer={onToggleDrawer} />
         </StHeader>
         <StArticle>{children}</StArticle>
       </StSection>

@@ -33,8 +33,6 @@ const StNav = styled.nav`
   width: 100%;
 
   margin-top: 4.3rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
 `;
 
 const StUl = styled.ul`

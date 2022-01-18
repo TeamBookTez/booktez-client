@@ -1,10 +1,17 @@
 import styled from "styled-components";
 
-import { IcRightArrow } from "../../../assets/icons";
+import { IcRightArrow } from "../../assets/icons";
 
-export default function ExButton() {
+interface ExButtonProps {
+  idx: number;
+  onToggleDrawer: (i: number) => void;
+}
+
+export default function ExButton(props: ExButtonProps) {
+  const { idx, onToggleDrawer } = props;
+
   return (
-    <StButton type="button">
+    <StButton type="button" onClick={() => onToggleDrawer(idx)}>
       예시
       <StIcon />
     </StButton>

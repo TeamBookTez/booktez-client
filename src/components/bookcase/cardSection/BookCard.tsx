@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
@@ -8,26 +9,28 @@ interface BookCardProps {
 }
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo } = props;
-
   const { thumbnail, title, author } = bookcaseInfo;
+  const [isPopUp, setIsPopUp] = useState(false);
 
-  const handleDelete = () => {
-    console.log("책 삭제");
+  const handlePopUp = () => {
+    setIsPopUp((isPopUp) => !isPopUp);
   };
 
   return (
-    <StBookCard>
-      <StImgWrapper>
-        <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
-      </StImgWrapper>
-      <StTextWrapper>
-        <StTitleWrapper>
-          <StCardTitle>{title}</StCardTitle>
-          <StCardAuthor>{author}</StCardAuthor>
-        </StTitleWrapper>
-        <StIcBin onClick={handleDelete} />
-      </StTextWrapper>
-    </StBookCard>
+    <>
+      <StBookCard>
+        <StImgWrapper>
+          <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
+        </StImgWrapper>
+        <StTextWrapper>
+          <StTitleWrapper>
+            <StCardTitle>{title}</StCardTitle>
+            <StCardAuthor>{author}</StCardAuthor>
+          </StTitleWrapper>
+          <StIcBin onClick={handlePopUp} />
+        </StTextWrapper>
+      </StBookCard>
+    </>
   );
 }
 

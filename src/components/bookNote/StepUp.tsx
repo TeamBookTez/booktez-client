@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IcCheck } from "../../../assets/icons";
+import { IcCheck } from "../../assets/icons";
 
 interface StepUpProps {
   onToggleModal: () => void;
