@@ -7,18 +7,35 @@ import { PairsProps } from "./PeriNote";
 
 interface AnswerInputProps {
   depthOneAnswer: AnswerProps;
+  depthOneAnswerArray: AnswerProps[];
+  order: number;
   depthOneOrder: number;
   pairsList: PairsProps[];
   setPairsList: React.Dispatch<React.SetStateAction<PairsProps[]>>;
 }
 export default function AnswerInput(props: AnswerInputProps) {
-  const { depthOneAnswer, depthOneOrder, pairsList, setPairsList } = props;
+  const { depthOneAnswer, depthOneAnswerArray, order, depthOneOrder, pairsList, setPairsList } = props;
+  //depthOneAnswer로 구조분해 할당(text, children)도 가능하나 일단 생략.
 
-  const currentAnswer = depthOneAnswer.text;
+  const currentAnswerObj = depthOneAnswerArray[depthOneOrder]; // = depthOneAnswer;
+  const currentAnswer = currentAnswerObj.text;
+
+  const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newObj = {
+      ...currentAnswerObj,
+      text: e.currentTarget.value,
+    };
+
+    const newArray = [...pairsList];
+
+    newArray[order].answer[depthOneOrder] = newObj;
+
+    setPairsList(newArray);
+  };
 
   return (
     <StWrapper>
-      <StAnswer placeholder="답변을 입력해주세요" value={currentAnswer} />
+      <StAnswer placeholder="답변을 입력해주세요" value={currentAnswer} onChange={handleAnswerChange} />
       <IcMore />
     </StWrapper>
   );

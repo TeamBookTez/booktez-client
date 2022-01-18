@@ -12,12 +12,12 @@ interface QuestionInputProps {
 export default function QuestionInput(props: QuestionInputProps) {
   const { order, pairsList, setPairsList } = props;
 
-  const currentObj = pairsList[order];
-  const currentQuestion = currentObj.question;
+  const currentQuestionObj = pairsList[order];
+  const currentQuestion = currentQuestionObj.question;
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newObj = {
-      ...currentObj,
+      ...currentQuestionObj,
       question: e.currentTarget.value,
     };
 

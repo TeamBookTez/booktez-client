@@ -19,7 +19,7 @@ export default function PairsWrapper(props: PairsWrapperProps) {
   const { order, pairs, pairsList, setPairsList } = props;
   //pairs로 구조분해 할당(answer,depth,question)도 가능하나 일단 생략.
 
-  const currentObj = pairsList[order];
+  const currentObj = pairsList[order]; // = pairs;
 
   //AnswerInput mapping을 위한 코드
   const depthOneAnswerArray = currentObj.answer;
@@ -31,7 +31,9 @@ export default function PairsWrapper(props: PairsWrapperProps) {
       {depthOneAnswerArray.map((depthOneAnswer: AnswerProps, idx: number) => (
         <AnswerInput
           key={idx}
+          order={order}
           depthOneAnswer={depthOneAnswer}
+          depthOneAnswerArray={depthOneAnswerArray}
           depthOneOrder={idx}
           setPairsList={setPairsList}
           pairsList={pairsList}
