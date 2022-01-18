@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcLandingFooter } from "../../assets/icons";
@@ -8,7 +9,9 @@ export default function LandingFooter() {
     <>
       <StFooterWrapper>
         <StH1>북스테어즈 사용해보기</StH1>
-        <StButton>북스테어즈 시작</StButton>
+        <Link to="/main">
+          <StButton>북스테어즈 시작</StButton>
+        </Link>
         <StIcFooter />
       </StFooterWrapper>
       <StFooter />

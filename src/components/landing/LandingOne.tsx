@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgLanding01 } from "../../assets/images";
@@ -12,7 +13,9 @@ export default function LandingOne() {
           <br />
           독서법을 만들어 갑니다
         </StTitle>
-        <StButton>북스테어즈 시작</StButton>
+        <Link to="/main">
+          <StButton>북스테어즈 시작</StButton>
+        </Link>
       </StArticle>
       <img src={ImgLanding01} alt="여긴 어떤 이미지가 들어갈까요?" />
     </StWrapper>

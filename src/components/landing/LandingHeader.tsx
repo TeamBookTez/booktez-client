@@ -1,15 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcMainLogo } from "../../assets/icons";
 import { Button } from "../common/styled/Button";
 
 export default function LandingHeader() {
+  const navigate = useNavigate();
+
   return (
     <StHeader>
       <StLogo />
       <StBtnWrapper>
-        <StBtnLogin>로그인</StBtnLogin>
-        <StBtnSignup>회원가입</StBtnSignup>
+        <StBtnLogin onClick={() => navigate("/login")}>로그인</StBtnLogin>
+        <StBtnSignup onClick={() => navigate("/signup", { state: "rightpath" })}>회원가입</StBtnSignup>
       </StBtnWrapper>
     </StHeader>
   );
