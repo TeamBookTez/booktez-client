@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
-import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
@@ -31,7 +30,6 @@ export default function BookCard(props: BookCardProps) {
           <StIcBin onClick={handlePopUp} />
         </StTextWrapper>
       </StBookCard>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} /> : <></>}
     </>
   );
 }

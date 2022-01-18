@@ -7,6 +7,7 @@ import { DrawerPre } from ".";
 interface DrawerWrapperProps {
   idx: number;
   isOpen: boolean;
+  onCloseDrawer: (i: number) => void;
 }
 
 interface QaPair {
@@ -15,7 +16,7 @@ interface QaPair {
 }
 
 export default function DrawerWrapper(props: DrawerWrapperProps) {
-  const { idx, isOpen } = props;
+  const { idx, isOpen, onCloseDrawer } = props;
 
   const qaPair: QaPair = { question: "", answer: [""] };
 
@@ -43,7 +44,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
 
   return (
     <StDrawerWrapper isopen={isOpen}>
-      <IcLeftArrow />
+      <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
       <StImg src={ImgGraphic} />
       <StTitleWrapper>
         <IcBooks />
@@ -55,25 +56,58 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
 }
 
 const opentoright = keyframes`
-    0% {
-      opacity: 0;
-      /* transform: translateX(39rem); */
-      width: 0;
-    }
-    100% {
-      opacity: 1;
-      /* transform: translateX(0); */
-      width: 39rem;
-    }
+  0% {
+    /* opacity: 0; */
+    transform: translateX(39rem);
+    /* right: -39rem; */
+    /* width: 0; */
+  }
+  100% {
+    /* opacity: 1; */
+    transform: translateX(0);
+    /* right: 0; */
+    /* width: 39rem; */
+  }
 `;
 
 const StDrawerWrapper = styled.section<{ isopen: boolean }>`
+  /* ${({ isopen }) =>
+    isopen
+      ? css`
+          animation: ${opentoright} 1s linear;
+          animation-fill-mode: forwards;
+        `
+      : css`
+          animation: ${opentoright} 1s linear;
+          animation-direction: reverse;
+          animation-fill-mode: forwards;
+        `} */
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  animation: opentoright 1s linear forwards;
   ${({ isopen }) =>
     isopen
       ? css`
-          animation: ${opentoright} 300ms linear;
+          animation-direction: reverse;
         `
       : ""}
+
+  @keyframes opentoright {
+    0% {
+      /* opacity: 0; */
+      transform: translateX(39rem);
+      /* right: -39rem; */
+      /* width: 0; */
+    }
+    100% {
+      /* opacity: 1; */
+      transform: translateX(0);
+      /* right: 0; */
+      /* width: 39rem; */
+    }
+  }
 
   display: flex;
   flex-direction: column;
@@ -85,6 +119,7 @@ const StDrawerWrapper = styled.section<{ isopen: boolean }>`
   padding: 3.3rem 3.3rem 5.4rem 3.3rem;
   background-color: ${({ theme }) => theme.colors.white};
 
+  width: 39rem;
   height: 90rem;
 
   & > svg {
