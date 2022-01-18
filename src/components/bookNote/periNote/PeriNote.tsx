@@ -1,13 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { getData } from "../../../utils/lib/api";
 import { ExButton, StepUp } from "..";
-import QuestionForm from "./FormWrapper";
-import FormWrapper from "./FormWrapper";
+import PairsWrapper from "./PairsWrapper";
 
-export interface FormListInfo {
+export interface PairsProps {
   answer: any;
   depth: number;
   question: string;
@@ -16,13 +15,13 @@ export default function PeriNote() {
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/review/2";
 
-  const [questionFormList, setQuestionFormList] = useState<FormListInfo[]>([]);
+  const [pairsList, setPairsList] = useState<PairsProps[]>([]);
 
   const getReview = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
 
-      setQuestionFormList(data.data.answerThree.root);
+      setPairsList(data.data.answerThree.root);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -43,10 +42,10 @@ export default function PeriNote() {
         </StHead>
         <ExButton />
       </StHeadWrapper>
-      {questionFormList.map((formList: FormListInfo, idx: number) => (
-        <FormWrapper key={idx} formList={formList} />
+      {pairsList.map((pairs: PairsProps, idx: number) => (
+        <PairsWrapper key={idx} pairs={pairs} />
       ))}
-      <StAddBtn>+ 질문 리스트 추가</StAddBtn>
+      <StAddBtn type="button">+ 질문 리스트 추가</StAddBtn>
       <StNextBtn>작성 완료</StNextBtn>
     </StNoteForm>
   );
