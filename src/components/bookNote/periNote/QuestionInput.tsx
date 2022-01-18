@@ -26,6 +26,8 @@ export default function QuestionInput(props: QuestionInputProps) {
     newArray[order] = newObj;
 
     setPairsList(newArray);
+
+    console.log(pairsList);
   };
 
   return (

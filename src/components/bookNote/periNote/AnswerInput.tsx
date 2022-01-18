@@ -31,6 +31,8 @@ export default function AnswerInput(props: AnswerInputProps) {
     newArray[order].answer[depthOneOrder] = newObj;
 
     setPairsList(newArray);
+
+    console.log(pairsList);
   };
 
   return (
