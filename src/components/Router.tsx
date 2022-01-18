@@ -1,8 +1,17 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AddBook, Bookcase, Login, Main, MyPage, Signup } from "../pages";
-import BookNote from "../pages/BookNote";
-import ToBe from "../pages/ToBe";
+import {
+  AddBook,
+  Bookcase,
+  BookNote,
+  DetailBookNote,
+  DetailExample,
+  Login,
+  Main,
+  MyPage,
+  Signup,
+  ToBe,
+} from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import PeriNote from "./bookNote/periNote/PeriNote";
 import PreNote from "./bookNote/preNote/PreNote";
@@ -37,6 +46,8 @@ export default function Router() {
           <Route path="peri" element={<PeriNote />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
+        <Route path="/detail-book-note" element={<DetailBookNote />} />
+        <Route path="/detail-example" element={<DetailExample />} />
         <Route path="/login" element={<Login />} />
         {/* 회원가입 1,2,3 나눔 */}
         <Route path="/signup/*" element={<Signup />}>
