@@ -13,19 +13,17 @@ export default function StepUpModal(props: StepUpProps) {
   return (
     <StModalBox>
       <StModalIcCancel onClick={onToggleModal} />
-      <StContentWrapper>
-        <StLeftWrapper>
-          <StImgWrapper>
-            <img src="" alt="" />
-          </StImgWrapper>
-          <StLifeQuotes>{before1.lifeQuote}</StLifeQuotes>
-          <StPublic>{before1.public}</StPublic>
-        </StLeftWrapper>
-        <StRightWrapper>
-          <StHeader>{before1.header}</StHeader>
-          <StDesc>{before1.desc}</StDesc>
-        </StRightWrapper>
-      </StContentWrapper>
+      <StLeftWrapper>
+        <StImgWrapper>
+          <img src="" alt="" />
+        </StImgWrapper>
+        <StLifeQuotes>{before1.lifeQuote}</StLifeQuotes>
+        <StPublic>{before1.public}</StPublic>
+      </StLeftWrapper>
+      <StRightWrapper>
+        <StHeader>{before1.header}</StHeader>
+        {before1 && before1.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
+      </StRightWrapper>
     </StModalBox>
   );
 }
@@ -36,7 +34,7 @@ const StModalBox = styled.article`
   display: flex;
 
   width: 85rem;
-  height: 48rem;
+  height: 48.2rem;
 
   padding: 4.2rem 4.5rem;
 
@@ -44,6 +42,7 @@ const StModalBox = styled.article`
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
+
 const StModalIcCancel = styled(IcCancelBlack)`
   position: absolute;
   top: 3.2rem;
@@ -51,11 +50,53 @@ const StModalIcCancel = styled(IcCancelBlack)`
 
   cursor: pointer;
 `;
-const StContentWrapper = styled.div``;
-const StLeftWrapper = styled.div``;
-const StImgWrapper = styled.div``;
-const StLifeQuotes = styled.p``;
-const StPublic = styled.p``;
-const StRightWrapper = styled.div``;
-const StHeader = styled.h3``;
-const StDesc = styled.p``;
+
+const StLeftWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 36.9rem;
+
+  margin-right: 2.8rem;
+`;
+
+const StImgWrapper = styled.div`
+  width: 35.2rem;
+  height: 33.2rem;
+
+  margin-bottom: 2rem;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const StLifeQuotes = styled.p`
+  ${({ theme }) => theme.fonts.caption};
+  color: ${({ theme }) => theme.colors.gray200};
+`;
+
+const StPublic = styled.p`
+  ${({ theme }) => theme.fonts.caption};
+  color: ${({ theme }) => theme.colors.gray200};
+`;
+
+const StRightWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const StHeader = styled.h3`
+  margin-bottom: 2.4rem;
+
+  ${({ theme }) => theme.fonts.header3};
+  color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StDesc = styled.p`
+  ${({ theme }) => theme.fonts.body4};
+  color: ${({ theme }) => theme.colors.gray100};
+`;
