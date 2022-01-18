@@ -10,9 +10,9 @@ interface QuestionInputProps {
 export default function QuestionInput(props: QuestionInputProps) {
   const { question } = props;
 
-  // const [modifyQuestion, setModifyQuestion] = useState<string>("");
+  const [modifyQuestion, setModifyQuestion] = useState<string>(question);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    setModifyQuestion(e.currentTarget.value);
   };
 
   return (

@@ -33,6 +33,11 @@ export default function PeriNote() {
     getReview(infoKey, token);
   }, []);
 
+  //console확인을 위한 useEffect
+  useEffect(() => {
+    console.log(pairsList);
+  }, [pairsList]);
+
   return (
     <StNoteForm>
       <StHeadWrapper>
