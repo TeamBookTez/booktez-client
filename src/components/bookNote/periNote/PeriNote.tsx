@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { getData } from "../../../utils/lib/api";
@@ -12,6 +13,7 @@ export interface PairsProps {
   question: string;
 }
 export default function PeriNote() {
+  const [handleToggleDrawer] = useOutletContext<[(i: number) => void]>();
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/review/2";
 
@@ -45,7 +47,7 @@ export default function PeriNote() {
           구조화된 질문과 답변을 만들어 우선순위 독서를 해보세요!
           <StepUp />
         </StHead>
-        <ExButton />
+        <ExButton idx={4} onToggleDrawer={handleToggleDrawer} />
       </StHeadWrapper>
       {pairsList.map((pairs: PairsProps, idx: number) => (
         <PairsWrapper key={idx} pairs={pairs} />

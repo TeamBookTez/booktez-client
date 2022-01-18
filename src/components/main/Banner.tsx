@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { ImgGraphic } from "../../assets/images";
-import { Button } from "../common/styled/Button";
+import { Button } from "../common";
 
 export default function Banner() {
   return (

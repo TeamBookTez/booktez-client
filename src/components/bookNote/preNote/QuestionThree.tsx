@@ -3,7 +3,13 @@ import styled from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
 
-export default function QuestionThree() {
+interface QuestionThreeProps {
+  onToggleDrawer: (i: number) => void;
+}
+
+export default function QuestionThree(props: QuestionThreeProps) {
+  const { onToggleDrawer } = props;
+
   const [inputList, setInputList] = useState<string[]>([""]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
@@ -29,7 +35,7 @@ export default function QuestionThree() {
   };
 
   return (
-    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!">
+    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>
       {inputList.map((inputElem, idx) => (
         <InputQuestion key={idx} value={inputElem} idx={idx} onChangeValue={handleChange} onDelete={handleDelete} />
       ))}
