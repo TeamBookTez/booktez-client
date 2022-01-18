@@ -1,11 +1,18 @@
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
+import { PreNoteData } from "../../../pages/BookNote";
 import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const [handleToggleDrawer] = useOutletContext<[(i: number) => void]>();
+  const [handleToggleDrawer, preNote, handleChangeReview] =
+    useOutletContext<[(i: number) => void, PreNoteData, (key: string, value: string | string[] | number) => void]>();
+  const { answerOne, answerTwo, questionList } = preNote;
+
+  function onChangeReview(key: string, value: string | string[] | number): void {
+    handleChangeReview(key, value);
+  }
 
   return (
     <StNoteForm>
@@ -15,15 +22,27 @@ export default function PreNote() {
           question="익명의 독서가(비회원)/000님은 이 책에 어떤 기대를 하고 계신가요?"
           idx={1}
           onToggleDrawer={handleToggleDrawer}>
-          <StTextarea placeholder="답변을 입력해주세요." />
+          <StTextarea
+            placeholder="답변을 입력해주세요."
+            value={answerOne}
+            onChange={(e) => onChangeReview("answerOne", e.target.value)}
+          />
         </PreNoteForm>
         <PreNoteForm
           question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
           idx={2}
           onToggleDrawer={handleToggleDrawer}>
-          <StTextarea placeholder="답변을 입력해주세요." />
+          <StTextarea
+            placeholder="답변을 입력해주세요."
+            value={answerTwo}
+            onChange={(e) => onChangeReview("answerTwo", e.target.value)}
+          />
         </PreNoteForm>
-        <QuestionThree onToggleDrawer={handleToggleDrawer} />
+        <QuestionThree
+          questionList={questionList}
+          onChangeReview={onChangeReview}
+          onToggleDrawer={handleToggleDrawer}
+        />
       </StFormWrapper>
 
       {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}

@@ -1,43 +1,39 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
 
 interface QuestionThreeProps {
+  questionList: string[];
+  onChangeReview: (key: string, value: string | string[] | number) => void;
   onToggleDrawer: (i: number) => void;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { onToggleDrawer } = props;
-
-  const [inputList, setInputList] = useState<string[]>([""]);
+  const { questionList, onChangeReview, onToggleDrawer } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
-    setInputList((current) => {
-      const newData = [...current];
+    const modified = [...questionList];
 
-      newData[idx] = e.target.value;
-
-      return newData;
-    });
+    modified[idx] = e.target.value;
+    onChangeReview("questionList", modified);
   };
 
   const handleDelete = (idx: number) => {
-    const newArray = [...inputList];
+    const newArray = [...questionList];
 
     newArray.splice(idx, 1);
-    setInputList(newArray);
+    onChangeReview("questionList", newArray);
   };
 
   const addInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setInputList((currentList) => [...currentList, ""]);
+    onChangeReview("questionList", [...questionList, ""]);
   };
 
   return (
     <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>
-      {inputList.map((inputElem, idx) => (
-        <InputQuestion key={idx} value={inputElem} idx={idx} onChangeValue={handleChange} onDelete={handleDelete} />
+      {questionList.map((question, idx) => (
+        <InputQuestion key={idx} value={question} idx={idx} onChangeValue={handleChange} onDelete={handleDelete} />
       ))}
       <StAddButton type="button" onClick={addInput}>
         + 질문추가
