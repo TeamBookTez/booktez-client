@@ -14,6 +14,7 @@ export interface PairsProps {
 }
 export default function PeriNote() {
   const [handleToggleDrawer] = useOutletContext<[(i: number) => void]>();
+
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/review/2";
 

@@ -11,13 +11,14 @@ export default function QuestionInput(props: QuestionInputProps) {
   const { question } = props;
 
   const [modifyQuestion, setModifyQuestion] = useState<string>(question);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModifyQuestion(e.currentTarget.value);
   };
 
   return (
     <StWrapper>
-      <StQuestion placeholder="질문을 입력해주세요" value={question} onChange={handleChange} />
+      <StQuestion placeholder="질문을 입력해주세요" value={modifyQuestion} onChange={handleChange} />
       <StAnswerBtn>답변</StAnswerBtn>
       <IcMore />
     </StWrapper>
@@ -31,6 +32,8 @@ const StWrapper = styled.div`
 
 const StQuestion = styled.input`
   width: 80rem; // 임시 코드
+
+  background-color: white; // 임시 코드
   ${({ theme }) => theme.fonts.header4};
 `;
 

@@ -29,5 +29,3 @@ const StFormWrapper = styled.article`
 
   ${({ theme }) => theme.fonts.header4};
 `;
-
-const StAnswer = styled.div``;
