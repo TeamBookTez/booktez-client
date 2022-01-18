@@ -8,7 +8,7 @@ interface StepUpProps {
   onToggleModal: () => void;
 }
 
-export default function ModalBefore2(props: StepUpProps) {
+export default function ThreeCaseModal(props: StepUpProps) {
   const { onToggleModal } = props;
   const [slideIndex, setSlideIndex] = useState<number>(1);
   const [data, setData] = useState(before2[0]);
