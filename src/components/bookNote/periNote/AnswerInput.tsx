@@ -14,9 +14,11 @@ interface AnswerInputProps {
 export default function AnswerInput(props: AnswerInputProps) {
   const { depthOneAnswer, depthOneOrder, pairsList, setPairsList } = props;
 
+  const currentAnswer = depthOneAnswer.text;
+
   return (
     <StWrapper>
-      <StAnswer placeholder="답변을 입력해주세요" />
+      <StAnswer placeholder="답변을 입력해주세요" value={currentAnswer} />
       <IcMore />
     </StWrapper>
   );
