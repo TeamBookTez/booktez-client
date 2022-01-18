@@ -1,14 +1,16 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
 import { before1 } from "../../../utils/dataCarousel";
-
+import CarouselDots from "./CarouselDots";
 interface StepUpProps {
   onToggleModal: () => void;
 }
 
 export default function StepUpModal(props: StepUpProps) {
   const { onToggleModal } = props;
+  const [slideIndex, setSlideIndex] = useState<number>(1);
 
   return (
     <StModalBox>
@@ -24,6 +26,7 @@ export default function StepUpModal(props: StepUpProps) {
         <StHeader>{before1.header}</StHeader>
         {before1 && before1.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
       </StRightWrapper>
+      <CarouselDots slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
     </StModalBox>
   );
 }
