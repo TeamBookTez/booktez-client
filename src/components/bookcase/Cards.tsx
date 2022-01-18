@@ -29,7 +29,13 @@ export default function Cards(props: CardsProps) {
     );
   }
 }
-const StDefaultSection = styled.section``;
+const StDefaultSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: calc(100% - 19.7rem);
+`;
 
 const StSection = styled.section`
   display: flex;

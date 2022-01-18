@@ -1,9 +1,12 @@
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgEmptyBook } from "../../../assets/images";
 import { Button } from "../../common/styled/Button";
 
 export default function Empty() {
+  const { pathname } = useLocation();
+
   return (
     <StArticle>
       <StImg src={ImgEmptyBook} alt="빈 폴더 이미지" />
@@ -12,7 +15,7 @@ export default function Empty() {
         북스테어즈만의 독서법을 통해
         <br /> 지식을 얻고 독서의 매력을 느껴보세요
       </StParagraph>
-      <StAddBookBtn>+ 책 추가</StAddBookBtn>
+      {pathname === "/main/bookcase" && <StAddBookBtn>+ 책 추가</StAddBookBtn>}
     </StArticle>
   );
 }
@@ -21,6 +24,8 @@ const StArticle = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  height: 32.7rem;
 `;
 
 const StImg = styled.img`
