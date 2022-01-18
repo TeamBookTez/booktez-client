@@ -19,9 +19,8 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = `${process.env.REACT_APP_TEST_TOKEN}`;
-  const TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjQyMzU2NDUwLCJleHAiOjE2NDM1NjYwNTB9.TCjC67PebDxNNztPZz4jjH1mGeCRv46yGPgmTuOLQLs";
+  const REVIEWID = 2;
+  const TOKEN = `${process.env.REACT_APP_TEST_TOKEN}`;
 
   const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
