@@ -50,7 +50,7 @@ export default function ModalBefore2(props: StepUpProps) {
         {data && data.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
       </StRightWrapper>
       <StPrevBtn onClick={prevSlide}>이전</StPrevBtn>
-      <StNextBtn onClick={nextSlide}>오후</StNextBtn>
+      <StNextBtn onClick={nextSlide}>다음</StNextBtn>
       <CarouselDots slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
     </StModalBox>
   );
@@ -129,5 +129,27 @@ const StDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StPrevBtn = styled.button``;
-const StNextBtn = styled.button``;
+const StPrevBtn = styled.button`
+  position: absolute;
+  bottom: 3rem;
+  right: 13.6rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 8rem;
+  height: 4.6rem;
+
+  border-radius: 0.8rem;
+
+  background-color: ${({ theme }) => theme.colors.gray300};
+
+  ${({ theme }) => theme.fonts.button2};
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const StNextBtn = styled(StPrevBtn)`
+  right: 4rem;
+  background-color: ${({ theme }) => theme.colors.orange100};
+`;
