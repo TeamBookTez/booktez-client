@@ -1,4 +1,5 @@
-import styled, { css, keyframes } from "styled-components";
+import { useEffect } from "react";
+import styled, { css } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgGraphic } from "../../assets/images";
@@ -7,6 +8,7 @@ import { DrawerPre } from ".";
 interface DrawerWrapperProps {
   idx: number;
   isOpen: boolean;
+  onCloseDrawer: (i: number) => void;
 }
 
 interface QaPair {
@@ -15,7 +17,7 @@ interface QaPair {
 }
 
 export default function DrawerWrapper(props: DrawerWrapperProps) {
-  const { idx, isOpen } = props;
+  const { idx, isOpen, onCloseDrawer } = props;
 
   const qaPair: QaPair = { question: "", answer: [""] };
 
@@ -41,9 +43,11 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
       ];
   }
 
+  if (!isOpen) return null;
+
   return (
     <StDrawerWrapper isopen={isOpen}>
-      <IcLeftArrow />
+      <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
       <StImg src={ImgGraphic} />
       <StTitleWrapper>
         <IcBooks />
@@ -54,26 +58,10 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   );
 }
 
-const opentoright = keyframes`
-    0% {
-      opacity: 0;
-      /* transform: translateX(39rem); */
-      width: 0;
-    }
-    100% {
-      opacity: 1;
-      /* transform: translateX(0); */
-      width: 39rem;
-    }
-`;
-
 const StDrawerWrapper = styled.section<{ isopen: boolean }>`
-  ${({ isopen }) =>
-    isopen
-      ? css`
-          animation: ${opentoright} 300ms linear;
-        `
-      : ""}
+  position: fixed;
+  top: 0;
+  right: 0;
 
   display: flex;
   flex-direction: column;
@@ -85,7 +73,27 @@ const StDrawerWrapper = styled.section<{ isopen: boolean }>`
   padding: 3.3rem 3.3rem 5.4rem 3.3rem;
   background-color: ${({ theme }) => theme.colors.white};
 
+  width: 39rem;
   height: 90rem;
+
+  ${({ isopen }) =>
+    isopen
+      ? css`
+          animation: opentoright 300ms linear forwards;
+        `
+      : css`
+          animation: opentoright 300ms linear forwards;
+          animation-direction: reverse;
+        `}
+
+  @keyframes opentoright {
+    0% {
+      transform: translateX(39rem);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 
   & > svg {
     width: 4.4rem;
