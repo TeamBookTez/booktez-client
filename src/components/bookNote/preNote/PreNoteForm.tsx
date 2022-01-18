@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-import ModalWrapper from "../../addBook/ModalWrapper";
+import ModalWrapper, { StModalWrapper } from "../../addBook/ModalWrapper";
 import { ExButton, StepUp } from "..";
 
 interface PreNoteFormProps {
@@ -30,7 +30,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
         </StHeader>
         <StArticle>{children}</StArticle>
       </StSection>
-      {openModal && <ModalWrapper>모달</ModalWrapper>}
+      {openModal && <StStepModalWrapper>모달</StStepModalWrapper>}
     </>
   );
 }
@@ -64,4 +64,10 @@ const StH3 = styled.h3`
 
 const StArticle = styled.article`
   padding: 2.6rem 1.4rem;
+`;
+
+const StStepModalWrapper = styled(StModalWrapper)`
+  z-index: 20;
+
+  background-color: rgba(55, 56, 62, 0.8);
 `;
