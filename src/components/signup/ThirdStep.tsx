@@ -6,7 +6,9 @@ import styled, { css } from "styled-components";
 import { UserData } from "../../pages/Signup";
 import { checkPwdType } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
-import { AlertLabel, Button, InputPwd, LabelHidden } from "../common";
+import { AlertLabel, InputPwd } from "../common";
+import { Button } from "../common/styled/Button";
+import { LabelHidden } from "../common/styled/LabelHidden";
 
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =

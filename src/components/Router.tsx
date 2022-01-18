@@ -1,8 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AddBook, Bookcase, Login, Main, MyPage, Signup, Test } from "../pages";
-import BookNote from "../pages/BookNote";
-import ToBe from "../pages/ToBe";
+import { AddBook, Bookcase, BookNote, Login, Main, MyPage, Signup, Test, ToBe } from "../pages";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote } from "./bookNote";
 import PreNote from "./bookNote/preNote/PreNote";

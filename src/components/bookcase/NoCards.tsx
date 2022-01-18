@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { ImgEmptyBooks } from "../../assets/images";
-import { Button } from "../common";
+import { Button } from "../common/styled/Button";
 
 export default function NoCards() {
   return (

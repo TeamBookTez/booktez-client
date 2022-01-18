@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { ImgAddBooks } from "../../../assets/images";
-import { Button } from "../../common";
+import { Button } from "../../common/styled/Button";
 import { StImg } from "./BookCard";
 
 export default function AddBookCard() {
