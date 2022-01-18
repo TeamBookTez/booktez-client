@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
 import { ImgNull } from "../../assets/images";
-import { Button } from "../common";
+import { Button } from "../common/styled/Button";
 import { PublishDate } from "./BookInfoWrapper";
 
 interface ShowModalProps {

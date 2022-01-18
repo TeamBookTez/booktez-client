@@ -6,7 +6,9 @@ import styled, { css } from "styled-components";
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
 import { getData } from "../../utils/lib/api";
-import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
+import { AlertLabel, InputEmail } from "../common";
+import { Button } from "../common/styled/Button";
+import { LabelHidden } from "../common/styled/LabelHidden";
 
 export default function FirstStep() {
   const [userData, setUserData, handleIsAniTime] =

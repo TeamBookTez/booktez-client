@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
-import { Button } from "../../common";
+import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
@@ -39,7 +39,6 @@ const StNoteForm = styled.form`
 
   width: 100%;
   max-height: fit-content;
-  overflow-y: scroll;
 `;
 
 const StFormWrapper = styled.section`

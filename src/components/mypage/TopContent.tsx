@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import { UserInfo } from "../../pages/MyPage";
-import { Button } from "../common";
 import { StLoginLink } from "../common/MainHeader";
+import { Button } from "../common/styled/Button";
 import { TopBanner } from ".";
 
 interface TopContentProps {
