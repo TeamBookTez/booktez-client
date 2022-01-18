@@ -1,12 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-import { IcSave } from "../assets/icons";
-import {
-  StBookTitle,
-  StIcCancelWhite,
-  StNavWrapper,
-  StNoteModalWrapper,
-} from "../components/common/styled/NoteModalWrapper";
+import { IcDeleteNote, IcModifyNote } from "../assets/icons";
+import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 
 export default function DetailBookNote() {
   const navigate = useNavigate();
@@ -15,9 +11,23 @@ export default function DetailBookNote() {
     <StNoteModalWrapper>
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
-      <StNavWrapper>
-        <IcSave />
-      </StNavWrapper>
+      <StBtnWrapper>
+        <IcDeleteNote />
+        <IcModifyNote />
+      </StBtnWrapper>
     </StNoteModalWrapper>
   );
 }
+
+const StBtnWrapper = styled.div`
+  text-align: right;
+
+  & > svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  & > svg:not(:first-child) {
+    margin-left: 1.4rem;
+  }
+`;
