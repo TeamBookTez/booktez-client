@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AddBook, Bookcase, Login, Main, MyPage, Signup } from "../pages";
+import { AddBook, Bookcase, Login, Main, MyPage, Signup, Test } from "../pages";
 import BookNote from "../pages/BookNote";
 import ToBe from "../pages/ToBe";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
@@ -13,10 +13,9 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/*" element={<CommonLayout />}>
-          <Route path="" element={<Navigate to="/main" />} />
+        <Route path="/main/*" element={<CommonLayout />}>
           {/* /main */}
-          <Route path="main/" element={<Main />} />
+          <Route path="" element={<Main />} />
           {/* bookcase */}
           <Route path="bookcase/*" element={<Bookcase />}>
             <Route path="" element={<Total />} />
@@ -46,7 +45,15 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        {/* <Route path="/error" element={<Test />} /> */}
+        <Route
+          path="*"
+          element={
+            <p>
+              404 에러 얍얍
+              <Test />
+            </p>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
