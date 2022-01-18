@@ -10,7 +10,7 @@ export default function Empty() {
   return (
     <StArticle>
       <StImg src={ImgEmptyBook} alt="빈 폴더 이미지" />
-      <StH3>아직 읽은 책이 없어요</StH3>
+      <StH3>이 단계의 책이 없어요</StH3>
       <StParagraph>
         북스테어즈만의 독서법을 통해
         <br /> 지식을 얻고 독서의 매력을 느껴보세요
