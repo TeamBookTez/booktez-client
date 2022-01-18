@@ -1,16 +1,13 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
 import { before3 } from "../../../utils/dataCarousel";
-import CarouselDots from "./CarouselDots";
 interface StepUpProps {
   onToggleModal: () => void;
 }
 
 export default function ModalBefore3(props: StepUpProps) {
   const { onToggleModal } = props;
-  const [slideIndex, setSlideIndex] = useState<number>(1);
 
   return (
     <StModalBox>
@@ -26,7 +23,7 @@ export default function ModalBefore3(props: StepUpProps) {
         <StHeader>{before3.header}</StHeader>
         {before3 && before3.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
       </StRightWrapper>
-      <CarouselDots slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
+      <StCarouselDot />
     </StModalBox>
   );
 }
@@ -102,4 +99,16 @@ const StHeader = styled.h3`
 const StDesc = styled.p`
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StCarouselDot = styled.div`
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+
+  background-color: ${({ theme }) => theme.colors.orange100};
 `;
