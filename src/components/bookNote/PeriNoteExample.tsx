@@ -86,7 +86,7 @@ const StExampleWrapper = styled.article`
   }
 `;
 
-const StQuestion = styled.h5`
+const StQuestion = styled.ul`
   margin-top: 2.4rem;
 
   ${({ theme }) => theme.fonts.body2};
@@ -94,7 +94,9 @@ const StQuestion = styled.h5`
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
-const StAnswer = styled.h6`
+const StAnswer = styled.li`
+  list-style: none;
+
   position: relative;
 
   margin-top: 1.7rem;
