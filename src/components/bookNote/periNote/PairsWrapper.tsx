@@ -1,22 +1,24 @@
 import styled from "styled-components";
 
+import AnswerInput from "./AnswerInput";
 import { PairsProps } from "./PeriNote";
 import QuestionInput from "./QuestionInput";
 
 interface PairsWrapperProps {
+  order: number;
   pairs: PairsProps;
+  pairsList: PairsProps[];
+  setPairsList: React.Dispatch<React.SetStateAction<PairsProps[]>>;
 }
-export default function PairsWrapper(props: PairsWrapperProps) {
-  const { pairs } = props;
-  const { question, answer, depth } = pairs;
 
-  const answerText = answer[0].text;
-  const answerChildren = answer[0].children;
+export default function PairsWrapper(props: PairsWrapperProps) {
+  const { order, pairs, pairsList, setPairsList } = props;
+  //pairs로 구조분해 할당(answer,depth,question)도 가능하나 일단 생략.
 
   return (
     <StFormWrapper>
-      <QuestionInput question={question} />
-      {/* <StAnswer>{answerText}</StAnswer> */}
+      <QuestionInput setPairsList={setPairsList} order={order} pairsList={pairsList} />
+      {/* <AnswerInput setPairsList={setPairsList} order={order} pairsList={pairsList} /> */}
       {/* {answerChildren.map((child: FormListInfo, idx: number) => (
         <FormWrapper formList={child} key={idx} />
       ))} */}

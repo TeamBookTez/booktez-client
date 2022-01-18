@@ -1,24 +1,38 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 
 import { IcMore } from "../../../assets/icons";
+import { PairsProps } from "./PeriNote";
 
 interface QuestionInputProps {
-  question: string;
+  order: number;
+
+  pairsList: PairsProps[];
+  setPairsList: React.Dispatch<React.SetStateAction<PairsProps[]>>;
 }
 
 export default function QuestionInput(props: QuestionInputProps) {
-  const { question } = props;
+  const { order, pairsList, setPairsList } = props;
 
-  const [modifyQuestion, setModifyQuestion] = useState<string>(question);
+  const currentObj = pairsList[order];
+  const currentQuestion = currentObj.question;
+  const currentAnswer = currentObj.answer[0].text; // mapping 이용해야 할듯. 더미가 답변 하나일 뿐
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setModifyQuestion(e.currentTarget.value);
+  const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newObj = {
+      ...currentObj,
+      question: e.currentTarget.value,
+    };
+
+    const newArray = [...pairsList];
+
+    newArray[order] = newObj;
+
+    setPairsList(newArray);
   };
 
   return (
     <StWrapper>
-      <StQuestion placeholder="질문을 입력해주세요" value={modifyQuestion} onChange={handleChange} />
+      <StQuestion placeholder="질문을 입력해주세요" value={currentQuestion} onChange={handleQuestionChange} />
       <StAnswerBtn>답변</StAnswerBtn>
       <IcMore />
     </StWrapper>

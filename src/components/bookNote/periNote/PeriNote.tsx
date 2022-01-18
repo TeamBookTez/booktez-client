@@ -36,11 +36,6 @@ export default function PeriNote() {
     getReview(infoKey, token);
   }, []);
 
-  //console확인을 위한 useEffect
-  useEffect(() => {
-    console.log(pairsList);
-  }, [pairsList]);
-
   return (
     <StNoteForm>
       <StHeadWrapper>
@@ -51,7 +46,7 @@ export default function PeriNote() {
         <ExButton idx={4} onToggleDrawer={handleToggleDrawer} />
       </StHeadWrapper>
       {pairsList.map((pairs: PairsProps, idx: number) => (
-        <PairsWrapper key={idx} pairs={pairs} />
+        <PairsWrapper key={idx} order={idx} pairs={pairs} pairsList={pairsList} setPairsList={setPairsList} />
       ))}
       <StAddBtn type="button">+ 질문 리스트 추가</StAddBtn>
       <StNextBtn>작성 완료</StNextBtn>
