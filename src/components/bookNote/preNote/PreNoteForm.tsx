@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { ExButton, StepUp } from "..";
-import StepUpModal from "./StepUpModal";
+import StepUpModal from "../stepUp/StepUpModal";
 
 interface PreNoteFormProps {
   question: string;
@@ -31,11 +31,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
         </StHeader>
         <StArticle>{children}</StArticle>
       </StSection>
-      {openModal && (
-        <StStepModalWrapper>
-          <StepUpModal />
-        </StStepModalWrapper>
-      )}
+      {openModal && <StStepModalWrapper></StStepModalWrapper>}
     </>
   );
 }
