@@ -3,7 +3,22 @@ import styled from "styled-components";
 
 import { StIcCancel } from "../../addBook/ShowModal";
 
-export default function StepUpModal() {
+interface StepUpBoxProps {
+  idx: number;
+}
+
+interface Contents {
+  lifeQuote?: string[];
+  public?: string[];
+  header: string[];
+  desc: string[];
+}
+
+export default function StepUpModal(props: StepUpBoxProps) {
+  const { idx } = props;
+
+  const contents: Contents = { lifeQuote: [""], public: [""], header: [""], desc: [""] };
+
   return (
     <StModalBox>
       <StIcCancel />
