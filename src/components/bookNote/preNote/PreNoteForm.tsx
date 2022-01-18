@@ -31,7 +31,11 @@ export default function PreNoteForm(props: PreNoteFormProps) {
         </StHeader>
         <StArticle>{children}</StArticle>
       </StSection>
-      {openModal && <StStepModalWrapper></StStepModalWrapper>}
+      {openModal && (
+        <StStepModalWrapper>
+          <StepUpModal />
+        </StStepModalWrapper>
+      )}
     </>
   );
 }
