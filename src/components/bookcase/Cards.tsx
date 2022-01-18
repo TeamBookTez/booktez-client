@@ -14,9 +14,9 @@ export default function Cards(props: CardsProps) {
 
   if (bookcaseInfo.length === 0) {
     return (
-      <StSection>
+      <StDefaultSection>
         <Empty />
-      </StSection>
+      </StDefaultSection>
     );
   } else {
     return (
@@ -29,6 +29,7 @@ export default function Cards(props: CardsProps) {
     );
   }
 }
+const StDefaultSection = styled.section``;
 
 const StSection = styled.section`
   display: flex;
