@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-import ModalWrapper, { StModalWrapper } from "../../addBook/ModalWrapper";
+import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { ExButton, StepUp } from "..";
+import StepUpModal from "./StepUpModal";
 
 interface PreNoteFormProps {
   question: string;
@@ -30,7 +31,11 @@ export default function PreNoteForm(props: PreNoteFormProps) {
         </StHeader>
         <StArticle>{children}</StArticle>
       </StSection>
-      {openModal && <StStepModalWrapper>모달</StStepModalWrapper>}
+      {openModal && (
+        <StStepModalWrapper>
+          <StepUpModal />
+        </StStepModalWrapper>
+      )}
     </>
   );
 }
