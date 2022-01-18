@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
-import { before1 } from "../../../utils/dataCarousel";
+import { before1, before3 } from "../../../utils/dataCarousel";
+
 interface StepUpProps {
+  idx: number;
   onToggleModal: () => void;
 }
 
-export default function ModalBefore1(props: StepUpProps) {
-  const { onToggleModal } = props;
+export default function OneCaseModal(props: StepUpProps) {
+  const { idx, onToggleModal } = props;
 
   return (
     <StModalBox>
@@ -16,12 +18,14 @@ export default function ModalBefore1(props: StepUpProps) {
         <StImgWrapper>
           <img src="" alt="" />
         </StImgWrapper>
-        <StLifeQuotes>{before1.lifeQuote}</StLifeQuotes>
-        <StPublic>{before1.public}</StPublic>
+        <StLifeQuotes>{idx === 1 ? before1.lifeQuote : before3.lifeQuote}</StLifeQuotes>
+        <StPublic>{idx === 1 ? before1.public : before3.public}</StPublic>
       </StLeftWrapper>
       <StRightWrapper>
-        <StHeader>{before1.header}</StHeader>
-        {before1 && before1.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
+        <StHeader>{idx === 1 ? before1.header : before3.header}</StHeader>
+        {idx === 1
+          ? before1.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)
+          : before3.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
       </StRightWrapper>
       <StCarouselDot />
     </StModalBox>
@@ -89,6 +93,7 @@ const StRightWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 const StHeader = styled.h3`
   margin-bottom: 2.4rem;
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { ExButton, StepUp } from "..";
-import ModalBefore2 from "../stepUp/ModalBefore2";
+import OneCaseModal from "../stepUp/OneCaseModal";
 
 interface PreNoteFormProps {
   question: string;
@@ -35,7 +35,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
       </StSection>
       {openModal && (
         <StStepModalWrapper>
-          <ModalBefore2 onToggleModal={onToggleModal} />
+          <OneCaseModal idx={idx} onToggleModal={onToggleModal} />
         </StStepModalWrapper>
       )}
     </>
