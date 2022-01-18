@@ -5,7 +5,6 @@ import { PairsProps } from "./PeriNote";
 
 interface QuestionInputProps {
   order: number;
-
   pairsList: PairsProps[];
   setPairsList: React.Dispatch<React.SetStateAction<PairsProps[]>>;
 }
@@ -15,7 +14,6 @@ export default function QuestionInput(props: QuestionInputProps) {
 
   const currentObj = pairsList[order];
   const currentQuestion = currentObj.question;
-  const currentAnswer = currentObj.answer[0].text; // mapping 이용해야 할듯. 더미가 답변 하나일 뿐
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newObj = {

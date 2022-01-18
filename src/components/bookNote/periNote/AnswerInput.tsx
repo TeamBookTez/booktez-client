@@ -1,14 +1,22 @@
+import React from "react";
 import styled from "styled-components";
 
 import { IcMore } from "../../../assets/icons";
+import { AnswerProps } from "./PairsWrapper";
+import { PairsProps } from "./PeriNote";
 
-// interface AnswerInputProps {
-//   answer: string;
-// }
-export default function AnswerInput() {
+interface AnswerInputProps {
+  depthOneAnswer: AnswerProps;
+  depthOneOrder: number;
+  pairsList: PairsProps[];
+  setPairsList: React.Dispatch<React.SetStateAction<PairsProps[]>>;
+}
+export default function AnswerInput(props: AnswerInputProps) {
+  const { depthOneAnswer, depthOneOrder, pairsList, setPairsList } = props;
+
   return (
     <StWrapper>
-      <StAnswer placeholder="질문을 입력해주세요" />
+      <StAnswer placeholder="답변을 입력해주세요" />
       <IcMore />
     </StWrapper>
   );
