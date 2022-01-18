@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { AddBook, Bookcase, BookNote, Login, Main, MyPage, Signup, Test, ToBe } from "../pages";
+import Landing from "../pages/Landing";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
 import { CommonLayout } from "./common";
@@ -10,6 +11,7 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/main/*" element={<CommonLayout />}>
           {/* /main */}
           <Route path="" element={<Main />} />
