@@ -8,7 +8,7 @@ interface StepUpProps {
   onToggleModal: () => void;
 }
 
-export default function ModaAfter1(props: StepUpProps) {
+export default function PeriModal(props: StepUpProps) {
   const { onToggleModal } = props;
   const [slideIndex, setSlideIndex] = useState<number>(1);
   const [data, setData] = useState(after1[0]);
