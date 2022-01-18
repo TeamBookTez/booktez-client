@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
+import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 
 export default function DetailBookNote() {
@@ -16,8 +17,12 @@ export default function DetailBookNote() {
         <IcDeleteNote />
         <IcModifyNote />
       </StBtnWrapper>
-      <DetailArticleWrapper title="독서 전 단계" />
-      <DetailArticleWrapper title="독서 중 단계" />
+      <DetailArticleWrapper title="독서 전 단계">
+        <ExamplePreNote />
+      </DetailArticleWrapper>
+      <DetailArticleWrapper title="독서 중 단계">
+        <ExamplePeriNote />
+      </DetailArticleWrapper>
     </StNoteModalWrapper>
   );
 }

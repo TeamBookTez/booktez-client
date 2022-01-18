@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface DetailArticleWrapperProps {
   title: string;
+  children: React.ReactNode;
 }
 
 const IIIIIII = styled.div`
@@ -11,14 +12,28 @@ const IIIIIII = styled.div`
 `;
 
 export default function DetailArticleWrapper(props: DetailArticleWrapperProps) {
-  const { title } = props;
+  const { title, children } = props;
 
   return (
     <section>
-      {/* 이미지 div */}
-      <IIIIIII></IIIIIII>
-      <h3>{title}</h3>
-      <article></article>
+      <StTitleWrapper>
+        {/* 이미지 div */}
+        <IIIIIII></IIIIIII>
+        <StTitle>{title}</StTitle>
+      </StTitleWrapper>
+      {children}
     </section>
   );
 }
+
+const StTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StTitle = styled.h3`
+  margin-left: 0.5rem;
+
+  ${({ theme }) => theme.fonts.header4}
+  color: ${({ theme }) => theme.colors.gray100};
+`;

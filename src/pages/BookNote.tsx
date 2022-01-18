@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import { IcSave } from "../assets/icons";
-import { StIcCancel } from "../components/addBook/ShowModal";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
-import { StBookTitle, StNavWrapper, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
+import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 
 export default function BookNote() {
   const [drawerIdx, setDrawerIdx] = useState(1);
@@ -19,7 +19,7 @@ export default function BookNote() {
   return (
     <StWrapper>
       <StNoteModalWrapper isopen={isDrawerOpen}>
-        <StIcCancel onClick={() => navigate(-1)} />
+        <StIcCancelWhite onClick={() => navigate(-1)} />
         <StBookTitle>엉덩이 탐정 뿡뿡</StBookTitle>
         <StNavWrapper>
           <Navigator />
