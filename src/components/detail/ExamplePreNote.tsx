@@ -3,7 +3,14 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import LabelQuestion from "../common/styled/LabelQuestion";
 
-export default function ExamplePreNote() {
+interface ExamplePreNoteProps {
+  answerOne: string | undefined;
+  answerTwo: string | undefined;
+  questionList: string[] | undefined;
+}
+
+export default function ExamplePreNote(props: ExamplePreNoteProps) {
+  const { answerOne, answerTwo, questionList } = props;
   const nickname = "냠냠"; // 닉네임 받아오기
   // 줄바꿈 표시, 따옴표 표시
 
@@ -11,27 +18,22 @@ export default function ExamplePreNote() {
     <StExampleWrapper>
       <StQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        익명의 독서가(비회원) / {nickname} 독서가 님은 이 책에 어떤 기대를 하고 계신가요?
+        {nickname ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
       </StQuestion>
-      <StAnswer>
-        상황에 따라 변하는 동기를 한 곳에 잡아 두고 싶다
-        <br /> 앞으로의 모든 업무에 대해 내가 이 일을 왜 하는지 명확하게 할 수 있는 힌트를 얻고 싶다.
-      </StAnswer>
+      <StAnswer>{answerOne}</StAnswer>
       <StQuestion>
-        <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이 {nickname}
+        <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이{" "}
+        {nickname ? `${nickname} 독서가` : "익명의 독서가"}
         님의 기대를 만족시킬 수 있을까요?
       </StQuestion>
-      <StAnswer>
-        이 책의 핵심은 열정적이고 행복한 삶의 근원이 되는 왜 찾는 법을 개인, 조직에 맞게 탐색, 발견, 유지, 공유 방법들을
-        소개한다.
-      </StAnswer>
+      <StAnswer>{answerTwo}</StAnswer>
       <StQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        익명의 독서가(비회원) / {nickname} 독서가 님은 이 책에 어떤 기대를 하고 계신가요?
+        {nickname ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
       </StQuestion>
-      <StAnswer>상황에 따라 변하는 동기를 한 곳에 잡아 두고 싶다</StAnswer>
-      <StAnswer>상황에 따라 변하는 동기를 한 곳에 잡아 두고 싶다</StAnswer>
-      <StAnswer>상황에 따라 변하는 동기를 한 곳에 잡아 두고 싶다</StAnswer>
+      {questionList?.map((question: string, idx: number) => (
+        <StAnswer key={idx}>{questionList}</StAnswer>
+      ))}
     </StExampleWrapper>
   );
 }
