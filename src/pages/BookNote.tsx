@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
@@ -19,6 +19,10 @@ export default function BookNote() {
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false);
   };
+
+  useEffect(() => {
+    console.log("isDrawerOpen", isDrawerOpen);
+  }, [isDrawerOpen]);
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
