@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { ImgGraphic } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
-import { Button } from "../common";
+import { Button } from "../common/styled/Button";
 
 export default function LastStep() {
   const [userData, setUserData, handleIsAniTime] =

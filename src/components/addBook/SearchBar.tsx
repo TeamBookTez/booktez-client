@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
-import { LabelHidden } from "../common";
+import { LabelHidden } from "../common/styled/LabelHidden";
 
 interface SearchBarProps {
   debounceQuery: string;

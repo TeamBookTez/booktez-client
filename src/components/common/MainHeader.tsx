@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { Button } from "../common/styled/Button";
+import { Button } from "./styled/Button";
 
 interface MainHeaderProps {
   children: string;

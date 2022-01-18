@@ -1,3 +1,3 @@
 export default function PeriNote() {
-  return <div></div>;
+  return <div>PeriNote</div>;
 }

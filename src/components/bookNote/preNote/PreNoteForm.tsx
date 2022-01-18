@@ -4,11 +4,13 @@ import { ExButton, StepUp } from "..";
 
 interface PreNoteFormProps {
   question: string;
+  idx: number;
+  onToggleDrawer: (i: number) => void;
   children: React.ReactNode;
 }
 
 export default function PreNoteForm(props: PreNoteFormProps) {
-  const { question, children } = props;
+  const { question, idx, onToggleDrawer, children } = props;
 
   return (
     <StSection>
@@ -17,7 +19,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
           {question}
           <StepUp />
         </StH3>
-        <ExButton />
+        <ExButton idx={idx} onToggleDrawer={onToggleDrawer} />
       </StHeader>
       <StArticle>{children}</StArticle>
     </StSection>

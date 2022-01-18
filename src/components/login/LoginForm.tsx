@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { postData } from "../../utils/lib/api";
-import { AlertLabel, Button, InputEmail, InputPwd } from "../common";
+import { AlertLabel, InputEmail, InputPwd } from "../common";
+import { Button } from "../common/styled/Button";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");

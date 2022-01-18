@@ -2,8 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
-import BottomContent from "../components/myPage/BottomContent";
-import TopContent from "../components/myPage/TopContent";
+import { BottomContent, TopContent } from "../components/mypage";
 import { getData, patchData } from "../utils/lib/api";
 
 export interface UserInfo {

@@ -32,6 +32,11 @@ export const GlobalStyle = createGlobalStyle`
     background-color: transparent;
   }
 
+  button {
+    padding: 0;
+    cursor: pointer;
+  }
+
   input {
     -webkit-appearance: none; /* Safari and Chrome */
     -moz-appearance: none; /* Firefox */
@@ -40,6 +45,13 @@ export const GlobalStyle = createGlobalStyle`
     &:focus {
       outline: none;
     }
+  }
+
+  textarea {
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
   }
 
   input:focus::-webkit-input-placeholder, 
@@ -61,11 +73,6 @@ export const GlobalStyle = createGlobalStyle`
   textarea:focus:-ms-input-placeholder {
     /* Internet Explorer 10+ */ 
     color:transparent; 
-  }
-
-  button {
-    padding: 0;
-    cursor: pointer;
   }
 `;
 

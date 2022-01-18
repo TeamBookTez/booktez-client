@@ -1,10 +1,14 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { checkNicknameType } from "../../utils/check";
-import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
+import { getData } from "../../utils/lib/api";
+import { AlertLabel, InputEmail } from "../common";
+import { Button } from "../common/styled/Button";
+import { LabelHidden } from "../common/styled/LabelHidden";
 
 export default function SecondStep() {
   const [userData, setUserData, handleIsAniTime] =
@@ -12,7 +16,24 @@ export default function SecondStep() {
   const [nickname, setNickname] = useState<string>("");
   const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
   const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [validNickname, setValidNickname] = useState<boolean>(true);
+
   const nav = useNavigate();
+
+  const getNickname = async (nicknameData: string) => {
+    try {
+      const res = await getData(`/auth/nickname?nickname=${nicknameData}`);
+      const resData = res.data;
+
+      setValidNickname(resData.data.isValid);
+      setErrorMessage(resData.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -20,11 +41,13 @@ export default function SecondStep() {
 
   useEffect(() => {
     setIsNicknameError(false);
+    getNickname(userData["nickname"]);
   }, [userData]);
 
   const goNextStep = () => {
     if (isNicknameEmpty) return;
-    if (checkNicknameType(userData["nickname"])) {
+    if (checkNicknameType(userData["nickname"]) || validNickname === false) {
+      getNickname(userData["nickname"]);
       setIsNicknameError(true);
     } else {
       handleIsAniTime(true);
@@ -59,7 +82,7 @@ export default function SecondStep() {
           isError={isNicknameError}
           handleOnChange={handleOnChange}
         />
-        <AlertLabel isError={isNicknameError}>올바른 형식이 아닙니다.</AlertLabel>
+        <AlertLabel isError={isNicknameError}>{errorMessage}</AlertLabel>
         <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>

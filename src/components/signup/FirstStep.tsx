@@ -1,10 +1,14 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
-import { AlertLabel, Button, InputEmail, LabelHidden } from "../common";
+import { getData } from "../../utils/lib/api";
+import { AlertLabel, InputEmail } from "../common";
+import { Button } from "../common/styled/Button";
+import { LabelHidden } from "../common/styled/LabelHidden";
 
 export default function FirstStep() {
   const [userData, setUserData, handleIsAniTime] =
@@ -12,8 +16,24 @@ export default function FirstStep() {
   const [email, setEmail] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [validEmail, setValidEmail] = useState<boolean>(true);
 
   const nav = useNavigate();
+
+  const getEmail = async (emailData: string) => {
+    try {
+      const res = await getData(`/auth/email?email=${emailData}`);
+      const resData = res.data;
+
+      setValidEmail(resData.data.isValid);
+      setErrorMessage(resData.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -21,11 +41,13 @@ export default function FirstStep() {
 
   useEffect(() => {
     setIsEmailError(false);
+    getEmail(userData["email"]);
   }, [userData]);
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!checkEmailType(userData["email"])) {
+    if (!checkEmailType(userData["email"]) || validEmail === false) {
+      getEmail(userData["email"]);
       setIsEmailError(true);
     } else {
       handleIsAniTime(true);
@@ -60,7 +82,7 @@ export default function FirstStep() {
           isError={isEmailError}
           handleOnChange={handleOnChange}
         />
-        <AlertLabel isError={isEmailError}>올바른 형식이 아닙니다.</AlertLabel>
+        <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StNextStepBtn type="button" active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>

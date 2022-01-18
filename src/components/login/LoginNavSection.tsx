@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
-import { Button, NavHeader } from "../common";
+import { NavHeader } from "../common";
+import { Button } from "../common/styled/Button";
 
 interface SignupNavProps {
   isAniTime: boolean;
