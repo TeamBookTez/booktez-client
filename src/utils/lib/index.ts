@@ -24,6 +24,9 @@ export const client = (token?: string) => {
 
   return axios.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${process.env.REACT_APP_TEST_TOKEN}`,
+    },
   });
 };
