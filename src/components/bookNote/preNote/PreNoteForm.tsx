@@ -1,5 +1,7 @@
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
+import ModalWrapper from "../../addBook/ModalWrapper";
 import { ExButton, StepUp } from "..";
 
 interface PreNoteFormProps {
@@ -10,17 +12,26 @@ interface PreNoteFormProps {
 export default function PreNoteForm(props: PreNoteFormProps) {
   const { question, children } = props;
 
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const onToggleModal = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal]);
+
   return (
-    <StSection>
-      <StHeader>
-        <StH3>
-          {question}
-          <StepUp />
-        </StH3>
-        <ExButton />
-      </StHeader>
-      <StArticle>{children}</StArticle>
-    </StSection>
+    <>
+      <StSection>
+        <StHeader>
+          <StH3>
+            {question}
+            <StepUp onToggleModal={onToggleModal} />
+          </StH3>
+          <ExButton />
+        </StHeader>
+        <StArticle>{children}</StArticle>
+      </StSection>
+      {openModal && <ModalWrapper>모달</ModalWrapper>}
+    </>
   );
 }
 

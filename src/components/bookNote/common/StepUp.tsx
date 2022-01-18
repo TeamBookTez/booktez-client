@@ -2,9 +2,15 @@ import styled from "styled-components";
 
 import { IcCheck } from "../../../assets/icons";
 
-export default function StepUp() {
+interface StepUpProps {
+  onToggleModal: () => void;
+}
+
+export default function StepUp(props: StepUpProps) {
+  const { onToggleModal } = props;
+
   return (
-    <StButton type="button">
+    <StButton type="button" onClick={onToggleModal}>
       <StIcon />
       Step Up
     </StButton>
