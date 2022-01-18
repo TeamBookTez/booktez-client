@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { before2 } from "../../../utils/dataCarousel";
+
 interface CarouselProps {
   slideIndex: number;
   setSlideIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -14,7 +16,7 @@ export default function CarouselDots(props: CarouselProps) {
 
   return (
     <StContainerDots>
-      {Array.from({ length: 1 }).map((item: any, index: number) => (
+      {Array.from({ length: 3 }).map((item: any, index: number) => (
         <div
           key={item}
           onClick={() => moveDot(index + 1)}
