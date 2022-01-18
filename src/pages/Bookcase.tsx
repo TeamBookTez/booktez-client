@@ -19,7 +19,8 @@ export default function Bookcase() {
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const userToken = localStorage.getItem("booktez-token");
+  const token = `${userToken}`;
   const infoKey = "/book";
 
   const getBookcase = async (key: string, token: string) => {
