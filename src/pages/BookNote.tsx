@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
@@ -6,14 +5,7 @@ import styled, { css, keyframes } from "styled-components";
 import { IcSave } from "../assets/icons";
 import { StIcCancel } from "../components/addBook/ShowModal";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
-import { getData } from "../utils/lib/api";
-
-export interface Response<T> {
-  data: T;
-  message: string;
-  status: number;
-  success: boolean;
-}
+import { getData, patchData } from "../utils/lib/api";
 
 interface ObjKey {
   [key: string]: string | string[] | number;
@@ -23,21 +15,20 @@ export interface PreNoteData extends ObjKey {
   answerOne: string;
   answerTwo: string;
   questionList: string[];
-  bookTitle: string;
-  reviewState: number;
+  progress: number;
 }
 
 export default function BookNote() {
-  const REVIEWID = 2;
+  const REVIEWID = `${process.env.REACT_APP_TEST_TOKEN}`;
   const TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjQyMzU2NDUwLCJleHAiOjE2NDM1NjYwNTB9.TCjC67PebDxNNztPZz4jjH1mGeCRv46yGPgmTuOLQLs";
 
+  const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
-    bookTitle: "",
-    questionList: [],
-    reviewState: 0,
+    questionList: [""],
+    progress: 2,
   });
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -53,12 +44,20 @@ export default function BookNote() {
   };
 
   const getReview = async (key: string, token: string) => {
-    const { data }: AxiosResponse<Response<PreNoteData>> = await getData(key, token);
+    const { data } = await getData(key, token);
+    const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
 
-    setPreNote(data.data);
+    setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+    setTitle(bookTitle);
   };
 
-  function handleChangeReview(key: string, value: string | string[]): void {
+  const patchReview = async () => {
+    const res = await patchData(TOKEN, `/review/before/${REVIEWID}`, preNote);
+
+    console.log("res", res);
+  };
+
+  function handleChangeReview(key: string, value: string | string[] | number): void {
     setPreNote((currentNote) => {
       const newData = { ...currentNote };
 
@@ -85,12 +84,12 @@ export default function BookNote() {
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
       <StIcCancel onClick={() => navigate(-1)} />
-      <StBookTitle>{preNote.bookTitle}</StBookTitle>
+      <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator />
         <IcSave />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview]} />
+      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, patchReview]} />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
     </StNoteModalWrapper>
   );

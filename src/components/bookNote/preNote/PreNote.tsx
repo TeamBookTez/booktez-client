@@ -6,13 +6,20 @@ import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const [handleToggleDrawer, preNote, handleChangeReview] =
-    useOutletContext<[(i: number) => void, PreNoteData, (key: string, value: string | string[] | number) => void]>();
+  const [handleToggleDrawer, preNote, handleChangeReview, patchReview] =
+    useOutletContext<
+      [(i: number) => void, PreNoteData, (key: string, value: string | string[] | number) => void, () => Promise<void>]
+    >();
   const { answerOne, answerTwo, questionList } = preNote;
 
   function onChangeReview(key: string, value: string | string[] | number): void {
     handleChangeReview(key, value);
   }
+
+  const handleSubmit = () => {
+    handleChangeReview("progress", 3);
+    patchReview();
+  };
 
   return (
     <StNoteForm>
@@ -46,7 +53,9 @@ export default function PreNote() {
       </StFormWrapper>
 
       {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn>다음 계단</StNextBtn>
+      <StNextBtn type="button" onClick={handleSubmit}>
+        다음 계단
+      </StNextBtn>
     </StNoteForm>
   );
 }
