@@ -34,7 +34,9 @@ const StWrapper = styled.section`
   flex-direction: column;
   align-items: center;
 
-  padding: 21rem 0;
+  padding: 21rem 0 16rem 0;
+
+  width: 100%;
 
   ${({ theme }) => theme.fonts.body0}
 `;
@@ -47,7 +49,9 @@ const StH2 = styled.h2`
 
 const StCardsWrapper = styled.section`
   display: flex;
-  gap: 2.3rem;
+  justify-content: space-between;
 
   margin-top: 9.2rem;
+
+  width: 100%;
 `;

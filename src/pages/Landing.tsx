@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 import {
   LandingFive,
   LandingFooter,
@@ -12,14 +14,21 @@ export default function Landing() {
   return (
     <>
       <LandingHeader />
-      <main>
+      <StMain>
         <LandingOne />
         <LandingTwo />
         <LandingThree />
         <LandingFour />
         <LandingFive />
-      </main>
+      </StMain>
       <LandingFooter />
     </>
   );
 }
+
+const StMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 11.5rem;
+`;

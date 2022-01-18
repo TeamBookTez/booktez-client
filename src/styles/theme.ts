@@ -77,7 +77,7 @@ const fonts = {
   `,
   body00: `
     font-family: Pretendard;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 2.4rem;
     line-height: 1.5;
     letter-spacing: -0.07rem;

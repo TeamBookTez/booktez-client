@@ -24,7 +24,7 @@ const StWrapper = styled.section`
   align-items: center;
   justify-content: space-between;
 
-  padding: 0.9rem 11rem;
+  width: 100%;
 `;
 
 const StArticle = styled.article`

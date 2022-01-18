@@ -1,3 +1,4 @@
+export { default as LandingCard } from "./LandingCard";
 export { default as LandingFive } from "./LandingFive";
 export { default as LandingFooter } from "./LandingFooter";
 export { default as LandingFour } from "./LandingFour";
