@@ -22,7 +22,7 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 4;
+  const REVIEWID = 34;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -142,6 +142,16 @@ export default function BookNote() {
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
           idxList[5]
         ].children[idxList[6]].answer[idxList[7]].text = value;
+        break;
+      case 9:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]][key] = value;
+        break;
+      case 10:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].text = value;
         break;
     }
 
