@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { getData } from "../utils/lib/api";
+import { deleteData, getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
@@ -20,6 +20,11 @@ export default function Bookcase() {
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
   // 로그인 정보를 이용할때 아래 두 줄의 코드
   // const userToken = localStorage.getItem("booktez-token");
   // const token = `${userToken}`;
@@ -63,13 +68,13 @@ export default function Bookcase() {
 
   useEffect(() => {
     getBookcase("/book", userToken);
-  }, []);
+  }, [bookDelete]);
 
   return (
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost]} />
+      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete]} />
     </>
   );
 }

@@ -17,6 +17,13 @@ export default function DetailBookNote() {
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const navigate = useNavigate();
 
+  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
+  //
+
   const getReview = async (key: string, token: string) => {
     try {
       const {
@@ -60,7 +67,7 @@ export default function DetailBookNote() {
           </DetailArticleWrapper>
         </StMarginTop>
       </StNoteModalWrapper>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
     </>
   );
 }
