@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
+import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
 }
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo } = props;
-  const { thumbnail, title, author } = bookcaseInfo;
+  const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
   const handlePopUp = () => {
@@ -30,6 +31,7 @@ export default function BookCard(props: BookCardProps) {
           <StIcBin onClick={handlePopUp} />
         </StTextWrapper>
       </StBookCard>
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
     </>
   );
 }

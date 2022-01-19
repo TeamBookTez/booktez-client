@@ -7,14 +7,16 @@ import { Button } from "../common/styled/Button";
 import { Default } from ".";
 
 interface TempBookInfo {
+  author: string[];
+  reviewId: number;
   thumbnail: string;
   title: string;
-  author: string[];
 }
 
 export default function Recent() {
   const tempBookInfo = {
     thumbnail: ImgTemp,
+    reviewId: 6789,
     title: "석상한 귬",
     author: ["제임스 아세 함이", "령이"],
   };
@@ -30,7 +32,7 @@ export default function Recent() {
         <StHeading3>최근 작성한 북노트</StHeading3>
         {!isDefault ? (
           <StButton type="button">
-            <Link to="/bookcase">전체보기</Link>
+            <Link to="/main/bookcase">전체보기</Link>
           </StButton>
         ) : null}
       </StHeader>

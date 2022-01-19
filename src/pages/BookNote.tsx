@@ -3,8 +3,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
-import { StIcCancel } from "../components/addBook/ShowModal";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
+import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { getData, patchData } from "../utils/lib/api";
 
 interface ObjKey {
@@ -82,7 +82,7 @@ export default function BookNote() {
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
-      <StIcCancel onClick={() => navigate(-1)} />
+      <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator />
