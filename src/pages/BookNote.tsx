@@ -7,6 +7,7 @@ import { IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
+import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
 
 interface ObjKey {
@@ -21,7 +22,7 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 9;
+  const REVIEWID = 4;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -35,6 +36,7 @@ export default function BookNote() {
     questionList: [""],
     progress: 2,
   });
+  const [periNote, setPeriNote] = useState<Question[]>([]);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -62,9 +64,10 @@ export default function BookNote() {
   const getReview = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
-      const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
+      const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
       setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+      setPeriNote(answerThree.root);
       setTitle(bookTitle);
 
       // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
@@ -105,6 +108,46 @@ export default function BookNote() {
     setOpenModal(false);
   };
 
+  const handleChangePeri = (key: string, value: string, idxList: number[]) => {
+    const newRoot = [...periNote];
+
+    switch (idxList.length) {
+      case 1:
+        newRoot[idxList[0]][key] = value;
+        break;
+      case 2:
+        newRoot[idxList[0]].answer[idxList[1]].text = value;
+        break;
+      case 3:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]][key] = value;
+        break;
+      case 4:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].text = value;
+        break;
+      case 5:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]][key] =
+          value;
+        break;
+      case 6:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].text = value;
+        break;
+      case 7:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]][key] = value;
+        break;
+      case 8:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].text = value;
+        break;
+    }
+
+    setPeriNote(newRoot);
+  };
+
   useEffect(() => {
     getReview(`/review/${REVIEWID}`, userToken);
   }, []);
@@ -128,7 +171,18 @@ export default function BookNote() {
         <Navigator />
         <IcSave onClick={patchReview} />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch]} />
+      <Outlet
+        context={[
+          handleOpenDrawer,
+          preNote,
+          handleChangeReview,
+          setOpenModal,
+          isPrevented,
+          ablePatch,
+          periNote,
+          handleChangePeri,
+        ]}
+      />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
