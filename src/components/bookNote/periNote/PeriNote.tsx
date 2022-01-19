@@ -44,7 +44,7 @@ export default function PeriNote() {
       <StQAWrapper>
         {periNote.map((question0, a) => (
           <StQAContainer key={a}>
-            <StPriQuestionWrapper>
+            <StPriQuestionWrapper className="question">
               <StQuestionIcon />
               <StPriQuestionInput
                 placeholder="질문을 입력해주세요"
@@ -53,7 +53,7 @@ export default function PeriNote() {
                 onChange={(event) => handleChangePeri("question", event.target.value, [a])}
               />
             </StPriQuestionWrapper>
-            <StAnswerWrapper>
+            <StAnswerWrapper className="answer">
               {question0.answer.map((answer0, b) => (
                 <React.Fragment key={b}>
                   <StPriAnswerWrapper>
@@ -273,6 +273,17 @@ const StQAWrapper = styled.section`
 const StQAContainer = styled.section`
   display: flex;
   flex-direction: column;
+
+  &:focus-within {
+    > .question {
+      border-bottom: 0.1rem solid;
+      border-color: ${({ theme }) => theme.colors.orange100};
+    }
+
+    > .answer {
+      border-color: ${({ theme }) => theme.colors.orange100};
+    }
+  }
 `;
 
 const StPriQuestionWrapper = styled.div`
