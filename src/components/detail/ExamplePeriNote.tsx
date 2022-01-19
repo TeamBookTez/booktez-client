@@ -48,7 +48,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                       {answer1.children?.map((question2, idx) => (
                         <article key={`q2-${idx}`}>
                           <StQuestion>
-                            <LabelQuestion bgColor={theme.colors.orange200} />
+                            <LabelQuestion bgColor={theme.colors.orange400} />
                             {question2.question}
                             <StIcToggle onClick={handleToggle} />
                           </StQuestion>

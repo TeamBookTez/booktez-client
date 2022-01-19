@@ -7,7 +7,7 @@ import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
-  const isLogin = false;
+  const isLogin = true;
   // const _token = localStorage.getItem("booktez-token");
   const navigate = useNavigate();
 
