@@ -24,18 +24,19 @@ export default function Bookcase() {
 
   const getBookcase = async (key: string, token: string) => {
     try {
-      const { data } = await getData(key, token);
+      const {
+        data: {
+          data: { books },
+        },
+      } = await getData(key, token);
 
-      setBookcaseTotal(data.data.books);
+      setBookcaseTotal(books);
 
-      //filter를 3번이나 갈겨주는데 더 좋은 방법이 있으면 수정 부탁드립니다
-      const pre = data.data.books.filter((books: BookcaseInfo) => books.state === 2);
-      const peri = data.data.books.filter((books: BookcaseInfo) => books.state === 3);
-      const post = data.data.books.filter((books: BookcaseInfo) => books.state === 4);
-
-      setBookcasePre(pre);
-      setBookcasePeri(peri);
-      setBookcasePost(post);
+      books.forEach((book: BookcaseInfo) => {
+        if (book.state === 2) setBookcasePre((currentBook) => [...currentBook, book]);
+        if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
+        if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

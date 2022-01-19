@@ -11,7 +11,6 @@ interface BookCardProps {
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo } = props;
 
-  console.log(bookcaseInfo);
   const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
