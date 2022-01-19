@@ -25,7 +25,8 @@ export default function Bookcase() {
   // 로그인 정보를 이용할때 아래 두 줄의 코드
   // const userToken = localStorage.getItem("booktez-token");
   // const token = `${userToken}`;
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const TOKEN = localStorage.getItem("booktez-token");
+  const userToken = TOKEN ? TOKEN : "";
 
   const getBookcase = async (key: string, token: string) => {
     try {
@@ -42,6 +43,19 @@ export default function Bookcase() {
         if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
         if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
       });
+
+      // const wow = localStorage.getItem("booktez-data");
+      // const woww = wow ? wow : "";
+
+      // const wowww = JSON.parse(woww);
+
+      // setBookcaseTotal([wowww]);
+
+      // wowww.forEach((book: BookcaseInfo) => {
+      //   if (book.state === 2) setBookcasePre((currentBook) => [...currentBook, book]);
+      //   if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
+      //   if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
+      // LocalStorage에서 저장한 객체를 불러올 때는 JSON.parse를 쓴다.
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -50,8 +64,8 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase("/book", token);
-  }, [bookDelete]);
+    getBookcase("/book", userToken);
+  }, []);
 
   return (
     <>

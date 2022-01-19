@@ -61,16 +61,21 @@ const StBookCard = styled.article`
   }
 `;
 
-export const StImg = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
 const StImgWrapper = styled.div`
   width: 20.5rem;
   height: 30rem;
 
   margin-bottom: 1.6rem;
+
+  border-radius: 1.6rem;
+`;
+
+export const StImg = styled.img`
+  width: 100%;
+  height: 100%;
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
+  border-radius: 1.6rem;
 `;
 
 const StTextWrapper = styled.div`
@@ -81,24 +86,24 @@ const StTextWrapper = styled.div`
 
 const StTitleWrapper = styled.header`
   width: 100%;
-`;
 
-const StCardTitle = styled.strong`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
 
+const StCardTitle = styled.strong`
   ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StCardAuthor = styled.p`
+  ${({ theme }) => theme.fonts.body6}
+  color: ${({ theme }) => theme.colors.gray300};
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  ${({ theme }) => theme.fonts.body6}
-  color: ${({ theme }) => theme.colors.gray300};
 `;
 
 const StIcBin = styled(IcBin)`

@@ -6,19 +6,25 @@ import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const [handleToggleDrawer, preNote, handleChangeReview, patchReview] =
+  const [handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
     useOutletContext<
-      [(i: number) => void, PreNoteData, (key: string, value: string | string[] | number) => void, () => Promise<void>]
+      [
+        (i: number) => void,
+        PreNoteData,
+        (key: string, value: string | string[] | number) => void,
+        React.Dispatch<React.SetStateAction<boolean>>,
+        boolean,
+        boolean,
+      ]
     >();
   const { answerOne, answerTwo, questionList } = preNote;
 
-  function onChangeReview(key: string, value: string | string[] | number): void {
+  const onChangeReview = (key: string, value: string | string[] | number): void => {
     handleChangeReview(key, value);
-  }
+  };
 
   const handleSubmit = () => {
-    handleChangeReview("progress", 3);
-    patchReview();
+    setOpenModal(true);
   };
 
   return (
@@ -49,11 +55,12 @@ export default function PreNote() {
           questionList={questionList}
           onChangeReview={onChangeReview}
           onToggleDrawer={handleToggleDrawer}
+          isPrevented={isPrevented}
         />
       </StFormWrapper>
 
       {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn type="button" onClick={handleSubmit}>
+      <StNextBtn type="button" disabled={!ablePatch} onClick={handleSubmit} isdisabled={!ablePatch}>
         다음 계단
       </StNextBtn>
     </StNoteForm>
@@ -97,13 +104,13 @@ const StTextarea = styled.textarea`
   }
 `;
 
-const StNextBtn = styled(Button)`
+const StNextBtn = styled(Button)<{ isdisabled: boolean }>`
   margin-top: 10rem;
   padding: 1.6rem 13rem;
   border-radius: 1rem;
-  background-color: ${({ theme }) => theme.colors.white400};
+  background-color: ${({ isdisabled, theme }) => (isdisabled ? theme.colors.white400 : theme.colors.orange100)};
 
   width: 32.5rem;
-  color: ${({ theme }) => theme.colors.gray300};
+  color: ${({ isdisabled, theme }) => (isdisabled ? theme.colors.gray300 : theme.colors.white)};
   ${({ theme }) => theme.fonts.button};
 `;

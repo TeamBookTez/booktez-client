@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
 
-const StTemp = styled.div`
+export const StTemp = styled.div`
   width: 100%;
   height: 16.1rem;
 `;

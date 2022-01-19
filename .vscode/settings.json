@@ -5,6 +5,8 @@
   "editor.formatOnSave": true,
   "cSpell.words": [
     "fromlogin",
+    "isdisabled",
+    "isfilled",
     "isopen",
     "isrightpath",
     "KAKAO",

@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import { ImgTemp } from "../../assets/images";
 import { BookCard } from "../bookcase";
+import Empty from "../bookcase/cardSection/Empty";
 import { Button } from "../common/styled/Button";
-import { Default } from ".";
 
 interface TempBookInfo {
   author: string[];

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
-import { after1 } from "../../../utils/dataCarousel";
+import { after1 } from "../../../utils/mockData";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
   onToggleModal: () => void;
