@@ -20,6 +20,10 @@ export default function MyPage() {
     reviewCount: 0,
   });
 
+  // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
+  // useEffect로 getInfo를 호출해주었다.
+  const [dataa, setDataa] = useState<string>("");
+
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/user/myInfo";
   const patchImgKey = "/user/img";
@@ -28,7 +32,6 @@ export default function MyPage() {
     try {
       const { data } = await getData(key, token);
 
-      console.log("data", data);
       setUserInfo(data.data);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -49,8 +52,8 @@ export default function MyPage() {
         const { data } = await patchData(token, patchImgKey, formData);
 
         if (data.success) {
+          setDataa(data.img);
           setUserInfo((current) => ({ ...current, img: data.img }));
-          console.log("data.img", userInfo);
         }
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -62,11 +65,7 @@ export default function MyPage() {
 
   useEffect(() => {
     getInfo(token, infoKey);
-  }, []);
-
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
+  }, [dataa]);
 
   return (
     <>
