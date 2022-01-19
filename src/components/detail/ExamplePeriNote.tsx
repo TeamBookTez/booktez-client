@@ -15,14 +15,13 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
   const root = answerThree?.root;
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const questionElement = e.currentTarget.closest("ul")?.nextElementSibling as HTMLScriptElement;
+    const questionElement = e.currentTarget.closest("ul")?.nextElementSibling;
 
     if (questionElement === null || questionElement === undefined) return;
-    // if (typeof questionElement !== HTMLScriptElement) return;
+    if (!(questionElement instanceof HTMLElement)) return;
 
     const whatValue = questionElement.style.display;
 
-    console.log(questionElement);
     if (whatValue === "none") questionElement.style.display = "block";
     else questionElement.style.display = "none";
   };
