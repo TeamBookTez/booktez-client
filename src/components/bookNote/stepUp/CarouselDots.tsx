@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { before2 } from "../../../utils/dataCarousel";
+import { before2 } from "../../../utils/mockData";
 
 interface CarouselProps {
   slideIndex: number;
