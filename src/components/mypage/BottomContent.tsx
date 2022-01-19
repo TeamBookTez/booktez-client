@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { UserInfo } from "../../pages/MyPage";
-import BookComment from "./BookComment";
+import { BookComment } from ".";
 
 export default function BottomContent(props: { userInfo: UserInfo }) {
   const { userInfo } = props;

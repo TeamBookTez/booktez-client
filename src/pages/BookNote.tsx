@@ -19,8 +19,11 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 2;
-  const TOKEN = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const REVIEWID = 4;
+  const TOKEN = localStorage.getItem("booktez-token");
+  // const userToken = TOKEN ? TOKEN : "";
+  const userToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjQyNDkyODY5LCJleHAiOjE2NDM3MDI0Njl9.FRHTfkfUGboCitLFsWKDXgVGQT4pLGR16_JZ3mUAJGM";
 
   const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
@@ -51,8 +54,9 @@ export default function BookNote() {
   };
 
   const patchReview = async () => {
-    const res = await patchData(TOKEN, `/review/before/${REVIEWID}`, preNote);
+    const res = await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
 
+    // 연결 확인 용
     console.log("res", res);
   };
 
@@ -71,8 +75,8 @@ export default function BookNote() {
   }, [isDrawerOpen]);
 
   useEffect(() => {
-    if (TOKEN) {
-      getReview(`/review/${REVIEWID}`, TOKEN);
+    if (userToken) {
+      getReview(`/review/${REVIEWID}`, userToken);
     }
   }, []);
 
