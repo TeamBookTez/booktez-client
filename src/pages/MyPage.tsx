@@ -24,7 +24,9 @@ export default function MyPage() {
   // useEffect로 getInfo를 호출해주었다.
   const [dataa, setDataa] = useState<string>("");
 
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const tempToken = localStorage.getItem("booktez-token");
+  const token = tempToken ? tempToken : "";
+
   const infoKey = "/user/myInfo";
   const patchImgKey = "/user/img";
 
