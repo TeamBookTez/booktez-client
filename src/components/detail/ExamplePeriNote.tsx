@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { IcToggle } from "../../assets/icons";
 import theme from "../../styles/theme";
 import { AnswerThree } from "../../utils/dataType";
 import LabelQuestion from "../common/styled/LabelQuestion";
@@ -13,6 +14,10 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
   const { answerThree } = props;
   const root = answerThree?.root;
 
+  const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    console.log("ASd");
+  };
+
   return (
     <StExampleWrapper>
       {/* ! depth 0 !  */}
@@ -21,6 +26,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
           <StFirstQuestion>
             <LabelQuestion bgColor={theme.colors.orange100} />
             {question0.question}
+            <StIcToggle onClick={handleToggle} />
           </StFirstQuestion>
           {question0.answer?.map((answer0, idx) => (
             <React.Fragment key={`a0-${idx}`}>
@@ -32,6 +38,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                   <StQuestion>
                     <LabelQuestion bgColor={theme.colors.orange300} />
                     {question1.question}
+                    <StIcToggle onClick={handleToggle} />
                   </StQuestion>
                   {question1.answer?.map((answer1, idx) => (
                     <React.Fragment key={`a1-${idx}`}>
@@ -43,6 +50,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                           <StQuestion>
                             <LabelQuestion bgColor={theme.colors.orange200} />
                             {question2.question}
+                            <StIcToggle onClick={handleToggle} />
                           </StQuestion>
                           {question2.answer?.map((answer2, idx) => (
                             <React.Fragment key={`a2-${idx}`}>
@@ -54,6 +62,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                                   <StQuestion>
                                     <LabelQuestion bgColor={theme.colors.orange400} />
                                     {question3.question}
+                                    <StIcToggle onClick={handleToggle} />
                                   </StQuestion>
                                   {question3.answer?.map((answer3, idx) => (
                                     <React.Fragment key={`a3-${idx}`}>
@@ -65,6 +74,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                                           <StQuestion>
                                             <LabelQuestion bgColor={theme.colors.orange500} />
                                             {question4.question}
+                                            <StIcToggle onClick={handleToggle} />
                                           </StQuestion>
                                           {question4.answer?.map((answer4, idx) => (
                                             <React.Fragment key={`a4-${idx}`}>
@@ -109,6 +119,9 @@ const StExampleWrapper = styled.article`
 `;
 
 const StQuestion = styled.ul`
+  display: flex;
+  align-items: center;
+
   margin-top: 2.3rem;
 
   ${({ theme }) => theme.fonts.body2};
@@ -121,6 +134,13 @@ const StFirstQuestion = styled(StQuestion)`
 
   &:first-child {
     margin-top: 0;
+  }
+`;
+
+const StIcToggle = styled(IcToggle)`
+  margin-left: 1.6rem;
+  &:hover {
+    cursor: pointer;
   }
 `;
 

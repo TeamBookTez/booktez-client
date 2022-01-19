@@ -27,3 +27,4 @@ export { ReactComponent as IcSave } from "./saveIcon.svg";
 export { ReactComponent as IcSearch } from "./searchIcon.svg";
 export { ReactComponent as IcSight } from "./sightIcon.svg";
 export { ReactComponent as IcToBe } from "./toBeIcon.svg";
+export { ReactComponent as IcToggle } from "./toggleIcon.svg";
