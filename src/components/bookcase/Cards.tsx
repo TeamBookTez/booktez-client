@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
@@ -6,9 +7,10 @@ import Empty from "./cardSection/Empty";
 
 interface CardsProps {
   bookcaseInfo: BookcaseInfo[];
+  setBookDelete: Dispatch<SetStateAction<boolean>>;
 }
 export default function Cards(props: CardsProps) {
-  const { bookcaseInfo } = props;
+  const { bookcaseInfo, setBookDelete } = props;
 
   console.log(bookcaseInfo);
 
@@ -23,7 +25,7 @@ export default function Cards(props: CardsProps) {
       <StSection>
         <AddBookCard />
         {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
-          <BookCard key={idx} bookcaseInfo={bookcaseInfo} />
+          <BookCard key={idx} bookcaseInfo={bookcaseInfo} setBookDelete={setBookDelete} />
         ))}
       </StSection>
     );

@@ -17,6 +17,8 @@ export default function DetailBookNote() {
   const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
 
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+
   const getReview = async (key: string, token: string) => {
     try {
       const {
@@ -59,7 +61,7 @@ export default function DetailBookNote() {
           </DetailArticleWrapper>
         </StMarginTop>
       </StNoteModalWrapper>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} setBookDelete={setBookDelete} /> : <></>}
     </>
   );
 }

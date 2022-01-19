@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -26,6 +27,8 @@ export default function Recent() {
 
   const tempBookList: TempBookInfo[] = [tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo];
 
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+
   return (
     <section>
       <StHeader>
@@ -37,7 +40,13 @@ export default function Recent() {
         ) : null}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {isDefault ? <Default /> : tempBookList.map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} />)}
+        {isDefault ? (
+          <Default />
+        ) : (
+          tempBookList.map((tempInfo, idx) => (
+            <BookCard key={idx} bookcaseInfo={tempInfo} setBookDelete={setBookDelete} />
+          ))
+        )}
       </StBookWrapper>
     </section>
   );

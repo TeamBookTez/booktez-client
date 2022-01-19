@@ -20,6 +20,8 @@ export default function Bookcase() {
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+
   // 로그인 정보를 이용할때 아래 두 줄의 코드
   // const userToken = localStorage.getItem("booktez-token");
   // const token = `${userToken}`;
@@ -49,13 +51,13 @@ export default function Bookcase() {
 
   useEffect(() => {
     getBookcase("/book", token);
-  }, []);
+  }, [bookDelete]);
 
   return (
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost]} />
+      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, setBookDelete]} />
     </>
   );
 }

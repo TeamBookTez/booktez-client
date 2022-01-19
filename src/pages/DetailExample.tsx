@@ -15,6 +15,8 @@ export default function DetailExample() {
   const reviewId = 4; // 리뷰 id 를 받아와 처리
   const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
+
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
   const reviewData = {
     bookTitle: "나는 왜 이 일을 하는가? 2",
     answerOne:
@@ -156,7 +158,7 @@ export default function DetailExample() {
           </DetailArticleWrapper>
         </StMarginTop>
       </StNoteModalWrapper>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} setBookDelete={setBookDelete} /> : <></>}
     </>
   );
 }

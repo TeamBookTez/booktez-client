@@ -5,12 +5,12 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function Total() {
-  const [bookcaseTotal] =
-    useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<BookcaseInfo[]>>, () => void]>();
+  const [bookcaseTotal, setBookDelete] =
+    useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<boolean>>, () => void]>();
 
   return (
     <>
-      <Cards bookcaseInfo={bookcaseTotal} />
+      <Cards bookcaseInfo={bookcaseTotal} setBookDelete={setBookDelete} />
       {/* <NoCards /> */}
     </>
   );
