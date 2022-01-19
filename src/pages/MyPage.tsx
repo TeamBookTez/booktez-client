@@ -50,6 +50,7 @@ export default function MyPage() {
 
         if (data.success) {
           setUserInfo((current) => ({ ...current, img: data.img }));
+          console.log("data.img", userInfo);
         }
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -62,6 +63,10 @@ export default function MyPage() {
   useEffect(() => {
     getInfo(token, infoKey);
   }, []);
+
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
 
   return (
     <>
