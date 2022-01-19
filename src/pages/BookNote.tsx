@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
@@ -22,7 +23,7 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const REVIEWID = 4;
   const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const userToken = "";
 
   const [isPrevented, setIsPrevented] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -48,12 +49,27 @@ export default function BookNote() {
   };
 
   const getReview = async (key: string, token: string) => {
-    const { data } = await getData(key, token);
-    const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
+    try {
+      const { data } = await getData(key, token);
+      const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
 
-    console.log("data.data", data.data);
-    setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-    setTitle(bookTitle);
+      setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+      setTitle(bookTitle);
+
+      // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+      // 답변 추가/삭제 막기
+      if (answerOne) {
+        setIsPrevented(true);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+
+      // 이건 필요없을지도 모름.
+      // 담에 한 번 확인
+      setIsPrevented(false);
+    }
   };
 
   const patchReview = async () => {
@@ -88,6 +104,7 @@ export default function BookNote() {
   useEffect(() => {
     console.log("isPrevented", isPrevented);
   }, [isPrevented]);
+
   useEffect(() => {
     getReview(`/review/${REVIEWID}`, userToken);
   }, []);
