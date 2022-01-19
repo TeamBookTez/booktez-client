@@ -19,6 +19,9 @@ export default function Bookcase() {
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
+  // 로그인 정보를 이용할때 아래 두 줄의 코드
+  // const userToken = localStorage.getItem("booktez-token");
+  // const token = `${userToken}`;
   const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const infoKey = "/book";
 

@@ -13,8 +13,8 @@ export default function AddBookCard() {
           <StImgWrapper>
             <StImg src={ImgAddBooks} alt="다음 책을 쌓아볼까요?" />
           </StImgWrapper>
-          <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
-          <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>
+          <StCardHeader>다음 책을 읽어볼까요?</StCardHeader>
+          <StCardDesc>또 하나의 지혜를 쌓아보세요.</StCardDesc>
           <StAddBookBtn type="button">
             <StLink to="/main/add-book">+ 책 추가</StLink>
           </StAddBookBtn>
@@ -53,20 +53,16 @@ const StImgWrapper = styled.div`
 const StCardHeader = styled.h3`
   margin-bottom: 0.4rem;
 
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.body5};
+
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StCardDesc = styled.p`
   margin-bottom: 2.7rem;
 
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 130%;
-  letter-spacing: -0.1rem;
+  ${({ theme }) => theme.fonts.caption};
+
   color: ${({ theme }) => theme.colors.gray200};
 `;
 

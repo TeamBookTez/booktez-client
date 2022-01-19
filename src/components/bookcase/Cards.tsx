@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { AddBookCard, BookCard } from ".";
+import Empty from "./cardSection/Empty";
 
 interface CardsProps {
   bookcaseInfo: BookcaseInfo[];
@@ -9,15 +10,32 @@ interface CardsProps {
 export default function Cards(props: CardsProps) {
   const { bookcaseInfo } = props;
 
-  return (
-    <StSection>
-      <AddBookCard />
-      {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
-        <BookCard key={idx} bookcaseInfo={bookcaseInfo} />
-      ))}
-    </StSection>
-  );
+  console.log(bookcaseInfo);
+
+  if (bookcaseInfo.length === 0) {
+    return (
+      <StDefaultSection>
+        <Empty />
+      </StDefaultSection>
+    );
+  } else {
+    return (
+      <StSection>
+        <AddBookCard />
+        {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
+          <BookCard key={idx} bookcaseInfo={bookcaseInfo} />
+        ))}
+      </StSection>
+    );
+  }
 }
+const StDefaultSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: calc(100% - 19.7rem);
+`;
 
 const StSection = styled.section`
   display: flex;
