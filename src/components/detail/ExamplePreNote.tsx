@@ -18,18 +18,18 @@ export default function ExamplePreNote(props: ExamplePreNoteProps) {
     <StExampleWrapper>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {nickname ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이{" "}
-        {nickname ? `${nickname} 독서가` : "익명의 독서가"}
+        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}
         님의 기대를 만족시킬 수 있을까요?
       </StFirstQuestion>
       <StAnswer>{answerTwo}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {nickname ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
       </StFirstQuestion>
       {isLogin && questionList?.map((question: string, idx: number) => <StAnswer key={idx}>{questionList}</StAnswer>)}
     </StExampleWrapper>

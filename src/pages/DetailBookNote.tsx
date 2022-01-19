@@ -14,8 +14,7 @@ export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const reviewId = 4; // 리뷰 id 를 받아와 처리
-  const _token = localStorage.getItem("booktez-token");
-  const token = _token ? _token : "";
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const navigate = useNavigate();
 
   const getReview = async (key: string, token: string) => {
