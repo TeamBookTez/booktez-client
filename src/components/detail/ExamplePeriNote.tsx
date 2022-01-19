@@ -15,7 +15,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
   const root = answerThree?.root;
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    console.log("ASd");
+    console.log(e);
   };
 
   return (
