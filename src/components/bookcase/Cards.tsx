@@ -10,8 +10,6 @@ interface CardsProps {
 export default function Cards(props: CardsProps) {
   const { bookcaseInfo } = props;
 
-  console.log(bookcaseInfo);
-
   if (bookcaseInfo.length === 0) {
     return (
       <StDefaultSection>
