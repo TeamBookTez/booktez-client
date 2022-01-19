@@ -25,6 +25,8 @@ export default function Bookcase() {
   // const token = `${userToken}`;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
+  const wow = localStorage.getItem("booktez-data");
+  const woww = wow ? wow : "";
 
   const getBookcase = async (key: string, token: string) => {
     try {
@@ -33,8 +35,6 @@ export default function Bookcase() {
           data: { books },
         },
       } = await getData(key, token);
-
-      setBookcaseTotal(books);
 
       books.forEach((book: BookcaseInfo) => {
         if (book.state === 2) setBookcasePre((currentBook) => [...currentBook, book]);

@@ -18,7 +18,7 @@ interface ShowModalProps {
 }
 
 export default function ShowModal(props: ShowModalProps) {
-  const { bookInfo, publishDate, onToggleModal } = props;
+  const { bookInfo, setBookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
   const bookData = { ...bookInfo, publicationDate: publishDate.toString(), author: authors, translator: translators };
   const TOKEN = localStorage.getItem("booktez-token");
@@ -29,7 +29,10 @@ export default function ShowModal(props: ShowModalProps) {
   const postAddBooks = async () => {
     try {
       const res = await postData("/book", bookData, userToken);
-      const resData = res.data.data.isLogin;
+
+      if (!userToken) {
+        localStorage.setItem("booktez-data", JSON.stringify(bookInfo));
+      }
 
       nav("/book-note");
     } catch (err) {
