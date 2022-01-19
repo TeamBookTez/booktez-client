@@ -1,11 +1,14 @@
+import { SetStateAction } from "react";
 import { useOutletContext } from "react-router-dom";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function PeriRead() {
-  const [bookcasePeri, setBookDelete] =
-    useOutletContext<[BookcaseInfo[], React.Dispatch<React.SetStateAction<boolean>>]>();
+  const [bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, setBookDelete] =
+    useOutletContext<
+      [BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], React.Dispatch<React.SetStateAction<boolean>>]
+    >();
 
   return (
     <>

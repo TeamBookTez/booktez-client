@@ -51,7 +51,7 @@ export default function Bookcase() {
 
   useEffect(() => {
     getBookcase("/book", token);
-  }, [bookDelete]);
+  }, []);
 
   return (
     <>
