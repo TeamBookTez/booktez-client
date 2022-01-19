@@ -19,13 +19,21 @@ export interface PostBody {
   progress?: string;
 }
 
+export interface GetBody {
+  bookTitle?: string;
+  answerOne?: string;
+  answerTwo?: string;
+  answerThree?: AnswerThree;
+  questionList?: string[];
+}
+
 export interface PatchBody {
   answerOne?: string;
   answerTwo?: string;
   answerThree?: AnswerThree;
 }
 
-interface AnswerThree {
+export interface AnswerThree {
   root: Question[];
 }
 
