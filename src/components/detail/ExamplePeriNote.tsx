@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
@@ -10,11 +11,55 @@ interface ExamplePreNoteProps {
 
 export default function ExamplePeriNote(props: ExamplePreNoteProps) {
   const { answerThree } = props;
+  const root = answerThree?.root;
 
-  console.log(answerThree);
+  console.log(root);
 
   return (
     <StExampleWrapper>
+      {/* ! depth 1 !  */}
+      {root?.map((question1, idx) => (
+        <React.Fragment key={`q1-${idx}`}>
+          <StFirstQuestion>
+            <LabelQuestion bgColor={theme.colors.orange100} />
+            {question1.question}
+          </StFirstQuestion>
+          {question1.answer?.map((answer1, idx) => (
+            <React.Fragment key={`a1-${idx}`}>
+              <StAnswer>{answer1.text}</StAnswer>
+              {/* ! depth 2 !  */}
+              {answer1.children?.map((question2, idx) => (
+                <article key={`q2-${idx}`}>
+                  <StFirstQuestion>
+                    <LabelQuestion bgColor={theme.colors.orange200} />
+                    {question2.question}
+                  </StFirstQuestion>
+                  {question2.answer?.map((answer2, idx) => (
+                    <React.Fragment key={`a2-${idx}`}>
+                      <StAnswer>{answer2.text}</StAnswer>
+                      {/* ! depth 3 !  */}
+                      {answer2.children?.map((question3, idx) => (
+                        <article key={`q3-${idx}`}>
+                          <StFirstQuestion>
+                            <LabelQuestion bgColor={theme.colors.orange300} />
+                            {question3.question}
+                          </StFirstQuestion>
+                          {question3.answer?.map((answer3, idx) => (
+                            <React.Fragment key={`a3-${idx}`}>
+                              <StAnswer>{answer3.text}</StAnswer>
+                              {/* ! depth 4 !  */}
+                            </React.Fragment>
+                          ))}
+                        </article>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </article>
+              ))}
+            </React.Fragment>
+          ))}
+        </React.Fragment>
+      ))}
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
         QQQQQQQQ

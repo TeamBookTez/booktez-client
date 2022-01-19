@@ -12,7 +12,8 @@ import { reviewData } from "../utils/mockData";
 export default function DetailExample() {
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const reviewId = 4; // 리뷰 id 를 받아와 처리
-  // const token = localStorage.getItem("booktez-token");
+  // const TOKEN = localStorage.getItem("booktez-token");
+  // userToken = TOKEN ? TOKEN : "";
   const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
 
