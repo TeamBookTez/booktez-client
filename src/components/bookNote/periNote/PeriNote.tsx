@@ -6,6 +6,7 @@ import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../as
 import { PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
 import { Answer, Question } from "../../../utils/dataType";
+import { Button } from "../../common/styled/Button";
 import { StepUp } from "..";
 
 export default function PeriNote() {
@@ -76,7 +77,7 @@ export default function PeriNote() {
                               value={question1.question}
                               onChange={(event) => handleChangePeri("question", event.target.value, [a, b, c])}
                             />
-                            <StAddAnswerButton>답변</StAddAnswerButton>
+                            <StAddAnswerButton type="button">답변</StAddAnswerButton>
                             <IcMore />
                           </StQuestionInputWrapper>
                         </StQuestionLabelWrapper>
@@ -105,7 +106,7 @@ export default function PeriNote() {
                                         handleChangePeri("question", event.target.value, [a, b, c, d, e])
                                       }
                                     />
-                                    <StAddAnswerButton>답변</StAddAnswerButton>
+                                    <StAddAnswerButton type="button">답변</StAddAnswerButton>
                                     <IcMore />
                                   </StQuestionInputWrapper>
                                 </StQuestionLabelWrapper>
@@ -136,7 +137,7 @@ export default function PeriNote() {
                                                 handleChangePeri("question", event.target.value, [a, b, c, d, e, f, g])
                                               }
                                             />
-                                            <StAddAnswerButton>답변</StAddAnswerButton>
+                                            <StAddAnswerButton type="button">답변</StAddAnswerButton>
                                             <IcMore />
                                           </StQuestionInputWrapper>
                                         </StQuestionLabelWrapper>
@@ -188,7 +189,7 @@ export default function PeriNote() {
                                                         ])
                                                       }
                                                     />
-                                                    <StAddAnswerButton>답변</StAddAnswerButton>
+                                                    <StAddAnswerButton type="button">답변</StAddAnswerButton>
                                                     <IcMore />
                                                   </StQuestionInputWrapper>
                                                 </StQuestionLabelWrapper>
@@ -239,7 +240,9 @@ export default function PeriNote() {
             </StAnswerWrapper>
           </StQAContainer>
         ))}
+        <StAddQuestionButton type="button">+ 질문 리스트 추가</StAddQuestionButton>
       </StQAWrapper>
+      <StDoneButton type="button">작성 완료</StDoneButton>
     </StNoteForm>
   );
 }
@@ -442,4 +445,26 @@ const StAnswerInput = styled.input`
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
+`;
+
+const StAddQuestionButton = styled(Button)`
+  margin-top: 1rem;
+  padding: 2.35rem 0;
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 0.1rem solid ${({ theme }) => theme.colors.white400};
+  border-radius: 1.6rem;
+
+  width: 100%;
+  color: ${({ theme }) => theme.colors.gray100};
+  ${({ theme }) => theme.fonts.button}
+`;
+
+const StDoneButton = styled(Button)`
+  margin-top: 6rem;
+  margin-left: auto;
+  border-radius: 1rem;
+
+  width: 32.5rem;
+  height: 5.6rem;
+  ${({ theme }) => theme.fonts.button}
 `;
