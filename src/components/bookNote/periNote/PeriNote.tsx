@@ -1,4 +1,3 @@
-import { String } from "lodash";
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -323,6 +322,10 @@ const StAnswerWrapper = styled.div`
 
 const StPriQuestionInput = styled.input`
   ${({ theme }) => theme.fonts.header4}
+
+  &:placeholder {
+    color: ${({ theme }) => theme.colors.white500};
+  }
 `;
 
 const StPriAnswerWrapper = styled.div`
@@ -334,6 +337,10 @@ const StPriAnswerWrapper = styled.div`
 
 const StPriAnswerInput = styled.input`
   ${({ theme }) => theme.fonts.body1}
+
+  &:placeholder {
+    color: ${({ theme }) => theme.colors.white500};
+  }
 `;
 
 const StAnswerIcon = styled(IcPeriAnswer)`
@@ -392,6 +399,10 @@ const StQuestionInput = styled.input`
 
   ${({ theme }) => theme.fonts.body2}
   color: ${({ theme }) => theme.colors.gray200};
+
+  &:placeholder {
+    color: ${({ theme }) => theme.colors.white500};
+  }
 `;
 
 const StAddAnswerButton = styled.button`
@@ -427,4 +438,8 @@ const StAnswerInput = styled.input`
 
   ${({ theme }) => theme.fonts.body4}
   color: ${({ theme }) => theme.colors.gray400};
+
+  &:placeholder {
+    color: ${({ theme }) => theme.colors.white500};
+  }
 `;
