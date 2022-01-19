@@ -22,6 +22,6 @@ export const patchData = (token: string, key: string, patchBody: PatchBody | For
   return client(token).patch(key, patchBody);
 };
 
-export const deleteData = (key: string, token: string) => {
+export const deleteData = (key: string, token: string | null) => {
   return client(token).delete(key);
 };

@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { getData } from "../utils/lib/api";
+import { deleteData, getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
@@ -68,7 +68,7 @@ export default function Bookcase() {
 
   useEffect(() => {
     getBookcase("/book", userToken);
-  }, []);
+  }, [bookDelete]);
 
   return (
     <>

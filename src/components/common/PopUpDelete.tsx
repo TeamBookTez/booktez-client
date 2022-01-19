@@ -18,7 +18,7 @@ interface PopUpDeleteProps {
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
   const { onPopUp, reviewId, handleBookDelete } = props;
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
+  const token = localStorage.getItem("booktez-token"); // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
 
   const handleDelete = async () => {
