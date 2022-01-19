@@ -20,10 +20,12 @@ import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
+  const isLogin = false;
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={isLogin ? <Navigate to="/main" /> : <Landing />} />
         <Route path="/main/*" element={<CommonLayout />}>
           {/* /main */}
           <Route path="" element={<Main />} />
