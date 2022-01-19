@@ -27,7 +27,12 @@ export default function Recent() {
 
   const tempBookList: TempBookInfo[] = [tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo];
 
+  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
   const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
+  //
 
   return (
     <section>
@@ -44,7 +49,7 @@ export default function Recent() {
           <Default />
         ) : (
           tempBookList.map((tempInfo, idx) => (
-            <BookCard key={idx} bookcaseInfo={tempInfo} setBookDelete={setBookDelete} />
+            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
           ))
         )}
       </StBookWrapper>

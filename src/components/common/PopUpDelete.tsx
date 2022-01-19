@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { BookcaseInfo } from "../../pages/Bookcase";
 import { deleteData } from "../../utils/lib/api";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
 
@@ -14,11 +13,11 @@ const StTemp = styled.div`
 interface PopUpDeleteProps {
   onPopUp: () => void;
   reviewId: number;
-  setBookDelete: Dispatch<SetStateAction<boolean>>;
+  handleBookDelete: () => void;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, reviewId, setBookDelete } = props;
+  const { onPopUp, reviewId, handleBookDelete } = props;
   const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
 
@@ -27,7 +26,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
       navigate("/main/bookcase");
-      setBookDelete((prev) => !prev);
+      handleBookDelete();
     } catch (err) {
       alert(err);
     }

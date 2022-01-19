@@ -60,7 +60,7 @@ export default function Bookcase() {
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, setBookDelete]} />
+      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete]} />
     </>
   );
 }

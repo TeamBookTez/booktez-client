@@ -16,7 +16,12 @@ export default function DetailExample() {
   const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
 
+  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
   const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
+  //
   const reviewData = {
     bookTitle: "나는 왜 이 일을 하는가? 2",
     answerOne:
@@ -158,7 +163,7 @@ export default function DetailExample() {
           </DetailArticleWrapper>
         </StMarginTop>
       </StNoteModalWrapper>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} setBookDelete={setBookDelete} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
     </>
   );
 }

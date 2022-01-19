@@ -7,10 +7,10 @@ import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
-  setBookDelete: Dispatch<SetStateAction<boolean>>;
+  handleBookDelete: () => void;
 }
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, setBookDelete } = props;
+  const { bookcaseInfo, handleBookDelete } = props;
   const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
@@ -32,7 +32,7 @@ export default function BookCard(props: BookCardProps) {
           <StIcBin onClick={handlePopUp} />
         </StTextWrapper>
       </StBookCard>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} setBookDelete={setBookDelete} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
     </>
   );
 }
