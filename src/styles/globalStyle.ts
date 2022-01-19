@@ -74,19 +74,6 @@ export const GlobalStyle = createGlobalStyle`
     /* Internet Explorer 10+ */ 
     color:transparent; 
   }
-  .dot {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  margin: 0 0.5rem;
-  transition: 0.5s;
-  background: ${({ theme }) => theme.colors.white300};
-}
-
-.dot.active {
-  border-radius: 0.7rem;
-  background: ${({ theme }) => theme.colors.orange300};
-}
 `;
 
 export default GlobalStyle;
