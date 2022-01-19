@@ -17,6 +17,8 @@ export default function BookCard(props: BookCardProps) {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
+  const reviewId = 8; // bookcaseInfo에서 넘겨 받아야 함
+
   return (
     <>
       <StBookCard>
@@ -31,7 +33,7 @@ export default function BookCard(props: BookCardProps) {
           <StIcBin onClick={handlePopUp} />
         </StTextWrapper>
       </StBookCard>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
     </>
   );
 }

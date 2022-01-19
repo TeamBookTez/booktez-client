@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
+import { PopUpDelete } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
@@ -11,7 +12,8 @@ import { getData } from "../utils/lib/api";
 
 export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
-  const reviewId = 4; // 리뷰 id 를 받아와 처리
+  const [isPopUp, setIsPopUp] = useState<boolean>(false);
+  const reviewId = 7; // 리뷰 id 를 받아와 처리
   const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function DetailBookNote() {
 
       setReviewData(data);
     } catch (err) {
-      console.log("err", err);
+      alert(err);
     }
   };
 
@@ -31,27 +33,34 @@ export default function DetailBookNote() {
     getReview(`review/${reviewId}`, token);
   }, []);
 
+  const handlePopUp = () => {
+    setIsPopUp((isPopUp) => !isPopUp);
+  };
+
   return (
-    <StNoteModalWrapper>
-      <StIcCancelWhite onClick={() => navigate(-1)} />
-      <StBookTitle>{reviewData?.bookTitle}</StBookTitle>
-      <StBtnWrapper>
-        <IcDeleteNote />
-        <IcModifyNote />
-      </StBtnWrapper>
-      <DetailArticleWrapper title="독서 전 단계">
-        <ExamplePreNote
-          answerOne={reviewData?.answerOne}
-          answerTwo={reviewData?.answerTwo}
-          questionList={reviewData?.questionList}
-        />
-      </DetailArticleWrapper>
-      <StMarginTop>
-        <DetailArticleWrapper title="독서 중 단계">
-          <ExamplePeriNote answerThree={reviewData?.answerThree} />
+    <>
+      <StNoteModalWrapper>
+        {isPopUp ? <></> : <StIcCancelWhite onClick={() => navigate(-1)} />}
+        <StBookTitle>{reviewData?.bookTitle}</StBookTitle>
+        <StBtnWrapper>
+          <IcDeleteNote onClick={handlePopUp} />
+          <IcModifyNote />
+        </StBtnWrapper>
+        <DetailArticleWrapper title="독서 전 단계">
+          <ExamplePreNote
+            answerOne={reviewData?.answerOne}
+            answerTwo={reviewData?.answerTwo}
+            questionList={reviewData?.questionList}
+          />
         </DetailArticleWrapper>
-      </StMarginTop>
-    </StNoteModalWrapper>
+        <StMarginTop>
+          <DetailArticleWrapper title="독서 중 단계">
+            <ExamplePeriNote answerThree={reviewData?.answerThree} />
+          </DetailArticleWrapper>
+        </StMarginTop>
+      </StNoteModalWrapper>
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+    </>
   );
 }
 

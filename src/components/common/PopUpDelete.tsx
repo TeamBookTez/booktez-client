@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { deleteData } from "../../utils/lib/api";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
 
 const StTemp = styled.div`
@@ -9,10 +11,23 @@ const StTemp = styled.div`
 
 interface PopUpDeleteProps {
   onPopUp: () => void;
+  reviewId: number;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp } = props;
+  const { onPopUp, reviewId } = props;
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      await deleteData(`/review/${reviewId}`, token);
+      onPopUp();
+      navigate("/main/bookcase");
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   return (
     <StPopUpWrpper>
@@ -25,7 +40,9 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
           <StBtnCancel type="button" onClick={onPopUp}>
             취소
           </StBtnCancel>
-          <StBtnDelete type="button">삭제</StBtnDelete>
+          <StBtnDelete type="button" onClick={handleDelete}>
+            삭제
+          </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
     </StPopUpWrpper>
