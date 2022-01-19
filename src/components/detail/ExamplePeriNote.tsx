@@ -24,7 +24,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
       {root?.map((question0, idx) => (
         <React.Fragment key={`q0-${idx}`}>
           <StFirstQuestion>
-            <LabelQuestion bgColor={theme.colors.orange100} />
+            <LabelQuestion bgColor={theme.colors.orange000} />
             {question0.question}
             <StIcToggle onClick={handleToggle} />
           </StFirstQuestion>
@@ -36,7 +36,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
               {answer0.children?.map((question1, idx) => (
                 <article key={`q1-${idx}`}>
                   <StQuestion>
-                    <LabelQuestion bgColor={theme.colors.orange300} />
+                    <LabelQuestion bgColor={theme.colors.orange100} />
                     {question1.question}
                     <StIcToggle onClick={handleToggle} />
                   </StQuestion>
@@ -48,7 +48,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                       {answer1.children?.map((question2, idx) => (
                         <article key={`q2-${idx}`}>
                           <StQuestion>
-                            <LabelQuestion bgColor={theme.colors.orange400} />
+                            <LabelQuestion bgColor={theme.colors.orange300} />
                             {question2.question}
                             <StIcToggle onClick={handleToggle} />
                           </StQuestion>
