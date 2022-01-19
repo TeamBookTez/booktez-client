@@ -22,6 +22,8 @@ export { ReactComponent as IcModifyNote } from "./modifyNoteIcon.svg";
 export { ReactComponent as IcMore } from "./moreIcon.svg";
 export { ReactComponent as IcMyPage } from "./myPageIcon.svg";
 export { ReactComponent as IcNoSight } from "./noSightIcon.svg";
+export { ReactComponent as IcPeriAnswer } from "./periAnswerIcon.svg";
+export { ReactComponent as IcPeriQuestion } from "./periQuestionIcon.svg";
 export { ReactComponent as IcRightArrow } from "./rightArrowIcon.svg";
 export { ReactComponent as IcSave } from "./saveIcon.svg";
 export { ReactComponent as IcSearch } from "./searchIcon.svg";
