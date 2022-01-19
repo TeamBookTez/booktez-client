@@ -21,9 +21,9 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 4;
+  const REVIEWID = 9;
   const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = "";
+  const userToken = TOKEN ? TOKEN : "";
 
   const [isPrevented, setIsPrevented] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -48,6 +48,16 @@ export default function BookNote() {
     setIsDrawerOpen(false);
   };
 
+  const handleChangeReview = (key: string, value: string | string[] | number): void => {
+    setPreNote((currentNote) => {
+      const newData = { ...currentNote };
+
+      newData[key] = value;
+
+      return newData;
+    });
+  };
+
   const getReview = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
@@ -60,6 +70,8 @@ export default function BookNote() {
       // 답변 추가/삭제 막기
       if (answerOne) {
         setIsPrevented(true);
+      } else {
+        handleChangeReview("questionList", [""]);
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -78,16 +90,6 @@ export default function BookNote() {
     setIsPrevented(true);
     // 연결 확인 용
     console.log("res", res);
-  };
-
-  const handleChangeReview = (key: string, value: string | string[] | number): void => {
-    setPreNote((currentNote) => {
-      const newData = { ...currentNote };
-
-      newData[key] = value;
-
-      return newData;
-    });
   };
 
   const handleSubmit = () => {
