@@ -26,6 +26,7 @@ export default function BookNote() {
   const userToken = TOKEN ? TOKEN : "";
 
   const [isPrevented, setIsPrevented] = useState(false);
+  const [ablePatch, setAblePatch] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
@@ -70,6 +71,7 @@ export default function BookNote() {
       // 답변 추가/삭제 막기
       if (answerOne) {
         setIsPrevented(true);
+        setAblePatch(true);
       } else {
         handleChangeReview("questionList", [""]);
       }
@@ -104,12 +106,19 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    console.log("isPrevented", isPrevented);
-  }, [isPrevented]);
-
-  useEffect(() => {
     getReview(`/review/${REVIEWID}`, userToken);
   }, []);
+
+  useEffect(() => {
+    // console.log("preNote.answerOne", preNote.answerOne);
+    // console.log("preNote.answerTwo", preNote.answerTwo);
+    // console.log("preNote.questionList", !preNote.questionList.includes(""));
+    // console.log("ablePatch", ablePatch);
+
+    if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
+      setAblePatch(true);
+    }
+  }, [preNote]);
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
@@ -119,7 +128,7 @@ export default function BookNote() {
         <Navigator />
         <IcSave onClick={patchReview} />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented]} />
+      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch]} />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
