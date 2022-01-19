@@ -7,14 +7,16 @@ import { Button } from "../common/styled/Button";
 import { Default } from ".";
 
 interface TempBookInfo {
+  author: string[];
+  reviewId: number;
   thumbnail: string;
   title: string;
-  author: string[];
 }
 
 export default function Recent() {
   const tempBookInfo = {
     thumbnail: ImgTemp,
+    reviewId: 6789,
     title: "석상한 귬",
     author: ["제임스 아세 함이", "령이"],
   };

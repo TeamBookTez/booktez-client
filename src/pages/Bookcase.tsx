@@ -8,6 +8,7 @@ import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
+  reviewId: number;
   state?: number;
   thumbnail: string;
   title: string;

@@ -10,14 +10,14 @@ interface BookCardProps {
 }
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo } = props;
-  const { thumbnail, title, author } = bookcaseInfo;
+
+  console.log(bookcaseInfo);
+  const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
   };
-
-  const reviewId = 8; // bookcaseInfo에서 넘겨 받아야 함
 
   return (
     <>
