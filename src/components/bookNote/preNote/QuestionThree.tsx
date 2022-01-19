@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
@@ -10,6 +11,7 @@ interface QuestionThreeProps {
 
 export default function QuestionThree(props: QuestionThreeProps) {
   const { questionList, onChangeReview, onToggleDrawer } = props;
+  const [isFilled, setIsFilled] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const modified = [...questionList];
@@ -30,19 +32,23 @@ export default function QuestionThree(props: QuestionThreeProps) {
     onChangeReview("questionList", [...questionList, ""]);
   };
 
+  useEffect(() => {
+    setIsFilled(!questionList.includes(""));
+  }, [questionList]);
+
   return (
     <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>
       {questionList.map((question, idx) => (
         <InputQuestion key={idx} value={question} idx={idx} onChangeValue={handleChange} onDelete={handleDelete} />
       ))}
-      <StAddButton type="button" onClick={addInput}>
+      <StAddButton type="button" disabled={!isFilled} onClick={addInput} isfilled={isFilled}>
         + 질문추가
       </StAddButton>
     </PreNoteForm>
   );
 }
 
-const StAddButton = styled.button`
+const StAddButton = styled.button<{ isfilled: boolean }>`
   margin-right: 9.1rem;
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 0.8rem;
@@ -50,7 +56,7 @@ const StAddButton = styled.button`
   background-color: ${({ theme }) => theme.colors.white200};
 
   width: calc(100% - 5rem);
-  color: ${({ theme }) => theme.colors.white500};
+  color: ${({ isfilled, theme }) => (isfilled ? theme.colors.gray100 : theme.colors.white500)};
   text-align: start;
   ${({ theme }) => theme.fonts.body4}
 `;

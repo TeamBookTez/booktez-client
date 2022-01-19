@@ -6,19 +6,23 @@ import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const [handleToggleDrawer, preNote, handleChangeReview, patchReview] =
+  const [handleToggleDrawer, preNote, handleChangeReview, setOpenModal] =
     useOutletContext<
-      [(i: number) => void, PreNoteData, (key: string, value: string | string[] | number) => void, () => Promise<void>]
+      [
+        (i: number) => void,
+        PreNoteData,
+        (key: string, value: string | string[] | number) => void,
+        React.Dispatch<React.SetStateAction<boolean>>,
+      ]
     >();
   const { answerOne, answerTwo, questionList } = preNote;
 
-  function onChangeReview(key: string, value: string | string[] | number): void {
+  const onChangeReview = (key: string, value: string | string[] | number): void => {
     handleChangeReview(key, value);
-  }
+  };
 
   const handleSubmit = () => {
-    handleChangeReview("progress", 3);
-    patchReview();
+    setOpenModal(true);
   };
 
   return (

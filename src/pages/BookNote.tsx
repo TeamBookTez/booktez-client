@@ -4,6 +4,7 @@ import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
+import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { getData, patchData } from "../utils/lib/api";
 
@@ -25,6 +26,7 @@ export default function BookNote() {
   const userToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjQyNDkyODY5LCJleHAiOjE2NDM3MDI0Njl9.FRHTfkfUGboCitLFsWKDXgVGQT4pLGR16_JZ3mUAJGM";
 
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
@@ -49,6 +51,7 @@ export default function BookNote() {
     const { data } = await getData(key, token);
     const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
 
+    console.log("data.data", data.data);
     setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
     setTitle(bookTitle);
   };
@@ -60,7 +63,7 @@ export default function BookNote() {
     console.log("res", res);
   };
 
-  function handleChangeReview(key: string, value: string | string[] | number): void {
+  const handleChangeReview = (key: string, value: string | string[] | number): void => {
     setPreNote((currentNote) => {
       const newData = { ...currentNote };
 
@@ -68,21 +71,30 @@ export default function BookNote() {
 
       return newData;
     });
-  }
+  };
+
+  const handleSubmit = () => {
+    handleChangeReview("progress", 3);
+    patchReview();
+    setOpenModal(false);
+    navigate("/book-note/peri");
+  };
+
+  const handleCancel = () => {
+    setOpenModal(false);
+  };
 
   useEffect(() => {
     console.log("isDrawerOpen", isDrawerOpen);
   }, [isDrawerOpen]);
 
   useEffect(() => {
-    if (userToken) {
-      getReview(`/review/${REVIEWID}`, userToken);
-    }
+    getReview(`/review/${REVIEWID}`, userToken);
   }, []);
 
   useEffect(() => {
-    console.log("preNote", preNote);
-  }, [preNote]);
+    console.log("openModal", openModal);
+  }, [openModal]);
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
@@ -90,10 +102,11 @@ export default function BookNote() {
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator />
-        <IcSave />
+        <IcSave onClick={patchReview} />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, patchReview]} />
+      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal]} />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
+      {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
   );
 }
