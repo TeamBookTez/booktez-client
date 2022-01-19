@@ -14,7 +14,7 @@ export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const reviewId = 4; // 리뷰 id 를 받아와 처리
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
+  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
   const navigate = useNavigate();
 
   //이 부분은 props를 필수로 내려주기 위해 작성한 코드
@@ -58,6 +58,7 @@ export default function DetailBookNote() {
             answerOne={reviewData?.answerOne}
             answerTwo={reviewData?.answerTwo}
             questionList={reviewData?.questionList}
+            isLogin={true}
           />
         </DetailArticleWrapper>
         <StMarginTop>
@@ -83,6 +84,7 @@ const StBtnWrapper = styled.div`
     margin-left: 1.4rem;
   }
 `;
+
 const StMarginTop = styled.div`
   margin-top: 8.3rem;
 `;

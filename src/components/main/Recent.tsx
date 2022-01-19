@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import { ImgTemp } from "../../assets/images";
 import { BookCard } from "../bookcase";
+import Empty from "../bookcase/cardSection/Empty";
 import { Button } from "../common/styled/Button";
-import { Default } from ".";
 
 interface TempBookInfo {
   author: string[];
@@ -46,7 +46,7 @@ export default function Recent() {
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
         {isDefault ? (
-          <Default />
+          <Empty />
         ) : (
           tempBookList.map((tempInfo, idx) => (
             <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
