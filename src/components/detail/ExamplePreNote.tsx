@@ -7,10 +7,11 @@ interface ExamplePreNoteProps {
   answerOne: string | undefined;
   answerTwo: string | undefined;
   questionList: string[] | undefined;
+  isLogin?: boolean;
 }
 
 export default function ExamplePreNote(props: ExamplePreNoteProps) {
-  const { answerOne, answerTwo, questionList } = props;
+  const { answerOne, answerTwo, questionList, isLogin } = props;
   const nickname = "냠냠"; // 닉네임 받아오기(로컬스토리지)
 
   return (
@@ -30,9 +31,7 @@ export default function ExamplePreNote(props: ExamplePreNoteProps) {
         <LabelQuestion bgColor={theme.colors.orange100} />
         {nickname ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
       </StFirstQuestion>
-      {questionList?.map((question: string, idx: number) => (
-        <StAnswer key={idx}>{questionList}</StAnswer>
-      ))}
+      {isLogin && questionList?.map((question: string, idx: number) => <StAnswer key={idx}>{questionList}</StAnswer>)}
     </StExampleWrapper>
   );
 }
@@ -57,7 +56,7 @@ const StQuestion = styled.ul`
 
   ${({ theme }) => theme.fonts.body2};
   line-height: 2.6rem;
-  color: ${({ theme }) => theme.colors.gray200};
+  color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StFirstQuestion = styled(StQuestion)`
@@ -77,7 +76,7 @@ const StAnswer = styled.li`
   padding-left: 5.7rem;
 
   ${({ theme }) => theme.fonts.body3}
-  color: ${({ theme }) => theme.colors.gray400};
+  color: ${({ theme }) => theme.colors.gray300};
   white-space: pre-wrap;
 
   &::before {

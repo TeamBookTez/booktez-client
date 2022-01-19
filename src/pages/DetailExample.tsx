@@ -12,9 +12,8 @@ import { reviewData } from "../utils/mockData";
 export default function DetailExample() {
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const reviewId = 4; // 리뷰 id 를 받아와 처리
-  // const TOKEN = localStorage.getItem("booktez-token");
-  // userToken = TOKEN ? TOKEN : "";
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`; // 로컬스토리지에서 token 받아와 처리
+  const isLogin = false;
+  // const _token = localStorage.getItem("booktez-token");
   const navigate = useNavigate();
 
   const handlePopUp = () => {
@@ -35,13 +34,16 @@ export default function DetailExample() {
             answerOne={reviewData?.answerOne}
             answerTwo={reviewData?.answerTwo}
             questionList={reviewData?.questionList}
+            isLogin={isLogin}
           />
         </DetailArticleWrapper>
-        <StMarginTop>
-          <DetailArticleWrapper title="독서 중 단계">
-            <ExamplePeriNote answerThree={reviewData?.answerThree} />
-          </DetailArticleWrapper>
-        </StMarginTop>
+        {isLogin && (
+          <StMarginTop>
+            <DetailArticleWrapper title="독서 중 단계">
+              <ExamplePeriNote answerThree={reviewData?.answerThree} />
+            </DetailArticleWrapper>
+          </StMarginTop>
+        )}
       </StNoteModalWrapper>
       {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
     </>
