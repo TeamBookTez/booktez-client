@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
+import { PreNoteData } from "../../../pages/BookNote";
 import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
