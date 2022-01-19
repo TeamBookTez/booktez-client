@@ -1,6 +1,10 @@
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
+import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { ExButton, StepUp } from "..";
+import OneCaseModal from "../stepUp/OneCaseModal";
+import ThreeCaseModal from "../stepUp/ThreeCaseModal";
 
 interface PreNoteFormProps {
   question: string;
@@ -12,17 +16,34 @@ interface PreNoteFormProps {
 export default function PreNoteForm(props: PreNoteFormProps) {
   const { question, idx, onToggleDrawer, children } = props;
 
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const onToggleModal = useCallback(() => {
+    setOpenModal(!openModal);
+  }, [openModal]);
+
   return (
-    <StSection>
-      <StHeader>
-        <StH3>
-          {question}
-          <StepUp />
-        </StH3>
-        <ExButton idx={idx} onToggleDrawer={onToggleDrawer} />
-      </StHeader>
-      <StArticle>{children}</StArticle>
-    </StSection>
+    <>
+      <StSection>
+        <StHeader>
+          <StH3>
+            {question}
+            <StepUp onToggleModal={onToggleModal} />
+          </StH3>
+          <ExButton idx={idx} onToggleDrawer={onToggleDrawer} />
+        </StHeader>
+        <StArticle>{children}</StArticle>
+      </StSection>
+      {openModal && (
+        <StStepModalWrapper>
+          {idx === 2 ? (
+            <ThreeCaseModal onToggleModal={onToggleModal} />
+          ) : (
+            <OneCaseModal idx={idx} onToggleModal={onToggleModal} />
+          )}
+        </StStepModalWrapper>
+      )}
+    </>
   );
 }
 
@@ -55,4 +76,13 @@ const StH3 = styled.h3`
 
 const StArticle = styled.article`
   padding: 2.6rem 1.4rem;
+`;
+
+const StStepModalWrapper = styled(StModalWrapper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+
+  background-color: rgba(55, 56, 62, 0.8);
 `;

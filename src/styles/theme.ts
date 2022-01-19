@@ -140,7 +140,7 @@ const fonts = {
   `,
   caption: `
     font-family: Pretendard;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1.4rem;
     line-height: 1.3;
     letter-spacing: -0.1rem;
