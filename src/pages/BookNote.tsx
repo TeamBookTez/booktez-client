@@ -1,9 +1,11 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
+import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { getData, patchData } from "../utils/lib/api";
 
@@ -19,12 +21,13 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 4;
+  const REVIEWID = 9;
   const TOKEN = localStorage.getItem("booktez-token");
-  // const userToken = TOKEN ? TOKEN : "";
-  const userToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjQyNDkyODY5LCJleHAiOjE2NDM3MDI0Njl9.FRHTfkfUGboCitLFsWKDXgVGQT4pLGR16_JZ3mUAJGM";
+  const userToken = TOKEN ? TOKEN : "";
 
+  const [isPrevented, setIsPrevented] = useState(false);
+  const [ablePatch, setAblePatch] = useState(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
@@ -34,6 +37,7 @@ export default function BookNote() {
   });
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleOpenDrawer = (i: number) => {
@@ -45,22 +49,7 @@ export default function BookNote() {
     setIsDrawerOpen(false);
   };
 
-  const getReview = async (key: string, token: string) => {
-    const { data } = await getData(key, token);
-    const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
-
-    setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-    setTitle(bookTitle);
-  };
-
-  const patchReview = async () => {
-    const res = await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
-
-    // 연결 확인 용
-    console.log("res", res);
-  };
-
-  function handleChangeReview(key: string, value: string | string[] | number): void {
+  const handleChangeReview = (key: string, value: string | string[] | number): void => {
     setPreNote((currentNote) => {
       const newData = { ...currentNote };
 
@@ -68,20 +57,67 @@ export default function BookNote() {
 
       return newData;
     });
-  }
+  };
 
-  useEffect(() => {
-    console.log("isDrawerOpen", isDrawerOpen);
-  }, [isDrawerOpen]);
+  const getReview = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
 
-  useEffect(() => {
-    if (userToken) {
-      getReview(`/review/${REVIEWID}`, userToken);
+      setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+      setTitle(bookTitle);
+
+      // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+      // 답변 추가/삭제 막기
+      if (answerOne) {
+        setIsPrevented(true);
+        setAblePatch(true);
+      } else {
+        handleChangeReview("questionList", [""]);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+
+      // 이건 필요없을지도 모름.
+      // 담에 한 번 확인
+      setIsPrevented(false);
     }
+  };
+
+  const patchReview = async () => {
+    const res = await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
+
+    setIsPrevented(true);
+    // 연결 확인 용
+    console.log("res", res);
+  };
+
+  const handleSubmit = () => {
+    handleChangeReview("progress", 3);
+    patchReview();
+    setOpenModal(false);
+    navigate("/book-note/peri");
+  };
+
+  const handleCancel = () => {
+    setOpenModal(false);
+  };
+
+  useEffect(() => {
+    getReview(`/review/${REVIEWID}`, userToken);
   }, []);
 
   useEffect(() => {
-    console.log("preNote", preNote);
+    // console.log("preNote.answerOne", preNote.answerOne);
+    // console.log("preNote.answerTwo", preNote.answerTwo);
+    // console.log("preNote.questionList", !preNote.questionList.includes(""));
+    // console.log("ablePatch", ablePatch);
+
+    if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
+      setAblePatch(true);
+    }
   }, [preNote]);
 
   return (
@@ -90,10 +126,11 @@ export default function BookNote() {
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator />
-        <IcSave />
+        <IcSave onClick={patchReview} />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, patchReview]} />
+      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch]} />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
+      {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
   );
 }
