@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -19,25 +19,21 @@ interface ShowModalProps {
 
 export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
-  const { isbn, thumbnail, title, authors, translators } = bookInfo;
-  const bookData = { ...bookInfo, publicationDate: publishDate, author: authors, translator: translators };
-  const TOKEN = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const { thumbnail, title, authors, translators } = bookInfo;
+  const bookData = { ...bookInfo, publicationDate: publishDate.toString(), author: authors, translator: translators };
+  const TOKEN = localStorage.getItem("booktez-token");
+  const userToken = TOKEN ? TOKEN : "";
 
   const nav = useNavigate();
 
   const postAddBooks = async () => {
     try {
-      const res = await postData("/book", bookData, TOKEN);
-      const resData = res.data;
+      const res = await postData("/book", bookData, userToken);
+      const resData = res.data.data.isLogin;
 
-      console.log(resData);
-      console.log(bookData);
-      // localStorage.setItem("booktez-token", resData.token);
-
-      nav("/");
+      nav("/book-note");
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        console.log(bookData);
         console.log("err", err.response?.data);
       }
     }
@@ -111,7 +107,7 @@ const StWriteBtn = styled(Button)`
   ${({ theme }) => theme.fonts.button};
 `;
 
-const StIcCancel = styled(IcCancelBlack)`
+export const StIcCancel = styled(IcCancelBlack)`
   position: absolute;
   top: 3.2rem;
   left: 2.4rem;

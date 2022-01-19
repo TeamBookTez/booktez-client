@@ -23,7 +23,8 @@ export default function Bookcase() {
   // 로그인 정보를 이용할때 아래 두 줄의 코드
   // const userToken = localStorage.getItem("booktez-token");
   // const token = `${userToken}`;
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const TOKEN = localStorage.getItem("booktez-token");
+  const userToken = TOKEN ? TOKEN : "";
 
   const getBookcase = async (key: string, token: string) => {
     try {
@@ -48,7 +49,7 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase("/book", token);
+    getBookcase("/book", userToken);
   }, []);
 
   return (

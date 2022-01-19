@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgEmptyBook } from "../../../assets/images";
@@ -15,7 +15,11 @@ export default function Empty() {
         북스테어즈만의 독서법을 통해
         <br /> 지식을 얻고 독서의 매력을 느껴보세요
       </StParagraph>
-      {pathname === "/main/bookcase" && <StAddBookBtn>+ 책 추가</StAddBookBtn>}
+      {pathname === "/main/bookcase" && (
+        <StAddBookBtn>
+          <StLink to="/main/add-book">+ 책 추가</StLink>
+        </StAddBookBtn>
+      )}
     </StArticle>
   );
 }
@@ -54,4 +58,13 @@ const StAddBookBtn = styled(Button)`
 
   ${({ theme }) => theme.fonts.button}
   border-radius: 1rem;
+`;
+
+const StLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
 `;
