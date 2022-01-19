@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";

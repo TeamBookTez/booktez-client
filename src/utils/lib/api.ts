@@ -21,3 +21,7 @@ export const postData = (key: string, postBody: PostBody, token?: string) => {
 export const patchData = (token: string, key: string, patchBody: PatchBody | FormData) => {
   return client(token).patch(key, patchBody);
 };
+
+export const deleteData = (key: string, token: string) => {
+  return client(token).delete(key);
+};
