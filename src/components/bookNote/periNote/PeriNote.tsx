@@ -41,7 +41,7 @@ export default function PeriNote() {
       <StHeadWrapper>
         <StHead>
           구조화된 질문과 답변을 만들어 우선순위 독서를 해보세요!
-          <StepUp />
+          <StepUp onToggleModal={() => handleToggleDrawer(4)} />
         </StHead>
         <ExButton idx={4} onToggleDrawer={handleToggleDrawer} />
       </StHeadWrapper>
