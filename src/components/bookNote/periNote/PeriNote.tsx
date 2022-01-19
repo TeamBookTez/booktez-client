@@ -12,6 +12,7 @@ export interface PairsProps {
   depth: number;
   question: string;
 }
+
 export default function PeriNote() {
   const [handleToggleDrawer] = useOutletContext<[(i: number) => void]>();
 
