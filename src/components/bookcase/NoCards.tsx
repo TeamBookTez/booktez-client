@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgEmptyBooks } from "../../assets/images";
@@ -10,7 +11,9 @@ export default function NoCards() {
         <StImg src={ImgEmptyBooks} alt="아직 읽은 책이 없어요" />
         <StCardHeader>아직 읽은 책이 없어요</StCardHeader>
         <StCardDesc>이정도면 좋겠니아ㅣㅏㄹ</StCardDesc>
-        <StAddBookBtn>+ 책 추가</StAddBookBtn>
+        <StAddBookBtn type="button">
+          <StLink to="/main/add-book">+ 책 추가</StLink>
+        </StAddBookBtn>
       </StArticleWrapper>
     </StSection>
   );
@@ -63,4 +66,15 @@ const StAddBookBtn = styled(Button)`
   height: 4.6rem;
 
   border-radius: 1rem;
+`;
+
+const StLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  ${({ theme }) => theme.fonts.button};
 `;
