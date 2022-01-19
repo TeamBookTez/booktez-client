@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
-import { BottomContent, TopContent } from "../components/myPage";
+import { BottomContent, TopContent } from "../components/myQage";
 import { getData, patchData } from "../utils/lib/api";
 
 export interface UserInfo {
