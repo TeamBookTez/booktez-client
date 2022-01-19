@@ -22,6 +22,7 @@ export const StNoteModalWrapper = styled.main`
   justify-content: flex-start;
 
   width: 100%;
+  min-height: 100vh;
 
   padding: 10rem 9.5rem;
 

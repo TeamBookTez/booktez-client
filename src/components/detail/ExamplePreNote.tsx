@@ -9,7 +9,7 @@ interface ExamplePreNoteProps {
   answerOne: string | undefined;
   answerTwo: string | undefined;
   questionList: string[] | undefined;
-  isLogin?: boolean;
+  isLogin: boolean;
 }
 
 export default function ExamplePreNote(props: ExamplePreNoteProps) {
@@ -122,7 +122,7 @@ const StLinkWrapper = styled.section`
   justify-content: center;
   align-items: center;
 
-  height: 40%;
+  height: 25.9rem;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) -9.07%, rgba(194, 195, 204, 0.85) 100%);
 `;
 
@@ -136,6 +136,8 @@ const StSignupText = styled.p`
 const StButton = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
+
+  margin-top: 1.2rem;
 
   border-radius: 1rem;
 

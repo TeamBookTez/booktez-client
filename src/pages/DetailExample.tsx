@@ -62,6 +62,7 @@ const StBtnWrapper = styled.div`
     margin-left: 1.4rem;
   }
 `;
+
 const StMarginTop = styled.div`
   margin-top: 8.3rem;
 `;

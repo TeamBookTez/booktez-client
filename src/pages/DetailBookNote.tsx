@@ -51,6 +51,7 @@ export default function DetailBookNote() {
             answerOne={reviewData?.answerOne}
             answerTwo={reviewData?.answerTwo}
             questionList={reviewData?.questionList}
+            isLogin={true}
           />
         </DetailArticleWrapper>
         <StMarginTop>
@@ -76,6 +77,7 @@ const StBtnWrapper = styled.div`
     margin-left: 1.4rem;
   }
 `;
+
 const StMarginTop = styled.div`
   margin-top: 8.3rem;
 `;
