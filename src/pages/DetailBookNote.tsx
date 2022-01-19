@@ -48,7 +48,7 @@ export default function DetailBookNote() {
       </DetailArticleWrapper>
       <StMarginTop>
         <DetailArticleWrapper title="독서 중 단계">
-          <ExamplePeriNote />
+          <ExamplePeriNote answerThree={reviewData?.answerThree} />
         </DetailArticleWrapper>
       </StMarginTop>
     </StNoteModalWrapper>

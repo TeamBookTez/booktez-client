@@ -85,36 +85,3 @@ const StAnswer = styled.li`
     background-color: ${({ theme }) => theme.colors.gray400};
   }
 `;
-
-// export const StQuestion = styled.ul`
-//   margin-top: 2.4rem;
-
-//   ${({ theme }) => theme.fonts.body2};
-//   line-height: 2.6rem;
-//   color: ${({ theme }) => theme.colors.gray200};
-// `;
-
-// export const StAnswer = styled.li`
-//   list-style: none;
-
-//   position: relative;
-
-//   margin-top: 1.7rem;
-//   padding-left: 5.7rem;
-
-//   ${({ theme }) => theme.fonts.body3}
-//   color: ${({ theme }) => theme.colors.gray400};
-
-//   &::before {
-//     content: "";
-//     position: absolute;
-//     left: 3.4rem;
-//     top: 0.82rem;
-
-//     width: 0.7rem;
-//     height: 0.7rem;
-
-//     border-radius: 1rem;
-//     background-color: ${({ theme }) => theme.colors.gray400};
-//   }
-// `;

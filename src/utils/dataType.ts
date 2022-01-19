@@ -33,7 +33,7 @@ export interface PatchBody {
   answerThree?: AnswerThree;
 }
 
-interface AnswerThree {
+export interface AnswerThree {
   root: Question[];
 }
 
