@@ -3,7 +3,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AddBook, Bookcase, BookNote, Login, Main, MyPage, Signup, Test, ToBe } from "../pages";
 import Landing from "../pages/Landing";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
-import { PeriNote, PreNote } from "./bookNote";
+import { PeriNote } from "./bookNote";
+import PreNote from "./bookNote/preNote/PreNote";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
