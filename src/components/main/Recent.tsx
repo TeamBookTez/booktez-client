@@ -32,7 +32,7 @@ export default function Recent() {
         <StHeading3>최근 작성한 북노트</StHeading3>
         {!isDefault ? (
           <StButton type="button">
-            <Link to="/bookcase">전체보기</Link>
+            <Link to="/main/bookcase">전체보기</Link>
           </StButton>
         ) : null}
       </StHeader>

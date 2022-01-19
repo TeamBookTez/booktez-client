@@ -13,7 +13,7 @@ export default function NavWrapper() {
   const getColor = (nav: string, sub?: string): string => {
     let color;
 
-    if (pathname.startsWith(`/${nav}`) || pathname === sub) {
+    if (pathname === `/main${nav}` || pathname.startsWith(`/main/${sub}`)) {
       color = highlightColor;
     } else {
       color = defaultColor;
@@ -27,26 +27,26 @@ export default function NavWrapper() {
       <NavHeader logocolor={"#FFFFFFF"} />
       <StNav>
         <StUl>
-          <StItem color={getColor("main")}>
-            <StLink to="main">
-              <IcHome fill={getColor("main")} />홈
+          <StItem color={getColor("")}>
+            <StLink to="/main">
+              <IcHome fill={getColor("")} />홈
             </StLink>
           </StItem>
-          <StItem color={getColor("bookcase", "/add-book")}>
-            <StLink to="bookcase">
-              <IcBookcase fill={getColor("bookcase", "/add-book")} />
+          <StItem color={getColor("/add-book", "bookcase")}>
+            <StLink to="/main/bookcase">
+              <IcBookcase fill={getColor("/add-book", "bookcase")} />
               서재
             </StLink>
           </StItem>
-          <StItem color={getColor("my-page")}>
-            <StLink to="my-page">
-              <IcMyPage fill={getColor("my-page")} />
+          <StItem color={getColor("/my-page")}>
+            <StLink to="/main/my-page">
+              <IcMyPage fill={getColor("/my-page")} />
               마이페이지
             </StLink>
           </StItem>
-          <StItem color={getColor("to-be")}>
-            <StLink to="to-be">
-              <IcToBe fill={getColor("to-be")} />곧 만나요
+          <StItem color={getColor("/to-be")}>
+            <StLink to="/main/to-be">
+              <IcToBe fill={getColor("/to-be")} />곧 만나요
             </StLink>
           </StItem>
         </StUl>
