@@ -17,37 +17,68 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
 
   return (
     <StExampleWrapper>
-      {/* ! depth 1 !  */}
-      {root?.map((question1, idx) => (
-        <React.Fragment key={`q1-${idx}`}>
+      {/* ! depth 0 !  */}
+      {root?.map((question0, idx) => (
+        <React.Fragment key={`q0-${idx}`}>
           <StFirstQuestion>
             <LabelQuestion bgColor={theme.colors.orange100} />
-            {question1.question}
+            {question0.question}
           </StFirstQuestion>
-          {question1.answer?.map((answer1, idx) => (
-            <React.Fragment key={`a1-${idx}`}>
-              <StAnswer>{answer1.text}</StAnswer>
-              {/* ! depth 2 !  */}
-              {answer1.children?.map((question2, idx) => (
-                <article key={`q2-${idx}`}>
-                  <StFirstQuestion>
-                    <LabelQuestion bgColor={theme.colors.orange200} />
-                    {question2.question}
-                  </StFirstQuestion>
-                  {question2.answer?.map((answer2, idx) => (
-                    <React.Fragment key={`a2-${idx}`}>
-                      <StAnswer>{answer2.text}</StAnswer>
-                      {/* ! depth 3 !  */}
-                      {answer2.children?.map((question3, idx) => (
-                        <article key={`q3-${idx}`}>
-                          <StFirstQuestion>
-                            <LabelQuestion bgColor={theme.colors.orange300} />
-                            {question3.question}
-                          </StFirstQuestion>
-                          {question3.answer?.map((answer3, idx) => (
-                            <React.Fragment key={`a3-${idx}`}>
-                              <StAnswer>{answer3.text}</StAnswer>
-                              {/* ! depth 4 !  */}
+          {question0.answer?.map((answer0, idx) => (
+            <React.Fragment key={`a0-${idx}`}>
+              <StAnswer>{answer0.text}</StAnswer>
+
+              {/* ! depth 1 !  */}
+              {answer0.children?.map((question1, idx) => (
+                <article key={`q1-${idx}`}>
+                  <StQuestion>
+                    <LabelQuestion bgColor={theme.colors.orange300} />
+                    {question1.question}
+                  </StQuestion>
+                  {question1.answer?.map((answer1, idx) => (
+                    <React.Fragment key={`a1-${idx}`}>
+                      <StAnswer>{answer1.text}</StAnswer>
+
+                      {/* ! depth 2 !  */}
+                      {answer1.children?.map((question2, idx) => (
+                        <article key={`q2-${idx}`}>
+                          <StQuestion>
+                            <LabelQuestion bgColor={theme.colors.orange200} />
+                            {question2.question}
+                          </StQuestion>
+                          {question2.answer?.map((answer2, idx) => (
+                            <React.Fragment key={`a2-${idx}`}>
+                              <StAnswer>{answer2.text}</StAnswer>
+
+                              {/* ! depth 3 !  */}
+                              {answer2.children?.map((question3, idx) => (
+                                <article key={`q3-${idx}`}>
+                                  <StQuestion>
+                                    <LabelQuestion bgColor={theme.colors.orange400} />
+                                    {question3.question}
+                                  </StQuestion>
+                                  {question3.answer?.map((answer3, idx) => (
+                                    <React.Fragment key={`a3-${idx}`}>
+                                      <StAnswer>{answer3.text}</StAnswer>
+
+                                      {/* ! depth 4 !  */}
+                                      {answer3.children?.map((question4, idx) => (
+                                        <article key={`q4-${idx}`}>
+                                          <StQuestion>
+                                            <LabelQuestion bgColor={theme.colors.orange500} />
+                                            {question4.question}
+                                          </StQuestion>
+                                          {question4.answer?.map((answer4, idx) => (
+                                            <React.Fragment key={`a4-${idx}`}>
+                                              <StAnswer>{answer4.text}</StAnswer>
+                                            </React.Fragment>
+                                          ))}
+                                        </article>
+                                      ))}
+                                    </React.Fragment>
+                                  ))}
+                                </article>
+                              ))}
                             </React.Fragment>
                           ))}
                         </article>
@@ -60,30 +91,6 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
           ))}
         </React.Fragment>
       ))}
-      <StFirstQuestion>
-        <LabelQuestion bgColor={theme.colors.orange100} />
-        QQQQQQQQ
-      </StFirstQuestion>
-      <StAnswer>AAAAAAA</StAnswer>
-      <article>
-        <StQuestion>
-          <LabelQuestion bgColor={theme.colors.orange100} />
-          QQQQQQQQ
-        </StQuestion>
-        <StAnswer>AAAAAAA</StAnswer>
-      </article>
-      <StFirstQuestion>
-        <LabelQuestion bgColor={theme.colors.orange100} />
-        QQQQQQQQ
-      </StFirstQuestion>
-      <StAnswer>AAAAAAA</StAnswer>
-      <article>
-        <StQuestion>
-          <LabelQuestion bgColor={theme.colors.orange100} />
-          QQQQQQQQ
-        </StQuestion>
-        <StAnswer>AAAAAAA</StAnswer>
-      </article>
     </StExampleWrapper>
   );
 }
