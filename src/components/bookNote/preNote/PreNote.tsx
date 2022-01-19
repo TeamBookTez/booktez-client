@@ -6,13 +6,14 @@ import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const [handleToggleDrawer, preNote, handleChangeReview, setOpenModal] =
+  const [handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented] =
     useOutletContext<
       [
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,
         React.Dispatch<React.SetStateAction<boolean>>,
+        boolean,
       ]
     >();
   const { answerOne, answerTwo, questionList } = preNote;
@@ -53,6 +54,7 @@ export default function PreNote() {
           questionList={questionList}
           onChangeReview={onChangeReview}
           onToggleDrawer={handleToggleDrawer}
+          isPrevented={isPrevented}
         />
       </StFormWrapper>
 

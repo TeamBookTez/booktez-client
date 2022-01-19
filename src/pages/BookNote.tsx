@@ -22,10 +22,9 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const REVIEWID = 4;
   const TOKEN = localStorage.getItem("booktez-token");
-  // const userToken = TOKEN ? TOKEN : "";
-  const userToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNjQyNDkyODY5LCJleHAiOjE2NDM3MDI0Njl9.FRHTfkfUGboCitLFsWKDXgVGQT4pLGR16_JZ3mUAJGM";
+  const userToken = TOKEN ? TOKEN : "";
 
+  const [isPrevented, setIsPrevented] = useState(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [title, setTitle] = useState("");
   const [preNote, setPreNote] = useState<PreNoteData>({
@@ -36,6 +35,7 @@ export default function BookNote() {
   });
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleOpenDrawer = (i: number) => {
@@ -59,6 +59,7 @@ export default function BookNote() {
   const patchReview = async () => {
     const res = await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
 
+    setIsPrevented(true);
     // 연결 확인 용
     console.log("res", res);
   };
@@ -85,16 +86,11 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    console.log("isDrawerOpen", isDrawerOpen);
-  }, [isDrawerOpen]);
-
+    console.log("isPrevented", isPrevented);
+  }, [isPrevented]);
   useEffect(() => {
     getReview(`/review/${REVIEWID}`, userToken);
   }, []);
-
-  useEffect(() => {
-    console.log("openModal", openModal);
-  }, [openModal]);
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
@@ -104,7 +100,7 @@ export default function BookNote() {
         <Navigator />
         <IcSave onClick={patchReview} />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal]} />
+      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented]} />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
