@@ -78,6 +78,7 @@ const StAnswer = styled.li`
 
   ${({ theme }) => theme.fonts.body3}
   color: ${({ theme }) => theme.colors.gray400};
+  white-space: pre-wrap;
 
   &::before {
     content: "";
