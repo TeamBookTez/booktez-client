@@ -47,7 +47,7 @@ export default function PeriNote() {
               <input
                 key={`a0-${b}`}
                 value={answer0.text}
-                onChange={(event) => handleChangePeri("question", event.target.value, [a, b])}
+                onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
               />
               {answer0.children.map((question1, c) => (
                 <React.Fragment key={c}>
@@ -63,7 +63,7 @@ export default function PeriNote() {
                       <input
                         key={`a1-${d}`}
                         value={answer1.text}
-                        onChange={(event) => handleChangePeri("question", event.target.value, [a, b, c, d])}
+                        onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
                       />
                       {answer1.children.map((question2, e) => (
                         <React.Fragment key={e}>
@@ -79,9 +79,7 @@ export default function PeriNote() {
                               <input
                                 key={`a2-${f}`}
                                 value={answer2.text}
-                                onChange={(event) =>
-                                  handleChangePeri("question", event.target.value, [a, b, c, d, e, f])
-                                }
+                                onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])}
                               />
                               {answer2.children.map((question3, g) => (
                                 <React.Fragment key={g}>
@@ -100,7 +98,7 @@ export default function PeriNote() {
                                         key={`a3-${h}`}
                                         value={answer3.text}
                                         onChange={(event) =>
-                                          handleChangePeri("question", event.target.value, [a, b, c, d, e, f, g, h])
+                                          handleChangePeri("answer", event.target.value, [a, b, c, d, e, f, g, h])
                                         }
                                       />
                                     </React.Fragment>
