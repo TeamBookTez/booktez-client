@@ -26,6 +26,20 @@ const fonts = {
     line-height: 1.3;
     letter-spacing: -0.1rem;
   `,
+  header00: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 4rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  header001: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 4.8rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
   header0: `
     font-family: Pretendard;
     font-weight: 800;
@@ -61,6 +75,13 @@ const fonts = {
     line-height: 1.3;
     letter-spacing: -0.1rem;
   `,
+  body00: `
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 1.5;
+    letter-spacing: -0.07rem;
+  `,
   body0: `
     font-family: Pretendard;
     font-weight: 500;
@@ -89,6 +110,13 @@ const fonts = {
     line-height: 1.3;
     letter-spacing: -0.1rem;
   `,
+  body35: `
+    font-family: Pretendard;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    letter-spacing: -0.07rem;
+  `,
   body4: `
     font-family: Pretendard;
     font-weight: 400;
@@ -111,6 +139,13 @@ const fonts = {
     letter-spacing: -0.1rem;
   `,
   caption: `
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  caption2: `
     font-family: Pretendard;
     font-weight: 500;
     font-size: 1.4rem;

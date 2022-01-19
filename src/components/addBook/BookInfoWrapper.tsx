@@ -27,7 +27,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const { thumbnail, title, authors, datetime, contents, translators }: BookInfo = book;
+  const { isbn, thumbnail, title, authors, datetime, contents }: BookInfo = book;
 
   const dateTimeString = bookInfo.datetime.toString();
 
@@ -45,6 +45,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
     () =>
       setBookInfo((prev: BookInfo) => ({
         ...prev,
+        isbn,
         thumbnail,
         title,
         authors,
@@ -78,10 +79,8 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         <ModalWrapper>
           <ShowModal
             onToggleModal={onToggleModal}
-            thumbnail={thumbnail}
-            title={title}
-            authors={authors}
-            translators={translators}
+            bookInfo={bookInfo}
+            setBookInfo={setBookInfo}
             publishDate={publishDate}
           />
         </ModalWrapper>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgAddBooks } from "../../../assets/images";
@@ -14,7 +15,9 @@ export default function AddBookCard() {
           </StImgWrapper>
           <StCardHeader>다음 책을 읽어볼까요?</StCardHeader>
           <StCardDesc>또 하나의 지혜를 쌓아보세요.</StCardDesc>
-          <StAddBookBtn>+ 책 추가</StAddBookBtn>
+          <StAddBookBtn type="button">
+            <StLink to="/main/add-book">+ 책 추가</StLink>
+          </StAddBookBtn>
         </StContent>
       </StAddCard>
     </>
@@ -68,4 +71,15 @@ const StAddBookBtn = styled(Button)`
   height: 3.2rem;
 
   border-radius: 0.8rem;
+`;
+
+const StLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  ${({ theme }) => theme.fonts.button2};
 `;

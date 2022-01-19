@@ -1,20 +1,47 @@
+import axios from "axios";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
 import { ImgNull } from "../../assets/images";
+import { BookInfo } from "../../pages/AddBook";
+import { postData } from "../../utils/lib/api";
 import { Button } from "../common/styled/Button";
 import { PublishDate } from "./BookInfoWrapper";
 
 interface ShowModalProps {
-  thumbnail: string;
-  title: string;
-  authors: string[];
-  translators: string[];
+  bookInfo: BookInfo;
+  setBookInfo: Dispatch<SetStateAction<BookInfo>>;
   publishDate: PublishDate;
   onToggleModal: () => void;
 }
+
 export default function ShowModal(props: ShowModalProps) {
-  const { thumbnail, title, authors, translators, publishDate, onToggleModal } = props;
+  const { bookInfo, publishDate, onToggleModal } = props;
+  const { isbn, thumbnail, title, authors, translators } = bookInfo;
+  const bookData = { ...bookInfo, publicationDate: publishDate, author: authors, translator: translators };
+  const TOKEN = `${process.env.REACT_APP_TEST_TOKEN}`;
+
+  const nav = useNavigate();
+
+  const postAddBooks = async () => {
+    try {
+      const res = await postData("/book", bookData, TOKEN);
+      const resData = res.data;
+
+      console.log(resData);
+      console.log(bookData);
+      // localStorage.setItem("booktez-token", resData.token);
+
+      nav("/");
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log(bookData);
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   return (
     <>
@@ -33,7 +60,7 @@ export default function ShowModal(props: ShowModalProps) {
       <ModalDate>
         {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
       </ModalDate>
-      <StWriteBtn>독서 시작</StWriteBtn>
+      <StWriteBtn onClick={postAddBooks}>독서 시작</StWriteBtn>
     </>
   );
 }

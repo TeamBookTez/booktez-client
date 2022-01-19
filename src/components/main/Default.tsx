@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgMainDefault } from "../../assets/images";
@@ -13,7 +14,9 @@ export default function Default() {
         <br />
         지식을 얻고 독서의 매력을 느껴요
       </StNotice>
-      <StButton type="button">+ 책 추가</StButton>
+      <StButton type="button">
+        <StLink to="/main/add-book">+ 책 추가</StLink>
+      </StButton>
     </>
   );
 }
@@ -46,4 +49,13 @@ const StButton = styled(Button)`
   height: 4.6rem;
   border-radius: 1rem;
   ${({ theme }) => theme.fonts.button}
+`;
+
+const StLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
 `;

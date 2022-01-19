@@ -13,7 +13,7 @@ export default function NavWrapper() {
   const getColor = (nav: string, sub?: string): string => {
     let color;
 
-    if (pathname.startsWith(`/${nav}`) || pathname === sub) {
+    if (pathname.startsWith(`/main/${nav}`) || pathname === sub) {
       color = highlightColor;
     } else {
       color = defaultColor;
@@ -27,9 +27,9 @@ export default function NavWrapper() {
       <NavHeader logocolor={"#FFFFFFF"} />
       <StNav>
         <StUl>
-          <StItem color={getColor("main")}>
-            <StLink to="main">
-              <IcHome fill={getColor("main")} />홈
+          <StItem color={pathname === "/main" ? highlightColor : defaultColor}>
+            <StLink to="">
+              <IcHome fill={pathname === "/main" ? highlightColor : defaultColor} />홈
             </StLink>
           </StItem>
           <StItem color={getColor("bookcase", "/add-book")}>
