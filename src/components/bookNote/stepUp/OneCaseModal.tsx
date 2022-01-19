@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
-import { before1, before3 } from "../../../utils/dataCarousel";
+import { before1, before3 } from "../../../utils/mockData";
 
 interface StepUpProps {
   idx: number;
