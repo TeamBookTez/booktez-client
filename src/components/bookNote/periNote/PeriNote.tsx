@@ -20,6 +20,8 @@ export default function PeriNote() {
     ablePatch,
     periNote,
     handleChangePeri,
+    handleAddPeri,
+    handleDeletePeri,
   ] =
     useOutletContext<
       [
@@ -31,10 +33,12 @@ export default function PeriNote() {
         boolean,
         Question[],
         (key: string, value: string, idxList: number[]) => void,
+        (idxList: number[]) => void,
+        (idxList: number[]) => void,
       ]
     >();
 
-  const REVIEWID = 3;
+  const REVIEWID = 34;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -92,8 +96,15 @@ export default function PeriNote() {
                               value={question1.question}
                               onChange={(event) => handleChangePeri("question", event.target.value, [a, b, c])}
                             />
-                            <StAddAnswerButton type="button">답변</StAddAnswerButton>
-                            <IcMore />
+                            <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c])}>
+                              답변
+                            </StAddAnswerButton>
+                            <StMoreIcon />
+                            <StMiniMenu>
+                              <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c])}>
+                                삭제
+                              </StMenuBtn>
+                            </StMiniMenu>
                           </StQuestionInputWrapper>
                         </StQuestionLabelWrapper>
                         {question1.answer.map((answer1, d) => (
@@ -106,7 +117,15 @@ export default function PeriNote() {
                                 value={answer1.text}
                                 onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
                               />
-                              <IcMore />
+                              <StMoreIcon />
+                              <StMiniMenu>
+                                <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d])}>
+                                  꼬리질문 추가
+                                </StMenuBtn>
+                                <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d])}>
+                                  삭제
+                                </StMenuBtn>
+                              </StMiniMenu>
                             </StAnswerInputWrapper>
                             {answer1.children.map((question2, e) => (
                               <StArticle key={e} isFirst={false}>
@@ -121,8 +140,15 @@ export default function PeriNote() {
                                         handleChangePeri("question", event.target.value, [a, b, c, d, e])
                                       }
                                     />
-                                    <StAddAnswerButton type="button">답변</StAddAnswerButton>
-                                    <IcMore />
+                                    <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c, d, e])}>
+                                      답변
+                                    </StAddAnswerButton>
+                                    <StMoreIcon />
+                                    <StMiniMenu>
+                                      <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e])}>
+                                        삭제
+                                      </StMenuBtn>
+                                    </StMiniMenu>
                                   </StQuestionInputWrapper>
                                 </StQuestionLabelWrapper>
                                 {question2.answer.map((answer2, f) => (
@@ -137,7 +163,15 @@ export default function PeriNote() {
                                           handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
                                         }
                                       />
-                                      <IcMore />
+                                      <StMoreIcon />
+                                      <StMiniMenu>
+                                        <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d, e, f])}>
+                                          꼬리질문 추가
+                                        </StMenuBtn>
+                                        <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e, f])}>
+                                          삭제
+                                        </StMenuBtn>
+                                      </StMiniMenu>
                                     </StAnswerInputWrapper>
                                     {answer2.children.map((question3, g) => (
                                       <StArticle key={g} isFirst={false}>
@@ -152,8 +186,19 @@ export default function PeriNote() {
                                                 handleChangePeri("question", event.target.value, [a, b, c, d, e, f, g])
                                               }
                                             />
-                                            <StAddAnswerButton type="button">답변</StAddAnswerButton>
-                                            <IcMore />
+                                            <StAddAnswerButton
+                                              type="button"
+                                              onClick={() => handleAddPeri([a, b, c, d, e, f, g])}>
+                                              답변
+                                            </StAddAnswerButton>
+                                            <StMoreIcon />
+                                            <StMiniMenu>
+                                              <StMenuBtn
+                                                type="button"
+                                                onClick={() => handleDeletePeri([a, b, c, d, e, f, g])}>
+                                                삭제
+                                              </StMenuBtn>
+                                            </StMiniMenu>
                                           </StQuestionInputWrapper>
                                         </StQuestionLabelWrapper>
                                         {question3.answer.map((answer3, h) => (
@@ -177,7 +222,19 @@ export default function PeriNote() {
                                                   ])
                                                 }
                                               />
-                                              <IcMore />
+                                              <StMoreIcon />
+                                              <StMiniMenu>
+                                                <StMenuBtn
+                                                  type="button"
+                                                  onClick={() => handleAddPeri([a, b, c, d, e, f, g, h])}>
+                                                  꼬리질문 추가
+                                                </StMenuBtn>
+                                                <StMenuBtn
+                                                  type="button"
+                                                  onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h])}>
+                                                  삭제
+                                                </StMenuBtn>
+                                              </StMiniMenu>
                                             </StAnswerInputWrapper>
                                             {answer3.children.map((question4, i) => (
                                               <StArticle key={i} isFirst={false}>
@@ -204,8 +261,19 @@ export default function PeriNote() {
                                                         ])
                                                       }
                                                     />
-                                                    <StAddAnswerButton type="button">답변</StAddAnswerButton>
-                                                    <IcMore />
+                                                    <StAddAnswerButton
+                                                      type="button"
+                                                      onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i])}>
+                                                      답변
+                                                    </StAddAnswerButton>
+                                                    <StMoreIcon />
+                                                    <StMiniMenu>
+                                                      <StMenuBtn
+                                                        type="button"
+                                                        onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h, i])}>
+                                                        삭제
+                                                      </StMenuBtn>
+                                                    </StMiniMenu>
                                                   </StQuestionInputWrapper>
                                                 </StQuestionLabelWrapper>
                                                 {question4.answer.map((answer4, j) => (
@@ -231,7 +299,21 @@ export default function PeriNote() {
                                                           ])
                                                         }
                                                       />
-                                                      <IcMore />
+                                                      <StMoreIcon />
+                                                      <StMiniMenu>
+                                                        <StMenuBtn
+                                                          type="button"
+                                                          onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i, j])}>
+                                                          꼬리질문 추가
+                                                        </StMenuBtn>
+                                                        <StMenuBtn
+                                                          type="button"
+                                                          onClick={() =>
+                                                            handleDeletePeri([a, b, c, d, e, f, g, h, i, j])
+                                                          }>
+                                                          삭제
+                                                        </StMenuBtn>
+                                                      </StMiniMenu>
                                                     </StAnswerInputWrapper>
                                                   </React.Fragment>
                                                 ))}
@@ -341,6 +423,7 @@ const StAnswerWrapper = styled.div`
 `;
 
 const StPriQuestionInput = styled.input`
+  flex: 1;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
@@ -402,6 +485,7 @@ const StQuestionLabelWrapper = styled.div`
 `;
 
 const StQuestionInputWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   flex: 1;
@@ -484,4 +568,38 @@ const StDoneButton = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
   ${({ theme }) => theme.fonts.button}
+`;
+
+const StMoreIcon = styled(IcMore)`
+  &:hover {
+    fill: #efefef;
+  }
+`;
+
+const StMiniMenu = styled.div`
+  /* display: none; */
+
+  position: absolute;
+  top: 4.3rem;
+  right: 1.6rem;
+
+  z-index: 10;
+
+  border: 0.1rem solid ${({ theme }) => theme.colors.gray200};
+  border-radius: 0.8rem;
+  padding: 0.4rem;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const StMenuBtn = styled(Button)`
+  border-radius: 0.8rem;
+  background-color: transparent;
+  width: 9.5rem;
+  height: 3.8rem;
+  ${({ theme }) => theme.fonts.caption}
+  color: ${({ theme }) => theme.colors.gray200};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.white300};
+  }
 `;

@@ -22,7 +22,7 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 3;
+  const REVIEWID = 34;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -173,6 +173,114 @@ export default function BookNote() {
     setPeriNote(newRoot);
   };
 
+  const handleAddPeri = (idxList: number[]) => {
+    const newRoot = [...periNote];
+
+    switch (idxList.length) {
+      case 1:
+        newRoot[idxList[0]].answer.push({ text: "", children: [] });
+        break;
+      case 2:
+        newRoot[idxList[0]].answer[idxList[1]].children.push({ depth: 2, question: "", answer: [] });
+        break;
+      case 3:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.push({ text: "", children: [] });
+        break;
+      case 4:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.push({
+          depth: 2,
+          question: "",
+          answer: [],
+        });
+        break;
+      case 5:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer.push(
+          { text: "", children: [] },
+        );
+        break;
+      case 6:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children.push({ depth: 3, question: "", answer: [] });
+        break;
+      case 7:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer.push({ text: "", children: [] });
+        break;
+      case 8:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children.push({ depth: 4, question: "", answer: [] });
+        break;
+      case 9:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer.push({ text: "", children: [] });
+        break;
+      case 10:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].children.push({
+          depth: 5,
+          question: "",
+          answer: [],
+        });
+        break;
+    }
+
+    setPeriNote(newRoot);
+  };
+
+  const handleDeletePeri = (idxList: number[]) => {
+    const newRoot = [...periNote];
+
+    switch (idxList.length) {
+      case 1:
+        newRoot.splice(idxList[0], 1);
+        break;
+      case 2:
+        newRoot[idxList[0]].answer.splice(idxList[1], 1);
+        break;
+      case 3:
+        newRoot[idxList[0]].answer[idxList[1]].children.splice(idxList[2], 1);
+        break;
+      case 4:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.splice(idxList[3], 1);
+        break;
+      case 5:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.splice(idxList[4], 1);
+        break;
+      case 6:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[
+          idxList[4]
+        ].answer.splice(idxList[5], 1);
+        break;
+      case 7:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children.splice(idxList[6], 1);
+        break;
+      case 8:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer.splice(idxList[7], 1);
+        break;
+      case 9:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children.splice(idxList[8], 1);
+        break;
+      case 10:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer.splice(idxList[9], 1);
+        break;
+    }
+
+    setPeriNote(newRoot);
+  };
+
   useEffect(() => {
     getReview(`/review/${REVIEWID}`, userToken);
   }, []);
@@ -206,6 +314,8 @@ export default function BookNote() {
           ablePatch,
           periNote,
           handleChangePeri,
+          handleAddPeri,
+          handleDeletePeri,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
