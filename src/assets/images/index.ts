@@ -8,6 +8,7 @@ export { default as ImgLandingBookNote } from "./landingBookNoteImage.png";
 export { default as ImgLanding01 } from "./landingImage01.png";
 export { default as ImgLanding02 } from "./landingImage02.png";
 export { default as ImgLogo } from "./logoImage.png";
+export { default as ImgMainBanner } from "./mainBannerImage.png";
 export { default as ImgMainDefault } from "./mainDefault.png";
 export { default as ImgNull } from "./nullImage.jpeg";
 export { default as ImgSignupFirst } from "./signupFirstImage.png";
