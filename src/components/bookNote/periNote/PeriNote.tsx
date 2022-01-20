@@ -16,7 +16,9 @@ export interface PairsProps {
 export default function PeriNote() {
   const [handleToggleDrawer] = useOutletContext<[(i: number) => void]>();
 
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+  const tempToken = localStorage.getItem("booktez-token");
+  const token = tempToken ? tempToken : "";
+
   const infoKey = "/review/2";
 
   const [pairsList, setPairsList] = useState<PairsProps[]>([]);
