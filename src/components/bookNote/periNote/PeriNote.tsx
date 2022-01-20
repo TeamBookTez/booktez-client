@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
-import { PreNoteData } from "../../../pages/BookNote";
+import { IsLoginState, PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
@@ -42,7 +42,10 @@ export default function PeriNote() {
       ]
     >();
 
-  const reviewId = 32;
+  const { state } = useLocation();
+  const isLoginState = state as IsLoginState;
+  const reviewId = isLoginState.reviewId;
+
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
 
   const handlePeriCarousel = () => {
