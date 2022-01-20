@@ -66,6 +66,8 @@ const StLine = styled.div`
 
   border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
   border-radius: 0.2rem;
+
+  background-color: ${({ theme }) => theme.colors.gray300};
 `;
 
 const StH3 = styled.h3`
