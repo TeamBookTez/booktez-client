@@ -1,3 +1,4 @@
+export { default as ImgAddBooksSearch } from "./addBookSearchImage.png";
 export { default as ImgAddBooks } from "./addBooksImage.png";
 export { default as ImgDevice } from "./deviceImage.png";
 export { default as ImgEmptyBook } from "./emptyBookImage.png";

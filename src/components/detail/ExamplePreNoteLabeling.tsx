@@ -48,15 +48,14 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>
       <StFirstQuestion>
-        <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이{" "}
-        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}
-        님의 기대를 만족시킬 수 있을까요?
+        <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를
+        만족시킬 수 있을까요?
         <StepUp onToggleModal={() => handleToggleModal(2)} />
       </StFirstQuestion>
       <StAnswer>{answerTwo}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        가장 관심가는 주제부터 질문 리스트를 만들어보세요!
         <StepUp onToggleModal={() => handleToggleModal(3)} />
       </StFirstQuestion>
       {isLogin ? (
@@ -170,7 +169,7 @@ const StButton = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
 
-  margin-top: 1.2rem;
+  margin-top: 2.4rem;
 
   border-radius: 1rem;
 

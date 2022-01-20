@@ -35,18 +35,20 @@ const StContainerDots = styled.div`
 `;
 
 const StDiv = styled.div<{ isActive: boolean }>`
+  width: 1rem;
+  height: 1rem;
+
+  margin: 0 0.5rem;
+
+  border-radius: 50%;
+
+  transition: 0.5s;
+  background: ${({ theme }) => theme.colors.white300};
+
   ${({ isActive }) =>
     isActive
       ? css`
-          border-radius: 0.7rem;
           background: ${({ theme }) => theme.colors.orange300};
         `
-      : css`
-          width: 1rem;
-          height: 1rem;
-          border-radius: 50%;
-          margin: 0 0.5rem;
-          transition: 0.5s;
-          background: ${({ theme }) => theme.colors.white300};
-        `}
+      : css``}
 `;
