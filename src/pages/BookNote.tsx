@@ -31,8 +31,6 @@ export default function BookNote() {
   const reviewId = isLoginState.reviewId;
   const isLogin = isLoginState.isLogin;
 
-  console.log("isLogin", isLogin, "reviewId", reviewId);
-
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -81,26 +79,32 @@ export default function BookNote() {
 
   const getReview = async (key: string, token: string) => {
     try {
-      const { data } = await getData(key, token);
-      const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
+      if (!isLogin) {
+        const localData = localStorage.getItem("booktez-data");
+        const bookTitle = localData ? JSON.parse(localData).title : "";
 
-      // console.log("data", data);
-      setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-      setTitle(bookTitle);
-
-      if (answerThree) {
-        setPeriNote(answerThree.root);
+        setTitle(bookTitle);
       } else {
-        setPeriNote([]);
-      }
+        const { data } = await getData(key, token);
+        const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
-      // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
-      // 답변 추가/삭제 막기
-      if (answerOne) {
-        setIsPrevented(true);
-        setAblePatch(true);
-      } else {
-        handleChangeReview("questionList", [""]);
+        setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+        setTitle(bookTitle);
+
+        if (answerThree) {
+          setPeriNote(answerThree.root);
+        } else {
+          setPeriNote([]);
+        }
+
+        // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+        // 답변 추가/삭제 막기
+        if (answerOne) {
+          setIsPrevented(true);
+          setAblePatch(true);
+        } else {
+          handleChangeReview("questionList", [""]);
+        }
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -311,10 +315,6 @@ export default function BookNote() {
   }, []);
 
   useEffect(() => {
-    console.log("preNote", preNote);
-  }, [title]);
-
-  useEffect(() => {
     // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
     // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
@@ -343,6 +343,8 @@ export default function BookNote() {
           handleChangePeri,
           handleAddPeri,
           handleDeletePeri,
+          reviewId,
+          userToken,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

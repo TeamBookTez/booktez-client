@@ -25,6 +25,8 @@ export default function PeriNote() {
     handleChangePeri,
     handleAddPeri,
     handleDeletePeri,
+    reviewId,
+    userToken,
   ] =
     useOutletContext<
       [
@@ -39,6 +41,8 @@ export default function PeriNote() {
         (key: string, value: string, idxList: number[]) => void,
         (idxList: number[]) => void,
         (idxList: number[]) => void,
+        number,
+        string,
       ]
     >();
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
@@ -47,13 +51,9 @@ export default function PeriNote() {
     setIsPeriModal(!isPeriModal);
   };
 
-  const REVIEWID = 2;
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
-
   const submitReview = async (isComplete: boolean) => {
     const progress = isComplete ? 4 : 3;
-    const res = await patchData(userToken, `/review/now/${REVIEWID}`, { answerThree: { root: periNote }, progress });
+    const res = await patchData(userToken, `/review/now/${reviewId}`, { answerThree: { root: periNote }, progress });
 
     console.log("res", res);
   };
