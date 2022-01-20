@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
@@ -22,8 +23,9 @@ export default function Main() {
         setIsLogin(false);
       }
     } catch (err) {
-      // if (axios.isAxiosError(err)) {
-      // }
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 
