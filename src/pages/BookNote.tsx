@@ -110,11 +110,6 @@ export default function BookNote() {
   }, []);
 
   useEffect(() => {
-    // console.log("preNote.answerOne", preNote.answerOne);
-    // console.log("preNote.answerTwo", preNote.answerTwo);
-    // console.log("preNote.questionList", !preNote.questionList.includes(""));
-    // console.log("ablePatch", ablePatch);
-
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
       setAblePatch(true);
     }

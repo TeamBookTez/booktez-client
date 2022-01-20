@@ -1,6 +1,7 @@
 import { DefaultTheme } from "styled-components";
 
 const colors = {
+  orange000: "#FF3D00",
   orange100: "#FF4C00",
   orange200: "#FFF1EB",
   orange300: "#FF7F49",

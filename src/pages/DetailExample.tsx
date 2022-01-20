@@ -1,15 +1,31 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
-import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
+import {
+  DetailArticleWrapperLabeling,
+  ExamplePeriNote,
+  ExamplePreNote,
+  ExamplePreNoteLabeling,
+} from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
-  const isLogin = false;
+  const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
+  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+
+  const isLogin = true;
   // const _token = localStorage.getItem("booktez-token");
   const navigate = useNavigate();
+
+  const handlePeriCarousel = () => {
+    setIsPeriModal(!isPeriModal);
+  };
 
   return (
     <>
@@ -17,7 +33,7 @@ export default function DetailExample() {
         <StIcCancelWhite onClick={() => navigate(-1)} />
         <StBookTitleUp>{reviewData?.bookTitle}</StBookTitleUp>
         <DetailArticleWrapper title="독서 전 단계">
-          <ExamplePreNote
+          <ExamplePreNoteLabeling
             answerOne={reviewData?.answerOne}
             answerTwo={reviewData?.answerTwo}
             questionList={reviewData?.questionList}
@@ -26,11 +42,13 @@ export default function DetailExample() {
         </DetailArticleWrapper>
         {isLogin && (
           <StMarginTop>
-            <DetailArticleWrapper title="독서 중 단계">
+            <DetailArticleWrapperLabeling title="독서 중 단계" handlePeriCarousel={handlePeriCarousel}>
               <ExamplePeriNote answerThree={reviewData?.answerThree} />
-            </DetailArticleWrapper>
+            </DetailArticleWrapperLabeling>
           </StMarginTop>
         )}
+        {/* 모달창 하다가 중지 */}
+        {/* {isPeriModal && <PeriModal onToggleModal={handlePeriCarousel} />} */}
       </StNoteModalWrapper>
     </>
   );
