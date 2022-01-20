@@ -1,4 +1,6 @@
-import { StTemp } from "../../common/PopUpExit";
+import styled from "styled-components";
+
+import { ImgPreBook } from "../../../assets/images";
 import {
   StBtnCancel,
   StBtnDelete,
@@ -20,7 +22,7 @@ export default function PopUpPreDone(props: PopUpPreDoneProps) {
   return (
     <StPopUpWrpper>
       <StPopUp>
-        <StTemp />
+        <StImg src={ImgPreBook} alt="독서 전 단계 완료" />
         <StQuestion>독서 전 단계를 완료하셨나요?</StQuestion>
         <StDetail>질문리스트와 함께 본격적으로 책을 펼쳐봐요!</StDetail>
         <StBtnWrapper>
@@ -35,3 +37,7 @@ export default function PopUpPreDone(props: PopUpPreDoneProps) {
     </StPopUpWrpper>
   );
 }
+
+const StImg = styled.img`
+  margin-bottom: 2.1rem;
+`;
