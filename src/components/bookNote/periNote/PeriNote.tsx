@@ -14,6 +14,7 @@ import PeriModal from "../stepUp/PeriModal";
 
 export default function PeriNote() {
   const [
+    isLogin,
     handleToggleDrawer,
     preNote,
     handleChangeReview,
@@ -28,6 +29,7 @@ export default function PeriNote() {
   ] =
     useOutletContext<
       [
+        boolean,
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,

@@ -86,8 +86,9 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
+        const questions = questionList ? questionList : [""];
 
-        setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+        setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
         setTitle(bookTitle);
 
         if (answerThree) {
@@ -116,15 +117,7 @@ export default function BookNote() {
     }
   };
 
-  // 저장만 하기 - 수정 완료는 아님
-  const saveReview = async () => {
-    console.log("saveReview reviewId", reviewId);
-    const res = await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
-  };
-
-  const patchReview = async () => {
-    await patchData(userToken, `/review/before/${reviewId}`, preNote);
-
+  const syncQuestion = () => {
     if (!isPrevented) {
       const newData: Question[] = [];
 
@@ -133,6 +126,16 @@ export default function BookNote() {
       });
       setPeriNote(newData);
     }
+  };
+
+  // 저장만 하기 - 수정 완료는 아님
+  const saveReview = async () => {
+    await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
+  };
+
+  const patchReview = async () => {
+    await patchData(userToken, `/review/before/${reviewId}`, preNote);
+    syncQuestion();
     setIsPrevented(true);
     // 연결 확인 용
     // console.log("res", res);
@@ -333,6 +336,7 @@ export default function BookNote() {
       </StNavWrapper>
       <Outlet
         context={[
+          isLogin,
           handleToggleDrawer,
           preNote,
           handleChangeReview,

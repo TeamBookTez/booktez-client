@@ -7,9 +7,10 @@ import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
   const navigate = useNavigate();
-  const [handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
+  const [isLogin, handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
     useOutletContext<
       [
+        boolean,
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,
@@ -18,7 +19,6 @@ export default function PreNote() {
         boolean,
       ]
     >();
-  const isLogin = true;
   const { answerOne, answerTwo, questionList } = preNote;
 
   const onChangeReview = (key: string, value: string | string[] | number): void => {
