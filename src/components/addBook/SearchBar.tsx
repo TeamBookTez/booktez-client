@@ -22,8 +22,8 @@ export default function SearchBar(props: SearchBarProps) {
 
   return (
     <StWrapper>
-      <SearchBarWrapper isqueryempty={debounceQuery === ""}>
-        <StIcSearch isqueryempty={debounceQuery === ""} />
+      <SearchBarWrapper isqueryempty={debounceQuery}>
+        <StIcSearch isqueryempty={debounceQuery} />
 
         <LabelHidden htmlFor="addBookSearch">검색</LabelHidden>
         <InputSearch
@@ -33,7 +33,7 @@ export default function SearchBar(props: SearchBarProps) {
           id="addBookSearch"
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
-        <StIcCancel onClick={handleCancel} isqueryempty={debounceQuery === ""} />
+        <StIcCancel onClick={handleCancel} isqueryempty={debounceQuery} />
       </SearchBarWrapper>
     </StWrapper>
   );
@@ -48,7 +48,7 @@ const StWrapper = styled.section`
   padding-bottom: 3.5rem;
 `;
 
-const SearchBarWrapper = styled.div<{ isqueryempty: boolean }>`
+const SearchBarWrapper = styled.div<{ isqueryempty: string }>`
   position: relative;
 
   display: flex;
@@ -63,7 +63,7 @@ const SearchBarWrapper = styled.div<{ isqueryempty: boolean }>`
   height: 5.6rem;
 
   ${({ isqueryempty }) =>
-    isqueryempty
+    isqueryempty === ""
       ? css`
           border: 0.2rem solid ${({ theme }) => theme.colors.white200};
         `
@@ -72,7 +72,7 @@ const SearchBarWrapper = styled.div<{ isqueryempty: boolean }>`
         `}
 `;
 
-const StIcSearch = styled(IcSearch)<{ isqueryempty: boolean }>`
+const StIcSearch = styled(IcSearch)<{ isqueryempty: string }>`
   position: absolute;
   top: 1.2rem;
   left: 1.2rem;
@@ -81,7 +81,7 @@ const StIcSearch = styled(IcSearch)<{ isqueryempty: boolean }>`
   height: 3.2rem;
 
   ${({ isqueryempty }) =>
-    isqueryempty
+    isqueryempty === ""
       ? css`
           fill: ${({ theme }) => theme.colors.white500};
         `
@@ -105,10 +105,10 @@ const InputSearch = styled.input`
   }
 `;
 
-const StIcCancel = styled(IcCancel)<{ isqueryempty: boolean }>`
+const StIcCancel = styled(IcCancel)<{ isqueryempty: string }>`
   margin-right: 1.5rem;
 
-  ${({ isqueryempty }) => (isqueryempty ? "display: none;" : "")}
+  ${({ isqueryempty }) => (isqueryempty === "" ? "display: none;" : "")}
 
   &:hover {
     cursor: pointer;
