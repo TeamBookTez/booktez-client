@@ -1,38 +1,50 @@
-import { useState } from "react";
+import axios from "axios";
+import { stringify } from "querystring";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgTemp } from "../../assets/images";
+import { BookcaseInfo } from "../../pages/Bookcase";
+import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
 import { Button } from "../common/styled/Button";
 
-interface TempBookInfo {
-  author: string[];
-  reviewId: number;
-  thumbnail: string;
-  title: string;
-}
-
 export default function Recent() {
-  const tempBookInfo = {
-    thumbnail: ImgTemp,
-    reviewId: 6789,
-    title: "석상한 귬",
-    author: ["제임스 아세 함이", "령이"],
-  };
+  const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
 
-  // 로그인 여부 맞춰서 아래 isDefault를 조작
-  const isDefault = true;
-
-  const tempBookList: TempBookInfo[] = [tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo];
-
-  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
   const [bookDelete, setBookDelete] = useState<boolean>(false);
   const handleBookDelete = () => {
     setBookDelete(!bookDelete);
   };
-  //
+
+  const TOKEN = localStorage.getItem("booktez-token");
+  const userToken = TOKEN ? TOKEN : "";
+
+  const getBookRecent = async (key: string, token: string) => {
+    try {
+      const {
+        data: {
+          data: { books },
+        },
+      } = await getData(key, token);
+
+      setBooksRecent(books);
+      console.log(booksRecent);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  // // 로그인 여부 맞춰서 아래 isDefault를 조작
+  const isDefault = false;
+
+  useEffect(() => {
+    getBookRecent("/book", userToken);
+  }, [bookDelete]);
 
   return (
     <section>
@@ -48,7 +60,7 @@ export default function Recent() {
         {isDefault ? (
           <Empty />
         ) : (
-          tempBookList.map((tempInfo, idx) => (
+          booksRecent.map((tempInfo, idx) => (
             <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
           ))
         )}

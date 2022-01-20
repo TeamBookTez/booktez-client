@@ -15,7 +15,15 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
   const root = answerThree?.root;
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    console.log(e);
+    const questionElement = e.currentTarget.closest("ul")?.nextElementSibling;
+
+    if (questionElement === null || questionElement === undefined) return;
+    if (!(questionElement instanceof HTMLElement)) return;
+
+    const whatValue = questionElement.style.display;
+
+    if (whatValue === "none") questionElement.style.display = "block";
+    else questionElement.style.display = "none";
   };
 
   return (
@@ -24,79 +32,89 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
       {root?.map((question0, idx) => (
         <React.Fragment key={`q0-${idx}`}>
           <StFirstQuestion>
-            <LabelQuestion bgColor={theme.colors.orange100} />
+            <LabelQuestion bgColor={theme.colors.orange000} />
             {question0.question}
             <StIcToggle onClick={handleToggle} />
           </StFirstQuestion>
-          {question0.answer?.map((answer0, idx) => (
-            <React.Fragment key={`a0-${idx}`}>
-              <StAnswer>{answer0.text}</StAnswer>
+          <div>
+            {question0.answer?.map((answer0, idx) => (
+              <React.Fragment key={`a0-${idx}`}>
+                <StAnswer>{answer0.text}</StAnswer>
 
-              {/* ! depth 1 !  */}
-              {answer0.children?.map((question1, idx) => (
-                <article key={`q1-${idx}`}>
-                  <StQuestion>
-                    <LabelQuestion bgColor={theme.colors.orange300} />
-                    {question1.question}
-                    <StIcToggle onClick={handleToggle} />
-                  </StQuestion>
-                  {question1.answer?.map((answer1, idx) => (
-                    <React.Fragment key={`a1-${idx}`}>
-                      <StAnswer>{answer1.text}</StAnswer>
+                {/* ! depth 1 !  */}
+                {answer0.children?.map((question1, idx) => (
+                  <article key={`q1-${idx}`}>
+                    <StQuestion>
+                      <LabelQuestion bgColor={theme.colors.orange100} />
+                      {question1.question}
+                      <StIcToggle onClick={handleToggle} />
+                    </StQuestion>
+                    <div>
+                      {question1.answer?.map((answer1, idx) => (
+                        <React.Fragment key={`a1-${idx}`}>
+                          <StAnswer>{answer1.text}</StAnswer>
 
-                      {/* ! depth 2 !  */}
-                      {answer1.children?.map((question2, idx) => (
-                        <article key={`q2-${idx}`}>
-                          <StQuestion>
-                            <LabelQuestion bgColor={theme.colors.orange200} />
-                            {question2.question}
-                            <StIcToggle onClick={handleToggle} />
-                          </StQuestion>
-                          {question2.answer?.map((answer2, idx) => (
-                            <React.Fragment key={`a2-${idx}`}>
-                              <StAnswer>{answer2.text}</StAnswer>
+                          {/* ! depth 2 !  */}
+                          {answer1.children?.map((question2, idx) => (
+                            <article key={`q2-${idx}`}>
+                              <StQuestion>
+                                <LabelQuestion bgColor={theme.colors.orange300} />
+                                {question2.question}
+                                <StIcToggle onClick={handleToggle} />
+                              </StQuestion>
+                              <div>
+                                {question2.answer?.map((answer2, idx) => (
+                                  <React.Fragment key={`a2-${idx}`}>
+                                    <StAnswer>{answer2.text}</StAnswer>
 
-                              {/* ! depth 3 !  */}
-                              {answer2.children?.map((question3, idx) => (
-                                <article key={`q3-${idx}`}>
-                                  <StQuestion>
-                                    <LabelQuestion bgColor={theme.colors.orange400} />
-                                    {question3.question}
-                                    <StIcToggle onClick={handleToggle} />
-                                  </StQuestion>
-                                  {question3.answer?.map((answer3, idx) => (
-                                    <React.Fragment key={`a3-${idx}`}>
-                                      <StAnswer>{answer3.text}</StAnswer>
+                                    {/* ! depth 3 !  */}
+                                    {answer2.children?.map((question3, idx) => (
+                                      <article key={`q3-${idx}`}>
+                                        <StQuestion>
+                                          <LabelQuestion bgColor={theme.colors.orange400} />
+                                          {question3.question}
+                                          <StIcToggle onClick={handleToggle} />
+                                        </StQuestion>
+                                        <div>
+                                          {question3.answer?.map((answer3, idx) => (
+                                            <React.Fragment key={`a3-${idx}`}>
+                                              <StAnswer>{answer3.text}</StAnswer>
 
-                                      {/* ! depth 4 !  */}
-                                      {answer3.children?.map((question4, idx) => (
-                                        <article key={`q4-${idx}`}>
-                                          <StQuestion>
-                                            <LabelQuestion bgColor={theme.colors.orange500} />
-                                            {question4.question}
-                                            <StIcToggle onClick={handleToggle} />
-                                          </StQuestion>
-                                          {question4.answer?.map((answer4, idx) => (
-                                            <React.Fragment key={`a4-${idx}`}>
-                                              <StAnswer>{answer4.text}</StAnswer>
+                                              {/* ! depth 4 !  */}
+                                              {answer3.children?.map((question4, idx) => (
+                                                <article key={`q4-${idx}`}>
+                                                  <StQuestion>
+                                                    <LabelQuestion bgColor={theme.colors.orange500} />
+                                                    {question4.question}
+                                                    <StIcToggle onClick={handleToggle} />
+                                                  </StQuestion>
+                                                  <div>
+                                                    {question4.answer?.map((answer4, idx) => (
+                                                      <React.Fragment key={`a4-${idx}`}>
+                                                        <StAnswer>{answer4.text}</StAnswer>
+                                                      </React.Fragment>
+                                                    ))}
+                                                  </div>
+                                                </article>
+                                              ))}
                                             </React.Fragment>
                                           ))}
-                                        </article>
-                                      ))}
-                                    </React.Fragment>
-                                  ))}
-                                </article>
-                              ))}
-                            </React.Fragment>
+                                        </div>
+                                      </article>
+                                    ))}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </article>
                           ))}
-                        </article>
+                        </React.Fragment>
                       ))}
-                    </React.Fragment>
-                  ))}
-                </article>
-              ))}
-            </React.Fragment>
-          ))}
+                    </div>
+                  </article>
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
         </React.Fragment>
       ))}
     </StExampleWrapper>

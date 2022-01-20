@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { deleteData } from "../../utils/lib/api";
@@ -23,13 +23,16 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const token = tempToken ? tempToken : "";
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleDelete = async () => {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      navigate("/main/bookcase");
       handleBookDelete();
+      if (pathname === "/detail-book-note") {
+        navigate("/main");
+      }
     } catch (err) {
       alert(err);
     }

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgGraphic } from "../../assets/images";
-import { Button } from "../common/styled/Button";
 
 export default function Banner() {
   return (
@@ -47,7 +46,11 @@ const StContent = styled.p`
   ${({ theme }) => theme.fonts.body2}
 `;
 
-const StExBtn = styled(Button)`
+const StExampleLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 13.7rem;
   height: 4.6rem;
 
