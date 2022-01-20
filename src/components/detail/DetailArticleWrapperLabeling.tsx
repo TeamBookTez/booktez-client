@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { StepUp } from "../bookNote";
 import { StepUpOnExample } from ".";
 import { StBtnStepUp, StIcStepUp } from "./StepUpOnExample";
 
@@ -24,10 +25,7 @@ export default function DetailArticleWrapperLabeling(props: DetailArticleWrapper
         {/* 이미지 div */}
         <IIIIIII></IIIIIII>
         <StTitle>{title}</StTitle>
-        <StBtnStepUp onClick={handlePeriCarousel}>
-          <StIcStepUp />
-          Step Up
-        </StBtnStepUp>
+        <StepUp onToggleModal={handlePeriCarousel} />
       </StTitleWrapper>
       {children}
     </section>

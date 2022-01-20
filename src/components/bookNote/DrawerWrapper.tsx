@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgGraphic } from "../../assets/images";
-import { DrawerPre } from ".";
+import { DrawerPre, PeriNoteExample } from ".";
 
 interface DrawerWrapperProps {
   idx: number;
@@ -13,6 +13,11 @@ interface DrawerWrapperProps {
 interface QaPair {
   question: string;
   answer: string[];
+}
+
+interface StDrawerWrapperProps {
+  isopen: boolean;
+  idx: number;
 }
 
 export default function DrawerWrapper(props: DrawerWrapperProps) {
@@ -45,19 +50,19 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   if (!isOpen) return null;
 
   return (
-    <StDrawerWrapper isopen={isOpen}>
+    <StDrawerWrapper isopen={isOpen} idx={idx}>
       <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
-      <StImg src={ImgGraphic} />
+      <StImg src={ImgGraphic} idx={idx} />
       <StTitleWrapper>
         <IcBooks />
         나는 왜 이 일을 하는가? 2
       </StTitleWrapper>
-      <StArticle>{idx === 4 ? "" : <DrawerPre qaPair={qaPair} idx={idx} />}</StArticle>
+      <StArticle idx={idx}>{idx === 4 ? <PeriNoteExample /> : <DrawerPre qaPair={qaPair} idx={idx} />}</StArticle>
     </StDrawerWrapper>
   );
 }
 
-const StDrawerWrapper = styled.section<{ isopen: boolean }>`
+const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
   position: fixed;
   top: 0;
   right: 0;
@@ -72,8 +77,8 @@ const StDrawerWrapper = styled.section<{ isopen: boolean }>`
   padding: 3.3rem 3.3rem 5.4rem 3.3rem;
   background-color: ${({ theme }) => theme.colors.white};
 
-  width: 39rem;
-  height: 90rem;
+  width: ${({ idx }) => (idx === 4 ? "60rem" : "39rem")};
+  height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
 
   ${({ isopen }) =>
     isopen
@@ -102,9 +107,9 @@ const StDrawerWrapper = styled.section<{ isopen: boolean }>`
   }
 `;
 
-const StImg = styled.img`
-  width: 32.4rem;
-  height: 11.9rem;
+const StImg = styled.img<{ idx: number }>`
+  width: ${({ idx }) => (idx === 4 ? "53.4rem" : "32.4rem")};
+  height: ${({ idx }) => (idx === 4 ? "12.5rem" : "11.9rem")};
 
   margin-bottom: 3.8rem;
   border-radius: 1.6rem;
@@ -124,14 +129,22 @@ const StTitleWrapper = styled.header`
   }
 `;
 
-const StArticle = styled.article`
+const StArticle = styled.article<{ idx: number }>`
   display: flex;
   flex-direction: column;
-
+  ${({ idx }) =>
+    idx === 4
+      ? css`
+          align-items: flex-start;
+          /* & article {
+            padding-left: 2rem;
+          } */
+        `
+      : ""}
   border-radius: 2rem;
-  padding: 3.2rem;
+  padding: ${({ idx }) => (idx === 4 ? "4rem 1.5rem" : "3.2rem")};
   background-color: ${({ theme }) => theme.colors.white200};
 
-  width: 32.4rem;
-  height: 53.4rem;
+  width: ${({ idx }) => (idx === 4 ? "53.4rem" : "32.4rem")};
+  height: ${({ idx }) => (idx === 4 ? "104.3rem" : "53.4rem")};
 `;

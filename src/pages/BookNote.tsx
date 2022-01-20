@@ -22,7 +22,10 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 34;
+  // 로그인 및 리뷰 아이디는 규민이가 한 state 넘기는 걸로 받아오기
+  const isLogin = true;
+  const reviewId = 2;
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -50,7 +53,7 @@ export default function BookNote() {
 
   const navigate = useNavigate();
 
-  const handleOpenDrawer = (i: number) => {
+  const handleToggleDrawer = (i: number) => {
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -74,9 +77,15 @@ export default function BookNote() {
       const { data } = await getData(key, token);
       const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
+      // console.log("data", data);
       setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-      setPeriNote(answerThree.root);
       setTitle(bookTitle);
+
+      if (answerThree) {
+        setPeriNote(answerThree.root);
+      } else {
+        setPeriNote([]);
+      }
 
       // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
       // 답변 추가/삭제 막기
@@ -99,13 +108,13 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    const res = await patchData(userToken, `/review/${REVIEWID}`, { ...preNote, answerThree: { root: periNote } });
+    const res = await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
 
     console.log("saveReview res", res);
   };
 
   const patchReview = async () => {
-    await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
+    await patchData(userToken, `/review/before/${reviewId}`, preNote);
 
     if (!isPrevented) {
       const newData: Question[] = [];
@@ -291,10 +300,16 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    getReview(`/review/${REVIEWID}`, userToken);
+    getReview(`/review/${reviewId}`, userToken);
   }, []);
 
   useEffect(() => {
+    console.log("preNote", preNote);
+  }, [title]);
+
+  useEffect(() => {
+    // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
+    // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
       setAblePatch(true);
     }
@@ -310,7 +325,8 @@ export default function BookNote() {
       </StNavWrapper>
       <Outlet
         context={[
-          handleOpenDrawer,
+          isLogin,
+          handleToggleDrawer,
           preNote,
           handleChangeReview,
           setOpenModal,

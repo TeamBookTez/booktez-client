@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -8,11 +8,14 @@ import theme from "../../../styles/theme";
 import { Answer, PatchBody, Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
 import { Button } from "../../common/styled/Button";
-import { StepUp } from "..";
+import { ExButton, StepUp } from "..";
+import { StStepModalWrapper } from "../preNote/PreNoteForm";
+import PeriModal from "../stepUp/PeriModal";
 
 export default function PeriNote() {
   const [
-    handleOpenDrawer,
+    isLogin,
+    handleToggleDrawer,
     preNote,
     handleChangeReview,
     setOpenModal,
@@ -25,6 +28,7 @@ export default function PeriNote() {
   ] =
     useOutletContext<
       [
+        boolean,
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,
@@ -37,8 +41,13 @@ export default function PeriNote() {
         (idxList: number[]) => void,
       ]
     >();
+  const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
 
-  const REVIEWID = 34;
+  const handlePeriCarousel = () => {
+    setIsPeriModal(!isPeriModal);
+  };
+
+  const REVIEWID = 2;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -67,162 +76,139 @@ export default function PeriNote() {
   }, [periNote, preNote]);
 
   return (
-    <StNoteForm>
-      <StLabelWrapper>
-        <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
-        {/* 캐러셀 모달 버튼 StepUp 추가 */}
-      </StLabelWrapper>
-      <StQAWrapper>
-        {periNote.map((question0, a) => (
-          <StQAContainer key={a}>
-            <StPriQuestionWrapper className="question">
-              <StQuestionIcon />
-              <StPriQuestionInput
-                placeholder="질문을 입력해주세요"
-                key={`q0-${a}`}
-                value={question0.question}
-                onChange={(event) => handleChangePeri("question", event.target.value, [a])}
-              />
-            </StPriQuestionWrapper>
-            <StAnswerWrapper className="answer">
-              {question0.answer.map((answer0, b) => (
-                <React.Fragment key={b}>
-                  <StPriAnswerWrapper>
-                    <StAnswerIcon />
-                    <StPriAnswerInput
-                      placeholder="답변을 입력해주세요"
-                      key={`a0-${b}`}
-                      value={answer0.text}
-                      onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
-                    />
-                  </StPriAnswerWrapper>
-                  <StAnswerContainer>
-                    {answer0.children.map((question1, c) => (
-                      <StArticle key={c} isFirst={true}>
-                        <StQuestionLabelWrapper>
-                          <StQuestionLabel bgcolor={theme.colors.orange100}>질문</StQuestionLabel>
-                          <StQuestionInputWrapper>
-                            <StQuestionInput
-                              placeholder="질문을 입력해주세요"
-                              key={`q1-${c}`}
-                              value={question1.question}
-                              onChange={(event) => handleChangePeri("question", event.target.value, [a, b, c])}
-                            />
-                            <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c])}>
-                              답변
-                            </StAddAnswerButton>
-                            <StMoreIcon onClick={handleToggle} />
-                            <StMiniMenu>
-                              <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c])}>
-                                삭제
-                              </StMenuBtn>
-                            </StMiniMenu>
-                          </StQuestionInputWrapper>
-                        </StQuestionLabelWrapper>
-                        {question1.answer.map((answer1, d) => (
-                          <React.Fragment key={d}>
-                            <StAnswerInputWrapper>
-                              <StAnswerLabel labelcolor={theme.colors.orange100} />
-                              <StAnswerInput
-                                placeholder="답변을 입력해주세요"
-                                key={`a1-${d}`}
-                                value={answer1.text}
-                                onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
+    <>
+      <StNoteForm>
+        <StLabelWrapper>
+          <StLabelContainer>
+            <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
+            <StepUp onToggleModal={handlePeriCarousel} />
+          </StLabelContainer>
+          <ExButton idx={4} onToggleDrawer={handleToggleDrawer} />
+        </StLabelWrapper>
+        <StQAWrapper>
+          {periNote.map((question0, a) => (
+            <StQAContainer key={a}>
+              <StPriQuestionWrapper className="question">
+                <StQuestionIcon />
+                <StPriQuestionInput
+                  placeholder="질문을 입력해주세요"
+                  key={`q0-${a}`}
+                  value={question0.question}
+                  onChange={(event) => handleChangePeri("question", event.target.value, [a])}
+                />
+              </StPriQuestionWrapper>
+              <StAnswerWrapper className="answer">
+                {question0.answer.map((answer0, b) => (
+                  <React.Fragment key={b}>
+                    <StPriAnswerWrapper>
+                      <StAnswerIcon />
+                      <StPriAnswerInput
+                        placeholder="답변을 입력해주세요"
+                        key={`a0-${b}`}
+                        value={answer0.text}
+                        onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
+                      />
+                    </StPriAnswerWrapper>
+                    <StAnswerContainer>
+                      {answer0.children.map((question1, c) => (
+                        <StArticle key={c} isFirst={true}>
+                          <StQuestionLabelWrapper>
+                            <StQuestionLabel bgcolor={theme.colors.orange100}>질문</StQuestionLabel>
+                            <StQuestionInputWrapper>
+                              <StQuestionInput
+                                placeholder="질문을 입력해주세요"
+                                key={`q1-${c}`}
+                                value={question1.question}
+                                onChange={(event) => handleChangePeri("question", event.target.value, [a, b, c])}
                               />
+                              <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c])}>
+                                답변
+                              </StAddAnswerButton>
                               <StMoreIcon onClick={handleToggle} />
                               <StMiniMenu>
-                                <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d])}>
-                                  꼬리질문 추가
-                                </StMenuBtn>
-                                <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d])}>
+                                <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c])}>
                                   삭제
                                 </StMenuBtn>
                               </StMiniMenu>
-                            </StAnswerInputWrapper>
-                            {answer1.children.map((question2, e) => (
-                              <StArticle key={e} isFirst={false}>
-                                <StQuestionLabelWrapper>
-                                  <StQuestionLabel bgcolor={theme.colors.orange300}>질문</StQuestionLabel>
-                                  <StQuestionInputWrapper>
-                                    <StQuestionInput
-                                      placeholder="질문을 입력해주세요"
-                                      key={`q2-${e}`}
-                                      value={question2.question}
-                                      onChange={(event) =>
-                                        handleChangePeri("question", event.target.value, [a, b, c, d, e])
-                                      }
-                                    />
-                                    <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c, d, e])}>
-                                      답변
-                                    </StAddAnswerButton>
-                                    <StMoreIcon onClick={handleToggle} />
-                                    <StMiniMenu>
-                                      <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e])}>
-                                        삭제
-                                      </StMenuBtn>
-                                    </StMiniMenu>
-                                  </StQuestionInputWrapper>
-                                </StQuestionLabelWrapper>
-                                {question2.answer.map((answer2, f) => (
-                                  <React.Fragment key={f}>
-                                    <StAnswerInputWrapper>
-                                      <StAnswerLabel labelcolor={theme.colors.orange300} />
-                                      <StAnswerInput
-                                        placeholder="답변을 입력해주세요"
-                                        key={`a2-${f}`}
-                                        value={answer2.text}
+                            </StQuestionInputWrapper>
+                          </StQuestionLabelWrapper>
+                          {question1.answer.map((answer1, d) => (
+                            <React.Fragment key={d}>
+                              <StAnswerInputWrapper>
+                                <StAnswerLabel labelcolor={theme.colors.orange100} />
+                                <StAnswerInput
+                                  placeholder="답변을 입력해주세요"
+                                  key={`a1-${d}`}
+                                  value={answer1.text}
+                                  onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
+                                />
+                                <StMoreIcon onClick={handleToggle} />
+                                <StMiniMenu>
+                                  <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d])}>
+                                    꼬리질문 추가
+                                  </StMenuBtn>
+                                  <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d])}>
+                                    삭제
+                                  </StMenuBtn>
+                                </StMiniMenu>
+                              </StAnswerInputWrapper>
+                              {answer1.children.map((question2, e) => (
+                                <StArticle key={e} isFirst={false}>
+                                  <StQuestionLabelWrapper>
+                                    <StQuestionLabel bgcolor={theme.colors.orange300}>질문</StQuestionLabel>
+                                    <StQuestionInputWrapper>
+                                      <StQuestionInput
+                                        placeholder="질문을 입력해주세요"
+                                        key={`q2-${e}`}
+                                        value={question2.question}
                                         onChange={(event) =>
-                                          handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
+                                          handleChangePeri("question", event.target.value, [a, b, c, d, e])
                                         }
                                       />
+                                      <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c, d, e])}>
+                                        답변
+                                      </StAddAnswerButton>
                                       <StMoreIcon onClick={handleToggle} />
                                       <StMiniMenu>
-                                        <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d, e, f])}>
-                                          꼬리질문 추가
-                                        </StMenuBtn>
-                                        <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e, f])}>
+                                        <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e])}>
                                           삭제
                                         </StMenuBtn>
                                       </StMiniMenu>
-                                    </StAnswerInputWrapper>
-                                    {answer2.children.map((question3, g) => (
-                                      <StArticle key={g} isFirst={false}>
-                                        <StQuestionLabelWrapper>
-                                          <StQuestionLabel bgcolor={theme.colors.orange400}>질문</StQuestionLabel>
-                                          <StQuestionInputWrapper>
-                                            <StQuestionInput
-                                              placeholder="질문을 입력해주세요"
-                                              key={`q3-${g}`}
-                                              value={question3.question}
-                                              onChange={(event) =>
-                                                handleChangePeri("question", event.target.value, [a, b, c, d, e, f, g])
-                                              }
-                                            />
-                                            <StAddAnswerButton
-                                              type="button"
-                                              onClick={() => handleAddPeri([a, b, c, d, e, f, g])}>
-                                              답변
-                                            </StAddAnswerButton>
-                                            <StMoreIcon onClick={handleToggle} />
-                                            <StMiniMenu>
-                                              <StMenuBtn
-                                                type="button"
-                                                onClick={() => handleDeletePeri([a, b, c, d, e, f, g])}>
-                                                삭제
-                                              </StMenuBtn>
-                                            </StMiniMenu>
-                                          </StQuestionInputWrapper>
-                                        </StQuestionLabelWrapper>
-                                        {question3.answer.map((answer3, h) => (
-                                          <React.Fragment key={h}>
-                                            <StAnswerInputWrapper>
-                                              <StAnswerLabel labelcolor={theme.colors.orange400} />
-                                              <StAnswerInput
-                                                placeholder="답변을 입력해주세요"
-                                                key={`a3-${h}`}
-                                                value={answer3.text}
+                                    </StQuestionInputWrapper>
+                                  </StQuestionLabelWrapper>
+                                  {question2.answer.map((answer2, f) => (
+                                    <React.Fragment key={f}>
+                                      <StAnswerInputWrapper>
+                                        <StAnswerLabel labelcolor={theme.colors.orange300} />
+                                        <StAnswerInput
+                                          placeholder="답변을 입력해주세요"
+                                          key={`a2-${f}`}
+                                          value={answer2.text}
+                                          onChange={(event) =>
+                                            handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
+                                          }
+                                        />
+                                        <StMoreIcon onClick={handleToggle} />
+                                        <StMiniMenu>
+                                          <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d, e, f])}>
+                                            꼬리질문 추가
+                                          </StMenuBtn>
+                                          <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e, f])}>
+                                            삭제
+                                          </StMenuBtn>
+                                        </StMiniMenu>
+                                      </StAnswerInputWrapper>
+                                      {answer2.children.map((question3, g) => (
+                                        <StArticle key={g} isFirst={false}>
+                                          <StQuestionLabelWrapper>
+                                            <StQuestionLabel bgcolor={theme.colors.orange400}>질문</StQuestionLabel>
+                                            <StQuestionInputWrapper>
+                                              <StQuestionInput
+                                                placeholder="질문을 입력해주세요"
+                                                key={`q3-${g}`}
+                                                value={question3.question}
                                                 onChange={(event) =>
-                                                  handleChangePeri("answer", event.target.value, [
+                                                  handleChangePeri("question", event.target.value, [
                                                     a,
                                                     b,
                                                     c,
@@ -230,72 +216,70 @@ export default function PeriNote() {
                                                     e,
                                                     f,
                                                     g,
-                                                    h,
                                                   ])
                                                 }
                                               />
+                                              <StAddAnswerButton
+                                                type="button"
+                                                onClick={() => handleAddPeri([a, b, c, d, e, f, g])}>
+                                                답변
+                                              </StAddAnswerButton>
                                               <StMoreIcon onClick={handleToggle} />
                                               <StMiniMenu>
                                                 <StMenuBtn
                                                   type="button"
-                                                  onClick={() => handleAddPeri([a, b, c, d, e, f, g, h])}>
-                                                  꼬리질문 추가
-                                                </StMenuBtn>
-                                                <StMenuBtn
-                                                  type="button"
-                                                  onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h])}>
+                                                  onClick={() => handleDeletePeri([a, b, c, d, e, f, g])}>
                                                   삭제
                                                 </StMenuBtn>
                                               </StMiniMenu>
-                                            </StAnswerInputWrapper>
-                                            {answer3.children.map((question4, i) => (
-                                              <StArticle key={i} isFirst={false}>
-                                                <StQuestionLabelWrapper>
-                                                  <StQuestionLabel bgcolor={theme.colors.orange500}>
-                                                    질문
-                                                  </StQuestionLabel>
-                                                  <StQuestionInputWrapper>
-                                                    <StQuestionInput
-                                                      placeholder="질문을 입력해주세요"
-                                                      key={`q3-${i}`}
-                                                      value={question4.question}
-                                                      onChange={(event) =>
-                                                        handleChangePeri("answer", event.target.value, [
-                                                          a,
-                                                          b,
-                                                          c,
-                                                          d,
-                                                          e,
-                                                          f,
-                                                          g,
-                                                          h,
-                                                          i,
-                                                        ])
-                                                      }
-                                                    />
-                                                    <StAddAnswerButton
-                                                      type="button"
-                                                      onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i])}>
-                                                      답변
-                                                    </StAddAnswerButton>
-                                                    <StMoreIcon onClick={handleToggle} />
-                                                    <StMiniMenu>
-                                                      <StMenuBtn
-                                                        type="button"
-                                                        onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h, i])}>
-                                                        삭제
-                                                      </StMenuBtn>
-                                                    </StMiniMenu>
-                                                  </StQuestionInputWrapper>
-                                                </StQuestionLabelWrapper>
-                                                {question4.answer.map((answer4, j) => (
-                                                  <React.Fragment key={j}>
-                                                    <StAnswerInputWrapper>
-                                                      <StAnswerLabel labelcolor={theme.colors.orange500} />
-                                                      <StAnswerInput
-                                                        placeholder="답변을 입력해주세요"
-                                                        key={`a4-${j}`}
-                                                        value={answer4.text}
+                                            </StQuestionInputWrapper>
+                                          </StQuestionLabelWrapper>
+                                          {question3.answer.map((answer3, h) => (
+                                            <React.Fragment key={h}>
+                                              <StAnswerInputWrapper>
+                                                <StAnswerLabel labelcolor={theme.colors.orange400} />
+                                                <StAnswerInput
+                                                  placeholder="답변을 입력해주세요"
+                                                  key={`a3-${h}`}
+                                                  value={answer3.text}
+                                                  onChange={(event) =>
+                                                    handleChangePeri("answer", event.target.value, [
+                                                      a,
+                                                      b,
+                                                      c,
+                                                      d,
+                                                      e,
+                                                      f,
+                                                      g,
+                                                      h,
+                                                    ])
+                                                  }
+                                                />
+                                                <StMoreIcon onClick={handleToggle} />
+                                                <StMiniMenu>
+                                                  <StMenuBtn
+                                                    type="button"
+                                                    onClick={() => handleAddPeri([a, b, c, d, e, f, g, h])}>
+                                                    꼬리질문 추가
+                                                  </StMenuBtn>
+                                                  <StMenuBtn
+                                                    type="button"
+                                                    onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h])}>
+                                                    삭제
+                                                  </StMenuBtn>
+                                                </StMiniMenu>
+                                              </StAnswerInputWrapper>
+                                              {answer3.children.map((question4, i) => (
+                                                <StArticle key={i} isFirst={false}>
+                                                  <StQuestionLabelWrapper>
+                                                    <StQuestionLabel bgcolor={theme.colors.orange500}>
+                                                      질문
+                                                    </StQuestionLabel>
+                                                    <StQuestionInputWrapper>
+                                                      <StQuestionInput
+                                                        placeholder="질문을 입력해주세요"
+                                                        key={`q3-${i}`}
+                                                        value={question4.question}
                                                         onChange={(event) =>
                                                           handleChangePeri("answer", event.target.value, [
                                                             a,
@@ -307,54 +291,99 @@ export default function PeriNote() {
                                                             g,
                                                             h,
                                                             i,
-                                                            j,
                                                           ])
                                                         }
                                                       />
+                                                      <StAddAnswerButton
+                                                        type="button"
+                                                        onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i])}>
+                                                        답변
+                                                      </StAddAnswerButton>
                                                       <StMoreIcon onClick={handleToggle} />
                                                       <StMiniMenu>
                                                         <StMenuBtn
                                                           type="button"
-                                                          onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i, j])}>
-                                                          꼬리질문 추가
-                                                        </StMenuBtn>
-                                                        <StMenuBtn
-                                                          type="button"
-                                                          onClick={() =>
-                                                            handleDeletePeri([a, b, c, d, e, f, g, h, i, j])
-                                                          }>
+                                                          onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h, i])}>
                                                           삭제
                                                         </StMenuBtn>
                                                       </StMiniMenu>
-                                                    </StAnswerInputWrapper>
-                                                  </React.Fragment>
-                                                ))}
-                                              </StArticle>
-                                            ))}
-                                          </React.Fragment>
-                                        ))}
-                                      </StArticle>
-                                    ))}
-                                  </React.Fragment>
-                                ))}
-                              </StArticle>
-                            ))}
-                          </React.Fragment>
-                        ))}
-                      </StArticle>
-                    ))}
-                  </StAnswerContainer>
-                </React.Fragment>
-              ))}
-            </StAnswerWrapper>
-          </StQAContainer>
-        ))}
-        <StAddQuestionButton type="button">+ 질문 리스트 추가</StAddQuestionButton>
-      </StQAWrapper>
-      <StDoneButton type="button" onClick={() => submitReview(true)}>
-        작성 완료
-      </StDoneButton>
-    </StNoteForm>
+                                                    </StQuestionInputWrapper>
+                                                  </StQuestionLabelWrapper>
+                                                  {question4.answer.map((answer4, j) => (
+                                                    <React.Fragment key={j}>
+                                                      <StAnswerInputWrapper>
+                                                        <StAnswerLabel labelcolor={theme.colors.orange500} />
+                                                        <StAnswerInput
+                                                          placeholder="답변을 입력해주세요"
+                                                          key={`a4-${j}`}
+                                                          value={answer4.text}
+                                                          onChange={(event) =>
+                                                            handleChangePeri("answer", event.target.value, [
+                                                              a,
+                                                              b,
+                                                              c,
+                                                              d,
+                                                              e,
+                                                              f,
+                                                              g,
+                                                              h,
+                                                              i,
+                                                              j,
+                                                            ])
+                                                          }
+                                                        />
+                                                        <StMoreIcon onClick={handleToggle} />
+                                                        <StMiniMenu>
+                                                          <StMenuBtn
+                                                            type="button"
+                                                            onClick={() =>
+                                                              handleAddPeri([a, b, c, d, e, f, g, h, i, j])
+                                                            }>
+                                                            꼬리질문 추가
+                                                          </StMenuBtn>
+                                                          <StMenuBtn
+                                                            type="button"
+                                                            onClick={() =>
+                                                              handleDeletePeri([a, b, c, d, e, f, g, h, i, j])
+                                                            }>
+                                                            삭제
+                                                          </StMenuBtn>
+                                                        </StMiniMenu>
+                                                      </StAnswerInputWrapper>
+                                                    </React.Fragment>
+                                                  ))}
+                                                </StArticle>
+                                              ))}
+                                            </React.Fragment>
+                                          ))}
+                                        </StArticle>
+                                      ))}
+                                    </React.Fragment>
+                                  ))}
+                                </StArticle>
+                              ))}
+                            </React.Fragment>
+                          ))}
+                        </StArticle>
+                      ))}
+                    </StAnswerContainer>
+                  </React.Fragment>
+                ))}
+              </StAnswerWrapper>
+            </StQAContainer>
+          ))}
+          <StAddQuestionButton type="button">+ 질문 리스트 추가</StAddQuestionButton>
+        </StQAWrapper>
+        <StDoneButton type="button" onClick={() => submitReview(true)}>
+          작성 완료
+        </StDoneButton>
+      </StNoteForm>
+      {isPeriModal && (
+        <StStepModalWrapper>
+          <PeriModal onToggleModal={handlePeriCarousel} />
+        </StStepModalWrapper>
+      )}
+    </>
   );
 }
 
@@ -368,7 +397,13 @@ const StNoteForm = styled.form`
 `;
 
 const StLabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: 4.6rem 0 4.6rem 2rem;
+`;
+
+const StLabelContainer = styled.div`
+  display: flex;
 `;
 
 const StLabel = styled.label`
