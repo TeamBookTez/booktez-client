@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 import { StepUp } from "../bookNote";
-import { StepUpOnExample } from ".";
-import { StBtnStepUp, StIcStepUp } from "./StepUpOnExample";
 
 interface DetailArticleWrapperLabelingProps {
   title: string;
