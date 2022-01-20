@@ -30,8 +30,7 @@ export default function MyPage() {
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
-    console.log("asdf");
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     getInfo("/user/myInfo", localToken);
@@ -48,6 +47,7 @@ export default function MyPage() {
       if (!(status === 200)) {
         setIsLogin(false);
       }
+      setIsLogin(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
