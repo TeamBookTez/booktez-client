@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
@@ -26,6 +26,7 @@ export default function PeriNote() {
     handleAddPeri,
     handleDeletePeri,
     userToken,
+    fromUrl,
   ] =
     useOutletContext<
       [
@@ -41,12 +42,14 @@ export default function PeriNote() {
         (idxList: number[]) => void,
         (idxList: number[]) => void,
         string,
+        string,
       ]
     >();
 
   const { state } = useLocation();
+  const navigate = useNavigate();
   const isLoginState = state as IsLoginState;
-  const reviewId = isLoginState.reviewId;
+  const { reviewId } = isLoginState;
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
 
@@ -71,6 +74,11 @@ export default function PeriNote() {
 
     if (whatValue === "none") miniMenu.style.display = "block";
     else miniMenu.style.display = "none";
+  };
+
+  const submitComplete = () => {
+    submitReview(true);
+    navigate("/detail-book-note", { state: { reviewId, isLogin, fromUrl } });
   };
 
   return (
@@ -392,7 +400,7 @@ export default function PeriNote() {
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
-        <StDoneButton type="button" onClick={() => submitReview(true)}>
+        <StDoneButton type="button" onClick={submitComplete}>
           작성 완료
         </StDoneButton>
       </StNoteForm>

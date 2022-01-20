@@ -8,13 +8,13 @@ export default function Navigation() {
 
   useEffect(() => {
     switch (pathname) {
-      case "/bookcase/pre":
+      case "/main/bookcase/pre":
         setNavIndex(1);
         break;
-      case "bookcase/peri":
+      case "/main/bookcase/peri":
         setNavIndex(2);
         break;
-      case "bookcase/post":
+      case "/main/bookcase/post":
         setNavIndex(3);
         break;
       default:
@@ -57,6 +57,8 @@ export default function Navigation() {
 const StNav = styled.nav`
   position: sticky;
   top: 0;
+
+  z-index: 10;
 
   padding-top: 3.3rem;
   padding-left: 4rem;
