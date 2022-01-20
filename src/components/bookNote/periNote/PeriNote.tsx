@@ -49,6 +49,18 @@ export default function PeriNote() {
     console.log("res", res);
   };
 
+  const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    const miniMenu = e.currentTarget.nextElementSibling;
+
+    if (miniMenu === null || miniMenu === undefined) return;
+    if (!(miniMenu instanceof HTMLElement)) return;
+
+    const whatValue = miniMenu.style.display;
+
+    if (whatValue === "none") miniMenu.style.display = "block";
+    else miniMenu.style.display = "none";
+  };
+
   useEffect(() => {
     console.log("preNote", preNote);
     console.log("periNote", periNote);
@@ -99,7 +111,7 @@ export default function PeriNote() {
                             <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c])}>
                               답변
                             </StAddAnswerButton>
-                            <StMoreIcon />
+                            <StMoreIcon onClick={handleToggle} />
                             <StMiniMenu>
                               <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c])}>
                                 삭제
@@ -117,7 +129,7 @@ export default function PeriNote() {
                                 value={answer1.text}
                                 onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
                               />
-                              <StMoreIcon />
+                              <StMoreIcon onClick={handleToggle} />
                               <StMiniMenu>
                                 <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d])}>
                                   꼬리질문 추가
@@ -143,7 +155,7 @@ export default function PeriNote() {
                                     <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c, d, e])}>
                                       답변
                                     </StAddAnswerButton>
-                                    <StMoreIcon />
+                                    <StMoreIcon onClick={handleToggle} />
                                     <StMiniMenu>
                                       <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e])}>
                                         삭제
@@ -163,7 +175,7 @@ export default function PeriNote() {
                                           handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
                                         }
                                       />
-                                      <StMoreIcon />
+                                      <StMoreIcon onClick={handleToggle} />
                                       <StMiniMenu>
                                         <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d, e, f])}>
                                           꼬리질문 추가
@@ -191,7 +203,7 @@ export default function PeriNote() {
                                               onClick={() => handleAddPeri([a, b, c, d, e, f, g])}>
                                               답변
                                             </StAddAnswerButton>
-                                            <StMoreIcon />
+                                            <StMoreIcon onClick={handleToggle} />
                                             <StMiniMenu>
                                               <StMenuBtn
                                                 type="button"
@@ -222,7 +234,7 @@ export default function PeriNote() {
                                                   ])
                                                 }
                                               />
-                                              <StMoreIcon />
+                                              <StMoreIcon onClick={handleToggle} />
                                               <StMiniMenu>
                                                 <StMenuBtn
                                                   type="button"
@@ -266,7 +278,7 @@ export default function PeriNote() {
                                                       onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i])}>
                                                       답변
                                                     </StAddAnswerButton>
-                                                    <StMoreIcon />
+                                                    <StMoreIcon onClick={handleToggle} />
                                                     <StMiniMenu>
                                                       <StMenuBtn
                                                         type="button"
@@ -299,7 +311,7 @@ export default function PeriNote() {
                                                           ])
                                                         }
                                                       />
-                                                      <StMoreIcon />
+                                                      <StMoreIcon onClick={handleToggle} />
                                                       <StMiniMenu>
                                                         <StMenuBtn
                                                           type="button"
@@ -577,7 +589,7 @@ const StMoreIcon = styled(IcMore)`
 `;
 
 const StMiniMenu = styled.div`
-  /* display: none; */
+  display: none;
 
   position: absolute;
   top: 4.3rem;
