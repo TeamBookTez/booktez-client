@@ -149,7 +149,7 @@ const fonts = {
   caption2: `
     font-family: Pretendard;
     font-weight: 500;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     line-height: 1.3;
     letter-spacing: -0.1rem;
   `,

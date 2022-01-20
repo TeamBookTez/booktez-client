@@ -37,7 +37,7 @@ export default function Navigator(props: NavigatorProps) {
         </li>
         <li>
           <StLink2 onClick={() => goToPeri(isPrevented)} index={navIndex}>
-            독서 후
+            독서 중
           </StLink2>
         </li>
       </StUl>

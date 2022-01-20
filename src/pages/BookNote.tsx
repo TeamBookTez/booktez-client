@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
-import { IcSave } from "../assets/icons";
+import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
@@ -51,6 +51,7 @@ export default function BookNote() {
   const [periNote, setPeriNote] = useState<Question[]>([]);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSave, setIsSave] = useState<boolean>(false);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
@@ -130,14 +131,16 @@ export default function BookNote() {
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
     const { answerOne, answerTwo } = preNote;
-
-    const res = await patchData(userToken, `/review/${reviewId}`, {
+    await patchData(userToken, `/review/${reviewId}`, {
       answerOne,
       answerTwo,
       answerThree: { root: periNote },
     });
-
-    console.log("res", res);
+    
+    setIsSave(true);
+    setTimeout(() => {
+      setIsSave(false);
+    }, 3000);
   };
 
   const patchReview = async () => {
@@ -340,7 +343,13 @@ export default function BookNote() {
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
-        <IcSave onClick={saveReview} />
+        {isSave && (
+          <StSave>
+            <StIcCheckSave />
+            작성한 내용이 저장되었어요.
+          </StSave>
+        )}
+        <StIcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet
         context={[
@@ -396,15 +405,50 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
 `;
 
 const StNavWrapper = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 
-  width: 100%;
+  height: 4.8rem;
+
+  margin-top: 4.3rem;
 `;
 
 const StBookTitle = styled.h1`
   width: 100%;
 
   ${({ theme }) => theme.fonts.header0};
+`;
+
+const StIcCheckSave = styled(IcCheckSave)`
+  margin-right: 1rem;
+`;
+
+const StSave = styled.div`
+  position: absolute;
+  left: 76%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 23.7rem;
+  height: 3.8rem;
+
+  margin-bottom: 0.5rem;
+  margin-right: 1.6rem;
+
+  border-radius: 0.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.14);
+
+  ${({ theme }) => theme.fonts.caption};
+  color: ${({ theme }) => theme.colors.gray200};
+`;
+
+const StIcSave = styled(IcSave)`
+  cursor: pointer;
 `;
