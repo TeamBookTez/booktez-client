@@ -126,7 +126,6 @@ export default function BookNote() {
         newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
       });
       setPeriNote(newData);
-      await patchData(userToken, `/review/now/${reviewId}`, { answerThree: { root: periNote }, progress: 2 });
     }
   };
 
@@ -155,7 +154,7 @@ export default function BookNote() {
     setIsPrevented(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
@@ -352,7 +351,13 @@ export default function BookNote() {
       </Link>
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
+        <Navigator
+          navIndex={navIndex}
+          onNav={handleNav}
+          isLoginState={isLoginState}
+          isPrevented={isPrevented}
+          isPeriEmpty={!periNote.length}
+        />
         {isSave && (
           <StSave>
             <StIcCheckSave />
