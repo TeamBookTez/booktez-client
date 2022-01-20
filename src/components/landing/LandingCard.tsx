@@ -21,7 +21,7 @@ export default function LandingCard(props: LandingCardProps) {
 }
 
 const StCard = styled.article`
-  disstsubtitlelay: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
 
