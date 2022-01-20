@@ -19,11 +19,10 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
   const [tempImg, setTempImg] = useState<string>("");
-  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
@@ -34,22 +33,26 @@ export default function MyPage() {
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
-  }, [isLogin]);
+  }, []);
 
   useEffect(() => {
     getInfo("/user/myInfo", localToken);
   }, [tempImg]);
+
+  useEffect(() => {
+    console.log("isLogin", isLogin);
+  }, [isLogin]);
 
   const getLogin = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
       const status = data.status;
 
-      if (!localToken) {
-        setIsLogin(false);
+      if (!token) {
+        return setIsLogin(false);
       }
       if (!(status === 200)) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
       setIsLogin(true);
     } catch (err) {
