@@ -1,10 +1,8 @@
 import axios from "axios";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgTemp } from "../../assets/images";
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
@@ -31,7 +29,6 @@ export default function Recent() {
       } = await getData(key, token);
 
       setBooksRecent(books);
-      console.log(booksRecent);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -39,7 +36,6 @@ export default function Recent() {
     }
   };
 
-  // // 로그인 여부 맞춰서 아래 isDefault를 조작
   const isDefault = false;
 
   useEffect(() => {
@@ -50,19 +46,15 @@ export default function Recent() {
     <section>
       <StHeader>
         <StHeading3>최근 작성한 북노트</StHeading3>
-        {!isDefault ? (
-          <StButton type="button">
-            <Link to="/main/bookcase">전체보기</Link>
-          </StButton>
-        ) : null}
+        {booksRecent.length > 0 && <StLink to="/main/bookcase">전체보기</StLink>}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {isDefault ? (
-          <Empty />
+        {booksRecent.length > 0 ? (
+          booksRecent
+            .slice(-booksRecent.length, -(booksRecent.length - 5))
+            .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />)
         ) : (
-          booksRecent.map((tempInfo, idx) => (
-            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
-          ))
+          <Empty />
         )}
       </StBookWrapper>
     </section>
@@ -83,11 +75,20 @@ const StHeading3 = styled.h3`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StButton = styled(Button)`
+const StLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 8.8rem;
+  height: 3.6rem;
+
   border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
   border-radius: 2.4rem;
-  padding: 0.9rem 2.1rem;
+
   background-color: ${({ theme }) => theme.colors.white};
+
+  ${({ theme }) => theme.fonts.button2};
   color: ${({ theme }) => theme.colors.gray300};
 `;
 

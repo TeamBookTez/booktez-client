@@ -19,8 +19,10 @@ interface ExamplePreNoteLabelingProps {
 
 export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProps) {
   const { answerOne, answerTwo, questionList, isLogin } = props;
+
   const navigate = useNavigate();
-  const nickname = "냠냠"; // 닉네임 받아오기(로컬스토리지)
+
+  const nickname = localStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
