@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { UserInfo } from "../../pages/MyPage";
@@ -14,6 +15,7 @@ interface TopContentProps {
 }
 
 export default function TopContent(props: TopContentProps) {
+  const navigate = useNavigate();
   const { userInfo, onImageChange } = props;
 
   const tempToken = localStorage.getItem("booktez-token");
@@ -39,19 +41,29 @@ export default function TopContent(props: TopContentProps) {
     }
   };
 
+  const handleMoveLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate("/login");
+  };
+
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    localStorage.removeItem("booktez-token");
+    localStorage.removeItem("booktez-nickname");
+    setIsLogin(false);
+  };
+
   useEffect(() => {
     getLogin("/auth/check", localToken);
-  }, []);
+  }, [isLogin]);
 
   return (
     <StWrapper>
       <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
       {!isLogin ? (
-        <StLoginButton type="button">
+        <StLoginButton type="button" onClick={(e) => handleMoveLogin}>
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginButton>
       ) : (
-        <StLogoutBtn>로그아웃</StLogoutBtn>
+        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
       )}
     </StWrapper>
   );
