@@ -8,13 +8,13 @@ export default function Navigation() {
 
   useEffect(() => {
     switch (pathname) {
-      case "/bookcase/pre":
+      case "/main/bookcase/pre":
         setNavIndex(1);
         break;
-      case "bookcase/peri":
+      case "/main/bookcase/peri":
         setNavIndex(2);
         break;
-      case "bookcase/post":
+      case "/main/bookcase/post":
         setNavIndex(3);
         break;
       default:
