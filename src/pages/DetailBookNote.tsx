@@ -64,7 +64,9 @@ export default function DetailBookNote() {
         <StBookTitle>{reviewData?.bookTitle}</StBookTitle>
         <StBtnWrapper>
           <IcDeleteNote onClick={handlePopUp} />
-          <IcModifyNote />
+          <IcModifyNote
+            onClick={() => navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post" } })}
+          />
         </StBtnWrapper>
         <DetailArticleWrapper title="독서 전 단계">
           <ExamplePreNote
