@@ -21,6 +21,7 @@ export default function MyPage() {
     reviewCount: 0,
   });
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
   const [tempImg, setTempImg] = useState<string>("");
@@ -66,6 +67,8 @@ export default function MyPage() {
       if (data.success) {
         setUserInfo(data.data);
       }
+
+      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -100,7 +103,7 @@ export default function MyPage() {
 
   return (
     <>
-      {userInfo.nickname === "" ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>
