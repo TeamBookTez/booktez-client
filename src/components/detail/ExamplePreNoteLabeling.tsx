@@ -1,10 +1,14 @@
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
+import { StepUp } from "../bookNote";
+import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
+import OneCaseModal from "../bookNote/stepUp/OneCaseModal";
+import ThreeCaseModal from "../bookNote/stepUp/ThreeCaseModal";
 import { Button } from "../common/styled/Button";
 import LabelQuestion from "../common/styled/LabelQuestion";
-import { StepUpOnExample } from ".";
 
 interface ExamplePreNoteLabelingProps {
   answerOne: string | undefined;
@@ -22,25 +26,36 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
     navigate("/signup", { state: "rightpath" });
   };
 
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [idx, setIdx] = useState<number>(0);
+
+  const handleToggleModal = useCallback(
+    (i: number) => {
+      setOpenModal(!openModal);
+      setIdx(i);
+    },
+    [openModal],
+  );
+
   return (
     <StExampleWrapper>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
         {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
-        <StepUpOnExample />
+        <StepUp onToggleModal={() => handleToggleModal(1)} />
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이{" "}
         {isLogin ? `${nickname} 독서가` : "익명의 독서가"}
         님의 기대를 만족시킬 수 있을까요?
-        <StepUpOnExample />
+        <StepUp onToggleModal={() => handleToggleModal(2)} />
       </StFirstQuestion>
       <StAnswer>{answerTwo}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
         {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
-        <StepUpOnExample />
+        <StepUp onToggleModal={() => handleToggleModal(3)} />
       </StFirstQuestion>
       {isLogin ? (
         questionList?.map((question: string, idx: number) => <StAnswer key={idx}>{question}</StAnswer>)
@@ -53,6 +68,15 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
           </StSignupText>
           <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
         </StLinkWrapper>
+      )}
+      {openModal && (
+        <StStepModalWrapper>
+          {idx === 2 ? (
+            <ThreeCaseModal onToggleModal={() => setOpenModal(!openModal)} />
+          ) : (
+            <OneCaseModal idx={idx} onToggleModal={() => setOpenModal(!openModal)} />
+          )}
+        </StStepModalWrapper>
       )}
     </StExampleWrapper>
   );

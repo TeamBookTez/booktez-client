@@ -24,7 +24,7 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   // 로그인 및 리뷰 아이디는 규민이가 한 state 넘기는 걸로 받아오기
   const isLogin = true;
-  const reviewId = 34;
+  const reviewId = 2;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -53,7 +53,7 @@ export default function BookNote() {
 
   const navigate = useNavigate();
 
-  const handleOpenDrawer = (i: number) => {
+  const handleToggleDrawer = (i: number) => {
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -326,7 +326,7 @@ export default function BookNote() {
       <Outlet
         context={[
           isLogin,
-          handleOpenDrawer,
+          handleToggleDrawer,
           preNote,
           handleChangeReview,
           setOpenModal,

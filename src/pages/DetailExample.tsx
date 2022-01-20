@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { StStepModalWrapper } from "../components/bookNote/preNote/PreNoteForm";
 import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import {
@@ -48,7 +49,11 @@ export default function DetailExample() {
           </StMarginTop>
         )}
         {/* 모달창 하다가 중지 */}
-        {/* {isPeriModal && <PeriModal onToggleModal={handlePeriCarousel} />} */}
+        {isPeriModal && (
+          <StStepModalWrapper>
+            <PeriModal onToggleModal={handlePeriCarousel} />
+          </StStepModalWrapper>
+        )}
       </StNoteModalWrapper>
     </>
   );
