@@ -38,10 +38,10 @@ export default function BookNote() {
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
-  const [isPrevented, setIsPrevented] = useState(false);
-  const [ablePatch, setAblePatch] = useState(false);
+  const [isPrevented, setIsPrevented] = useState<boolean>(false);
+  const [ablePatch, setAblePatch] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
@@ -150,6 +150,7 @@ export default function BookNote() {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
+    setIsDrawerOpen(false);
     navigate("/book-note/peri", { state: isLoginState });
     handleNav(1);
   };

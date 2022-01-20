@@ -16,7 +16,7 @@ export default function DetailBookNote() {
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const { state } = useLocation();
   const isLoginState = state as IsLoginState;
-  const { reviewId, fromUrl } = isLoginState;
+  const { reviewId, isLogin, fromUrl } = isLoginState;
   // const reviewId = 4; // 리뷰 id 를 받아와 처리
 
   const tempToken = localStorage.getItem("booktez-token");
@@ -65,7 +65,9 @@ export default function DetailBookNote() {
         <StBtnWrapper>
           <IcDeleteNote onClick={handlePopUp} />
           <IcModifyNote
-            onClick={() => navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post" } })}
+            onClick={() =>
+              navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post", isLogin } })
+            }
           />
         </StBtnWrapper>
         <DetailArticleWrapper title="독서 전 단계">

@@ -49,7 +49,7 @@ export default function PeriNote() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const isLoginState = state as IsLoginState;
-  const reviewId = isLoginState.reviewId;
+  const { reviewId } = isLoginState;
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
 
@@ -78,7 +78,7 @@ export default function PeriNote() {
 
   const submitComplete = () => {
     submitReview(true);
-    navigate("/detail-book-note", { state: { reviewId, fromUrl } });
+    navigate("/detail-book-note", { state: { reviewId, isLogin, fromUrl } });
   };
 
   return (
