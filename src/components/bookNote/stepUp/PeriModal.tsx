@@ -13,7 +13,7 @@ export default function PeriModal(props: StepUpProps) {
   const [slideIndex, setSlideIndex] = useState<number>(1);
   const [data, setData] = useState(after1[0]);
 
-  const nextSlide = (e: any) => {
+  const nextSlide = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (slideIndex !== after1.length) {
       setSlideIndex(slideIndex + 1);
@@ -24,7 +24,7 @@ export default function PeriModal(props: StepUpProps) {
     }
   };
 
-  const prevSlide = (e: any) => {
+  const prevSlide = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (slideIndex !== 1) {
       setSlideIndex(slideIndex - 1);

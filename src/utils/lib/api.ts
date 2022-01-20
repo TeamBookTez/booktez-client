@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
