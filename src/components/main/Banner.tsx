@@ -8,7 +8,9 @@ export default function Banner() {
     <StWrapper ratio="65.7rem">
       <StTitle>독서북 사용 가이드북</StTitle>
       <StContent>
-        북스테이즈만의 독서법을 사용하여 책을 더욱 효율적으로 체험해보며 내가 가지고 있는 지식을 한계단 아뉘면 두계단
+        진짜 독서가들은 어떻게 북스테어즈를 사용하고 있을까요?
+        <br />
+        북스테어즈를 똑똑하게 사용하는 방법을 보여드릴게요.
       </StContent>
       <StExampleLink to="/detail-example">적용 사례</StExampleLink>
       <img src={ImgMainBanner} alt="일러스트" />
