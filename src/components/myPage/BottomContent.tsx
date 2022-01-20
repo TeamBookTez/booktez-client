@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { ImgReadNum } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
 import { BookComment } from ".";
 
@@ -16,7 +17,7 @@ export default function BottomContent(props: BottomContentProps) {
       {isLogin && (
         <StCountBook>
           <StImgWrapper>
-            <img src="" alt="" />
+            <img src={ImgReadNum} alt="읽은 책 수" />
           </StImgWrapper>
           <StContentWrapper>
             <StBooksNum>{reviewCount}</StBooksNum>
@@ -51,25 +52,35 @@ const StWrapper = styled.section`
 
   width: 100%;
   height: 41%;
+
   padding: 0 4rem 7rem 4rem;
 `;
 
-// 로그인 여부에 따라 삼항연산자 분기 처리
 const StCountBook = styled.article`
-  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 25.9rem;
+  height: 30.3rem;
 
   margin-right: 4rem;
 
   border-radius: 2rem;
 
-  background-color: ${({ theme }) => theme.colors.white400};
+  background-color: #fbedea;
 `;
 
 const StImgWrapper = styled.div`
-  width: 100%;
-  height: 61%;
+  width: 21.1rem;
+  height: 16.3rem;
 
   border-radius: 2rem 2rem 0 0;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const StContentWrapper = styled.div`
@@ -87,12 +98,12 @@ const StBooksNum = styled.strong`
 `;
 
 const StServiceWrapper = styled.div`
+  width: 100rem;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 3rem;
   row-gap: 3rem;
-
-  width: 100%;
 `;
 
 const StServiceInfo = styled.article`
