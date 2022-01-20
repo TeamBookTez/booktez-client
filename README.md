@@ -76,3 +76,13 @@
 |fix|기존의 버그 수정|
 |refactor|더 좋은 코드 개선 (화면 영향 x)|
 |etc|문서 작성 or 그 외 커밋(주석, 개행 등)|
+<br />
+
+## 👨‍💻👩‍💻 팀원
+
+- [👧 김소령](https://github.com/orgs/TeamBookTez/people/soryeongk)
+- [🧑 이주함](https://github.com/orgs/TeamBookTez/people/soryeongk)
+- [👱‍♂️ 석상언](https://github.com/orgs/TeamBookTez/people/soryeongk)
+- [🤴 김규민](https://github.com/orgs/TeamBookTez/people/soryeongk)
+
+<br />
