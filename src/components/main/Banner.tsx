@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgGraphic } from "../../assets/images";
+import { ImgMainBanner } from "../../assets/images";
 
 export default function Banner() {
   return (
@@ -11,7 +11,7 @@ export default function Banner() {
         북스테이즈만의 독서법을 사용하여 책을 더욱 효율적으로 체험해보며 내가 가지고 있는 지식을 한계단 아뉘면 두계단
       </StContent>
       <StExampleLink to="/detail-example">적용 사례</StExampleLink>
-      <img src={ImgGraphic} alt="일러스트" />
+      <img src={ImgMainBanner} alt="일러스트" />
     </StWrapper>
   );
 }
@@ -25,8 +25,8 @@ const StWrapper = styled.section<{ ratio: string }>`
 
   & > img {
     position: absolute;
-    top: 30%;
-    right: 10%;
+    bottom: 0;
+    right: 0;
     object-fit: cover;
   }
 `;
@@ -55,17 +55,8 @@ const StExampleLink = styled(Link)`
   border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
   border-radius: 1rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.gray100};
 
-  color: ${({ theme }) => theme.colors.gray300};
-  ${({ theme }) => theme.fonts.button2}
-`;
-
-const StLink = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
+  color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.fonts.button}
 `;

@@ -17,6 +17,11 @@ interface ShowModalProps {
   onToggleModal: () => void;
 }
 
+interface IsLoginState {
+  isLogin: boolean;
+  reviewId: number;
+}
+
 export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, setBookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;

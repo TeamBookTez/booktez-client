@@ -60,7 +60,7 @@ export default function BookNote() {
 
   const navigate = useNavigate();
 
-  const handleOpenDrawer = (i: number) => {
+  const handleToggleDrawer = (i: number) => {
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -84,9 +84,15 @@ export default function BookNote() {
       const { data } = await getData(key, token);
       const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
+      // console.log("data", data);
       setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-      setPeriNote(answerThree.root);
       setTitle(bookTitle);
+
+      if (answerThree) {
+        setPeriNote(answerThree.root);
+      } else {
+        setPeriNote([]);
+      }
 
       // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
       // 답변 추가/삭제 막기
@@ -305,6 +311,12 @@ export default function BookNote() {
   }, []);
 
   useEffect(() => {
+    console.log("preNote", preNote);
+  }, [title]);
+
+  useEffect(() => {
+    // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
+    // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
       setAblePatch(true);
     }
@@ -320,7 +332,8 @@ export default function BookNote() {
       </StNavWrapper>
       <Outlet
         context={[
-          handleOpenDrawer,
+          isLogin,
+          handleToggleDrawer,
           preNote,
           handleChangeReview,
           setOpenModal,

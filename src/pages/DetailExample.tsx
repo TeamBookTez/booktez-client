@@ -1,27 +1,46 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { StStepModalWrapper } from "../components/bookNote/preNote/PreNoteForm";
 import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
-import {
-  DetailArticleWrapperLabeling,
-  ExamplePeriNote,
-  ExamplePreNote,
-  ExamplePreNoteLabeling,
-} from "../components/detail";
+import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
+import { getData } from "../utils/lib/api";
 import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
-  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
-  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
-  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  const isLogin = true;
-  // const _token = localStorage.getItem("booktez-token");
   const navigate = useNavigate();
+
+  const tempToken = localStorage.getItem("booktez-token");
+  const localToken = tempToken ? tempToken : "";
+
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getLogin("/auth/check", localToken);
+  }, []);
 
   const handlePeriCarousel = () => {
     setIsPeriModal(!isPeriModal);
@@ -48,7 +67,11 @@ export default function DetailExample() {
           </StMarginTop>
         )}
         {/* 모달창 하다가 중지 */}
-        {/* {isPeriModal && <PeriModal onToggleModal={handlePeriCarousel} />} */}
+        {isPeriModal && (
+          <StStepModalWrapper>
+            <PeriModal onToggleModal={handlePeriCarousel} />
+          </StStepModalWrapper>
+        )}
       </StNoteModalWrapper>
     </>
   );

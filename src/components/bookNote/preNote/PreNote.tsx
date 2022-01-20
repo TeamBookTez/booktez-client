@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { PreNoteData } from "../../../pages/BookNote";
@@ -6,9 +6,11 @@ import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const [handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
+  const navigate = useNavigate();
+  const [isLogin, handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
     useOutletContext<
       [
+        boolean,
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,
@@ -25,6 +27,10 @@ export default function PreNote() {
 
   const handleSubmit = () => {
     setOpenModal(true);
+  };
+
+  const handleGoSignup = () => {
+    navigate("/signup", { state: "rightpath" });
   };
 
   return (
@@ -51,12 +57,23 @@ export default function PreNote() {
             onChange={(e) => onChangeReview("answerTwo", e.target.value)}
           />
         </PreNoteForm>
-        <QuestionThree
-          questionList={questionList}
-          onChangeReview={onChangeReview}
-          onToggleDrawer={handleToggleDrawer}
-          isPrevented={isPrevented}
-        />
+        {isLogin ? (
+          <QuestionThree
+            questionList={questionList}
+            onChangeReview={onChangeReview}
+            onToggleDrawer={handleToggleDrawer}
+            isPrevented={isPrevented}
+          />
+        ) : (
+          <StLinkWrapper>
+            <StSignupText>
+              독서가들의 기대를 채워줄 책의 내용들은
+              <br />
+              어떻게 구체화 되어갈까요?
+            </StSignupText>
+            <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
+          </StLinkWrapper>
+        )}
       </StFormWrapper>
 
       {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
@@ -113,4 +130,37 @@ const StNextBtn = styled(Button)<{ isdisabled: boolean }>`
   width: 32.5rem;
   color: ${({ isdisabled, theme }) => (isdisabled ? theme.colors.gray300 : theme.colors.white)};
   ${({ theme }) => theme.fonts.button};
+`;
+
+const StLinkWrapper = styled.section`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 25.9rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) -9.07%, rgba(194, 195, 204, 0.85) 100%);
+`;
+
+const StSignupText = styled.p`
+  text-align: center;
+
+  ${({ theme }) => theme.fonts.body0}
+  color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StButton = styled(Button)`
+  width: 32.5rem;
+  height: 5.6rem;
+
+  margin-top: 1.2rem;
+
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 `;
