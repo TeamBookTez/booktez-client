@@ -8,7 +8,10 @@ export default function LandingFooter() {
   return (
     <>
       <StFooterWrapper>
-        <StH1>북스테어즈 사용해보기</StH1>
+        <StH1>
+          책을 통한 성장의 계단, <br />
+          함께 오르실 분들을 기다립니다.{" "}
+        </StH1>
         <Link to="/main">
           <StButton>북스테어즈 시작</StButton>
         </Link>
@@ -40,6 +43,8 @@ const StFooterWrapper = styled.footer`
 const StH1 = styled.h1`
   ${({ theme }) => theme.fonts.header00}
   color: ${({ theme }) => theme.colors.gray200};
+
+  text-align: center;
 `;
 
 const StButton = styled(Button)`

@@ -8,15 +8,14 @@ export default function LandingFive() {
     <StSection>
       <div>
         <StH2>
-          작성한 북노트를
-          <br />
-          서재에 쌓아서 모아보세요
+          읽을수록 쌓여가는 <br />
+          성장의 만족감을 느껴보세요.
         </StH2>
-        <p>
-          책을 서재에서 모아보고 내용을 재확인하며
+        <StParagraph>
+          나만의 북노트를 모아보고 내용을 재확인하며,
           <br />
-          내가 읽은 책들을 모두 습득해보세요
-        </p>
+          내가 읽은 책들을 모두 흡수해보세요.
+        </StParagraph>
       </div>
       <img src={ImgLandingBookcase} alt="서재 이미지" />
     </StSection>
@@ -25,4 +24,8 @@ export default function LandingFive() {
 
 const StSection = styled(StWrapper)`
   padding: 11.7rem 0;
+`;
+
+const StParagraph = styled.p`
+  ${({ theme }) => theme.fonts.body00}
 `;
