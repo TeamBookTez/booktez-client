@@ -8,12 +8,13 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  @font-face {
+  /* @font-face {
     font-family: "Pretendard";
     font-weight: normal;
     font-style: normal;
     src: local("/fonts/PretendardVariable.woff2") format("woff2");
-  }
+  } */
+  /* font 로컬로 변경 대비하여 주석처리  */
 
   html {
     color: ${({ theme }) => theme.colors.gray100};

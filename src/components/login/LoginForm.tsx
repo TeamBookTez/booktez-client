@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -37,10 +37,14 @@ export default function LoginForm() {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
+        const status = err.response?.data.status;
+
+        if (status === 404) {
+          setIsEmailError(true);
+        } else {
+          setIsPwdError(true);
+        }
       }
-      // setError 분기 처리 후 넣어주기
-      setIsEmailError(true);
-      setIsPwdError(true);
     }
   };
 
@@ -73,6 +77,14 @@ export default function LoginForm() {
     setPwd(targetValue);
   };
 
+  useEffect(() => {
+    setIsEmailError(false);
+  }, [email]);
+
+  useEffect(() => {
+    setIsPwdError(false);
+  }, [pwd]);
+
   return (
     <StForm onSubmit={handleSubmit}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
@@ -85,7 +97,7 @@ export default function LoginForm() {
         isError={isEmailError}
         handleOnChange={handleOnChangeEmail}
       />
-      <AlertLabel isError={isEmailError}>이멜 에러 경고 표시</AlertLabel>
+      <AlertLabel isError={isEmailError}>존재하지 않는 이메일 입니다.</AlertLabel>
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <InputPwd
         whatPlaceholder="비밀번호를 입력해 주세요"
@@ -98,7 +110,7 @@ export default function LoginForm() {
         toggleSightPwd={toggleSightPwd}
         handleOnChange={handleOnChangePwd}
       />
-      <AlertLabel isError={isPwdError}>비번 에러 경고 표시</AlertLabel>
+      <AlertLabel isError={isPwdError}>비밀번호가 일치하지 않습니다.</AlertLabel>
       <StLoginBtn active={!isEmailEmpty && !isPwdEmpty} onClick={postLogin}>
         로그인
       </StLoginBtn>
