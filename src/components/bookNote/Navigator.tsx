@@ -1,20 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-export default function Navigator() {
-  const [navIndex, setNavIndex] = useState<number>(0);
+interface NavigatorProps {
+  navIndex: number;
+  onNav: (idx: number) => void;
+}
+
+export default function Navigator(props: NavigatorProps) {
+  const { navIndex, onNav } = props;
 
   return (
     <StNav>
       <StUl>
         <StList>
-          <StLink1 to="" onClick={() => setNavIndex(0)} index={navIndex}>
+          <StLink1 to="" onClick={() => onNav(0)} index={navIndex}>
             독서 전
           </StLink1>
         </StList>
         <StList>
-          <StLink2 to="peri" onClick={() => setNavIndex(1)} index={navIndex}>
+          <StLink2 to="peri" onClick={() => onNav(1)} index={navIndex}>
             독서 후
           </StLink2>
         </StList>

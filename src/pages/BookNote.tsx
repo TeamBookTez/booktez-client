@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
@@ -39,6 +39,14 @@ export default function BookNote() {
   const [periNote, setPeriNote] = useState<Question[]>([]);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const { pathname } = useLocation();
+  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const [navIndex, setNavIndex] = useState<number>(initIndex);
+
+  const handleNav = (idx: number) => {
+    setNavIndex(idx);
+  };
 
   const navigate = useNavigate();
 
@@ -117,6 +125,7 @@ export default function BookNote() {
     patchReview();
     setOpenModal(false);
     navigate("/book-note/peri");
+    handleNav(1);
   };
 
   const handleCancel = () => {
@@ -301,7 +310,7 @@ export default function BookNote() {
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator />
+        <Navigator navIndex={navIndex} onNav={handleNav} />
         <IcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet
