@@ -15,8 +15,6 @@ export default function TopBanner(props: TopBannerProps) {
 
   const { img, nickname, email } = userInfo;
 
-  console.log(isLogin);
-
   return (
     <StBanner>
       <StProfile>

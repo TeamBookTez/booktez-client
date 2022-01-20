@@ -50,6 +50,10 @@ export default function BookCard(props: BookCardProps) {
 const StCardWrapper = styled.div`
   position: relative;
 
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.orange200};
+    cursor: pointer;
+  }
   &:hover > svg {
     display: block;
   }
@@ -66,11 +70,6 @@ const StBookCard = styled.article`
 
   border-radius: 1.6rem;
 
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.orange200};
-  }
   &:hover > div > header {
     width: 16.8rem;
   }
