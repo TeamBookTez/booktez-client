@@ -10,7 +10,6 @@ import {
   Main,
   MyPage,
   Signup,
-  Test,
   ToBe,
 } from "../pages";
 import Landing from "../pages/Landing";
@@ -60,15 +59,7 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route
-          path="*"
-          element={
-            <p>
-              404 에러 얍얍
-              <Test />
-            </p>
-          }
-        />
+        <Route path="*" element={<p>404 에러 얍얍</p>} />
       </Routes>
     </BrowserRouter>
   );
