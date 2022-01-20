@@ -34,7 +34,7 @@ export default function PeriNote() {
       ]
     >();
 
-  const REVIEWID = 34;
+  const REVIEWID = 3;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 

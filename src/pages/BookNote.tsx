@@ -22,7 +22,7 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 34;
+  const REVIEWID = 3;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -99,6 +99,14 @@ export default function BookNote() {
   const patchReview = async () => {
     await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
 
+    if (!isPrevented) {
+      const newData: Question[] = [];
+
+      preNote.questionList.map((question) => {
+        newData.push({ depth: 1, question, answer: [] });
+      });
+      setPeriNote(newData);
+    }
     setIsPrevented(true);
     // 연결 확인 용
     // console.log("res", res);
