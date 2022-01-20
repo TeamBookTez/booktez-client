@@ -2,7 +2,12 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
-import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
+import {
+  DetailArticleWrapperLabeling,
+  ExamplePeriNote,
+  ExamplePreNote,
+  ExamplePreNoteLabeling,
+} from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { reviewData } from "../utils/mockData";
 
@@ -11,13 +16,17 @@ export default function DetailExample() {
   // const _token = localStorage.getItem("booktez-token");
   const navigate = useNavigate();
 
+  const handlePeriCarousel = () => {
+    console.log("냠");
+  };
+
   return (
     <>
       <StNoteModalWrapper>
         <StIcCancelWhite onClick={() => navigate(-1)} />
         <StBookTitleUp>{reviewData?.bookTitle}</StBookTitleUp>
         <DetailArticleWrapper title="독서 전 단계">
-          <ExamplePreNote
+          <ExamplePreNoteLabeling
             answerOne={reviewData?.answerOne}
             answerTwo={reviewData?.answerTwo}
             questionList={reviewData?.questionList}
@@ -26,11 +35,12 @@ export default function DetailExample() {
         </DetailArticleWrapper>
         {isLogin && (
           <StMarginTop>
-            <DetailArticleWrapper title="독서 중 단계">
+            <DetailArticleWrapperLabeling title="독서 중 단계" handlePeriCarousel={handlePeriCarousel}>
               <ExamplePeriNote answerThree={reviewData?.answerThree} />
-            </DetailArticleWrapper>
+            </DetailArticleWrapperLabeling>
           </StMarginTop>
         )}
+        {/* <PeriModal /> */}
       </StNoteModalWrapper>
     </>
   );
