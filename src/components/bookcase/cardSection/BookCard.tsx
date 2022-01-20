@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
@@ -7,9 +7,10 @@ import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
+  handleBookDelete: () => void;
 }
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo } = props;
+  const { bookcaseInfo, handleBookDelete } = props;
   const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
@@ -31,7 +32,7 @@ export default function BookCard(props: BookCardProps) {
           <StIcBin onClick={handlePopUp} />
         </StTextWrapper>
       </StBookCard>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
     </>
   );
 }

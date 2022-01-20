@@ -14,8 +14,18 @@ export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const reviewId = 4; // 리뷰 id 를 받아와 처리
-  const token = `${process.env.REACT_APP_TEST_TOKEN}`;
+
+  const tempToken = localStorage.getItem("booktez-token");
+  const token = tempToken ? tempToken : "";
+
   const navigate = useNavigate();
+
+  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
+  //
 
   const getReview = async (key: string, token: string) => {
     try {
@@ -60,7 +70,7 @@ export default function DetailBookNote() {
           </DetailArticleWrapper>
         </StMarginTop>
       </StNoteModalWrapper>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
     </>
   );
 }

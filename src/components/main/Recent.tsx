@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -26,6 +27,13 @@ export default function Recent() {
 
   const tempBookList: TempBookInfo[] = [tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo, tempBookInfo];
 
+  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
+  //
+
   return (
     <section>
       <StHeader>
@@ -37,7 +45,13 @@ export default function Recent() {
         ) : null}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {isDefault ? <Empty /> : tempBookList.map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} />)}
+        {isDefault ? (
+          <Empty />
+        ) : (
+          tempBookList.map((tempInfo, idx) => (
+            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
+          ))
+        )}
       </StBookWrapper>
     </section>
   );

@@ -8,7 +8,7 @@ export const KAKAO = axios.create({
 });
 
 // header에 맞춰서 axios를 만들어줌
-export const client = (token?: string) => {
+export const client = (token?: string | null) => {
   let headers;
 
   if (token) {
