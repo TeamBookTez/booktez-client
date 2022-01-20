@@ -16,6 +16,8 @@ export default function BookCard(props: BookCardProps) {
   const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
+  const navigate = useNavigate();
+
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
   };
