@@ -3,21 +3,27 @@ import styled from "styled-components";
 import { UserInfo } from "../../pages/MyPage";
 import { BookComment } from ".";
 
-export default function BottomContent(props: { userInfo: UserInfo }) {
-  const { userInfo } = props;
+interface BottomContentProps {
+  userInfo: UserInfo;
+  isLogin: boolean;
+}
+export default function BottomContent(props: BottomContentProps) {
+  const { userInfo, isLogin } = props;
   const { reviewCount } = userInfo;
 
   return (
     <StWrapper>
-      <StCountBook>
-        <StImgWrapper>
-          <img src="" alt="" />
-        </StImgWrapper>
-        <StContentWrapper>
-          <StBooksNum>{reviewCount}</StBooksNum>
-          <BookComment booksNum={reviewCount} />
-        </StContentWrapper>
-      </StCountBook>
+      {isLogin && (
+        <StCountBook>
+          <StImgWrapper>
+            <img src="" alt="" />
+          </StImgWrapper>
+          <StContentWrapper>
+            <StBooksNum>{reviewCount}</StBooksNum>
+            <BookComment booksNum={reviewCount} />
+          </StContentWrapper>
+        </StCountBook>
+      )}
       <StServiceWrapper>
         <StServiceInfo>
           <StInfoTitle>개인정보 처리 방침</StInfoTitle>

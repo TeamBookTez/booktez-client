@@ -23,22 +23,43 @@ export default function MyPage() {
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
   const [dataa, setDataa] = useState<string>("");
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const localToken = tempToken ? tempToken : "";
 
+  const authCheckKey = "/auth/check";
   const infoKey = "/user/myInfo";
   const patchImgKey = "/user/img";
 
-  const getInfo = async (token: string, key: string) => {
+  const getInfo = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
 
-      setUserInfo(data.data);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
+      if (data.success) {
+        setUserInfo(data.data);
       }
+    } catch (err) {
+      // if (axios.isAxiosError(err)) {
+      // console.log("err", err.response?.data);
+      // }
+    }
+  };
+
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      // if (axios.isAxiosError(err)) {
+      // }
     }
   };
 
@@ -51,29 +72,37 @@ export default function MyPage() {
       formData.append("img", imgFile);
 
       try {
-        const { data } = await patchData(token, patchImgKey, formData);
+        const { data } = await patchData(localToken, patchImgKey, formData);
 
         if (data.success) {
           setDataa(data.img);
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.log("err", err.response?.data);
-        }
+        // if (axios.isAxiosError(err)) {
+        // console.log("err", err.response?.data);
+        // }
       }
     }
   };
 
+  const handleIsLogin = () => {
+    setIsLogin((prev) => !prev);
+  };
+
   useEffect(() => {
-    getInfo(token, infoKey);
+    getInfo(infoKey, localToken);
   }, [dataa]);
+
+  useEffect(() => {
+    getLogin(authCheckKey, localToken);
+  }, [isLogin]);
 
   return (
     <>
       <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} onImageChange={handleImageChange} />
-      <BottomContent userInfo={userInfo} />
+      <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} />
+      <BottomContent userInfo={userInfo} isLogin={isLogin} />
     </>
   );
 }
