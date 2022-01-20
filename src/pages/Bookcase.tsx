@@ -22,14 +22,34 @@ export default function Bookcase() {
 
   const [bookDelete, setBookDelete] = useState<boolean>(false);
 
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   const handleBookDelete = () => {
     setBookDelete(!bookDelete);
   };
   // 로그인 정보를 이용할때 아래 두 줄의 코드
   // const userToken = localStorage.getItem("booktez-token");
   // const token = `${userToken}`;
+
   const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const localToken = TOKEN ? TOKEN : "";
+  const authCheckKey = "/auth/check";
+
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      // if (axios.isAxiosError(err)) {
+      // }
+    }
+  };
 
   const getBookcase = async (key: string, token: string) => {
     try {
@@ -67,14 +87,18 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase("/book", userToken);
+    getBookcase("/book", localToken);
   }, [bookDelete]);
+
+  useEffect(() => {
+    getLogin(authCheckKey, localToken);
+  }, []);
 
   return (
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete]} />
+      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete, isLogin]} />
     </>
   );
 }

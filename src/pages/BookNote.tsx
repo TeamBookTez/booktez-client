@@ -14,6 +14,10 @@ interface ObjKey {
   [key: string]: string | string[] | number;
 }
 
+interface IsLoginState {
+  isLogin: boolean;
+  reviewId: number;
+}
 export interface PreNoteData extends ObjKey {
   answerOne: string;
   answerTwo: string;
@@ -22,9 +26,12 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  // 로그인 및 리뷰 아이디는 규민이가 한 state 넘기는 걸로 받아오기
-  const isLogin = true;
-  const reviewId = 2;
+  const { state } = useLocation();
+  const isLoginState = state as IsLoginState;
+  const reviewId = isLoginState.reviewId;
+  const isLogin = isLoginState.isLogin;
+
+  console.log("isLogin", isLogin, "reviewId", reviewId);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";

@@ -9,9 +9,10 @@ import { PopUpDelete } from "../../common";
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
   handleBookDelete: () => void;
+  isLogin: boolean;
 }
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, handleBookDelete } = props;
+  const { bookcaseInfo, handleBookDelete, isLogin } = props;
   const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
@@ -21,9 +22,18 @@ export default function BookCard(props: BookCardProps) {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
+  const navigate = useNavigate();
+
+  console.log(bookcaseInfo);
+  const moveBookNoteHandler = () => {
+    if (isLogin) {
+      navigate("/book-note", { state: { isLogin, reviewId } });
+    }
+  };
+
   return (
-    <StCardWrapper>
-      <StBookCard onClick={() => navigate("/book-note")}>
+    <>
+      <StBookCard onClick={moveBookNoteHandler}>
         <StImgWrapper>
           <StImg src={thumbnail} alt={`도서 ${title}의 이미지`} />
         </StImgWrapper>

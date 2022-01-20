@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import AddBookDefault from "../components/addBook/AddBookDefault";
 import BookList from "../components/addBook/BookList";
 import SearchBar from "../components/addBook/SearchBar";
 import { MainHeader } from "../components/common";
@@ -59,7 +60,7 @@ export default function AddBook() {
     <>
       <MainHeader>책 추가</MainHeader>
       <SearchBar debounceQuery={debounceQuery} onDebounceQuery={handleDebounceQuery} />
-      {debounceQuery ? <BookList books={books} /> : <></>}
+      {debounceQuery ? <BookList books={books} /> : <AddBookDefault />}
     </>
   );
 }
