@@ -58,5 +58,5 @@ const StExampleLink = styled(Link)`
   background-color: ${({ theme }) => theme.colors.gray100};
 
   color: ${({ theme }) => theme.colors.white};
-  ${({ theme }) => theme.fonts.button2}
+  ${({ theme }) => theme.fonts.button}
 `;

@@ -29,7 +29,6 @@ export default function Recent() {
       } = await getData(key, token);
 
       setBooksRecent(books);
-      console.log(booksRecent);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -47,19 +46,19 @@ export default function Recent() {
     <section>
       <StHeader>
         <StHeading3>최근 작성한 북노트</StHeading3>
-        {!isDefault ? (
+        {booksRecent.length > 0 && (
           <StButton type="button">
             <Link to="/main/bookcase">전체보기</Link>
           </StButton>
-        ) : null}
+        )}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {isDefault ? (
-          <Empty />
-        ) : (
+        {booksRecent.length > 0 ? (
           booksRecent.map((tempInfo, idx) => (
             <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
           ))
+        ) : (
+          <Empty />
         )}
       </StBookWrapper>
     </section>
