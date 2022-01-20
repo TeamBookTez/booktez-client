@@ -22,17 +22,20 @@ export default function MainHeader(props: MainHeaderProps) {
   const isMypage = pathname === "/main/my-page" || pathname === "/main/to-be" ? "none" : "block";
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const localToken = tempToken ? tempToken : "";
 
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
   const getLogin = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
       const status = data.status;
 
-      if (status === 200) {
-        setIsLogin(true);
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -42,7 +45,7 @@ export default function MainHeader(props: MainHeaderProps) {
   };
 
   useEffect(() => {
-    getLogin("/auth/check", token);
+    getLogin("/auth/check", localToken);
   }, []);
 
   return (
