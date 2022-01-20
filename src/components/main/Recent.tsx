@@ -50,9 +50,9 @@ export default function Recent() {
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
         {booksRecent.length > 0 ? (
-          booksRecent.map((tempInfo, idx) => (
-            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
-          ))
+          booksRecent
+            .slice(-booksRecent.length, -(booksRecent.length - 5))
+            .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />)
         ) : (
           <Empty />
         )}
