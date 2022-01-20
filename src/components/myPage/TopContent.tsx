@@ -10,11 +10,12 @@ interface TopContentProps {
   userInfo: UserInfo;
   isLogin: boolean;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onLogout: () => void;
 }
 
 export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
-  const { userInfo, isLogin, onImageChange } = props;
+  const { userInfo, isLogin, onImageChange, onLogout } = props;
 
   const handleMoveLogin = () => {
     navigate("/login");
@@ -24,6 +25,7 @@ export default function TopContent(props: TopContentProps) {
     localStorage.removeItem("booktez-token");
     localStorage.removeItem("booktez-nickname");
     navigate("/main");
+    onLogout();
   };
 
   return (
@@ -46,20 +48,19 @@ const StWrapper = styled.section`
   align-items: flex-end;
 
   width: 100%;
-  height: 34.2rem; // 임시
+  height: 29.4rem;
 
-  margin-bottom: 5.3rem;
+  margin-bottom: 10rem;
   padding: 0 4rem;
 `;
 
 const StLoginButton = styled(Button)`
+  width: 13.5rem;
   height: 4.6rem;
-
-  padding: 0 3.75rem;
 
   border-radius: 0.8rem;
 
-  ${({ theme }) => theme.fonts.button2};
+  ${({ theme }) => theme.fonts.button};
 `;
 
 const StLogoutBtn = styled(StLoginButton)`

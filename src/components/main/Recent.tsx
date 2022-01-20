@@ -106,4 +106,6 @@ const StBookWrapper = styled.section<{ isdefault: boolean }>`
   flex-direction: ${({ isdefault }) => (isdefault ? "column" : "row")};
   align-items: center;
   justify-content: ${({ isdefault }) => (isdefault ? "center" : "normal")};
+
+  margin-left: 2rem;
 `;

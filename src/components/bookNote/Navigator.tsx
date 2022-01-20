@@ -15,6 +15,11 @@ export default function Navigator(props: NavigatorProps) {
 
   const navigate = useNavigate();
 
+  const goToPre = () => {
+    navigate("", { state: isLoginState });
+    onNav(0);
+  };
+
   const goToPeri = (isPrevented: boolean) => {
     if (isPrevented) {
       navigate("peri", { state: isLoginState });
@@ -26,12 +31,7 @@ export default function Navigator(props: NavigatorProps) {
     <StNav>
       <StUl>
         <li>
-          <StLink1
-            onClick={() => {
-              navigate("", { state: isLoginState });
-              onNav(0);
-            }}
-            index={navIndex}>
+          <StLink1 onClick={() => goToPre} index={navIndex}>
             독서 전
           </StLink1>
         </li>

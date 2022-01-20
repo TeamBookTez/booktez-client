@@ -15,18 +15,14 @@ export default function Login() {
       <LoginNavSection isAniTime={isAniTime} onAniChange={handleAni} />
       <StMainWrapper isAniTime={isAniTime}>
         <StArticle>
-          <StH2>북스테어즈 로그인</StH2>
+          <StH2>이미 서재가 있으신가요?</StH2>
           <StH3>
-            북테에 로그인 ~~~ 더 아랓난 독서법 ~~~
+            북스테어즈에 로그인하고
             <br />
-            즐기세요롱 오유유
+            서재에서 독서를 이어가세요.
           </StH3>
           <LoginForm />
-          <StContact>
-            이메일/비밀번호를 잊어버리셨나요?
-            <br />
-            여기로 문의주세요.
-          </StContact>
+          <StContact>이메일/비밀번호를 잊어버리셨다면?</StContact>
         </StArticle>
       </StMainWrapper>
     </StPageWrapper>

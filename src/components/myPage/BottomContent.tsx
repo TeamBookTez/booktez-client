@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { ImgReadNum } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
 import { BookComment } from ".";
 
@@ -16,7 +17,7 @@ export default function BottomContent(props: BottomContentProps) {
       {isLogin && (
         <StCountBook>
           <StImgWrapper>
-            <img src="" alt="" />
+            <img src={ImgReadNum} alt="읽은 책 수" />
           </StImgWrapper>
           <StContentWrapper>
             <StBooksNum>{reviewCount}</StBooksNum>
@@ -27,19 +28,19 @@ export default function BottomContent(props: BottomContentProps) {
       <StServiceWrapper>
         <StServiceInfo>
           <StInfoTitle>개인정보 처리 방침</StInfoTitle>
-          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
+          <StInfoDesc>북스테어즈는 개인정보보호 규정, 가이드라인을 준수하고 있어요.</StInfoDesc>
         </StServiceInfo>
         <StServiceInfo>
-          <StInfoTitle>문의하기</StInfoTitle>
-          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
+          <StInfoTitle>서비스 문의</StInfoTitle>
+          <StInfoDesc>북스테어즈를 이용하며 문의하고 싶은 점들을 남겨주세요</StInfoDesc>
         </StServiceInfo>
         <StServiceInfo>
-          <StInfoTitle>북스테어즈 피드백 남기기</StInfoTitle>
-          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
+          <StInfoTitle>피드백 남기기</StInfoTitle>
+          <StInfoDesc>북스테어즈를 사용하시면서 느낀 점들에 대해 남겨주세요</StInfoDesc>
         </StServiceInfo>
         <StServiceInfo>
-          <StInfoTitle>북스테어즈를 만든 사람들</StInfoTitle>
-          <StInfoDesc>북스테어즈를 만든 팀 북테즈를 소개해드릴게요 </StInfoDesc>
+          <StInfoTitle>함께하는 사람들</StInfoTitle>
+          <StInfoDesc>북스테어즈를 만들어가는 팀원들을 소개할게요.</StInfoDesc>
         </StServiceInfo>
       </StServiceWrapper>
     </StWrapper>
@@ -51,25 +52,37 @@ const StWrapper = styled.section`
 
   width: 100%;
   height: 41%;
+
   padding: 0 4rem 7rem 4rem;
 `;
 
-// 로그인 여부에 따라 삼항연산자 분기 처리
 const StCountBook = styled.article`
-  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 25.9rem;
+  height: 30.3rem;
 
   margin-right: 4rem;
 
   border-radius: 2rem;
 
-  background-color: ${({ theme }) => theme.colors.white400};
+  background-color: #fbedea;
 `;
 
 const StImgWrapper = styled.div`
-  width: 100%;
-  height: 61%;
+  width: 21.1rem;
+  height: 16.3rem;
+
+  margin-bottom: 2.5rem;
 
   border-radius: 2rem 2rem 0 0;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const StContentWrapper = styled.div`
@@ -87,12 +100,12 @@ const StBooksNum = styled.strong`
 `;
 
 const StServiceWrapper = styled.div`
+  width: 100rem;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 3rem;
   row-gap: 3rem;
-
-  width: 100%;
 `;
 
 const StServiceInfo = styled.article`
