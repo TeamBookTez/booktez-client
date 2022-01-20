@@ -10,9 +10,7 @@ export default function Banner() {
       <StContent>
         북스테이즈만의 독서법을 사용하여 책을 더욱 효율적으로 체험해보며 내가 가지고 있는 지식을 한계단 아뉘면 두계단
       </StContent>
-      <StExBtn>
-        <StLink to="/detail-example">적용 사례</StLink>
-      </StExBtn>
+      <StExampleLink to="/detail-example">적용 사례</StExampleLink>
       <img src={ImgGraphic} alt="일러스트" />
     </StWrapper>
   );
