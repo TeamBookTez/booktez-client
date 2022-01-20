@@ -28,6 +28,10 @@ export default function MyPage() {
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
+  const handleLogout = () => {
+    setIsLogin(false);
+  };
+
   useEffect(() => {
     getLogin("/auth/check", localToken);
   }, [isLogin]);
@@ -97,7 +101,7 @@ export default function MyPage() {
   return (
     <>
       <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} />
+      <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
       <BottomContent userInfo={userInfo} isLogin={isLogin} />
     </>
   );

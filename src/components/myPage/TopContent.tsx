@@ -10,11 +10,12 @@ interface TopContentProps {
   userInfo: UserInfo;
   isLogin: boolean;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onLogout: () => void;
 }
 
 export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
-  const { userInfo, isLogin, onImageChange } = props;
+  const { userInfo, isLogin, onImageChange, onLogout } = props;
 
   const handleMoveLogin = () => {
     navigate("/login");
@@ -24,6 +25,7 @@ export default function TopContent(props: TopContentProps) {
     localStorage.removeItem("booktez-token");
     localStorage.removeItem("booktez-nickname");
     navigate("/main");
+    onLogout();
   };
 
   return (
