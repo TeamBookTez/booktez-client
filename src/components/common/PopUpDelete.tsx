@@ -31,7 +31,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
       onPopUp();
       handleBookDelete();
       if (pathname === "/detail-book-note") {
-        navigate("/main");
+        navigate("/main/bookcase");
       }
     } catch (err) {
       alert(err);
