@@ -101,12 +101,7 @@ export default function MyPage() {
   return (
     <>
       <MainHeader>마이페이지</MainHeader>
-      <TopContent
-        userInfo={userInfo}
-        onImageChange={handleImageChange}
-        isLogin={isLogin}
-        handleIsLogin={handleIsLogin}
-      />
+      <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} />
       <BottomContent userInfo={userInfo} isLogin={isLogin} />
     </>
   );

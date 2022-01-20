@@ -10,13 +10,12 @@ import { TopBanner } from ".";
 interface TopContentProps {
   userInfo: UserInfo;
   isLogin: boolean;
-  handleIsLogin: () => void;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
-  const { userInfo, isLogin, handleIsLogin, onImageChange } = props;
+  const { userInfo, isLogin, onImageChange } = props;
 
   const handleMoveLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate("/login");
@@ -25,7 +24,7 @@ export default function TopContent(props: TopContentProps) {
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     localStorage.removeItem("booktez-token");
     localStorage.removeItem("booktez-nickname");
-    handleIsLogin();
+    navigate("/main");
   };
 
   return (
