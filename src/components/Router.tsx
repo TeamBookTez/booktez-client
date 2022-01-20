@@ -78,9 +78,9 @@ export default function Router() {
         </Route>
         <Route path="/detail-book-note" element={<DetailBookNote />} />
         <Route path="/detail-example" element={<DetailExample />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={isLogin ? <Navigate to="/main" /> : <Login />} />
         {/* 회원가입 1,2,3 나눔 */}
-        <Route path="/signup/*" element={<Signup />}>
+        <Route path="/signup/*" element={isLogin ? <Navigate to="/main" /> : <Signup />}>
           <Route path="" element={<FirstStep />} />
           <Route path="2" element={<SecondStep />} />
           <Route path="3" element={<ThirdStep />} />
