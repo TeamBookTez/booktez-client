@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
+import { ImgLogin } from "../../assets/images";
 import { NavHeader } from "../common";
 import { Button } from "../common/styled/Button";
 
@@ -24,16 +25,16 @@ export default function SignupNav(props: SignupNavProps) {
       <NavHeader logocolor={"#242424"} />
       <StArticle>
         <StH2>
-          북스테어즈에 오신 걸<br />
-          환영합니다아ㅏㅇ
+          나만의 서재를
+          <br />
+          만들어볼까요?
         </StH2>
         <StH3>
-          북테즈와 함께 똑또또칸 사람이 되어보아용
+          지금 북스테어즈에 회원가입하고
           <br />
-          회원가입하시면~~~나만의 서~~
+          서재에 북노트를 쌓아보세요!
         </StH3>
-        {/* <img src="#" alt="북테즈 이미지" /> */}
-        <StTempImg>이미지 칸</StTempImg>
+        <img src={ImgLogin} alt="북테즈 이미지" />
         <StSignupBtn type="button" onClick={handleGoSignupBtn}>
           회원가입
         </StSignupBtn>
@@ -69,7 +70,7 @@ const StSection = styled.section<{ isAniTime: boolean }>`
 
   min-width: 48rem;
 
-  background-color: ${({ theme }) => theme.colors.white500};
+  background-color: ${({ theme }) => theme.colors.gray200};
   border-radius: 0 2rem 2rem 0;
 `;
 
@@ -78,6 +79,10 @@ const StArticle = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & > img {
+    margin-bottom: 5.3rem;
+  }
 `;
 
 const StH2 = styled.h2`
@@ -85,7 +90,7 @@ const StH2 = styled.h2`
 
   ${({ theme }) => theme.fonts.header0}
   text-align: center;
-  color: ${({ theme }) => theme.colors.gray100};
+  color: ${({ theme }) => theme.colors.white200};
 `;
 
 const StH3 = styled.h3`
@@ -94,17 +99,7 @@ const StH3 = styled.h3`
   text-align: center;
 
   ${({ theme }) => theme.fonts.body2}
-  color: ${({ theme }) => theme.colors.gray300};
-`;
-
-// 이미지 칸 임의의 css
-const StTempImg = styled.div`
-  width: 20.1rem;
-  height: 17.7rem;
-
-  margin-bottom: 5.2rem;
-
-  background-color: white;
+  color: ${({ theme }) => theme.colors.white300};
 `;
 
 const StSignupBtn = styled(Button)`
