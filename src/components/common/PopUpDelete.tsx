@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -34,7 +35,9 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
         navigate("/main/bookcase");
       }
     } catch (err) {
-      alert(err);
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 
