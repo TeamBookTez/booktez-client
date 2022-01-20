@@ -133,10 +133,17 @@ export default function BookNote() {
   const saveReview = async () => {
     await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
     setIsSave(true);
-    setTimeout(() => {
+  };
+
+  useEffect(() => {
+    const saveToast = setTimeout(() => {
       setIsSave(false);
     }, 3000);
-  };
+
+    return () => {
+      clearTimeout(saveToast);
+    };
+  }, [saveReview]);
 
   const patchReview = async () => {
     await patchData(userToken, `/review/before/${reviewId}`, preNote);
