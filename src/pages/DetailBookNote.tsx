@@ -55,42 +55,46 @@ export default function DetailBookNote() {
 
   return (
     <>
-      {isLoading ? (
+      {isLogin && isLoading ? (
         <Loading />
       ) : (
         <>
           <StNoteModalWrapper>
-        {isPopUp ? (
-          <></>
-        ) : (
-          <Link to={fromUrl}>
-            <StIcCancelWhite />
-          </Link>
-        )}
-        <StBookTitle>{reviewData?.bookTitle}</StBookTitle>
-        <StBtnWrapper>
-          <IcDeleteNote onClick={handlePopUp} />
-          <IcModifyNote
-            onClick={() =>
-              navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post", isLogin } })
-            }
-          />
-        </StBtnWrapper>
-        <DetailArticleWrapper title="독서 전 단계">
-          <ExamplePreNote
-            answerOne={reviewData?.answerOne}
-            answerTwo={reviewData?.answerTwo}
-            questionList={reviewData?.questionList}
-            isLogin={true}
-          />
-        </DetailArticleWrapper>
-        <StMarginTop>
-          <DetailArticleWrapper title="독서 중 단계">
-            <ExamplePeriNote answerThree={reviewData?.answerThree} />
-          </DetailArticleWrapper>
-        </StMarginTop>
-      </StNoteModalWrapper>
-          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
+            {isPopUp ? (
+              <></>
+            ) : (
+              <Link to={fromUrl}>
+                <StIcCancelWhite />
+              </Link>
+            )}
+            <StBookTitle>{reviewData?.bookTitle}</StBookTitle>
+            <StBtnWrapper>
+              <IcDeleteNote onClick={handlePopUp} />
+              <IcModifyNote
+                onClick={() =>
+                  navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post", isLogin } })
+                }
+              />
+            </StBtnWrapper>
+            <DetailArticleWrapper title="독서 전 단계">
+              <ExamplePreNote
+                answerOne={reviewData?.answerOne}
+                answerTwo={reviewData?.answerTwo}
+                questionList={reviewData?.questionList}
+                isLogin={true}
+              />
+            </DetailArticleWrapper>
+            <StMarginTop>
+              <DetailArticleWrapper title="독서 중 단계">
+                <ExamplePeriNote answerThree={reviewData?.answerThree} />
+              </DetailArticleWrapper>
+            </StMarginTop>
+          </StNoteModalWrapper>
+          {isPopUp ? (
+            <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} />
+          ) : (
+            <></>
+          )}
         </>
       )}
     </>

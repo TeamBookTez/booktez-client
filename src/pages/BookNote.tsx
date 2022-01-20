@@ -131,12 +131,13 @@ export default function BookNote() {
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
     const { answerOne, answerTwo } = preNote;
+
     await patchData(userToken, `/review/${reviewId}`, {
       answerOne,
       answerTwo,
       answerThree: { root: periNote },
     });
-    
+
     setIsSave(true);
     setTimeout(() => {
       setIsSave(false);

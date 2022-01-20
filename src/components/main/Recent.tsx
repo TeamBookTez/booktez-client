@@ -54,7 +54,7 @@ export default function Recent(props: RecentProps) {
 
   return (
     <section>
-      {isLoading ? (
+      {isLogin && isLoading ? (
         <Loading />
       ) : (
         <>

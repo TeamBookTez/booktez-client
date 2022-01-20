@@ -103,7 +103,7 @@ export default function MyPage() {
 
   return (
     <>
-      {isLoading ? (
+      {isLogin && isLoading ? (
         <Loading />
       ) : (
         <>

@@ -86,7 +86,7 @@ export default function Bookcase() {
 
   return (
     <>
-      {isLoading ? (
+      {isLogin && isLoading ? (
         <Loading />
       ) : (
         <>
