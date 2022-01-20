@@ -42,6 +42,23 @@ export default function MyPage() {
     }
   };
 
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      // if (axios.isAxiosError(err)) {
+      // }
+    }
+  };
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
 
