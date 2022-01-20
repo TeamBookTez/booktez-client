@@ -14,6 +14,7 @@ export { default as ImgMainDefault } from "./mainDefault.png";
 export { default as ImgMypageBanner } from "./mypageBannerImage.png";
 export { default as ImgReadNum } from "./mypageReadImage.png";
 export { default as ImgNull } from "./nullImage.jpeg";
+export { default as ImgPreBook } from "./preBookImage.png";
 export { default as ImgSignupFirst } from "./signupFirstImage.png";
 export { default as ImgSignupSecond } from "./signupSecondImage.png";
 export { default as ImgSignupThird } from "./signupThirdImage.png";
