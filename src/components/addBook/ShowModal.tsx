@@ -34,7 +34,7 @@ export default function ShowModal(props: ShowModalProps) {
         localStorage.setItem("booktez-data", JSON.stringify(bookInfo));
       }
 
-      nav("/book-note");
+      nav("/book-note", { state: res.data.data.isLogin });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

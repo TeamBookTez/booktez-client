@@ -22,6 +22,8 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
+  // const {state} = useLocation();
+  // { isLogin: boolean, reviewid: number};
   const REVIEWID = 34;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";

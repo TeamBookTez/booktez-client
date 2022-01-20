@@ -29,7 +29,7 @@ export default function Bookcase() {
   // const userToken = localStorage.getItem("booktez-token");
   // const token = `${userToken}`;
   const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const localToken = TOKEN ? TOKEN : "";
 
   const getBookcase = async (key: string, token: string) => {
     try {
@@ -67,7 +67,7 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    getBookcase("/book", userToken);
+    getBookcase("/book", localToken);
   }, [bookDelete]);
 
   return (
