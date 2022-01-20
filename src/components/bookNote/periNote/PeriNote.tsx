@@ -59,9 +59,8 @@ export default function PeriNote() {
 
   const submitReview = async (isComplete: boolean) => {
     const progress = isComplete ? 4 : 3;
-    const res = await patchData(userToken, `/review/now/${reviewId}`, { answerThree: { root: periNote }, progress });
 
-    console.log("res", res);
+    await patchData(userToken, `/review/now/${reviewId}`, { answerThree: { root: periNote }, progress });
   };
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {

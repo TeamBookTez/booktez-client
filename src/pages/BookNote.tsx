@@ -97,7 +97,7 @@ export default function BookNote() {
           setPeriNote([]);
         }
 
-        // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+        // 요청에 성공했으나, 답변이 채워져있다면,
         // 답변 추가/삭제 막기
         if (answerOne && answerTwo && questionList.length) {
           setIsPrevented(true);
@@ -117,7 +117,8 @@ export default function BookNote() {
     }
   };
 
-  const syncQuestion = () => {
+  const syncQuestion = async () => {
+    // 아직 다음 계단을 누르지 않은 경우
     if (!isPrevented) {
       const newData: Question[] = [];
 
@@ -125,6 +126,7 @@ export default function BookNote() {
         newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
       });
       setPeriNote(newData);
+      await patchData(userToken, `/review/now/${reviewId}`, { answerThree: { root: periNote }, progress: 2 });
     }
   };
 
@@ -132,11 +134,14 @@ export default function BookNote() {
   const saveReview = async () => {
     const { answerOne, answerTwo } = preNote;
 
+    // review patch에 questionList가 없어서 questionList의 내용을 저장하려면 API 요청을 두 번 보내야 함
     await patchData(userToken, `/review/${reviewId}`, {
       answerOne,
       answerTwo,
       answerThree: { root: periNote },
     });
+
+    await patchData(userToken, `/review/before/${reviewId}`, preNote);
 
     setIsSave(true);
     setTimeout(() => {
@@ -331,6 +336,10 @@ export default function BookNote() {
       setAblePatch(true);
     }
   }, [preNote]);
+
+  useEffect(() => {
+    console.log("periNote", periNote);
+  }, [periNote]);
 
   useEffect(() => {
     getReview();

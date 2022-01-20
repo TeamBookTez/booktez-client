@@ -12,6 +12,7 @@ import Loading from "../common/Loading";
 interface RecentProps {
   isLogin: boolean;
 }
+
 export default function Recent(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
