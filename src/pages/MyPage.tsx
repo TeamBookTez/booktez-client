@@ -23,9 +23,10 @@ export default function MyPage() {
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
   const [dataa, setDataa] = useState<string>("");
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const localToken = tempToken ? tempToken : "";
 
   const infoKey = "/user/myInfo";
   const patchImgKey = "/user/img";
@@ -42,6 +43,24 @@ export default function MyPage() {
     }
   };
 
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
 
@@ -51,7 +70,7 @@ export default function MyPage() {
       formData.append("img", imgFile);
 
       try {
-        const { data } = await patchData(token, patchImgKey, formData);
+        const { data } = await patchData(localToken, patchImgKey, formData);
 
         if (data.success) {
           setDataa(data.img);
@@ -65,15 +84,28 @@ export default function MyPage() {
     }
   };
 
+  const handleIsLogin = () => {
+    setIsLogin((prev) => !prev);
+  };
+
   useEffect(() => {
-    getInfo(token, infoKey);
+    getInfo(localToken, infoKey);
   }, [dataa]);
+
+  useEffect(() => {
+    getLogin("/auth/check", localToken);
+  }, [isLogin]);
 
   return (
     <>
       <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} onImageChange={handleImageChange} />
-      <BottomContent userInfo={userInfo} />
+      <TopContent
+        userInfo={userInfo}
+        onImageChange={handleImageChange}
+        isLogin={isLogin}
+        handleIsLogin={handleIsLogin}
+      />
+      <BottomContent userInfo={userInfo} isLogin={isLogin} />
     </>
   );
 }
