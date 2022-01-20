@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { deleteData, getData } from "../utils/lib/api";
+import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];

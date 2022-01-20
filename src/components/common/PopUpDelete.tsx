@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ImgdeletePopUp } from "../../assets/images";
@@ -26,10 +27,12 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
       onPopUp();
       handleBookDelete();
       if (pathname === "/detail-book-note") {
-        navigate("/main");
+        navigate("/main/bookcase");
       }
     } catch (err) {
-      alert(err);
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 

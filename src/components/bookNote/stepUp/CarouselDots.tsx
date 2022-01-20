@@ -1,8 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { before2 } from "../../../utils/mockData";
-
 interface CarouselProps {
   slideIndex: number;
   setSlideIndex: React.Dispatch<React.SetStateAction<number>>;

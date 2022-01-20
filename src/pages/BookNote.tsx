@@ -27,10 +27,15 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const { state } = useLocation();
+  const navigate = useNavigate();
+  const { pathname, state } = useLocation();
+  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const [navIndex, setNavIndex] = useState<number>(initIndex);
+
   const isLoginState = state as IsLoginState;
   const isLogin = isLoginState.isLogin;
   const reviewId = isLoginState.reviewId;
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -48,15 +53,9 @@ export default function BookNote() {
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const { pathname } = useLocation();
-  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
-  const [navIndex, setNavIndex] = useState<number>(initIndex);
-
   const handleNav = (idx: number) => {
     setNavIndex(idx);
   };
-
-  const navigate = useNavigate();
 
   const handleToggleDrawer = (i: number) => {
     setIsDrawerOpen(true);
@@ -87,8 +86,9 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
+        const questions = questionList ? questionList : [""];
 
-        setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+        setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
         setTitle(bookTitle);
 
         if (answerThree) {
@@ -117,16 +117,7 @@ export default function BookNote() {
     }
   };
 
-  // 저장만 하기 - 수정 완료는 아님
-  const saveReview = async () => {
-    const res = await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
-
-    console.log("saveReview res", res);
-  };
-
-  const patchReview = async () => {
-    await patchData(userToken, `/review/before/${reviewId}`, preNote);
-
+  const syncQuestion = () => {
     if (!isPrevented) {
       const newData: Question[] = [];
 
@@ -135,6 +126,16 @@ export default function BookNote() {
       });
       setPeriNote(newData);
     }
+  };
+
+  // 저장만 하기 - 수정 완료는 아님
+  const saveReview = async () => {
+    await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
+  };
+
+  const patchReview = async () => {
+    await patchData(userToken, `/review/before/${reviewId}`, preNote);
+    syncQuestion();
     setIsPrevented(true);
     // 연결 확인 용
     // console.log("res", res);
@@ -326,7 +327,7 @@ export default function BookNote() {
   }, []);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen}>
+    <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
@@ -335,6 +336,7 @@ export default function BookNote() {
       </StNavWrapper>
       <Outlet
         context={[
+          isLogin,
           handleToggleDrawer,
           preNote,
           handleChangeReview,
@@ -354,18 +356,18 @@ export default function BookNote() {
   );
 }
 
-export const reducewidth = keyframes`
+export const reducewidth = (width: number) => keyframes`
   0% {
     width: 100%;
     padding: 10rem 9.5rem;
   }
   100% {
-    width: calc(100% - 39rem);
+    width: calc(100% - ${width}rem);
     padding: 10rem 3.4rem 10rem 9.5rem;
   }
 `;
 
-const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
+const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -374,10 +376,11 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
   padding: 10rem ${({ isopen }) => (isopen ? "3.4rem" : "9.5rem")} 10rem 9.5rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
-  ${({ isopen }) =>
+  min-height: 100vh;
+  ${({ isopen, width }) =>
     isopen
       ? css`
-          animation: ${reducewidth} 300ms linear 1;
+          animation: ${reducewidth(width)} 300ms linear 1;
           animation-fill-mode: forwards;
         `
       : ""}
