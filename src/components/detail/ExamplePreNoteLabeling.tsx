@@ -15,8 +15,10 @@ interface ExamplePreNoteLabelingProps {
 
 export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProps) {
   const { answerOne, answerTwo, questionList, isLogin } = props;
+
   const navigate = useNavigate();
-  const nickname = "냠냠"; // 닉네임 받아오기(로컬스토리지)
+
+  const nickname = localStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
@@ -31,16 +33,15 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>
       <StFirstQuestion>
-        <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이{" "}
-        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}
-        님의 기대를 만족시킬 수 있을까요?
+        <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를
+        만족시킬 수 있을까요?
         <StepUpOnExample />
       </StFirstQuestion>
       <StAnswer>{answerTwo}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
-        <StepUpOnExample />
+        가장 관심가는 주제부터 질문 리스트를 만들어보세요!
+        {isLogin && <StepUpOnExample />}
       </StFirstQuestion>
       {isLogin ? (
         questionList?.map((question: string, idx: number) => <StAnswer key={idx}>{question}</StAnswer>)
