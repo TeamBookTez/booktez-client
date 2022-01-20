@@ -1,6 +1,10 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { UserInfo } from "../../pages/MyPage";
+import { getData } from "../../utils/lib/api";
 import { StLoginLink } from "../common/MainHeader";
 import { Button } from "../common/styled/Button";
 import { TopBanner } from ".";
@@ -11,15 +15,56 @@ interface TopContentProps {
 }
 
 export default function TopContent(props: TopContentProps) {
+  const navigate = useNavigate();
   const { userInfo, onImageChange } = props;
+
+  const tempToken = localStorage.getItem("booktez-token");
+  const localToken = tempToken ? tempToken : "";
+
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  const handleMoveLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate("/login");
+  };
+
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    localStorage.removeItem("booktez-token");
+    localStorage.removeItem("booktez-nickname");
+    setIsLogin(false);
+  };
+
+  useEffect(() => {
+    getLogin("/auth/check", localToken);
+  }, [isLogin]);
 
   return (
     <StWrapper>
       <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
-      <StLoginButton type="button">
-        <StLoginLink to="/login">로그인</StLoginLink>
-      </StLoginButton>
-      {/* <StLogoutBtn>로그아웃</StLogoutBtn> */}
+      {!isLogin ? (
+        <StLoginButton type="button" onClick={(e) => handleMoveLogin}>
+          <StLoginLink to="/login">로그인</StLoginLink>
+        </StLoginButton>
+      ) : (
+        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
+      )}
     </StWrapper>
   );
 }
@@ -46,7 +91,6 @@ const StLoginButton = styled(Button)`
   ${({ theme }) => theme.fonts.button2};
 `;
 
-// 분기 처리 필요
-// const StLogoutBtn = styled(StLoginButton)`
-//   background-color: ${({ theme }) => theme.colors.gray300};
-// `;
+const StLogoutBtn = styled(StLoginButton)`
+  background-color: ${({ theme }) => theme.colors.gray300};
+`;
