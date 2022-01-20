@@ -12,12 +12,14 @@
 <img src="https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=flat" height=40>&nbsp;&nbsp;<img src="https://img.shields.io/badge/-Typescript-3074BF?logo=Typescript&logoColor=white&style=flat" height=40>&nbsp;&nbsp;
 ```json
 "axios": "^0.24.0",
+"lodash": "^4.17.21",
 "react": "^17.0.2",
 "react-dom": "^17.0.2",
 "react-router-dom": "^6.2.1",
 "recoil": "^0.5.2",
 "styled-components": "^5.3.3",
 "styled-reset": "^4.3.4",
+"swr": "^1.1.2",
 "typescript": "^4.5.4",
 ```
 <br/>
