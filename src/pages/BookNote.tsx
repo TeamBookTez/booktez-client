@@ -27,7 +27,10 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const { state } = useLocation();
+  const { pathname, state } = useLocation();
+  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const [navIndex, setNavIndex] = useState<number>(initIndex);
+
   const isLoginState = state as IsLoginState;
   const isLogin = isLoginState.isLogin;
   const reviewId = isLoginState.reviewId;
@@ -47,10 +50,6 @@ export default function BookNote() {
   const [periNote, setPeriNote] = useState<Question[]>([]);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const { pathname } = useLocation();
-  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
-  const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
@@ -326,7 +325,7 @@ export default function BookNote() {
   }, []);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen}>
+    <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
@@ -354,18 +353,18 @@ export default function BookNote() {
   );
 }
 
-export const reducewidth = keyframes`
+export const reducewidth = (width: number) => keyframes`
   0% {
     width: 100%;
     padding: 10rem 9.5rem;
   }
   100% {
-    width: calc(100% - 39rem);
+    width: calc(100% - ${width}rem);
     padding: 10rem 3.4rem 10rem 9.5rem;
   }
 `;
 
-const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
+const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -374,10 +373,11 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
   padding: 10rem ${({ isopen }) => (isopen ? "3.4rem" : "9.5rem")} 10rem 9.5rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
-  ${({ isopen }) =>
+  min-height: 100vh;
+  ${({ isopen, width }) =>
     isopen
       ? css`
-          animation: ${reducewidth} 300ms linear 1;
+          animation: ${reducewidth(width)} 300ms linear 1;
           animation-fill-mode: forwards;
         `
       : ""}
