@@ -89,12 +89,19 @@ export default function BookNote() {
     }
   };
 
+  // 저장만 하기 - 수정 완료는 아님
+  const saveReview = async () => {
+    const res = await patchData(userToken, `/review/${REVIEWID}`, { ...preNote, answerThree: { root: periNote } });
+
+    console.log("saveReview res", res);
+  };
+
   const patchReview = async () => {
-    const res = await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
+    await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
 
     setIsPrevented(true);
     // 연결 확인 용
-    console.log("res", res);
+    // console.log("res", res);
   };
 
   const handleSubmit = () => {
@@ -179,7 +186,7 @@ export default function BookNote() {
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator />
-        <IcSave onClick={patchReview} />
+        <IcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet
         context={[
