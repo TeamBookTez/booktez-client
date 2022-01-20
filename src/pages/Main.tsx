@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
@@ -5,7 +6,7 @@ import { Banner, Recent } from "../components/main";
 import { getData } from "../utils/lib/api";
 
 export default function Main() {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
   const authCheckKey = "/auth/check";
@@ -16,14 +17,16 @@ export default function Main() {
       const status = data.status;
 
       if (!localToken) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
       if (!(status === 200)) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
+      setIsLogin(true);
     } catch (err) {
-      // if (axios.isAxiosError(err)) {
-      // }
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 

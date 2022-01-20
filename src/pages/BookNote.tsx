@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
-import { DrawerWrapper, Navigator } from "../components/bookNote";
-import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
+import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
@@ -17,6 +16,7 @@ interface ObjKey {
 export interface IsLoginState {
   isLogin: boolean;
   reviewId: number;
+  fromUrl: string;
 }
 
 export interface PreNoteData extends ObjKey {
@@ -33,16 +33,15 @@ export default function BookNote() {
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   const isLoginState = state as IsLoginState;
-  const isLogin = isLoginState.isLogin;
-  const reviewId = isLoginState.reviewId;
+  const { isLogin, reviewId, fromUrl } = isLoginState;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
-  const [isPrevented, setIsPrevented] = useState(false);
-  const [ablePatch, setAblePatch] = useState(false);
+  const [isPrevented, setIsPrevented] = useState<boolean>(false);
+  const [ablePatch, setAblePatch] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
@@ -87,7 +86,7 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
-        const questions = questionList ? questionList : [""];
+        const questions = questionList.length ? questionList : [""];
 
         setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
         setTitle(bookTitle);
@@ -100,7 +99,7 @@ export default function BookNote() {
 
         // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
         // 답변 추가/삭제 막기
-        if (answerOne) {
+        if (answerOne && answerTwo && questionList.length) {
           setIsPrevented(true);
           setAblePatch(true);
         } else {
@@ -131,7 +130,14 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
+    const { answerOne, answerTwo } = preNote;
+
+    await patchData(userToken, `/review/${reviewId}`, {
+      answerOne,
+      answerTwo,
+      answerThree: { root: periNote },
+    });
+
     setIsSave(true);
   };
 
@@ -149,14 +155,13 @@ export default function BookNote() {
     await patchData(userToken, `/review/before/${reviewId}`, preNote);
     syncQuestion();
     setIsPrevented(true);
-    // 연결 확인 용
-    // console.log("res", res);
   };
 
   const handleSubmit = () => {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
+    setIsDrawerOpen(false);
     navigate("/book-note/peri", { state: isLoginState });
     handleNav(1);
   };
@@ -340,7 +345,9 @@ export default function BookNote() {
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
-      <StIcCancelWhite onClick={() => navigate(-1)} />
+      <Link to={fromUrl}>
+        <StIcCancelWhite />
+      </Link>
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
@@ -366,6 +373,7 @@ export default function BookNote() {
           handleAddPeri,
           handleDeletePeri,
           userToken,
+          fromUrl,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

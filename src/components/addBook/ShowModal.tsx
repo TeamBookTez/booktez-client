@@ -34,8 +34,7 @@ export default function ShowModal(props: ShowModalProps) {
       }
       const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      console.log("stateData", stateData);
-      nav("/book-note", { state: { ...stateData } });
+      nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

@@ -31,12 +31,12 @@ export default function TopContent(props: TopContentProps) {
   return (
     <StWrapper>
       <TopBanner isLogin={isLogin} userInfo={userInfo} onImageChange={onImageChange} />
-      {!isLogin ? (
+      {isLogin ? (
+        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
+      ) : (
         <StLoginButton type="button" onClick={handleMoveLogin}>
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginButton>
-      ) : (
-        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
       )}
     </StWrapper>
   );

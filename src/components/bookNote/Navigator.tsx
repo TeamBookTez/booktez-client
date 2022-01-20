@@ -31,7 +31,7 @@ export default function Navigator(props: NavigatorProps) {
     <StNav>
       <StUl>
         <li>
-          <StLink1 onClick={() => goToPre} index={navIndex}>
+          <StLink1 onClick={() => goToPre()} index={navIndex}>
             독서 전
           </StLink1>
         </li>

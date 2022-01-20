@@ -7,6 +7,7 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
+import Loading from "../common/Loading";
 
 interface RecentProps {
   isLogin: boolean;
@@ -16,6 +17,7 @@ export default function Recent(props: RecentProps) {
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
   const [bookDelete, setBookDelete] = useState<boolean>(false);
   const [isDefault, setIsDefault] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -29,6 +31,7 @@ export default function Recent(props: RecentProps) {
       } = await getData(key, token);
 
       setBooksRecent(books);
+      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -41,6 +44,7 @@ export default function Recent(props: RecentProps) {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getBookRecent("/book", userToken);
   }, [bookDelete]);
 
@@ -50,21 +54,27 @@ export default function Recent(props: RecentProps) {
 
   return (
     <section>
-      <StHeader>
-        <StHeading3>최근 작성한 북노트</StHeading3>
-        {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
-      </StHeader>
-      <StBookWrapper isdefault={isDefault}>
-        {!isDefault ? (
-          booksRecent
-            .slice(-booksRecent.length, -(booksRecent.length - 5))
-            .map((tempInfo, idx) => (
-              <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
-            ))
-        ) : (
-          <Empty />
-        )}
-      </StBookWrapper>
+      {isLogin && isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <StHeader>
+            <StHeading3>최근 작성한 북노트</StHeading3>
+            {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
+          </StHeader>
+          <StBookWrapper isdefault={isDefault}>
+            {!isDefault ? (
+              booksRecent
+                .slice(-booksRecent.length, -(booksRecent.length - 5))
+                .map((tempInfo, idx) => (
+                  <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+                ))
+            ) : (
+              <Empty />
+            )}
+          </StBookWrapper>
+        </>
+      )}
     </section>
   );
 }

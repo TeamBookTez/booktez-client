@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
+import Loading from "../components/common/Loading";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -19,10 +20,9 @@ export default function Bookcase() {
   const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
-
   const [bookDelete, setBookDelete] = useState<boolean>(false);
-
   const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const handleBookDelete = () => {
     setBookDelete(!bookDelete);
   };
@@ -46,8 +46,9 @@ export default function Bookcase() {
         setIsLogin(false);
       }
     } catch (err) {
-      // if (axios.isAxiosError(err)) {
-      // }
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 
@@ -67,18 +68,7 @@ export default function Bookcase() {
         if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
       });
 
-      // const wow = localStorage.getItem("booktez-data");
-      // const woww = wow ? wow : "";
-
-      // const wowww = JSON.parse(woww);
-
-      // setBookcaseTotal([wowww]);
-
-      // wowww.forEach((book: BookcaseInfo) => {
-      //   if (book.state === 2) setBookcasePre((currentBook) => [...currentBook, book]);
-      //   if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
-      //   if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
-      // LocalStorage에서 저장한 객체를 불러올 때는 JSON.parse를 쓴다.
+      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -96,9 +86,15 @@ export default function Bookcase() {
 
   return (
     <>
-      <MainHeader>서재</MainHeader>
-      <Navigation />
-      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete, isLogin]} />
+      {isLogin && isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>서재</MainHeader>
+          <Navigation />
+          <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete, isLogin]} />
+        </>
+      )}
     </>
   );
 }
