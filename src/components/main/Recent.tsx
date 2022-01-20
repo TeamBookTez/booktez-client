@@ -31,12 +31,12 @@ export default function Recent(props: RecentProps) {
       } = await getData(key, token);
 
       setBooksRecent(books);
-      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
     }
+    setIsLoading(false);
   };
 
   const handleBookDelete = () => {

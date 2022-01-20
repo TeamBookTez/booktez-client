@@ -20,7 +20,7 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
@@ -34,31 +34,8 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    getLogin("/auth/check", localToken);
-  }, []);
-
-  useEffect(() => {
     getInfo("/user/myInfo", localToken);
   }, [tempImg]);
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!token) {
-        return setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        return setIsLogin(false);
-      }
-      setIsLogin(true);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
-    }
-  };
 
   const getInfo = async (key: string, token: string) => {
     try {
@@ -67,13 +44,13 @@ export default function MyPage() {
       if (data.success) {
         setUserInfo(data.data);
       }
-
-      setIsLoading(false);
     } catch (err) {
+      setIsLogin(false);
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
     }
+    setIsLoading(false);
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

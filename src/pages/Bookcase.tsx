@@ -67,13 +67,12 @@ export default function Bookcase() {
         if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
         if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
       });
-
-      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {

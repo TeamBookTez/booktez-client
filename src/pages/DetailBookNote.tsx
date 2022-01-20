@@ -39,10 +39,10 @@ export default function DetailBookNote() {
       } = await getData(key, token);
 
       setReviewData(data);
-      setIsLoading(false);
     } catch (err) {
       alert(err);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
