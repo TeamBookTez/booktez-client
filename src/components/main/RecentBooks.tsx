@@ -1,17 +1,15 @@
 import axios from "axios";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgTemp } from "../../assets/images";
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
 import { Button } from "../common/styled/Button";
 
-export default function Recent() {
+export default function RecentBooks() {
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
 
   const [bookDelete, setBookDelete] = useState<boolean>(false);
@@ -31,7 +29,6 @@ export default function Recent() {
       } = await getData(key, token);
 
       setBooksRecent(books);
-      console.log(booksRecent);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
