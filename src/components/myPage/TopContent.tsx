@@ -17,11 +17,11 @@ export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
   const { userInfo, isLogin, onImageChange } = props;
 
-  const handleMoveLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMoveLogin = () => {
     navigate("/login");
   };
 
-  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogout = () => {
     localStorage.removeItem("booktez-token");
     localStorage.removeItem("booktez-nickname");
     navigate("/main");
@@ -29,9 +29,9 @@ export default function TopContent(props: TopContentProps) {
 
   return (
     <StWrapper>
-      <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
+      <TopBanner isLogin={isLogin} userInfo={userInfo} onImageChange={onImageChange} />
       {!isLogin ? (
-        <StLoginButton type="button" onClick={(e) => handleMoveLogin}>
+        <StLoginButton type="button" onClick={handleMoveLogin}>
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginButton>
       ) : (

@@ -62,7 +62,7 @@ export default function Router() {
             <Route path="pre" element={<PreRead />} />
             <Route path="peri" element={<PeriRead />} />
             <Route path="post" element={<PostRead />} />
-            <Route path="*" element={<Navigate to="" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}
