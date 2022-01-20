@@ -31,6 +31,7 @@ export interface PatchBody {
   answerOne?: string;
   answerTwo?: string;
   answerThree?: AnswerThree;
+  progress?: number;
 }
 
 export interface AnswerThree {

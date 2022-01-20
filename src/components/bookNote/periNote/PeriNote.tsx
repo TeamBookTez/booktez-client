@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
 import { PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
-import { Answer, Question } from "../../../utils/dataType";
+import { Answer, PatchBody, Question } from "../../../utils/dataType";
+import { patchData } from "../../../utils/lib/api";
 import { Button } from "../../common/styled/Button";
 import { StepUp } from "..";
 
@@ -33,7 +34,21 @@ export default function PeriNote() {
       ]
     >();
 
-  console.log("periNote", periNote);
+  const REVIEWID = 34;
+  const TOKEN = localStorage.getItem("booktez-token");
+  const userToken = TOKEN ? TOKEN : "";
+
+  const submitReview = async (isComplete: boolean) => {
+    const progress = isComplete ? 4 : 3;
+    const res = await patchData(userToken, `/review/now/${REVIEWID}`, { answerThree: { root: periNote }, progress });
+
+    console.log("res", res);
+  };
+
+  useEffect(() => {
+    console.log("preNote", preNote);
+    console.log("periNote", periNote);
+  }, [periNote, preNote]);
 
   return (
     <StNoteForm>
@@ -242,7 +257,9 @@ export default function PeriNote() {
         ))}
         <StAddQuestionButton type="button">+ 질문 리스트 추가</StAddQuestionButton>
       </StQAWrapper>
-      <StDoneButton type="button">작성 완료</StDoneButton>
+      <StDoneButton type="button" onClick={() => submitReview(true)}>
+        작성 완료
+      </StDoneButton>
     </StNoteForm>
   );
 }
