@@ -28,18 +28,21 @@ export default function MyPage() {
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
+  const authCheckKey = "/auth/check";
   const infoKey = "/user/myInfo";
   const patchImgKey = "/user/img";
 
-  const getInfo = async (token: string, key: string) => {
+  const getInfo = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
 
-      setUserInfo(data.data);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
+      if (data.success) {
+        setUserInfo(data.data);
       }
+    } catch (err) {
+      // if (axios.isAxiosError(err)) {
+      // console.log("err", err.response?.data);
+      // }
     }
   };
 
@@ -55,9 +58,8 @@ export default function MyPage() {
         setIsLogin(false);
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      // if (axios.isAxiosError(err)) {
+      // }
     }
   };
 
@@ -77,9 +79,9 @@ export default function MyPage() {
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.log("err", err.response?.data);
-        }
+        // if (axios.isAxiosError(err)) {
+        // console.log("err", err.response?.data);
+        // }
       }
     }
   };
@@ -89,11 +91,11 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    getInfo(localToken, infoKey);
+    getInfo(infoKey, localToken);
   }, [dataa]);
 
   useEffect(() => {
-    getLogin("/auth/check", localToken);
+    getLogin(authCheckKey, localToken);
   }, [isLogin]);
 
   return (
