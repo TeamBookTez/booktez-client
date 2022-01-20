@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
+import Loading from "../components/common/Loading";
 import { BottomContent, TopContent } from "../components/myPage";
 import { getData, patchData } from "../utils/lib/api";
 
@@ -38,10 +39,6 @@ export default function MyPage() {
   useEffect(() => {
     getInfo("/user/myInfo", localToken);
   }, [tempImg]);
-
-  useEffect(() => {
-    console.log("isLogin", isLogin);
-  }, [isLogin]);
 
   const getLogin = async (key: string, token: string) => {
     try {
@@ -103,9 +100,15 @@ export default function MyPage() {
 
   return (
     <>
-      <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
-      <BottomContent userInfo={userInfo} isLogin={isLogin} />
+      {userInfo.nickname === "" ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>마이페이지</MainHeader>
+          <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
+          <BottomContent userInfo={userInfo} isLogin={isLogin} />
+        </>
+      )}
     </>
   );
 }
