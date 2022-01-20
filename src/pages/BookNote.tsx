@@ -327,7 +327,7 @@ export default function BookNote() {
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} />
+        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
         <IcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet

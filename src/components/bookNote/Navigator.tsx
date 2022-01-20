@@ -1,20 +1,26 @@
-import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IsLoginState } from "../../pages/BookNote";
-import { Button } from "../common/styled/Button";
 
 interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
   isLoginState: IsLoginState;
+  isPrevented: boolean;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isLoginState } = props;
+  const { navIndex, onNav, isLoginState, isPrevented } = props;
 
   const navigate = useNavigate();
+
+  const goToPeri = (isPrevented: boolean) => {
+    if (isPrevented) {
+      navigate("peri", { state: isLoginState });
+      onNav(1);
+    }
+  };
 
   return (
     <StNav>
@@ -30,12 +36,7 @@ export default function Navigator(props: NavigatorProps) {
           </StLink1>
         </li>
         <li>
-          <StLink2
-            onClick={() => {
-              navigate("peri", { state: isLoginState });
-              onNav(1);
-            }}
-            index={navIndex}>
+          <StLink2 onClick={() => goToPeri(isPrevented)} index={navIndex}>
             독서 후
           </StLink2>
         </li>
