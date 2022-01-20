@@ -15,8 +15,7 @@ export default function Recent(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
   const [bookDelete, setBookDelete] = useState<boolean>(false);
-
-  const isDefault = true;
+  const [isDefault, setIsDefault] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -45,14 +44,18 @@ export default function Recent(props: RecentProps) {
     getBookRecent("/book", userToken);
   }, [bookDelete]);
 
+  useEffect(() => {
+    setIsDefault(!(booksRecent.length > 0));
+  }, [booksRecent]);
+
   return (
     <section>
       <StHeader>
         <StHeading3>최근 작성한 북노트</StHeading3>
-        {booksRecent.length > 0 && <StLink to="/main/bookcase">전체보기</StLink>}
+        {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {booksRecent.length > 0 ? (
+        {!isDefault ? (
           booksRecent
             .slice(-booksRecent.length, -(booksRecent.length - 5))
             .map((tempInfo, idx) => (
@@ -102,5 +105,5 @@ const StBookWrapper = styled.section<{ isdefault: boolean }>`
   flex-wrap: wrap;
   flex-direction: ${({ isdefault }) => (isdefault ? "column" : "row")};
   align-items: center;
-  justify-content: center;
+  justify-content: ${({ isdefault }) => (isdefault ? "center" : "normal")};
 `;
