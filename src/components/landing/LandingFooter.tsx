@@ -1,20 +1,30 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { IcLandingFooter } from "../../assets/icons";
+import { IcLandingFooter, IcMainLogo } from "../../assets/icons";
 import { Button } from "../common/styled/Button";
 
 export default function LandingFooter() {
   return (
     <>
       <StFooterWrapper>
-        <StH1>북스테어즈 사용해보기</StH1>
+        <StH1>
+          책을 통한 성장의 계단, <br />
+          함께 오르실 분들을 기다립니다.{" "}
+        </StH1>
         <Link to="/main">
           <StButton>북스테어즈 시작</StButton>
         </Link>
         <StIcFooter />
       </StFooterWrapper>
-      <StFooter />
+      <StFooter>
+        <IcMainLogo />
+        <StContactWrapper>
+          <StContact>Contact</StContact>
+          <StEmail>bookstairs.official@gmail.com</StEmail>
+        </StContactWrapper>
+        <StCopyright>Copyright 2022. Bookstairs All right reserved</StCopyright>
+      </StFooter>
     </>
   );
 }
@@ -33,6 +43,8 @@ const StFooterWrapper = styled.footer`
 const StH1 = styled.h1`
   ${({ theme }) => theme.fonts.header00}
   color: ${({ theme }) => theme.colors.gray200};
+
+  text-align: center;
 `;
 
 const StButton = styled(Button)`
@@ -52,6 +64,43 @@ const StIcFooter = styled(IcLandingFooter)`
 `;
 
 const StFooter = styled.div`
-  height: 14.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 24.2rem;
   background-color: ${({ theme }) => theme.colors.gray100};
+
+  & > svg {
+    margin-bottom: 1.6rem;
+  }
+
+  & > svg path {
+    fill: ${({ theme }) => theme.colors.white};
+  }
+`;
+
+const StContactWrapper = styled.section`
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 0.8rem;
+`;
+
+const StContact = styled.p`
+  color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.fonts.body2};
+
+  margin-right: 1rem;
+`;
+
+const StEmail = styled.p`
+  color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.fonts.body2};
+`;
+
+const StCopyright = styled.p`
+  color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.fonts.body4};
 `;

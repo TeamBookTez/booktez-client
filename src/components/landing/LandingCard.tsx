@@ -14,7 +14,7 @@ export default function LandingCard(props: LandingCardProps) {
       {children}
       <div>
         <StH4>{title}</StH4>
-        <p>{subTitle}</p>
+        <StSubtitle>{subTitle}</StSubtitle>
       </div>
     </StCard>
   );
@@ -40,6 +40,8 @@ const StCard = styled.article`
     width: 4.5rem;
     height: 4.5rem;
     margin-left: 0.7rem;
+
+    margin-bottom: 9.4rem;
   }
 `;
 
@@ -47,4 +49,8 @@ const StH4 = styled.h4`
   margin-bottom: 2.2rem;
   ${({ theme }) => theme.fonts.header3}
   color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StSubtitle = styled.p`
+  width: 32.5rem;
 `;
