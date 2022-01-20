@@ -12,13 +12,10 @@ import { Button } from "../common/styled/Button";
 export default function RecentBooks() {
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
 
-  const [bookDelete, setBookDelete] = useState<boolean>(false);
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
-
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
+  // // 로그인 여부 맞춰서 아래 isDefault를 조작
+  const isDefault = false;
 
   const getBookRecent = async (key: string, token: string) => {
     try {
@@ -28,7 +25,7 @@ export default function RecentBooks() {
         },
       } = await getData(key, token);
 
-      setBooksRecent(books);
+      setBooksRecent(books.slice(0, 5));
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -36,12 +33,13 @@ export default function RecentBooks() {
     }
   };
 
-  // // 로그인 여부 맞춰서 아래 isDefault를 조작
-  const isDefault = false;
-
   useEffect(() => {
     getBookRecent("/book", userToken);
-  }, [bookDelete]);
+  }, []);
+
+  const handleBookDelete = () => {
+    getBookRecent("/book", userToken);
+  };
 
   return (
     <section>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -28,12 +29,14 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      handleBookDelete();
+      handleBookDelete(); //리렌더링
       if (pathname === "/detail-book-note") {
         navigate("/main");
       }
     } catch (err) {
-      alert(err);
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 

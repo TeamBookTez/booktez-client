@@ -4,8 +4,7 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function PreRead() {
-  const [bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete] =
-    useOutletContext<[BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], () => void]>();
+  const [bookcasePre, handleBookDelete] = useOutletContext<[BookcaseInfo[], () => void]>();
 
   return (
     <>

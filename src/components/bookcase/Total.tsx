@@ -5,8 +5,7 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function Total() {
-  const [bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete] =
-    useOutletContext<[BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], BookcaseInfo[], () => void]>();
+  const [bookcaseTotal, handleBookDelete] = useOutletContext<[BookcaseInfo[], () => void]>();
 
   return (
     <>
