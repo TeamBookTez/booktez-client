@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
 import { PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
-import { Answer, PatchBody, Question } from "../../../utils/dataType";
+import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
 import { Button } from "../../common/styled/Button";
 import { ExButton, StepUp } from "..";
@@ -94,6 +94,15 @@ export default function PeriNote() {
                   value={question0.question}
                   onChange={(event) => handleChangePeri("question", event.target.value, [a])}
                 />
+                <StAddAnswerButton type="button" onClick={() => handleAddPeri([a])}>
+                  답변
+                </StAddAnswerButton>
+                <StMoreIcon onClick={handleToggle} />
+                <StMiniMenu>
+                  <StMenuBtn type="button" onClick={() => handleDeletePeri([a])}>
+                    삭제
+                  </StMenuBtn>
+                </StMiniMenu>
               </StPriQuestionWrapper>
               <StAnswerWrapper className="answer">
                 {question0.answer.map((answer0, b) => (
@@ -106,6 +115,15 @@ export default function PeriNote() {
                         value={answer0.text}
                         onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
                       />
+                      <StMoreIcon onClick={handleToggle} />
+                      <StMiniMenu>
+                        <StMenuBtn type="button" onClick={() => handleAddPeri([a, b])}>
+                          꼬리질문 추가
+                        </StMenuBtn>
+                        <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b])}>
+                          삭제
+                        </StMenuBtn>
+                      </StMiniMenu>
                     </StPriAnswerWrapper>
                     <StAnswerContainer>
                       {answer0.children.map((question1, c) => (
@@ -433,18 +451,17 @@ const StQAContainer = styled.section`
 `;
 
 const StPriQuestionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
-  padding: 2.6rem 0 2.6rem 8.4rem;
+
+  padding: 2.6rem 4.4rem 2.6rem 8.4rem;
+
   border: 0.1rem solid ${({ theme }) => theme.colors.white200};
   border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.colors.white};
-
-  // focus 되었을 때 잘 적용될지 확인용
-  /* &:hover {
-    border-bottom: 0.1rem solid;
-    border-color: ${({ theme }) => theme.colors.orange100};
-  } */
 `;
 
 const StQuestionIcon = styled(IcPeriQuestion)`
@@ -477,8 +494,12 @@ const StPriQuestionInput = styled.input`
 `;
 
 const StPriAnswerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
   border-bottom: 0.2rem solid ${({ theme }) => theme.colors.white200};
+  padding-right: 1.6rem;
   padding-bottom: 2.8rem;
   padding-left: 5.6rem;
 `;
