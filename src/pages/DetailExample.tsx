@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import {
   DetailArticleWrapperLabeling,
@@ -12,12 +14,17 @@ import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
+  const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
+  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+  // const [isPeriModal, setIsPeriModal] = useStae<boolean>(false);
+
   const isLogin = true;
   // const _token = localStorage.getItem("booktez-token");
   const navigate = useNavigate();
 
   const handlePeriCarousel = () => {
-    console.log("냠");
+    setIsPeriModal(!isPeriModal);
   };
 
   return (
@@ -40,7 +47,8 @@ export default function DetailExample() {
             </DetailArticleWrapperLabeling>
           </StMarginTop>
         )}
-        {/* <PeriModal /> */}
+        {/* 모달창 하다가 중지 */}
+        {/* {isPeriModal && <PeriModal onToggleModal={handlePeriCarousel} />} */}
       </StNoteModalWrapper>
     </>
   );
