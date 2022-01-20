@@ -56,7 +56,9 @@ export default function Recent(props: RecentProps) {
         {booksRecent.length > 0 ? (
           booksRecent
             .slice(-booksRecent.length, -(booksRecent.length - 5))
-            .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />)
+            .map((tempInfo, idx) => (
+              <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+            ))
         ) : (
           <Empty />
         )}
