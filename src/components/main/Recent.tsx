@@ -1,10 +1,8 @@
 import axios from "axios";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgTemp } from "../../assets/images";
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
@@ -39,7 +37,6 @@ export default function Recent() {
     }
   };
 
-  // // 로그인 여부 맞춰서 아래 isDefault를 조작
   const isDefault = false;
 
   useEffect(() => {
