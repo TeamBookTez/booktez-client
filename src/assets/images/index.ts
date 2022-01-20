@@ -1,5 +1,6 @@
 export { default as ImgAddBooksSearch } from "./addBookSearchImage.png";
 export { default as ImgAddBooks } from "./addBooksImage.png";
+export { default as ImgdeletePopUp } from "./deleteImage.png";
 export { default as ImgDevice } from "./deviceImage.png";
 export { default as ImgEmptyBook } from "./emptyBookImage.png";
 export { default as ImgEmptyBooks } from "./emptyBooksImage.png";
@@ -15,6 +16,7 @@ export { default as ImgMainDefault } from "./mainDefault.png";
 export { default as ImgMypageBanner } from "./mypageBannerImage.png";
 export { default as ImgReadNum } from "./mypageReadImage.png";
 export { default as ImgNull } from "./nullImage.jpeg";
+export { default as ImgPreBook } from "./preBookImage.png";
 export { default as ImgSignupFirst } from "./signupFirstImage.png";
 export { default as ImgSignupSecond } from "./signupSecondImage.png";
 export { default as ImgSignupThird } from "./signupThirdImage.png";

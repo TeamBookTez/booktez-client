@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
@@ -11,12 +11,15 @@ interface BookCardProps {
   handleBookDelete: () => void;
   isLogin: boolean;
 }
+
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo, handleBookDelete, isLogin } = props;
-  const { author, reviewId, thumbnail, title } = bookcaseInfo;
+  const { author, reviewId, thumbnail, title, state } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const reviewUrl = state === 2 ? "/book-note" : state === 3 ? "/book-note/peri" : "/detail-book-note";
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
@@ -24,7 +27,7 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      navigate("/book-note", { state: { isLogin, reviewId } });
+      navigate(reviewUrl, { state: { isLogin, reviewId, fromUrl: pathname } });
     }
   };
 

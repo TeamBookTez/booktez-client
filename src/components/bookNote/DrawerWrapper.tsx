@@ -107,6 +107,10 @@ const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
   }
 `;
 
+const StTemp = styled.div`
+  overflow-y: scroll;
+`;
+
 const StImg = styled.img<{ idx: number }>`
   width: ${({ idx }) => (idx === 4 ? "53.4rem" : "32.4rem")};
   height: ${({ idx }) => (idx === 4 ? "12.5rem" : "11.9rem")};
