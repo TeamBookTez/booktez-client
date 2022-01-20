@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { IcLogo } from "../../assets/icons";
+import { IcLogo, IcTitleLogo } from "../../assets/icons";
 
 interface NavHeaderProps {
   logocolor: string;
@@ -14,7 +14,7 @@ export default function NavHeader(props: NavHeaderProps) {
     <StHeader>
       <StLink to="/main" logocolor={logocolor}>
         <StIcCool />
-        북스테어즈
+        <IcTitleLogo />
       </StLink>
     </StHeader>
   );
