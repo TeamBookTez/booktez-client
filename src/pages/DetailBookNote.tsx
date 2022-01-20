@@ -14,7 +14,7 @@ import { getData } from "../utils/lib/api";
 export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
-  const reviewId = 7; // 리뷰 id 를 받아와 처리
+  const reviewId = 88; // 리뷰 id 를 받아와 처리
 
   const tempToken = localStorage.getItem("booktez-token");
   const token = tempToken ? tempToken : "";

@@ -4,7 +4,7 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function PeriRead() {
-  const [bookcasePeri] = useOutletContext<[BookcaseInfo[]]>();
+  const [bookcasePeri, handleBookDelete] = useOutletContext<[BookcaseInfo[], () => void]>();
 
   return (
     <>

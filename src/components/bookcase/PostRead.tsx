@@ -4,7 +4,7 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import Cards from "./Cards";
 
 export default function PostRead() {
-  const [bookcasePost] = useOutletContext<[BookcaseInfo[]]>();
+  const [bookcasePost, handleBookDelete] = useOutletContext<[BookcaseInfo[], () => void]>();
 
   return (
     <>
