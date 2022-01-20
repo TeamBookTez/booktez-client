@@ -13,7 +13,7 @@ import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -26,11 +26,12 @@ export default function DetailExample() {
       const status = data.status;
 
       if (!localToken) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
       if (!(status === 200)) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
+      setIsLogin(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

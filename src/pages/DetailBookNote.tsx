@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
 import { PopUpDelete } from "../components/common";
+import Loading from "../components/common/Loading";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
@@ -14,10 +15,10 @@ import { IsLoginState } from "./BookNote";
 export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { state } = useLocation();
   const isLoginState = state as IsLoginState;
   const { reviewId, isLogin, fromUrl } = isLoginState;
-  // const reviewId = 4; // 리뷰 id 를 받아와 처리
 
   const tempToken = localStorage.getItem("booktez-token");
   const token = tempToken ? tempToken : "";
@@ -38,6 +39,7 @@ export default function DetailBookNote() {
       } = await getData(key, token);
 
       setReviewData(data);
+      setIsLoading(false);
     } catch (err) {
       alert(err);
     }
@@ -53,7 +55,11 @@ export default function DetailBookNote() {
 
   return (
     <>
-      <StNoteModalWrapper>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <StNoteModalWrapper>
         {isPopUp ? (
           <></>
         ) : (
@@ -84,7 +90,9 @@ export default function DetailBookNote() {
           </DetailArticleWrapper>
         </StMarginTop>
       </StNoteModalWrapper>
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
+          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
+        </>
+      )}
     </>
   );
 }

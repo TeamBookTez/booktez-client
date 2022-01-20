@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
+import Loading from "../components/common/Loading";
 import { BottomContent, TopContent } from "../components/myPage";
 import { getData, patchData } from "../utils/lib/api";
 
@@ -19,11 +20,11 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
   const [tempImg, setTempImg] = useState<string>("");
-  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
@@ -34,7 +35,7 @@ export default function MyPage() {
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
-  }, [isLogin]);
+  }, []);
 
   useEffect(() => {
     getInfo("/user/myInfo", localToken);
@@ -45,11 +46,11 @@ export default function MyPage() {
       const { data } = await getData(key, token);
       const status = data.status;
 
-      if (!localToken) {
-        setIsLogin(false);
+      if (!token) {
+        return setIsLogin(false);
       }
       if (!(status === 200)) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
       setIsLogin(true);
     } catch (err) {
@@ -66,6 +67,8 @@ export default function MyPage() {
       if (data.success) {
         setUserInfo(data.data);
       }
+
+      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -100,9 +103,15 @@ export default function MyPage() {
 
   return (
     <>
-      <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
-      <BottomContent userInfo={userInfo} isLogin={isLogin} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>마이페이지</MainHeader>
+          <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
+          <BottomContent userInfo={userInfo} isLogin={isLogin} />
+        </>
+      )}
     </>
   );
 }
