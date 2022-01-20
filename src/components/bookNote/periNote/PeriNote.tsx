@@ -78,7 +78,7 @@ export default function PeriNote() {
 
   return (
     <>
-      <StNoteForm>
+      <StNoteForm onSubmit={(e) => e.preventDefault()}>
         <StLabelWrapper>
           <StLabelContainer>
             <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>

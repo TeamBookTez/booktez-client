@@ -34,7 +34,7 @@ export default function PreNote() {
   };
 
   return (
-    <StNoteForm>
+    <StNoteForm onSubmit={(e) => e.preventDefault()}>
       <StFormHead>독서 전 단계 어쩌구 해보세요</StFormHead>
       <StFormWrapper>
         <PreNoteForm
