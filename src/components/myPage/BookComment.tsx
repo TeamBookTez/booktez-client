@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 interface BooksNumProps {
@@ -7,7 +6,7 @@ interface BooksNumProps {
 
 export default function BookComment(props: BooksNumProps) {
   const { booksNum } = props;
-  const [nowComment, setNowComment] = useState<string>("지금까지");
+  const nowComment = "지금까지";
 
   return (
     <StWrapper>

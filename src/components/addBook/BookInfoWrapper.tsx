@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { ImgNull } from "../../assets/images";
@@ -14,7 +14,7 @@ export interface PublishDate {
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
-  const { isbn, thumbnail, title, authors, datetime, contents } = book;
+  const { thumbnail, title, authors, datetime, contents } = book;
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const publishDate: PublishDate = {
