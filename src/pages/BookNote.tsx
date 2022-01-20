@@ -4,8 +4,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
-import { DrawerWrapper, Navigator } from "../components/bookNote";
-import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
+import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
@@ -132,7 +131,6 @@ export default function BookNote() {
   const saveReview = async () => {
     const { answerOne, answerTwo } = preNote;
 
-    // console.log("patchBody", { answerOne, answerTwo, answerThree: { root: periNote } });
     const res = await patchData(userToken, `/review/${reviewId}`, {
       answerOne,
       answerTwo,

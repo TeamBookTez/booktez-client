@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
@@ -45,6 +45,7 @@ export default function PeriNote() {
     >();
 
   const { state } = useLocation();
+  const navigate = useNavigate();
   const isLoginState = state as IsLoginState;
   const reviewId = isLoginState.reviewId;
 
@@ -71,6 +72,11 @@ export default function PeriNote() {
 
     if (whatValue === "none") miniMenu.style.display = "block";
     else miniMenu.style.display = "none";
+  };
+
+  const submitComplete = () => {
+    submitReview(true);
+    navigate("/detail-book-note", { state: { reviewId } });
   };
 
   return (
@@ -392,7 +398,7 @@ export default function PeriNote() {
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
-        <StDoneButton type="button" onClick={() => submitReview(true)}>
+        <StDoneButton type="button" onClick={submitComplete}>
           작성 완료
         </StDoneButton>
       </StNoteForm>
