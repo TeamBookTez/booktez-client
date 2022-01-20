@@ -14,7 +14,6 @@ import PeriModal from "../stepUp/PeriModal";
 
 export default function PeriNote() {
   const [
-    isLogin,
     handleToggleDrawer,
     preNote,
     handleChangeReview,
@@ -25,12 +24,10 @@ export default function PeriNote() {
     handleChangePeri,
     handleAddPeri,
     handleDeletePeri,
-    reviewId,
     userToken,
   ] =
     useOutletContext<
       [
-        boolean,
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,
@@ -41,10 +38,11 @@ export default function PeriNote() {
         (key: string, value: string, idxList: number[]) => void,
         (idxList: number[]) => void,
         (idxList: number[]) => void,
-        number,
         string,
       ]
     >();
+
+  const reviewId = 32;
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
 
   const handlePeriCarousel = () => {

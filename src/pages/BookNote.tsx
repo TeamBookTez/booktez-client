@@ -14,10 +14,11 @@ interface ObjKey {
   [key: string]: string | string[] | number;
 }
 
-interface IsLoginState {
+export interface IsLoginState {
   isLogin: boolean;
   reviewId: number;
 }
+
 export interface PreNoteData extends ObjKey {
   answerOne: string;
   answerTwo: string;
@@ -28,9 +29,8 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const { state } = useLocation();
   const isLoginState = state as IsLoginState;
-  const reviewId = isLoginState.reviewId;
   const isLogin = isLoginState.isLogin;
-
+  const reviewId = isLoginState.reviewId;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -77,7 +77,7 @@ export default function BookNote() {
     });
   };
 
-  const getReview = async (key: string, token: string) => {
+  const getReview = async () => {
     try {
       if (!isLogin) {
         const localData = localStorage.getItem("booktez-data");
@@ -85,7 +85,7 @@ export default function BookNote() {
 
         setTitle(bookTitle);
       } else {
-        const { data } = await getData(key, token);
+        const { data } = await getData(`/review/${reviewId}`, userToken);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
         setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
@@ -144,7 +144,7 @@ export default function BookNote() {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
-    navigate("/book-note/peri");
+    navigate("/book-note/peri", { state: isLoginState });
     handleNav(1);
   };
 
@@ -311,10 +311,6 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    getReview(`/review/${reviewId}`, userToken);
-  }, []);
-
-  useEffect(() => {
     // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
     // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
@@ -322,17 +318,20 @@ export default function BookNote() {
     }
   }, [preNote]);
 
+  useEffect(() => {
+    getReview();
+  }, []);
+
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator navIndex={navIndex} onNav={handleNav} />
+        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} />
         <IcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet
         context={[
-          isLogin,
           handleToggleDrawer,
           preNote,
           handleChangeReview,
@@ -343,7 +342,6 @@ export default function BookNote() {
           handleChangePeri,
           handleAddPeri,
           handleDeletePeri,
-          reviewId,
           userToken,
         ]}
       />

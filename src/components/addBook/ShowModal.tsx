@@ -17,11 +17,6 @@ interface ShowModalProps {
   onToggleModal: () => void;
 }
 
-interface IsLoginState {
-  isLogin: boolean;
-  reviewId: number;
-}
-
 export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, setBookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
@@ -40,7 +35,7 @@ export default function ShowModal(props: ShowModalProps) {
       }
       const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      nav("/book-note", { state: stateData });
+      nav("/book-note", { state: { stateData } });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
