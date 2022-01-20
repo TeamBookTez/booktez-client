@@ -98,7 +98,7 @@ export default function PeriNote() {
                   답변
                 </StAddAnswerButton>
                 <StMoreIcon onClick={handleToggle} />
-                <StMiniMenu>
+                <StMiniMenu position={"isPriQ"}>
                   <StMenuBtn type="button" onClick={() => handleDeletePeri([a])}>
                     삭제
                   </StMenuBtn>
@@ -116,7 +116,7 @@ export default function PeriNote() {
                         onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
                       />
                       <StMoreIcon onClick={handleToggle} />
-                      <StMiniMenu>
+                      <StMiniMenu position={"isPriA"}>
                         <StMenuBtn type="button" onClick={() => handleAddPeri([a, b])}>
                           꼬리질문 추가
                         </StMenuBtn>
@@ -471,6 +471,7 @@ const StQuestionIcon = styled(IcPeriQuestion)`
 `;
 
 const StAnswerWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   border: 0.1rem solid ${({ theme }) => theme.colors.white200};
@@ -498,6 +499,7 @@ const StPriAnswerWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
+
   border-bottom: 0.2rem solid ${({ theme }) => theme.colors.white200};
   padding-right: 1.6rem;
   padding-bottom: 2.8rem;
@@ -642,13 +644,12 @@ const StMoreIcon = styled(IcMore)`
   }
 `;
 
-const StMiniMenu = styled.div`
+const StMiniMenu = styled.div<{ position?: string }>`
   display: none;
 
   position: absolute;
-  top: 4.3rem;
-  right: 1.6rem;
-
+  top: ${({ position }) => (position === "isPriQ" ? "6rem" : position === "isPriA" ? "2.9rem" : "4.3rem")};
+  right: ${({ position }) => (position === "isPriQ" ? "4.4rem" : "1.6rem")};
   z-index: 10;
 
   border: 0.1rem solid ${({ theme }) => theme.colors.gray200};
