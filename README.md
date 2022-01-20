@@ -26,34 +26,99 @@
 ```
 .
 ├── components
+│   ├── addBook
+│   │   ├── AddBookDefault.tsx
+│   │   ├── BookEmpty.tsx
+│   │   ├── BookInfoWrapper.tsx
+│   │   ├── BookList.tsx
+│   │   ├── ModalWrapper.tsx
+│   │   ├── SearchBar.tsx
+│   │   └── ShowModal.tsx
 │   ├── bookcase
-│   │   ├── BookcaseWrapper.tsx
+│   │   ├── cardSection
+│   │   │   ├── AddBookCard.tsx
+│   │   │   ├── BookCard.tsx
+│   │   │   └── Empty.tsx
+│   │   ├── Card.tsx
 │   │   ├── Navigation.tsx
-│   │   ├── BookcaseWrapper.tsx
+│   │   ├── NoCards.tsx
 │   │   ├── PeriRead.tsx
 │   │   ├── PostRead.tsx
 │   │   ├── PreRead.tsx
 │   │   ├── Total.tsx
 │   │   └── index.ts
 │   ├── common
-│   │   ├── Button.tsx
+│   │   ├── styled
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── LabelHidden.tsx
+│   │   │   ├── LabelQuestion.tsx
+│   │   │   ├── NoteModalWrapper.tsx
+│   │   │   └── Popup.tsx
+│   │   ├── AlertLabel.tsx
+│   │   ├── CommonLayout.tsx
+│   │   ├── NavHeader.tsx
+│   │   ├── InputEmail.tsx
+│   │   ├── InputPwd.tsx
 │   │   ├── MainHeader.tsx
+│   │   ├── MainLayout.tsx
 │   │   ├── NavHeader.tsx
 │   │   ├── NavWrapper.tsx
+│   │   ├── PopUpDelete.tsx
+│   │   ├── PopUpExit.tsx
+│   │   └── index.ts
+│   ├── detail
+│   │   ├── DetailArticleWrapper.tsx
+│   │   ├── DetailArticleWrapperLabeling.tsx
+│   │   ├── ExamplePeriNote.tsx
+│   │   ├── ExamplePreNote.tsx
+│   │   ├── ExamplePreNoteLabeling.tsx
+│   │   ├── StepUpOnExample.tsx
+│   │   └── index.ts
+│   ├── landing 
+│   │   ├── LandingCard.tsx
+│   │   ├── LandingOne.tsx
+│   │   ├── LandingTwo.tsx
+│   │   ├── LandingThree.tsx
+│   │   ├── LandingFour.tsx
+│   │   ├── LandingFive.tsx
+│   │   ├── LandingHeader.tsx
+│   │   ├── LandingFooter.tsx
 │   │   └── index.ts
 │   ├── login
 │   │   ├── LoginForm.tsx
-│   │   └── LoginNavSection.tsx
+│   │   ├── LoginNavSection.tsx
+│   │   └── index.ts
 │   ├── main
 │   │   ├── Banner.tsx
-│   │   ├── MainWrapper.tsx
+│   │   ├── Recent.tsx
+│   │   └── index.ts
+│   ├── myPage
+│   │   ├── BookComment.tsx
+│   │   ├── BottomContent.tsx
+│   │   ├── TopBanner.tsx
+│   │   ├── TopContent.tsx
+│   │   └── index.ts
+│   ├── signup
+│   │   ├── FirstStep.tsx
+│   │   ├── SecondStep.tsx
+│   │   ├── ThirdStep.tsx
+│   │   ├── LastStep.tsx
 │   │   └── index.ts
 │   └── Router.tsx
 ├── pages
+│   ├── AddBook.tsx
 │   ├── Bookcase.tsx
+│   ├── BookNote.tsx
+│   ├── DetailBookNote.tsx
+│   ├── DetailExample.tsx
+│   ├── Landing.tsx
 │   ├── Login.tsx
 │   ├── Main.tsx
+│   ├── MyPage.tsx
 │   ├── Signup.tsx
+│   ├── Test.tsx
+│   ├── ToBe.tsx
 │   └── index.ts
 ├── states
 │   └── index.ts
@@ -62,7 +127,14 @@
 │   ├── styled.d.ts
 │   └── theme.ts
 ├── utils
-│   └── api.ts
+│   ├── lib
+│   │   ├── api.ts
+│   │   └── index.ts
+│   ├── check.ts
+│   ├── dataType.ts
+│   └── mockData.ts
+├── App.tsx
+├── index.tsx
 └── tsconfig.json
 ```
 <br />
@@ -84,5 +156,3 @@
 - [🧑 이주함](https://github.com/orgs/TeamBookTez/people/soryeongk)
 - [👱‍♂️ 석상언](https://github.com/orgs/TeamBookTez/people/soryeongk)
 - [🤴 김규민](https://github.com/orgs/TeamBookTez/people/soryeongk)
-
-<br />
