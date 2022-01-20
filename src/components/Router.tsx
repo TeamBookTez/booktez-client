@@ -33,11 +33,12 @@ export default function Router() {
       const status = data.status;
 
       if (!localToken) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
       if (!(status === 200)) {
-        setIsLogin(false);
+        return setIsLogin(false);
       }
+      setIsLogin(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
@@ -62,7 +63,7 @@ export default function Router() {
             <Route path="pre" element={<PreRead />} />
             <Route path="peri" element={<PeriRead />} />
             <Route path="post" element={<PostRead />} />
-            <Route path="*" element={<Navigate to="" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}

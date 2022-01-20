@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -20,9 +20,6 @@ export default function BookCard(props: BookCardProps) {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
-  const navigate = useNavigate();
-
-  console.log(bookcaseInfo);
   const moveBookNoteHandler = () => {
     if (isLogin) {
       navigate("/book-note", { state: { isLogin, reviewId } });

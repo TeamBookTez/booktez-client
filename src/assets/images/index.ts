@@ -1,3 +1,4 @@
+export { default as ImgAddBooksSearch } from "./addBookSearchImage.png";
 export { default as ImgAddBooks } from "./addBooksImage.png";
 export { default as ImgDevice } from "./deviceImage.png";
 export { default as ImgEmptyBook } from "./emptyBookImage.png";
@@ -7,7 +8,6 @@ export { default as ImgLandingBookcase } from "./landingBookcaseImage.png";
 export { default as ImgLandingBookNote } from "./landingBookNoteImage.png";
 export { default as ImgLanding01 } from "./landingImage01.png";
 export { default as ImgLanding02 } from "./landingImage02.png";
-export { default as ImgLogo } from "./logoImage.png";
 export { default as ImgMainBanner } from "./mainBannerImage.png";
 export { default as ImgMainDefault } from "./mainDefault.png";
 export { default as ImgNull } from "./nullImage.jpeg";

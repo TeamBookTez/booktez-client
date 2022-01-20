@@ -7,7 +7,6 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
-import { Button } from "../common/styled/Button";
 
 interface RecentProps {
   isLogin: boolean;
@@ -15,11 +14,8 @@ interface RecentProps {
 export default function Recent(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
-
   const [bookDelete, setBookDelete] = useState<boolean>(false);
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
+  const [isDefault, setIsDefault] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -40,23 +36,31 @@ export default function Recent(props: RecentProps) {
     }
   };
 
-  const isDefault = false;
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
 
   useEffect(() => {
     getBookRecent("/book", userToken);
   }, [bookDelete]);
 
+  useEffect(() => {
+    setIsDefault(!(booksRecent.length > 0));
+  }, [booksRecent]);
+
   return (
     <section>
       <StHeader>
         <StHeading3>최근 작성한 북노트</StHeading3>
-        {booksRecent.length > 0 && <StLink to="/main/bookcase">전체보기</StLink>}
+        {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
       </StHeader>
       <StBookWrapper isdefault={isDefault}>
-        {booksRecent.length > 0 ? (
+        {!isDefault ? (
           booksRecent
             .slice(-booksRecent.length, -(booksRecent.length - 5))
-            .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />)
+            .map((tempInfo, idx) => (
+              <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+            ))
         ) : (
           <Empty />
         )}
@@ -101,5 +105,5 @@ const StBookWrapper = styled.section<{ isdefault: boolean }>`
   flex-wrap: wrap;
   flex-direction: ${({ isdefault }) => (isdefault ? "column" : "row")};
   align-items: center;
-  justify-content: center;
+  justify-content: ${({ isdefault }) => (isdefault ? "center" : "normal")};
 `;
