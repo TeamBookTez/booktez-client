@@ -28,13 +28,12 @@ export default function ShowModal(props: ShowModalProps) {
 
   const postAddBooks = async () => {
     try {
-      const res = await postData("/book", bookData, userToken);
+      const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
         localStorage.setItem("booktez-data", JSON.stringify(bookInfo));
       }
-
-      nav("/book-note");
+      nav("/book-note", { state: data.data.isLogin.reviewId });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
