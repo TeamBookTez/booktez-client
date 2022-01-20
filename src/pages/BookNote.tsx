@@ -14,6 +14,10 @@ interface ObjKey {
   [key: string]: string | string[] | number;
 }
 
+interface IsLoginState {
+  isLogin: boolean;
+  reviewId: number;
+}
 export interface PreNoteData extends ObjKey {
   answerOne: string;
   answerTwo: string;
@@ -22,9 +26,13 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  // const {state} = useLocation();
-  // { isLogin: boolean, reviewid: number};
-  const REVIEWID = 34;
+  const { state } = useLocation();
+  const isLoginState = state as IsLoginState;
+  const reviewId = isLoginState.reviewId;
+  const isLogin = isLoginState.isLogin;
+
+  console.log("isLogin", isLogin, "reviewId", reviewId);
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -101,13 +109,13 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    const res = await patchData(userToken, `/review/${REVIEWID}`, { ...preNote, answerThree: { root: periNote } });
+    const res = await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
 
     console.log("saveReview res", res);
   };
 
   const patchReview = async () => {
-    await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
+    await patchData(userToken, `/review/before/${reviewId}`, preNote);
 
     if (!isPrevented) {
       const newData: Question[] = [];
@@ -293,7 +301,7 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    getReview(`/review/${REVIEWID}`, userToken);
+    getReview(`/review/${reviewId}`, userToken);
   }, []);
 
   useEffect(() => {

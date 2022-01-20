@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
@@ -8,9 +9,10 @@ import { PopUpDelete } from "../../common";
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
   handleBookDelete: () => void;
+  isLogin: boolean;
 }
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, handleBookDelete } = props;
+  const { bookcaseInfo, handleBookDelete, isLogin } = props;
   const { author, reviewId, thumbnail, title } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
@@ -18,9 +20,18 @@ export default function BookCard(props: BookCardProps) {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
+  const navigate = useNavigate();
+
+  console.log(bookcaseInfo);
+  const moveBookNoteHandler = () => {
+    if (isLogin) {
+      navigate("/book-note", { state: { isLogin, reviewId } });
+    }
+  };
+
   return (
     <>
-      <StBookCard>
+      <StBookCard onClick={moveBookNoteHandler}>
         <StImgWrapper>
           <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
         </StImgWrapper>

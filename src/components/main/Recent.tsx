@@ -11,7 +11,11 @@ import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
 import { Button } from "../common/styled/Button";
 
-export default function Recent() {
+interface RecentProps {
+  isLogin: boolean;
+}
+export default function Recent(props: RecentProps) {
+  const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
 
   const [bookDelete, setBookDelete] = useState<boolean>(false);
@@ -61,7 +65,7 @@ export default function Recent() {
           <Empty />
         ) : (
           booksRecent.map((tempInfo, idx) => (
-            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
+            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
           ))
         )}
       </StBookWrapper>
