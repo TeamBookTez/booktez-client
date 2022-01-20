@@ -86,7 +86,7 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
-        const questions = questionList ? questionList : [""];
+        const questions = questionList.length ? questionList : [""];
 
         setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
         setTitle(bookTitle);
@@ -99,7 +99,7 @@ export default function BookNote() {
 
         // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
         // 답변 추가/삭제 막기
-        if (answerOne) {
+        if (answerOne && answerTwo && questionList.length) {
           setIsPrevented(true);
           setAblePatch(true);
         } else {
@@ -130,15 +130,22 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
+    const { answerOne, answerTwo } = preNote;
+
+    // console.log("patchBody", { answerOne, answerTwo, answerThree: { root: periNote } });
+    const res = await patchData(userToken, `/review/${reviewId}`, {
+      answerOne,
+      answerTwo,
+      answerThree: { root: periNote },
+    });
+
+    console.log("res", res);
   };
 
   const patchReview = async () => {
     await patchData(userToken, `/review/before/${reviewId}`, preNote);
     syncQuestion();
     setIsPrevented(true);
-    // 연결 확인 용
-    // console.log("res", res);
   };
 
   const handleSubmit = () => {

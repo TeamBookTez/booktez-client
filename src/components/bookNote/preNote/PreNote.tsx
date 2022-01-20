@@ -32,6 +32,7 @@ export default function PreNote() {
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
   };
+
   const localNick = localStorage.getItem("booktez-nickname");
   const nickname = isLogin && localNick ? localNick : "익명의 독서가";
 
