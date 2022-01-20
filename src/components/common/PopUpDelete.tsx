@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { deleteData } from "../../utils/lib/api";
@@ -20,13 +20,16 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const { onPopUp, reviewId, handleBookDelete } = props;
   const token = localStorage.getItem("booktez-token"); // 로컬스토리지에서 token 받아와 처리
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleDelete = async () => {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      navigate("/main/bookcase");
       handleBookDelete();
+      if (pathname === "/detail-book-note") {
+        navigate("/main");
+      }
     } catch (err) {
       alert(err);
     }
