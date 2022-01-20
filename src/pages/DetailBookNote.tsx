@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
@@ -16,7 +16,7 @@ export default function DetailBookNote() {
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const { state } = useLocation();
   const isLoginState = state as IsLoginState;
-  const reviewId = isLoginState.reviewId;
+  const { reviewId, fromUrl } = isLoginState;
   // const reviewId = 4; // 리뷰 id 를 받아와 처리
 
   const tempToken = localStorage.getItem("booktez-token");
@@ -54,7 +54,13 @@ export default function DetailBookNote() {
   return (
     <>
       <StNoteModalWrapper>
-        {isPopUp ? <></> : <StIcCancelWhite onClick={() => navigate(-1)} />}
+        {isPopUp ? (
+          <></>
+        ) : (
+          <Link to={fromUrl}>
+            <StIcCancelWhite />
+          </Link>
+        )}
         <StBookTitle>{reviewData?.bookTitle}</StBookTitle>
         <StBtnWrapper>
           <IcDeleteNote onClick={handlePopUp} />

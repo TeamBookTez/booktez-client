@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
@@ -16,6 +16,7 @@ interface ObjKey {
 export interface IsLoginState {
   isLogin: boolean;
   reviewId: number;
+  fromUrl: string;
 }
 
 export interface PreNoteData extends ObjKey {
@@ -32,8 +33,7 @@ export default function BookNote() {
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   const isLoginState = state as IsLoginState;
-  const isLogin = isLoginState.isLogin;
-  const reviewId = isLoginState.reviewId;
+  const { isLogin, reviewId, fromUrl } = isLoginState;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -333,7 +333,9 @@ export default function BookNote() {
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
-      <StIcCancelWhite onClick={() => navigate(-1)} />
+      <Link to={fromUrl}>
+        <StIcCancelWhite />
+      </Link>
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
@@ -353,6 +355,7 @@ export default function BookNote() {
           handleAddPeri,
           handleDeletePeri,
           userToken,
+          fromUrl,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

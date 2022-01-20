@@ -26,6 +26,7 @@ export default function PeriNote() {
     handleAddPeri,
     handleDeletePeri,
     userToken,
+    fromUrl,
   ] =
     useOutletContext<
       [
@@ -40,6 +41,7 @@ export default function PeriNote() {
         (key: string, value: string, idxList: number[]) => void,
         (idxList: number[]) => void,
         (idxList: number[]) => void,
+        string,
         string,
       ]
     >();
@@ -76,7 +78,7 @@ export default function PeriNote() {
 
   const submitComplete = () => {
     submitReview(true);
-    navigate("/detail-book-note", { state: { reviewId } });
+    navigate("/detail-book-note", { state: { reviewId, fromUrl } });
   };
 
   return (
