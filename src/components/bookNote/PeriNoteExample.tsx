@@ -10,7 +10,7 @@ export default function PeriNoteExample() {
         <LabelQuestion bgColor={theme.colors.orange100} />나 자신의 Why를 발견하는 방법은 무엇일까?
       </StQuestion>
       {/* depth 1 */}
-      <article>
+      <StFirstArticle>
         <StAnswer>파트너를 구한다.</StAnswer>
         {/* depth 2 */}
         <article>
@@ -57,10 +57,16 @@ export default function PeriNoteExample() {
             <StAnswer>인상의 방향이 완전히 달라졌음을 느꼈던 인생의 가장 결정적 순간은 언제인가?</StAnswer>
           </article>
         </article>
-      </article>
+      </StFirstArticle>
     </>
   );
 }
+
+const StFirstArticle = styled.article`
+  & article {
+    padding-left: 5.3rem;
+  }
+`;
 
 const StQuestion = styled.ul`
   ${({ theme }) => theme.fonts.body2};

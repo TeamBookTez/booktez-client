@@ -73,11 +73,6 @@ export default function PeriNote() {
     else miniMenu.style.display = "none";
   };
 
-  useEffect(() => {
-    console.log("preNote", preNote);
-    console.log("periNote", periNote);
-  }, [periNote, preNote]);
-
   return (
     <>
       <StNoteForm onSubmit={(e) => e.preventDefault()}>
