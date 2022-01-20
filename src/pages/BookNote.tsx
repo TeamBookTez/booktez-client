@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
+import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
 
 interface ObjKey {
@@ -21,7 +22,7 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 9;
+  const REVIEWID = 34;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -35,8 +36,17 @@ export default function BookNote() {
     questionList: [""],
     progress: 2,
   });
+  const [periNote, setPeriNote] = useState<Question[]>([]);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const { pathname } = useLocation();
+  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const [navIndex, setNavIndex] = useState<number>(initIndex);
+
+  const handleNav = (idx: number) => {
+    setNavIndex(idx);
+  };
 
   const navigate = useNavigate();
 
@@ -62,9 +72,10 @@ export default function BookNote() {
   const getReview = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
-      const { answerOne, answerTwo, questionList, reviewState, bookTitle } = data.data;
+      const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
       setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+      setPeriNote(answerThree.root);
       setTitle(bookTitle);
 
       // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
@@ -86,12 +97,27 @@ export default function BookNote() {
     }
   };
 
-  const patchReview = async () => {
-    const res = await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
+  // 저장만 하기 - 수정 완료는 아님
+  const saveReview = async () => {
+    const res = await patchData(userToken, `/review/${REVIEWID}`, { ...preNote, answerThree: { root: periNote } });
 
+    console.log("saveReview res", res);
+  };
+
+  const patchReview = async () => {
+    await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
+
+    if (!isPrevented) {
+      const newData: Question[] = [];
+
+      preNote.questionList.map((question) => {
+        newData.push({ depth: 1, question, answer: [] });
+      });
+      setPeriNote(newData);
+    }
     setIsPrevented(true);
     // 연결 확인 용
-    console.log("res", res);
+    // console.log("res", res);
   };
 
   const handleSubmit = () => {
@@ -99,10 +125,169 @@ export default function BookNote() {
     patchReview();
     setOpenModal(false);
     navigate("/book-note/peri");
+    handleNav(1);
   };
 
   const handleCancel = () => {
     setOpenModal(false);
+  };
+
+  const handleChangePeri = (key: string, value: string, idxList: number[]) => {
+    const newRoot = [...periNote];
+
+    switch (idxList.length) {
+      case 1:
+        newRoot[idxList[0]][key] = value;
+        break;
+      case 2:
+        newRoot[idxList[0]].answer[idxList[1]].text = value;
+        break;
+      case 3:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]][key] = value;
+        break;
+      case 4:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].text = value;
+        break;
+      case 5:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]][key] =
+          value;
+        break;
+      case 6:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].text = value;
+        break;
+      case 7:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]][key] = value;
+        break;
+      case 8:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].text = value;
+        break;
+      case 9:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]][key] = value;
+        break;
+      case 10:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].text = value;
+        break;
+    }
+
+    setPeriNote(newRoot);
+  };
+
+  const handleAddPeri = (idxList: number[]) => {
+    const newRoot = [...periNote];
+
+    switch (idxList.length) {
+      case 1:
+        newRoot[idxList[0]].answer.push({ text: "", children: [] });
+        break;
+      case 2:
+        newRoot[idxList[0]].answer[idxList[1]].children.push({ depth: 2, question: "", answer: [] });
+        break;
+      case 3:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.push({ text: "", children: [] });
+        break;
+      case 4:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.push({
+          depth: 2,
+          question: "",
+          answer: [],
+        });
+        break;
+      case 5:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer.push(
+          { text: "", children: [] },
+        );
+        break;
+      case 6:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children.push({ depth: 3, question: "", answer: [] });
+        break;
+      case 7:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer.push({ text: "", children: [] });
+        break;
+      case 8:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children.push({ depth: 4, question: "", answer: [] });
+        break;
+      case 9:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer.push({ text: "", children: [] });
+        break;
+      case 10:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].children.push({
+          depth: 5,
+          question: "",
+          answer: [],
+        });
+        break;
+    }
+
+    setPeriNote(newRoot);
+  };
+
+  const handleDeletePeri = (idxList: number[]) => {
+    const newRoot = [...periNote];
+
+    switch (idxList.length) {
+      case 1:
+        newRoot.splice(idxList[0], 1);
+        break;
+      case 2:
+        newRoot[idxList[0]].answer.splice(idxList[1], 1);
+        break;
+      case 3:
+        newRoot[idxList[0]].answer[idxList[1]].children.splice(idxList[2], 1);
+        break;
+      case 4:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.splice(idxList[3], 1);
+        break;
+      case 5:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.splice(idxList[4], 1);
+        break;
+      case 6:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[
+          idxList[4]
+        ].answer.splice(idxList[5], 1);
+        break;
+      case 7:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children.splice(idxList[6], 1);
+        break;
+      case 8:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer.splice(idxList[7], 1);
+        break;
+      case 9:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children.splice(idxList[8], 1);
+        break;
+      case 10:
+        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
+          idxList[5]
+        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer.splice(idxList[9], 1);
+        break;
+    }
+
+    setPeriNote(newRoot);
   };
 
   useEffect(() => {
@@ -120,10 +305,23 @@ export default function BookNote() {
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator />
-        <IcSave onClick={patchReview} />
+        <Navigator navIndex={navIndex} onNav={handleNav} />
+        <IcSave onClick={saveReview} />
       </StNavWrapper>
-      <Outlet context={[handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch]} />
+      <Outlet
+        context={[
+          handleOpenDrawer,
+          preNote,
+          handleChangeReview,
+          setOpenModal,
+          isPrevented,
+          ablePatch,
+          periNote,
+          handleChangePeri,
+          handleAddPeri,
+          handleDeletePeri,
+        ]}
+      />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
