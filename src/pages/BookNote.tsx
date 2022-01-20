@@ -131,7 +131,7 @@ export default function BookNote() {
       const newData: Question[] = [];
 
       preNote.questionList.map((question) => {
-        newData.push({ depth: 1, question, answer: [] });
+        newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
       });
       setPeriNote(newData);
     }
@@ -207,7 +207,7 @@ export default function BookNote() {
 
     switch (idxList.length) {
       default:
-        newRoot.push({ depth: 1, question: "", answer: [] });
+        newRoot.push({ depth: 1, question: "", answer: [{ text: "", children: [] }] });
         break;
       case 1:
         newRoot[idxList[0]].answer.push({ text: "", children: [] });
