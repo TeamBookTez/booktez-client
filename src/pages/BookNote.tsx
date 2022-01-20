@@ -27,6 +27,7 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
+  const navigate = useNavigate();
   const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
   const [navIndex, setNavIndex] = useState<number>(initIndex);
@@ -34,6 +35,7 @@ export default function BookNote() {
   const isLoginState = state as IsLoginState;
   const isLogin = isLoginState.isLogin;
   const reviewId = isLoginState.reviewId;
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -54,8 +56,6 @@ export default function BookNote() {
   const handleNav = (idx: number) => {
     setNavIndex(idx);
   };
-
-  const navigate = useNavigate();
 
   const handleToggleDrawer = (i: number) => {
     setIsDrawerOpen(true);
@@ -118,9 +118,8 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
+    console.log("saveReview reviewId", reviewId);
     const res = await patchData(userToken, `/review/${reviewId}`, { ...preNote, answerThree: { root: periNote } });
-
-    console.log("saveReview res", res);
   };
 
   const patchReview = async () => {
