@@ -7,7 +7,6 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
-import { Button } from "../common/styled/Button";
 
 interface RecentProps {
   isLogin: boolean;
@@ -15,11 +14,9 @@ interface RecentProps {
 export default function Recent(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
-
   const [bookDelete, setBookDelete] = useState<boolean>(false);
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
+
+  const isDefault = true;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -40,7 +37,9 @@ export default function Recent(props: RecentProps) {
     }
   };
 
-  const isDefault = false;
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
 
   useEffect(() => {
     getBookRecent("/book", userToken);

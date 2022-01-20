@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -12,20 +11,15 @@ import { PublishDate } from "./BookInfoWrapper";
 
 interface ShowModalProps {
   bookInfo: BookInfo;
-  setBookInfo: Dispatch<SetStateAction<BookInfo>>;
   publishDate: PublishDate;
   onToggleModal: () => void;
 }
 
-interface IsLoginState {
-  isLogin: boolean;
-  reviewId: number;
-}
-
 export default function ShowModal(props: ShowModalProps) {
-  const { bookInfo, setBookInfo, publishDate, onToggleModal } = props;
+  const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
   const bookData = { ...bookInfo, publicationDate: publishDate.toString(), author: authors, translator: translators };
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
