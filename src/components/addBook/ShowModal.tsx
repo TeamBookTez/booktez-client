@@ -17,6 +17,11 @@ interface ShowModalProps {
   onToggleModal: () => void;
 }
 
+interface IsLoginState {
+  isLogin: boolean;
+  reviewId: number;
+}
+
 export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, setBookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
@@ -28,12 +33,13 @@ export default function ShowModal(props: ShowModalProps) {
 
   const postAddBooks = async () => {
     try {
-      const { data } = await postData("/book", bookData, userToken);
+      const res = await postData("/book", bookData, userToken);
 
       if (!userToken) {
         localStorage.setItem("booktez-data", JSON.stringify(bookInfo));
       }
-      nav("/book-note", { state: data.data.isLogin.reviewId });
+
+      nav("/book-note");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

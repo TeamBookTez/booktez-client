@@ -23,7 +23,7 @@ export default function BookCard(props: BookCardProps) {
 
   return (
     <StCardWrapper>
-      <StBookCard onClick={() => navigate("/book-note", { state: reviewId })}>
+      <StBookCard onClick={() => navigate("/book-note")}>
         <StImgWrapper>
           <StImg src={thumbnail} alt={`도서 ${title}의 이미지`} />
         </StImgWrapper>

@@ -12,6 +12,7 @@ import { StepUp } from "..";
 
 export default function PeriNote() {
   const [
+    isLogin,
     handleOpenDrawer,
     preNote,
     handleChangeReview,
@@ -25,6 +26,7 @@ export default function PeriNote() {
   ] =
     useOutletContext<
       [
+        boolean,
         (i: number) => void,
         PreNoteData,
         (key: string, value: string | string[] | number) => void,
