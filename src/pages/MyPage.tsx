@@ -22,29 +22,19 @@ export default function MyPage() {
 
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
-  const [dataa, setDataa] = useState<string>("");
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [tempImg, setTempImg] = useState<string>("");
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
-  const authCheckKey = "/auth/check";
-  const infoKey = "/user/myInfo";
-  const patchImgKey = "/user/img";
+  useEffect(() => {
+    getLogin("/auth/check", localToken);
+  }, [isLogin]);
 
-  const getInfo = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-
-      if (data.success) {
-        setUserInfo(data.data);
-      }
-    } catch (err) {
-      // if (axios.isAxiosError(err)) {
-      // console.log("err", err.response?.data);
-      // }
-    }
-  };
+  useEffect(() => {
+    getInfo("/user/myInfo", localToken);
+  }, [tempImg]);
 
   const getLogin = async (key: string, token: string) => {
     try {
@@ -57,13 +47,31 @@ export default function MyPage() {
       if (!(status === 200)) {
         setIsLogin(false);
       }
+      setIsLogin(true);
     } catch (err) {
-      // if (axios.isAxiosError(err)) {
-      // }
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  const getInfo = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+
+      if (data.success) {
+        setUserInfo(data.data);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isLogin === false) return;
+
     const formData = new FormData();
 
     if (e.target.files !== null) {
@@ -72,31 +80,19 @@ export default function MyPage() {
       formData.append("img", imgFile);
 
       try {
-        const { data } = await patchData(localToken, patchImgKey, formData);
+        const { data } = await patchData(localToken, "/user/img", formData);
 
         if (data.success) {
-          setDataa(data.img);
+          setTempImg(data.img);
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
-        // if (axios.isAxiosError(err)) {
-        // console.log("err", err.response?.data);
-        // }
+        if (axios.isAxiosError(err)) {
+          console.log("err", err.response?.data);
+        }
       }
     }
   };
-
-  const handleIsLogin = () => {
-    setIsLogin((prev) => !prev);
-  };
-
-  useEffect(() => {
-    getInfo(infoKey, localToken);
-  }, [dataa]);
-
-  useEffect(() => {
-    getLogin(authCheckKey, localToken);
-  }, [isLogin]);
 
   return (
     <>

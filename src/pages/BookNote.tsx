@@ -14,10 +14,11 @@ interface ObjKey {
   [key: string]: string | string[] | number;
 }
 
-interface IsLoginState {
+export interface IsLoginState {
   isLogin: boolean;
   reviewId: number;
 }
+
 export interface PreNoteData extends ObjKey {
   answerOne: string;
   answerTwo: string;
@@ -28,11 +29,8 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const { state } = useLocation();
   const isLoginState = state as IsLoginState;
-  const reviewId = isLoginState.reviewId;
   const isLogin = isLoginState.isLogin;
-
-  console.log("isLogin", isLogin, "reviewId", reviewId);
-
+  const reviewId = isLoginState.reviewId;
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -79,28 +77,34 @@ export default function BookNote() {
     });
   };
 
-  const getReview = async (key: string, token: string) => {
+  const getReview = async () => {
     try {
-      const { data } = await getData(key, token);
-      const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
+      if (!isLogin) {
+        const localData = localStorage.getItem("booktez-data");
+        const bookTitle = localData ? JSON.parse(localData).title : "";
 
-      // console.log("data", data);
-      setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-      setTitle(bookTitle);
-
-      if (answerThree) {
-        setPeriNote(answerThree.root);
+        setTitle(bookTitle);
       } else {
-        setPeriNote([]);
-      }
+        const { data } = await getData(`/review/${reviewId}`, userToken);
+        const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
 
-      // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
-      // 답변 추가/삭제 막기
-      if (answerOne) {
-        setIsPrevented(true);
-        setAblePatch(true);
-      } else {
-        handleChangeReview("questionList", [""]);
+        setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
+        setTitle(bookTitle);
+
+        if (answerThree) {
+          setPeriNote(answerThree.root);
+        } else {
+          setPeriNote([]);
+        }
+
+        // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+        // 답변 추가/삭제 막기
+        if (answerOne) {
+          setIsPrevented(true);
+          setAblePatch(true);
+        } else {
+          handleChangeReview("questionList", [""]);
+        }
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -127,7 +131,7 @@ export default function BookNote() {
       const newData: Question[] = [];
 
       preNote.questionList.map((question) => {
-        newData.push({ depth: 1, question, answer: [] });
+        newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
       });
       setPeriNote(newData);
     }
@@ -140,7 +144,7 @@ export default function BookNote() {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
-    navigate("/book-note/peri");
+    navigate("/book-note/peri", { state: isLoginState });
     handleNav(1);
   };
 
@@ -202,6 +206,9 @@ export default function BookNote() {
     const newRoot = [...periNote];
 
     switch (idxList.length) {
+      default:
+        newRoot.push({ depth: 1, question: "", answer: [{ text: "", children: [] }] });
+        break;
       case 1:
         newRoot[idxList[0]].answer.push({ text: "", children: [] });
         break;
@@ -307,14 +314,6 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    getReview(`/review/${reviewId}`, userToken);
-  }, []);
-
-  useEffect(() => {
-    console.log("preNote", preNote);
-  }, [title]);
-
-  useEffect(() => {
     // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
     // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
@@ -322,17 +321,20 @@ export default function BookNote() {
     }
   }, [preNote]);
 
+  useEffect(() => {
+    getReview();
+  }, []);
+
   return (
     <StNoteModalWrapper isopen={isDrawerOpen}>
       <StIcCancelWhite onClick={() => navigate(-1)} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator navIndex={navIndex} onNav={handleNav} />
+        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
         <IcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet
         context={[
-          isLogin,
           handleToggleDrawer,
           preNote,
           handleChangeReview,
@@ -343,6 +345,7 @@ export default function BookNote() {
           handleChangePeri,
           handleAddPeri,
           handleDeletePeri,
+          userToken,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

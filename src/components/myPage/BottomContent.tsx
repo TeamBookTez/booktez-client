@@ -75,6 +75,8 @@ const StImgWrapper = styled.div`
   width: 21.1rem;
   height: 16.3rem;
 
+  margin-bottom: 2.5rem;
+
   border-radius: 2rem 2rem 0 0;
 
   & > img {

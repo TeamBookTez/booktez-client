@@ -17,3 +17,4 @@ export { default as ImgSignupFirst } from "./signupFirstImage.png";
 export { default as ImgSignupSecond } from "./signupSecondImage.png";
 export { default as ImgSignupThird } from "./signupThirdImage.png";
 export { default as ImgTemp } from "./tempImage.png";
+export { default as ImgUser } from "./userImage.png";

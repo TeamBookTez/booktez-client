@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
 import { IcEditProfile } from "../../assets/icons";
-import { ImgMypageBanner } from "../../assets/images";
+import { ImgMypageBanner, ImgUser } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
 
 interface TopBannerProps {
+  isLogin: boolean;
   userInfo: UserInfo;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function TopBanner(props: TopBannerProps) {
-  const { userInfo, onImageChange } = props;
+  const { isLogin, userInfo, onImageChange } = props;
 
   const { img, nickname, email } = userInfo;
 
@@ -19,7 +20,7 @@ export default function TopBanner(props: TopBannerProps) {
       <StProfile>
         <StProfileImgBox>
           <StUserImgWrapper>
-            <img src={img} alt="유저 이미지" />
+            {isLogin ? <img src={img} alt="유저 이미지" /> : <img src={ImgUser} alt="유저 이미지" />}
           </StUserImgWrapper>
           <StIcEditProfile htmlFor="input-file">
             <StIcEditProfileImg />
