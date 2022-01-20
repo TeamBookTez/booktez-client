@@ -14,46 +14,18 @@ export interface PublishDate {
 
 export default function BookInfoWrapper(props: { book: BookInfo }) {
   const { book } = props;
-
-  const [bookInfo, setBookInfo] = useState<BookInfo>({
-    thumbnail: "",
-    title: "",
-    authors: [],
-    translators: [],
-    datetime: "",
-    contents: "",
-    isbn: "",
-  });
-
+  const { isbn, thumbnail, title, authors, datetime, contents } = book;
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const { isbn, thumbnail, title, authors, datetime, contents }: BookInfo = book;
-
-  const dateTimeString = bookInfo.datetime.toString();
-
   const publishDate: PublishDate = {
-    year: dateTimeString.slice(0, 4),
-    month: dateTimeString.slice(5, 7),
-    date: dateTimeString.slice(8, 10),
+    year: datetime.toString().slice(0, 4),
+    month: datetime.toString().slice(5, 7),
+    date: datetime.toString().slice(8, 10),
   };
 
   const onToggleModal = useCallback(() => {
     setOpenModal(!openModal);
   }, [openModal]);
-
-  useEffect(
-    () =>
-      setBookInfo((prev: BookInfo) => ({
-        ...prev,
-        isbn,
-        thumbnail,
-        title,
-        authors,
-        datetime,
-        contents,
-      })),
-    [],
-  );
 
   return (
     <>
@@ -77,12 +49,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
       </StArticle>
       {openModal && (
         <ModalWrapper>
-          <ShowModal
-            onToggleModal={onToggleModal}
-            bookInfo={bookInfo}
-            setBookInfo={setBookInfo}
-            publishDate={publishDate}
-          />
+          <ShowModal onToggleModal={onToggleModal} bookInfo={book} publishDate={publishDate} />
         </ModalWrapper>
       )}
     </>
