@@ -32,13 +32,15 @@ export default function PreNote() {
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
   };
+  const localNick = localStorage.getItem("booktez-nickname");
+  const nickname = isLogin && localNick ? localNick : "익명의 독서가";
 
   return (
     <StNoteForm onSubmit={(e) => e.preventDefault()}>
       <StFormHead>독서 전 단계 어쩌구 해보세요</StFormHead>
       <StFormWrapper>
         <PreNoteForm
-          question="익명의 독서가(비회원)/000님은 이 책에 어떤 기대를 하고 계신가요?"
+          question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
           idx={1}
           onToggleDrawer={handleToggleDrawer}>
           <StTextarea
