@@ -22,9 +22,6 @@ export default function BookCard(props: BookCardProps) {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
-  const navigate = useNavigate();
-
-  console.log(bookcaseInfo);
   const moveBookNoteHandler = () => {
     if (isLogin) {
       navigate("/book-note", { state: { isLogin, reviewId } });
@@ -32,7 +29,7 @@ export default function BookCard(props: BookCardProps) {
   };
 
   return (
-    <>
+    <StCardWrapper>
       <StBookCard onClick={moveBookNoteHandler}>
         <StImgWrapper>
           <StImg src={thumbnail} alt={`도서 ${title}의 이미지`} />
