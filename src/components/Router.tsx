@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import {
@@ -13,13 +15,39 @@ import {
   ToBe,
 } from "../pages";
 import Landing from "../pages/Landing";
+import { getData } from "../utils/lib/api";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
 import { CommonLayout } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
-  const isLogin = false;
+  const tempToken = localStorage.getItem("booktez-token");
+  const localToken = tempToken ? tempToken : "";
+
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getLogin("/auth/check", localToken);
+  }, []);
 
   return (
     <BrowserRouter>
