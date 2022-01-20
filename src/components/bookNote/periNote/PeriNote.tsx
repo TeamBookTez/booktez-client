@@ -388,7 +388,9 @@ export default function PeriNote() {
               </StAnswerWrapper>
             </StQAContainer>
           ))}
-          <StAddQuestionButton type="button">+ 질문 리스트 추가</StAddQuestionButton>
+          <StAddQuestionButton type="button" onClick={() => handleAddPeri([])}>
+            + 질문 리스트 추가
+          </StAddQuestionButton>
         </StQAWrapper>
         <StDoneButton type="button" onClick={() => submitReview(true)}>
           작성 완료

@@ -206,6 +206,9 @@ export default function BookNote() {
     const newRoot = [...periNote];
 
     switch (idxList.length) {
+      default:
+        newRoot.push({ depth: 1, question: "", answer: [] });
+        break;
       case 1:
         newRoot[idxList[0]].answer.push({ text: "", children: [] });
         break;
