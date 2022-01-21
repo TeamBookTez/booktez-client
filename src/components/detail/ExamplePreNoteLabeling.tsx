@@ -56,7 +56,6 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
         가장 관심가는 주제부터 질문 리스트를 만들어보세요!
-        <StepUp onToggleModal={() => handleToggleModal(3)} />
       </StFirstQuestion>
       {isLogin ? (
         questionList?.map((question: string, idx: number) => <StAnswer key={idx}>{question}</StAnswer>)
