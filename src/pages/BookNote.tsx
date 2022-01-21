@@ -465,7 +465,7 @@ const StIcCheckSave = styled(IcCheckSave)`
 
 const StSave = styled.div`
   position: absolute;
-  left: 76%;
+  right: 4.5rem;
 
   display: flex;
   justify-content: center;
