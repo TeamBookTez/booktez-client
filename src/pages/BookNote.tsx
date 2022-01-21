@@ -377,24 +377,24 @@ export default function BookNote() {
         <Loading />
       ) : (
         <Outlet
-        context={[
-          isLogin,
-          handleToggleDrawer,
-          preNote,
-          handleChangeReview,
-          setOpenModal,
-          isPrevented,
-          ablePatch,
-          periNote,
-          handleChangePeri,
-          handleAddPeri,
-          handleDeletePeri,
-          userToken,
-          fromUrl,
-          patchReview,
-          reviewId,
-        ]}
-      />
+          context={[
+            isLogin,
+            handleToggleDrawer,
+            preNote,
+            handleChangeReview,
+            setOpenModal,
+            isPrevented,
+            ablePatch,
+            periNote,
+            handleChangePeri,
+            handleAddPeri,
+            handleDeletePeri,
+            userToken,
+            fromUrl,
+            patchReview,
+            reviewId,
+          ]}
+        />
       )}
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
