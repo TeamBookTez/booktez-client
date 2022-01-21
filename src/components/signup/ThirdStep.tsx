@@ -24,23 +24,6 @@ export default function ThirdStep() {
 
   const nav = useNavigate();
 
-  const postSignup = async () => {
-    try {
-      const res = await postData("/auth/signup", userData);
-      const resData = res.data.data;
-
-      localStorage.setItem("booktez-token", resData.token);
-
-      nav("/");
-      // 메인에서 로그인 온 경우에는 메인으로,
-      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
-    }
-  };
-
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
@@ -53,6 +36,40 @@ export default function ThirdStep() {
     setIsPwdReError(false);
   }, [pwdRe]);
 
+  const postSignup = async () => {
+    try {
+      const res = await postData("/auth/signup", userData);
+      const resData = res.data.data;
+
+      localStorage.setItem("booktez-token", resData.token);
+      // 메인에서 로그인 온 경우에는 메인으로,
+      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
+  const postLogin = async () => {
+    const loginBody = {
+      email: userData.email,
+      password: pwd,
+    };
+
+    try {
+      const res = await postData("/auth/login", loginBody);
+      const resData = res.data.data;
+
+      localStorage.setItem("booktez-token", resData.token);
+      localStorage.setItem("booktez-nickname", resData.nickname);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
+
   const goNextStep = () => {
     if (pwd !== pwdRe) {
       return setIsPwdReError(true);
@@ -62,7 +79,7 @@ export default function ThirdStep() {
       return setIsPwdError(true);
     }
 
-    postSignup();
+    postSignup().then(() => postLogin());
     handleIsAniTime(true);
     setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
   };
