@@ -319,7 +319,7 @@ export default function PeriNote() {
                                                         key={`q3-${i}`}
                                                         value={question4.question}
                                                         onChange={(event) =>
-                                                          handleChangePeri("answer", event.target.value, [
+                                                          handleChangePeri("question", event.target.value, [
                                                             a,
                                                             b,
                                                             c,
@@ -372,13 +372,6 @@ export default function PeriNote() {
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
                                                         <StMiniMenu>
-                                                          <StMenuBtn
-                                                            type="button"
-                                                            onClick={() =>
-                                                              handleAddPeri([a, b, c, d, e, f, g, h, i, j])
-                                                            }>
-                                                            꼬리질문 추가
-                                                          </StMenuBtn>
                                                           <StMenuBtn
                                                             type="button"
                                                             onClick={() =>
@@ -510,9 +503,11 @@ const StAnswerWrapper = styled.div`
   } */
 `;
 
-const StPriQuestionInput = styled.input`
+const StPriQuestionInput = styled.textarea`
   flex: 1;
   ${({ theme }) => theme.fonts.header4}
+
+  overflow-y: visible;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
