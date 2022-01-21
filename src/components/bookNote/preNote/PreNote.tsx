@@ -137,6 +137,7 @@ const StTextarea = styled.textarea`
   width: 100%;
   height: 15.4rem;
   color: ${({ theme }) => theme.colors.gray100};
+  ${({ theme }) => theme.fonts.body4}
   resize: none;
 
   &::placeholder {
