@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
+import { ImgBefore1, ImgBefore3 } from "../../../assets/images";
 import { before1, before3 } from "../../../utils/mockData";
 
 interface StepUpProps {
@@ -16,7 +17,11 @@ export default function OneCaseModal(props: StepUpProps) {
       <StModalIcCancel onClick={onToggleModal} />
       <StLeftWrapper>
         <StImgWrapper>
-          <img src="" alt="" />
+          {idx === 1 ? (
+            <img src={ImgBefore1} alt="방향성을 찾아보세요" />
+          ) : (
+            <img src={ImgBefore3} alt="방향성을 찾아보세요" />
+          )}
         </StImgWrapper>
         <StLifeQuotes>{idx === 1 ? before1.lifeQuote : before3.lifeQuote}</StLifeQuotes>
         <StPublic>{idx === 1 ? before1.public : before3.public}</StPublic>

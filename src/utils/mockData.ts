@@ -13,6 +13,7 @@ export const before1 = {
 export const before2 = [
   {
     id: 1,
+    img: "before21Image",
     lifeQuote: "“생각하지 않고 읽는 것은 잘 씹지 않고 먹는 것과 같다.”",
     public: "- 에드먼드 버크 -",
     header: "전략을 세워 보세요.",
@@ -24,6 +25,7 @@ export const before2 = [
   },
   {
     id: 2,
+    img: "before22Image",
     lifeQuote: "책의 제목, 서론에는 저자가 전달하고자 하는 핵심 메시지가 들어있어요.",
     public: "",
     header: "방향성을 찾아보세요.",
@@ -36,6 +38,7 @@ export const before2 = [
   },
   {
     id: 3,
+    img: "before23Image",
     lifeQuote: "책의 목차는 핵심 메시지를 효과적으로 전달하기 위해 구성 되었어요.",
     public: "",
     header: "기대를 채워줄 부분을 파악해 보세요.",

@@ -46,7 +46,8 @@ export default function NavWrapper() {
           </StItem>
           <StItem color={getColor("/to-be")}>
             <StLink to="/main/to-be">
-              <IcToBe fill={getColor("/to-be")} />곧 만나요
+              <IcToBe fill={getColor("/to-be")} />
+              준비중
             </StLink>
           </StItem>
         </StUl>

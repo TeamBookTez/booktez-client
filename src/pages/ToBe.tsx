@@ -42,7 +42,13 @@ const StSection = styled.section`
 
   height: 57.2rem;
 
-  margin: 8.8rem 0 0 11.6rem; ;
+  margin: 8.8rem 0 0 11.6rem;
+
+  & > img {
+    width: 58.4rem;
+    height: 57.6rem;
+    margin-right: 3.6rem;
+  }
 `;
 
 const Starticle = styled.article`
