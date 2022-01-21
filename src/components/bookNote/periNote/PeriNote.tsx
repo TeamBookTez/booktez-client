@@ -27,6 +27,8 @@ export default function PeriNote() {
     handleDeletePeri,
     userToken,
     fromUrl,
+    patchReview,
+    reviewId,
   ] =
     useOutletContext<
       [
@@ -43,13 +45,10 @@ export default function PeriNote() {
         (idxList: number[]) => void,
         string,
         string,
+        () => Promise<void>,
+        number,
       ]
     >();
-
-  const { state } = useLocation();
-
-  const isLoginState = state as IsLoginState;
-  const { reviewId } = isLoginState;
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
