@@ -379,7 +379,7 @@ export default function BookNote() {
             작성한 내용이 저장되었어요.
           </StSave>
         )}
-        <StIcSave onClick={saveReview} />
+        {isLogin && <StIcSave onClick={saveReview} />}
       </StNavWrapper>
       {isLoading ? (
         <Loading />
