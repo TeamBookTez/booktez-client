@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import {
@@ -17,7 +15,7 @@ import {
 import Landing from "../pages/Landing";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
-import { CommonLayout } from "./common";
+import { CommonLayout, Error404 } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
@@ -59,7 +57,7 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route path="*" element={<p>404 에러 얍얍</p>} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );
