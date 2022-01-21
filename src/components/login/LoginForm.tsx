@@ -36,7 +36,7 @@ export default function LoginForm() {
       // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
+        console.log("err", err);
         const status = err.response?.data.status;
 
         if (status === 404) {

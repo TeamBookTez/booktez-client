@@ -1,6 +1,4 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { constSelector } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
@@ -22,11 +20,7 @@ export default function ShowModal(props: ShowModalProps) {
 
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
-  console.log("shomodal pdt", publicationDt);
-
   const bookData = { ...bookInfo, publicationDate: publicationDt, author: authors, translator: translators };
-
-  console.log("bookData", bookData);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -44,9 +38,7 @@ export default function ShowModal(props: ShowModalProps) {
 
       nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
@@ -120,9 +119,7 @@ export default function BookNote() {
         }
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
     // get 요청이 끝날 시 loading 끝
     setIsLoading(false);
@@ -130,7 +127,6 @@ export default function BookNote() {
 
   // 서버에의 저장을 관리
   const patchReview = async (progress: number) => {
-    console.log("patchData", { ...preNote, progress });
     // answerOne, answerTwo, questionList, progress update
     await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress });
   };
