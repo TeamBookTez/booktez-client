@@ -2,9 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
-import { before21Image } from "../../../assets/images/before21Image.png";
-import { before22Image } from "../../../assets/images/before22Image.png";
-import { before23Image } from "../../../assets/images/before23Image.png";
+import { ImgBefore21, ImgBefore22, ImgBefore23 } from "../../../assets/images";
 import { before2 } from "../../../utils/mockData";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
@@ -38,12 +36,25 @@ export default function ThreeCaseModal(props: StepUpProps) {
     }
   };
 
+  let imgSrc = "";
+
+  switch (slideIndex) {
+    case 2:
+      imgSrc = ImgBefore22;
+      break;
+    case 3:
+      imgSrc = ImgBefore23;
+      break;
+    default:
+      imgSrc = ImgBefore21;
+  }
+
   return (
     <StModalBox>
       <StModalIcCancel onClick={onToggleModal} />
       <StLeftWrapper>
         <StImgWrapper>
-          <img src={data.img} alt="" />
+          <img src={imgSrc} alt="독서전 캐러셀 이미지" />
         </StImgWrapper>
         <StLifeQuotes>{data.lifeQuote}</StLifeQuotes>
         <StPublic>{data.public}</StPublic>
@@ -94,7 +105,7 @@ const StLeftWrapper = styled.div`
 `;
 
 const StImgWrapper = styled.div`
-  width: 35.2rem;
+  width: 31.6rem;
   height: 33.2rem;
 
   margin-bottom: 2rem;

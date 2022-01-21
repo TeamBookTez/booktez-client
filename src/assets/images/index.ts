@@ -1,5 +1,8 @@
 export { default as ImgAddBooksSearch } from "./addBookSearchImage.png";
 export { default as ImgAddBooks } from "./addBooksImage.png";
+export { default as ImgAfter11 } from "./after11Image.png";
+export { default as ImgAfter12 } from "./after12Image.png";
+export { default as ImgAfter13 } from "./after13Image.png";
 export { default as ImgBefore1 } from "./before1Image.png";
 export { default as ImgBefore3 } from "./before3Image.png";
 export { default as ImgBefore21 } from "./before21Image.png";
