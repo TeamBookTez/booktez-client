@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
+import { ImgAfter11, ImgAfter12, ImgAfter13 } from "../../../assets/images";
 import { after1 } from "../../../utils/mockData";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
@@ -35,12 +36,25 @@ export default function PeriModal(props: StepUpProps) {
     }
   };
 
+  let imgSrc = "";
+
+  switch (slideIndex) {
+    case 2:
+      imgSrc = ImgAfter12;
+      break;
+    case 3:
+      imgSrc = ImgAfter13;
+      break;
+    default:
+      imgSrc = ImgAfter11;
+  }
+
   return (
     <StModalBox>
       <StModalIcCancel onClick={onToggleModal} />
       <StLeftWrapper>
         <StImgWrapper>
-          <img src="" alt="" />
+          <img src={imgSrc} alt="독서중 캐러셀 이미지" />
         </StImgWrapper>
         <StLifeQuotes>{data.lifeQuote}</StLifeQuotes>
         <StPublic>{data.public}</StPublic>
@@ -91,7 +105,7 @@ const StLeftWrapper = styled.div`
 `;
 
 const StImgWrapper = styled.div`
-  width: 35.2rem;
+  width: 31.6rem;
   height: 33.2rem;
 
   margin-bottom: 2rem;

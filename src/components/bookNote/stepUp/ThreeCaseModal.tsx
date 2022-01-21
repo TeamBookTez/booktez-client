@@ -54,7 +54,7 @@ export default function ThreeCaseModal(props: StepUpProps) {
       <StModalIcCancel onClick={onToggleModal} />
       <StLeftWrapper>
         <StImgWrapper>
-          <img src={imgSrc} alt="" />
+          <img src={imgSrc} alt="독서전 캐러셀 이미지" />
         </StImgWrapper>
         <StLifeQuotes>{data.lifeQuote}</StLifeQuotes>
         <StPublic>{data.public}</StPublic>
