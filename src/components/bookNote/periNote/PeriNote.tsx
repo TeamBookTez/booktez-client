@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
-import { IsLoginState, PreNoteData } from "../../../pages/BookNote";
+import { PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
@@ -90,14 +90,18 @@ export default function PeriNote() {
   const handleSelected = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const menuBtn = e.currentTarget.parentElement;
 
-    console.log("menuBtn", menuBtn);
-
     if (menuBtn === null || menuBtn === undefined) return;
     if (!(menuBtn instanceof HTMLElement)) return;
 
     const whatValue = menuBtn.style.display;
 
     if (whatValue !== "none") menuBtn.style.display = "none";
+  };
+
+  const handleEnterAdd = (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => {
+    if (event.key === "Enter") {
+      handleAddPeri(idxList);
+    }
   };
 
   const submitComplete = () => {
@@ -130,7 +134,7 @@ export default function PeriNote() {
                   답변
                 </StAddAnswerButton>
                 <StMoreIcon onClick={handleToggle} />
-                <StMiniMenu position={"isPriQ"}>
+                <StMiniMenu menuposition={"isPriQ"}>
                   <StMenuBtn type="button" onClick={() => handleDeletePeri([a])}>
                     삭제
                   </StMenuBtn>
@@ -146,9 +150,10 @@ export default function PeriNote() {
                         key={`a0-${b}`}
                         value={answer0.text}
                         onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
+                        onKeyPress={(event) => handleEnterAdd(event, [a, b])}
                       />
                       <StMoreIcon onClick={handleToggle} />
-                      <StMiniMenu position={"isPriA"}>
+                      <StMiniMenu menuposition={"isPriA"}>
                         <StMenuBtn
                           type="button"
                           onClick={(event) => {
@@ -194,6 +199,7 @@ export default function PeriNote() {
                                   key={`a1-${d}`}
                                   value={answer1.text}
                                   onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
+                                  onKeyPress={(event) => handleEnterAdd(event, [a, b])}
                                 />
                                 <StMoreIcon onClick={handleToggle} />
                                 <StMiniMenu>
@@ -245,6 +251,7 @@ export default function PeriNote() {
                                           onChange={(event) =>
                                             handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
                                           }
+                                          onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d])}
                                         />
                                         <StMoreIcon onClick={handleToggle} />
                                         <StMiniMenu>
@@ -317,6 +324,7 @@ export default function PeriNote() {
                                                       h,
                                                     ])
                                                   }
+                                                  onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e, f])}
                                                 />
                                                 <StMoreIcon onClick={handleToggle} />
                                                 <StMiniMenu>
@@ -398,6 +406,9 @@ export default function PeriNote() {
                                                               i,
                                                               j,
                                                             ])
+                                                          }
+                                                          onKeyPress={(event) =>
+                                                            handleEnterAdd(event, [a, b, c, d, e, f, g, h])
                                                           }
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
@@ -698,12 +709,12 @@ const StMoreIcon = styled(IcMore)`
   }
 `;
 
-const StMiniMenu = styled.div<{ position?: string }>`
+const StMiniMenu = styled.div<{ menuposition?: string }>`
   display: none;
 
   position: absolute;
-  top: ${({ position }) => (position === "isPriQ" ? "6rem" : position === "isPriA" ? "2.9rem" : "4.3rem")};
-  right: ${({ position }) => (position === "isPriQ" ? "4.4rem" : "1.6rem")};
+  top: ${({ menuposition }) => (menuposition === "isPriQ" ? "6rem" : menuposition === "isPriA" ? "2.9rem" : "4.3rem")};
+  right: ${({ menuposition }) => (menuposition === "isPriQ" ? "4.4rem" : "1.6rem")};
   z-index: 10;
 
   border: 0.1rem solid ${({ theme }) => theme.colors.gray200};
