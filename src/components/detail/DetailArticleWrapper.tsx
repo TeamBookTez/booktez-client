@@ -1,15 +1,11 @@
 import styled from "styled-components";
 
+import { IcDetail } from "../../assets/icons";
+
 interface DetailArticleWrapperProps {
   title: string;
   children: React.ReactNode;
 }
-
-const IIIIIII = styled.div`
-  width: 5.2rem;
-  height: 5.2rem;
-  background-color: black;
-`;
 
 export default function DetailArticleWrapper(props: DetailArticleWrapperProps) {
   const { title, children } = props;
@@ -17,8 +13,7 @@ export default function DetailArticleWrapper(props: DetailArticleWrapperProps) {
   return (
     <section>
       <StTitleWrapper>
-        {/* 이미지 div */}
-        <IIIIIII></IIIIIII>
+        <IcDetail />
         <StTitle>{title}</StTitle>
       </StTitleWrapper>
       {children}
@@ -32,7 +27,7 @@ const StTitleWrapper = styled.div`
 `;
 
 const StTitle = styled.h3`
-  margin-left: 0.5rem;
+  margin-left: 1rem;
 
   ${({ theme }) => theme.fonts.header4}
   color: ${({ theme }) => theme.colors.gray100};

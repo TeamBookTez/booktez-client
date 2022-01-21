@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -33,9 +32,7 @@ export default function DetailExample() {
       }
       setIsLogin(true);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 

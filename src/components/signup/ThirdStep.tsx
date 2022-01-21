@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -38,12 +37,9 @@ export default function ThirdStep() {
 
   const postSignup = async () => {
     try {
-      const res = await postData("/auth/signup", userData);
-      const resData = res.data.data;
+      await postData("/auth/signup", userData);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 
@@ -60,9 +56,7 @@ export default function ThirdStep() {
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 

@@ -10,7 +10,6 @@ export default function PeriRead() {
   return (
     <>
       <Cards bookcaseInfo={bookcasePeri} handleBookDelete={handleBookDelete} isLogin={isLogin} />
-      {/* <NoCards /> 3항 연산자로 각기 다른 컴포넌트 렌더링*/}
     </>
   );
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -38,9 +37,7 @@ export default function MainHeader(props: MainHeaderProps) {
         setIsLogin(false);
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 
