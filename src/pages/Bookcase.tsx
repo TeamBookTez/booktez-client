@@ -73,7 +73,6 @@ export default function Bookcase() {
         console.log("err", err.response?.data);
       }
     }
-    console.log("123s");
     setIsLoading(false);
   };
 
