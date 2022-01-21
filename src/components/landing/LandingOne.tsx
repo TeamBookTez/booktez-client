@@ -24,14 +24,14 @@ export default function LandingOne() {
 
 const StWrapper = styled.section`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
 
   width: 100%;
 `;
 
 const StArticle = styled.article`
-  /* margin-top: 15.5rem; */
+  margin-top: 15rem;
 `;
 
 const StTitle = styled.h1`
