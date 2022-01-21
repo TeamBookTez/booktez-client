@@ -14,6 +14,8 @@ export { default as ImgDrawer } from "./drawerImage.png";
 export { default as ImgDrawerSmall } from "./drawerImageSmall.png";
 export { default as ImgEmptyBook } from "./emptyBookImage.png";
 export { default as ImgEmptyBooks } from "./emptyBooksImage.png";
+export { default as ImgError404 } from "./error404Image.png";
+export { default as ImgErrorBack } from "./errorBackImage.png";
 export { default as ImgExit } from "./exitImage.png";
 export { default as ImgGraphic } from "./graphicImage.png";
 export { default as ImgLandingBookcase } from "./landingBookcaseImage.png";
