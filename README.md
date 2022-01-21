@@ -8,6 +8,40 @@
 <br/>
 <br/>
 
+## 💻 프로젝트 뷰
+### 1. 랜딩 페이지
+![book-stairs com_ (1)](https://user-images.githubusercontent.com/73876068/150489230-1a83d582-1985-454d-bb86-e4395e842ffe.png)
+<br />
+<br />
+### 2. 회원가입 페이지
+3단계 구성의 절차를 통해 회원가입이 이루어집니다. 
+
+![book-stairs com_signup_3](https://user-images.githubusercontent.com/73876068/150490051-bf01ff99-f7cc-4377-8aa4-0d4cdc105ddc.png)
+<br />
+<br />
+### 3. 로그인 페이지
+![book-stairs com_login](https://user-images.githubusercontent.com/73876068/150490216-48db45d5-b596-4b98-ab30-16b3fd26c9c1.png)
+<br />
+<br />
+### 4. 메인 페이지
+적용 사례를 통한 북노트 사용 가이드와 최근 작성한 북노트를 확인할 수 있습니다.
+
+![book-stairs com_login (1)](https://user-images.githubusercontent.com/73876068/150490611-6c6b2b6d-002d-4978-8df4-a1142d8238c2.png)
+<br />
+<br />
+### 5. 적용 사례 페이지
+북노트 사용 구체적 예시와 캐러셀 모달을 통한 상세 설명을 제공합니다. 
+
+![book-stairs com_login (4)](https://user-images.githubusercontent.com/73876068/150492076-85420c9f-9379-4006-bae1-cd1e7c830717.png)
+<br />
+<br />
+### 6. 서재 페이지
+전체, 독서 전, 독서 중, 독서 완료를 분기 처리하여 북노트 목록을 제공하며, 책추가 페이지로 이어집니다.
+
+![book-stairs com_login (3)](https://user-images.githubusercontent.com/73876068/150491967-a9d27ecd-0763-4c70-920a-0de750753679.png)
+
+
+
 ## 🛠 기술 스택
 <img src="https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=flat" height=40>&nbsp;&nbsp;<img src="https://img.shields.io/badge/-Typescript-3074BF?logo=Typescript&logoColor=white&style=flat" height=40>&nbsp;&nbsp;
 ```json
