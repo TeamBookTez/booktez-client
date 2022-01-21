@@ -79,6 +79,9 @@ export default function BookNote() {
 
   const getReview = async () => {
     try {
+      // 비회원인 경우
+      // 로컬스토리지에서 책 정보를 불러옴 - okay
+      // 로컬스토리지에서 리뷰 정보를 불러옴 - yet
       if (!isLogin) {
         const localData = localStorage.getItem("booktez-data");
         const bookTitle = localData ? JSON.parse(localData).title : "";
@@ -87,41 +90,29 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
-        const questions = questionList.length ? questionList : [""];
+        const questions: string[] = questionList.length ? questionList : [""];
 
-        console.log("data", data);
-        setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
         setTitle(bookTitle);
+        setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
 
-        console.log("preNote", preNote);
-        if (answerThree.root.length > 0) {
+        if (answerThree.root.length) {
           setPeriNote(answerThree.root);
         } else {
-          const newData: Question[] = [];
+          const defaultQuestions: Question[] = [];
 
-          preNote.questionList.map((question) => {
-            newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
-          });
-          setPeriNote(newData);
+          questions.map((question: string) => defaultQuestions.push({ depth: 1, question, answer: [] }));
+          setPeriNote(defaultQuestions);
         }
 
-        // 요청에 성공했으나, 답변이 채워져있다면,
-        // 답변 추가/삭제 막기
-        if (answerOne && answerTwo && questionList.length) {
+        if (reviewState > 2) {
           setIsPrevented(true);
           setAblePatch(true);
-        } else {
-          handleChangeReview("questionList", [""]);
         }
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
-
-      // 이건 필요없을지도 모름.
-      // 담에 한 번 확인
-      setIsPrevented(false);
     }
   };
 
@@ -138,7 +129,6 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    console.log(periNote);
     const { answerOne, answerTwo } = preNote;
 
     syncQuestion();
@@ -149,7 +139,7 @@ export default function BookNote() {
       answerThree: { root: periNote },
     });
 
-    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
+    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 2 });
 
     setIsSave(true);
   };
@@ -165,10 +155,9 @@ export default function BookNote() {
   }, [saveReview]);
 
   const patchReview = async () => {
+    // 작성 완료를 눌렀을 때 progress 3으로 변경
     await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
     syncQuestion();
-
-    setIsPrevented(true);
   };
 
   const handleSubmit = async () => {
