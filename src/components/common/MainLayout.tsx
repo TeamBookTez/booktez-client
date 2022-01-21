@@ -17,19 +17,4 @@ const StWrapper = styled.main`
 
   font-family: pretendard;
   overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 0.8rem;
-  }
-
-  &::-webkit-scrollbar-track {
-    height: auto;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    height: 10rem;
-    border-radius: 1.6rem;
-    background-color: ${({ theme }) => theme.colors.white500};
-  }
 `;

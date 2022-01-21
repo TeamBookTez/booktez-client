@@ -12,10 +12,10 @@ import Loading from "../common/Loading";
 interface RecentProps {
   isLogin: boolean;
 }
-export default function Recent(props: RecentProps) {
+export default function RecentBooks(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
-  const [bookDelete, setBookDelete] = useState<boolean>(false);
+  // const [bookDelete, setBookDelete] = useState<boolean>(false);
   const [isDefault, setIsDefault] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -31,22 +31,22 @@ export default function Recent(props: RecentProps) {
       } = await getData(key, token);
 
       setBooksRecent(books);
-      setIsLoading(false);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
     }
-  };
-
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
+    setIsLoading(false);
   };
 
   useEffect(() => {
     setIsLoading(true);
     getBookRecent("/book", userToken);
-  }, [bookDelete]);
+  }, []);
+
+  const handleBookDelete = () => {
+    getBookRecent("/book", userToken);
+  };
 
   useEffect(() => {
     setIsDefault(!(booksRecent.length > 0));
@@ -65,7 +65,7 @@ export default function Recent(props: RecentProps) {
           <StBookWrapper isdefault={isDefault}>
             {!isDefault ? (
               booksRecent
-                .slice(-booksRecent.length, -(booksRecent.length - 5))
+                .slice(0, 5)
                 .map((tempInfo, idx) => (
                   <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
                 ))

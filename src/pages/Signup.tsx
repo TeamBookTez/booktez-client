@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { ImgSignupFirst, ImgSignupSecond, ImgSignupThird } from "../assets/images";
-import { NavHeader } from "../components/common";
+import { Error404, NavHeader } from "../components/common";
 import theme from "../styles/theme";
 
 interface StMainProps {
@@ -54,17 +54,19 @@ export default function Layout() {
 
   return (
     <>
-      <NavHeader logocolor={theme.colors.gray100} />
       {state === "rightpath" ? (
-        <StMain isrightpath={state === "rightpath"} isAniTime={isAniTime}>
-          <StFormWrapper>
-            {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
-            <StHeading2>{headerText}</StHeading2>
-            <Outlet context={[userData, setUserData, handleIsAniTime]} />
-          </StFormWrapper>
-        </StMain>
+        <>
+          <NavHeader logocolor={theme.colors.gray100} />
+          <StMain isrightpath={state === "rightpath"} isAniTime={isAniTime}>
+            <StFormWrapper>
+              {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
+              <StHeading2>{headerText}</StHeading2>
+              <Outlet context={[userData, setUserData, handleIsAniTime]} />
+            </StFormWrapper>
+          </StMain>
+        </>
       ) : (
-        <div>404 에러</div>
+        <Error404 />
       )}
     </>
   );

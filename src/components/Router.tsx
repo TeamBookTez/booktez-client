@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import {
@@ -15,45 +13,16 @@ import {
   ToBe,
 } from "../pages";
 import Landing from "../pages/Landing";
-import { getData } from "../utils/lib/api";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
-import { CommonLayout } from "./common";
+import { CommonLayout, Error404 } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
-  const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
-
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        return setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        return setIsLogin(false);
-      }
-      setIsLogin(true);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
-    }
-  };
-
-  useEffect(() => {
-    getLogin("/auth/check", localToken);
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={isLogin ? <Navigate to="/main" /> : <Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/main/*" element={<CommonLayout />}>
           {/* /main */}
           <Route path="" element={<Main />} />
@@ -79,16 +48,16 @@ export default function Router() {
         </Route>
         <Route path="/detail-book-note" element={<DetailBookNote />} />
         <Route path="/detail-example" element={<DetailExample />} />
-        <Route path="/login" element={isLogin ? <Navigate to="/main" /> : <Login />} />
+        <Route path="/login" element={<Login />} />
         {/* 회원가입 1,2,3 나눔 */}
-        <Route path="/signup/*" element={isLogin ? <Navigate to="/main" /> : <Signup />}>
+        <Route path="/signup/*" element={<Signup />}>
           <Route path="" element={<FirstStep />} />
           <Route path="2" element={<SecondStep />} />
           <Route path="3" element={<ThirdStep />} />
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route path="*" element={<p>404 에러 얍얍</p>} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );

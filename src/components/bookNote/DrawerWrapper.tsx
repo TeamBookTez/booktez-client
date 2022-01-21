@@ -51,7 +51,9 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
 
   return (
     <StDrawerWrapper isopen={isOpen} idx={idx}>
-      <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+      <StIcWrapper>
+        <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+      </StIcWrapper>
       <StImg src={ImgDrawer} idx={idx} />
       <StTitleWrapper>
         <IcBooks />
@@ -62,7 +64,15 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   );
 }
 
+const StIcWrapper = styled.div`
+  text-align: left;
+  margin-bottom: 3.2rem;
+`;
+
 const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
+  overflow-y: scroll;
+  max-height: 100vh;
+
   position: fixed;
   top: 0;
   right: 0;
@@ -130,6 +140,8 @@ const StTitleWrapper = styled.header`
 `;
 
 const StArticle = styled.article<{ idx: number }>`
+  height: 100%;
+
   display: flex;
   flex-direction: column;
   ${({ idx }) =>
@@ -141,6 +153,7 @@ const StArticle = styled.article<{ idx: number }>`
           } */
         `
       : ""}
+
   border-radius: 2rem;
   padding: ${({ idx }) => (idx === 4 ? "4rem 1.5rem" : "3.2rem")};
   background-color: ${({ theme }) => theme.colors.white200};
