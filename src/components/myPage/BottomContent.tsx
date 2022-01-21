@@ -48,8 +48,14 @@ export default function BottomContent(props: BottomContentProps) {
           </a>
         </StServiceInfo>
         <StServiceInfo>
-          <StInfoTitle>피드백 남기기</StInfoTitle>
-          <StInfoDesc>북스테어즈를 사용하시면서 느낀 점들에 대해 남겨주세요</StInfoDesc>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdlnQz0Nwx8vtqmHtgNEkzPwUy-LsTMjt9KXlmsAGZiu1FJRw/viewform"
+            target="_blank"
+            rel="noreferrer">
+            {" "}
+            <StInfoTitle>피드백 남기기</StInfoTitle>
+            <StInfoDesc>북스테어즈를 사용하시면서 느낀 점들에 대해 남겨주세요</StInfoDesc>
+          </a>
         </StServiceInfo>
         <StServiceInfo>
           <StInfoTitle>함께하는 사람들</StInfoTitle>
