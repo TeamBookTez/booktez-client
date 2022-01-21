@@ -20,16 +20,20 @@ export default function Bookcase() {
   const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
-  const [bookDelete, setBookDelete] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
-  const authCheckKey = "/auth/check";
+
+  const handleBookDelete = () => {
+    getBookcase("/book", localToken);
+  };
+
+  useEffect(() => {
+    getBookcase("/book", localToken);
+    getLogin("/auth/check", localToken);
+  }, []);
 
   const getLogin = async (key: string, token: string) => {
     try {
@@ -69,20 +73,9 @@ export default function Bookcase() {
         console.log("err", err.response?.data);
       }
     }
+    console.log("123s");
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    getBookcase("/book", localToken);
-  }, [bookDelete]);
-
-  const handleBookDelete = () => {
-    getBookcase("/book", localToken);
-  };
-
-  useEffect(() => {
-    getLogin(authCheckKey, localToken);
-  }, []);
 
   return (
     <>
