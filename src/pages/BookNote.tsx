@@ -6,6 +6,7 @@ import styled, { css, keyframes } from "styled-components";
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
+import Loading from "../components/common/Loading";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
@@ -50,6 +51,7 @@ export default function BookNote() {
     progress: 2,
   });
   const [periNote, setPeriNote] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSave, setIsSave] = useState<boolean>(false);
@@ -78,6 +80,8 @@ export default function BookNote() {
   };
 
   const getReview = async () => {
+    // get 요청 시작할 시 loading 시작
+    setIsLoading(true);
     try {
       // 비회원인 경우
       // 로컬스토리지에서 책 정보를 불러옴 - okay
@@ -120,6 +124,8 @@ export default function BookNote() {
         console.log("err", err.response?.data);
       }
     }
+    // get 요청이 끝날 시 loading 끝
+    setIsLoading(false);
   };
 
   // 서버에의 저장을 관리
@@ -367,23 +373,27 @@ export default function BookNote() {
         )}
         <StIcSave onClick={saveReview} />
       </StNavWrapper>
-      <Outlet
-        context={[
-          isLogin,
-          handleToggleDrawer,
-          preNote,
-          handleChangeReview,
-          setOpenModal,
-          isPrevented,
-          ablePatch,
-          periNote,
-          handleChangePeri,
-          handleAddPeri,
-          handleDeletePeri,
-          userToken,
-          fromUrl,
-        ]}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Outlet
+          context={[
+            isLogin,
+            handleToggleDrawer,
+            preNote,
+            handleChangeReview,
+            setOpenModal,
+            isPrevented,
+            ablePatch,
+            periNote,
+            handleChangePeri,
+            handleAddPeri,
+            handleDeletePeri,
+            userToken,
+            fromUrl,
+          ]}
+        />
+      )}
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>
