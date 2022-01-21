@@ -89,16 +89,23 @@ export default function BookNote() {
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
         const questions = questionList.length ? questionList : [""];
 
+        console.log("data", data);
         setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
         setTitle(bookTitle);
 
-        if (answerThree) {
+        console.log("preNote", preNote);
+        if (answerThree.root.length > 0) {
           setPeriNote(answerThree.root);
         } else {
-          setPeriNote([]);
+          const newData: Question[] = [];
+
+          preNote.questionList.map((question) => {
+            newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
+          });
+          setPeriNote(newData);
         }
 
-        // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+        // 요청에 성공했으나, 답변이 채워져있다면,
         // 답변 추가/삭제 막기
         if (answerOne && answerTwo && questionList.length) {
           setIsPrevented(true);
@@ -131,13 +138,18 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
+    console.log(periNote);
     const { answerOne, answerTwo } = preNote;
 
+    syncQuestion();
+    // review patch에 questionList가 없어서 questionList의 내용을 저장하려면 API 요청을 두 번 보내야 함
     await patchData(userToken, `/review/${reviewId}`, {
       answerOne,
       answerTwo,
       answerThree: { root: periNote },
     });
+
+    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
 
     setIsSave(true);
   };
@@ -153,12 +165,13 @@ export default function BookNote() {
   }, [saveReview]);
 
   const patchReview = async () => {
-    await patchData(userToken, `/review/before/${reviewId}`, preNote);
+    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
     syncQuestion();
+
     setIsPrevented(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
@@ -341,6 +354,10 @@ export default function BookNote() {
   }, [preNote]);
 
   useEffect(() => {
+    console.log("periNote", periNote);
+  }, [periNote]);
+
+  useEffect(() => {
     getReview();
   }, []);
 
@@ -355,7 +372,13 @@ export default function BookNote() {
       <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
+        <Navigator
+          navIndex={navIndex}
+          onNav={handleNav}
+          isLoginState={isLoginState}
+          isPrevented={isPrevented}
+          isPeriEmpty={!periNote.length}
+        />
         {isSave && (
           <StSave>
             <StIcCheckSave />
@@ -379,6 +402,7 @@ export default function BookNote() {
           handleDeletePeri,
           userToken,
           fromUrl,
+          patchReview,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

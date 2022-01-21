@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
@@ -8,7 +8,7 @@ import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
 import { Button } from "../../common/styled/Button";
-import { ExButton, StepUp } from "..";
+import { Complete, ExButton, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 import PeriModal from "../stepUp/PeriModal";
 
@@ -47,11 +47,19 @@ export default function PeriNote() {
     >();
 
   const { state } = useLocation();
-  const navigate = useNavigate();
+
   const isLoginState = state as IsLoginState;
   const { reviewId } = isLoginState;
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [bookData, setBookData] = useState({
+    authors: [],
+    publicationDt: "",
+    thumbnail: "",
+    title: "",
+    translators: [],
+  });
 
   const handlePeriCarousel = () => {
     setIsPeriModal(!isPeriModal);
@@ -59,9 +67,13 @@ export default function PeriNote() {
 
   const submitReview = async (isComplete: boolean) => {
     const progress = isComplete ? 4 : 3;
-    const res = await patchData(userToken, `/review/now/${reviewId}`, { answerThree: { root: periNote }, progress });
 
-    console.log("res", res);
+    const { data } = await patchData(userToken, `/review/now/${reviewId}`, {
+      answerThree: { root: periNote },
+      progress,
+    });
+
+    setBookData(data.data.bookData);
   };
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -78,7 +90,7 @@ export default function PeriNote() {
 
   const submitComplete = () => {
     submitReview(true);
-    navigate("/detail-book-note", { state: { reviewId, isLogin, fromUrl } });
+    setIsComplete(true);
   };
 
   return (
@@ -409,6 +421,7 @@ export default function PeriNote() {
           <PeriModal onToggleModal={handlePeriCarousel} />
         </StStepModalWrapper>
       )}
+      {isComplete && <Complete bookData={bookData} isLoginState={{ reviewId, isLogin, fromUrl }} />}
     </>
   );
 }
