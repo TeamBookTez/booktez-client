@@ -38,8 +38,14 @@ export default function BottomContent(props: BottomContentProps) {
           </a>
         </StServiceInfo>
         <StServiceInfo>
-          <StInfoTitle>서비스 문의</StInfoTitle>
-          <StInfoDesc>북스테어즈를 이용하며 문의하고 싶은 점들을 남겨주세요</StInfoDesc>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd91WwzYqTpCzfMFOkrbwUtFiMGK7YGkP36lWbmsgPFomvNUg/viewform"
+            target="_blank"
+            rel="noreferrer">
+            {" "}
+            <StInfoTitle>서비스 문의</StInfoTitle>
+            <StInfoDesc>북스테어즈를 이용하며 문의하고 싶은 점들을 남겨주세요</StInfoDesc>
+          </a>
         </StServiceInfo>
         <StServiceInfo>
           <StInfoTitle>피드백 남기기</StInfoTitle>
