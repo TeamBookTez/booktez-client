@@ -55,7 +55,6 @@ export default function BookNote() {
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSave, setIsSave] = useState<boolean>(false);
-  const [isPeriActive, setIsPeriActive] = useState<boolean>(false);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
@@ -153,6 +152,13 @@ export default function BookNote() {
     navigate("/book-note/peri", { state: isLoginState });
     // navigator 변경
     handleNav(1);
+
+    const defaultQuestions: Question[] = [];
+
+    preNote.questionList.map((question: string) =>
+      defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+    );
+    setPeriNote(defaultQuestions);
   };
 
   // 모달 내 '취소' 버튼 - 모달을 끄는 용도
@@ -221,7 +227,6 @@ export default function BookNote() {
   };
 
   const handleAddPeri = (idxList: number[]) => {
-    setIsPeriActive(false);
     const newRoot = [...periNote];
 
     switch (idxList.length) {
