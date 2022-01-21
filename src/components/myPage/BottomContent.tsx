@@ -137,15 +137,17 @@ const StServiceInfo = styled.article`
   width: 100%;
   height: 13.6rem;
 
-  padding: 3.7rem 4.8rem;
-
   border-radius: 2rem;
 
   background-color: ${({ theme }) => theme.colors.white200};
 
   & > a {
+    display: block;
+
     width: 100%;
     height: 100%;
+
+    padding: 3.7rem 4.8rem;
   }
 `;
 
