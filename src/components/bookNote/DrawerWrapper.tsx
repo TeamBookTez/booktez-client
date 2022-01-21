@@ -51,7 +51,9 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
 
   return (
     <StDrawerWrapper isopen={isOpen} idx={idx}>
-      <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+      <StIcWrapper>
+        <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+      </StIcWrapper>
       <StImg src={ImgGraphic} idx={idx} />
       <StTitleWrapper>
         <IcBooks />
@@ -61,6 +63,11 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
     </StDrawerWrapper>
   );
 }
+
+const StIcWrapper = styled.div`
+  text-align: left;
+  margin-bottom: 3.2rem;
+`;
 
 const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
   overflow-y: scroll;
