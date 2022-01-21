@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
-import { ImgGraphic } from "../../assets/images";
+import { ImgDrawer } from "../../assets/images";
 import { DrawerPre, PeriNoteExample } from ".";
 
 interface DrawerWrapperProps {
@@ -52,7 +52,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   return (
     <StDrawerWrapper isopen={isOpen} idx={idx}>
       <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
-      <StImg src={ImgGraphic} idx={idx} />
+      <StImg src={ImgDrawer} idx={idx} />
       <StTitleWrapper>
         <IcBooks />
         나는 왜 이 일을 하는가? 2
@@ -105,10 +105,6 @@ const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
 
     margin-bottom: 3.2rem;
   }
-`;
-
-const StTemp = styled.div`
-  overflow-y: scroll;
 `;
 
 const StImg = styled.img<{ idx: number }>`

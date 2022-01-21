@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgExit } from "../../assets/images";
@@ -19,7 +19,7 @@ export default function PopUpExit(props: PopUpExitProps) {
   return (
     <StPopUpWrpper>
       <StPopUp>
-        <StImg src={ImgExit} alt="독서 전 단계 완료" />
+        <StImg src={ImgExit} alt="페이지 나가기" />
         <StQuestion>현재 페이지에서 나가시겠어요?</StQuestion>
         <StDetail>변경사항이 저장되지 않을 수도 있어요!</StDetail>
         <StBtnWrapper>
