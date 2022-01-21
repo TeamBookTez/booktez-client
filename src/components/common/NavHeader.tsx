@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link, useLocation } from "react-router-dom";
+import styled, { css } from "styled-components";
 
 import { IcLogo, IcTitleLogo } from "../../assets/icons";
 
@@ -9,10 +9,11 @@ interface NavHeaderProps {
 
 export default function NavHeader(props: NavHeaderProps) {
   const { logocolor } = props;
+  const { pathname } = useLocation();
 
   return (
     <StHeader>
-      <StLink to="/main" logocolor={logocolor}>
+      <StLink to="/main" logocolor={logocolor} pathname={pathname}>
         <StIcCool />
         <IcTitleLogo />
       </StLink>
@@ -32,7 +33,7 @@ const StHeader = styled.header`
   height: 9rem;
 `;
 
-const StLink = styled(Link)<{ logocolor: string }>`
+const StLink = styled(Link)<{ logocolor: string; pathname: string }>`
   display: flex;
   align-items: center;
 
@@ -40,6 +41,15 @@ const StLink = styled(Link)<{ logocolor: string }>`
   font-weight: 700;
   letter-spacing: -0.2rem;
   color: ${({ logocolor }) => logocolor};
+
+  ${({ pathname }) =>
+    pathname.startsWith("/signup")
+      ? css`
+          & > svg:last-child path {
+            fill: #242424;
+          }
+        `
+      : ""}
 `;
 
 const StIcCool = styled(IcLogo)`
