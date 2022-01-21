@@ -49,7 +49,6 @@ export default function PreNote() {
   };
 
   const handleSubmit = () => {
-    patchReview();
     setOpenModal(true);
   };
 

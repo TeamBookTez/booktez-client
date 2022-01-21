@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
@@ -89,18 +89,24 @@ export default function BookNote() {
         setTitle(bookTitle);
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
+
+        console.log("data", data);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
         const questions: string[] = questionList.length ? questionList : [""];
 
         setTitle(bookTitle);
         setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
 
-        if (answerThree.root.length) {
+        if (answerThree) {
           setPeriNote(answerThree.root);
         } else {
+          // answerThree가 비어있을 때 독서 전의 질문 동기화
+          // 한 번 동기화되고 나서는 빈 상태가 아니라서 동기화되지 않음
           const defaultQuestions: Question[] = [];
 
-          questions.map((question: string) => defaultQuestions.push({ depth: 1, question, answer: [] }));
+          questions.map((question: string) =>
+            defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+          );
           setPeriNote(defaultQuestions);
         }
 
@@ -116,32 +122,39 @@ export default function BookNote() {
     }
   };
 
-  const syncQuestion = () => {
-    if (!isPrevented) {
-      const newData: Question[] = [];
-
-      preNote.questionList.map((question) => {
-        newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
-      });
-      setPeriNote(newData);
-    }
+  // 서버에의 저장을 관리
+  const patchReview = async (progress: number) => {
+    console.log("patchData", { ...preNote, progress });
+    // answerOne, answerTwo, questionList, progress update
+    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress });
   };
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    const { answerOne, answerTwo } = preNote;
-
-    syncQuestion();
-    // review patch에 questionList가 없어서 questionList의 내용을 저장하려면 API 요청을 두 번 보내야 함
-    await patchData(userToken, `/review/${reviewId}`, {
-      answerOne,
-      answerTwo,
-      answerThree: { root: periNote },
-    });
-
-    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 2 });
-
+    patchReview(2);
     setIsSave(true);
+  };
+
+  // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
+  const handleSubmit = async () => {
+    handleChangeReview("progress", 3);
+    patchReview(3);
+    setIsPrevented(true);
+
+    // 현재 모달 닫기
+    setOpenModal(false);
+    // 드로워 닫기
+    setIsDrawerOpen(false);
+
+    // peri로 넘어가기
+    navigate("/book-note/peri", { state: isLoginState });
+    // navigator 변경
+    handleNav(1);
+  };
+
+  // 모달 내 '취소' 버튼 - 모달을 끄는 용도
+  const handleCancel = () => {
+    setOpenModal(false);
   };
 
   useEffect(() => {
@@ -153,25 +166,6 @@ export default function BookNote() {
       clearTimeout(saveToast);
     };
   }, [saveReview]);
-
-  const patchReview = async () => {
-    // 작성 완료를 눌렀을 때 progress 3으로 변경
-    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
-    syncQuestion();
-  };
-
-  const handleSubmit = async () => {
-    handleChangeReview("progress", 3);
-    patchReview();
-    setOpenModal(false);
-    setIsDrawerOpen(false);
-    navigate("/book-note/peri", { state: isLoginState });
-    handleNav(1);
-  };
-
-  const handleCancel = () => {
-    setOpenModal(false);
-  };
 
   const handleChangePeri = (key: string, value: string, idxList: number[]) => {
     const newRoot = [...periNote];
@@ -341,10 +335,6 @@ export default function BookNote() {
       setAblePatch(true);
     }
   }, [preNote]);
-
-  useEffect(() => {
-    console.log("periNote", periNote);
-  }, [periNote]);
 
   useEffect(() => {
     getReview();
