@@ -149,7 +149,7 @@ export default function BookNote() {
       answerThree: { root: periNote },
     });
 
-    await patchData(userToken, `/review/before/${reviewId}`, preNote);
+    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
 
     setIsSave(true);
   };
@@ -165,7 +165,7 @@ export default function BookNote() {
   }, [saveReview]);
 
   const patchReview = async () => {
-    await patchData(userToken, `/review/before/${reviewId}`, preNote);
+    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress: 3 });
     syncQuestion();
 
     setIsPrevented(true);
@@ -402,6 +402,7 @@ export default function BookNote() {
           handleDeletePeri,
           userToken,
           fromUrl,
+          patchReview,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

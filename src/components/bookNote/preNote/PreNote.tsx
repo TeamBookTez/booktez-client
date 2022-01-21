@@ -2,12 +2,28 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { PreNoteData } from "../../../pages/BookNote";
+import { Question } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
   const navigate = useNavigate();
-  const [isLogin, handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
+  const [
+    isLogin,
+    handleToggleDrawer,
+    preNote,
+    handleChangeReview,
+    setOpenModal,
+    isPrevented,
+    ablePatch,
+    periNote,
+    handleChangePeri,
+    handleAddPeri,
+    handleDeletePeri,
+    userToken,
+    fromUrl,
+    patchReview,
+  ] =
     useOutletContext<
       [
         boolean,
@@ -17,6 +33,13 @@ export default function PreNote() {
         React.Dispatch<React.SetStateAction<boolean>>,
         boolean,
         boolean,
+        Question[],
+        (key: string, value: string, idxList: number[]) => void,
+        (idxList: number[]) => void,
+        (idxList: number[]) => void,
+        string,
+        string,
+        () => Promise<void>,
       ]
     >();
   const { answerOne, answerTwo, questionList } = preNote;
@@ -26,6 +49,7 @@ export default function PreNote() {
   };
 
   const handleSubmit = () => {
+    patchReview();
     setOpenModal(true);
   };
 
