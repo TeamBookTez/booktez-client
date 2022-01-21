@@ -11,6 +11,7 @@ export { default as ImgBefore23 } from "./before23Image.png";
 export { default as ImgdeletePopUp } from "./deleteImage.png";
 export { default as ImgDevice } from "./deviceImage.png";
 export { default as ImgDrawer } from "./drawerImage.png";
+export { default as ImgDrawerSmall } from "./drawerImageSmall.png";
 export { default as ImgEmptyBook } from "./emptyBookImage.png";
 export { default as ImgEmptyBooks } from "./emptyBooksImage.png";
 export { default as ImgExit } from "./exitImage.png";
