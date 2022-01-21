@@ -84,7 +84,7 @@ const opentoright = keyframes`
 `;
 
 const StMainWrapper = styled.main<{ isAniTime: boolean }>`
-  width: 960px; //임의 px
+  flex: 1;
 
   display: flex;
   justify-content: center;

@@ -15,7 +15,7 @@ const StLabelQuestion = styled.mark<{ bgcolor: string }>`
   justify-content: center;
   align-items: center;
 
-  width: 4.1rem;
+  min-width: 4.1rem;
   height: 2.6rem;
 
   margin-right: 1.6rem;
