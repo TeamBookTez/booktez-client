@@ -52,6 +52,7 @@ export default function PeriNote() {
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState<boolean>(true);
   const [bookData, setBookData] = useState({
     authors: [],
     publicationDt: "",
@@ -113,12 +114,22 @@ export default function PeriNote() {
                   value={question0.question}
                   onChange={(event) => handleChangePeri("question", event.target.value, [a])}
                 />
-                <StAddAnswerButton type="button" onClick={() => handleAddPeri([a])}>
+                <StAddAnswerButton
+                  type="button"
+                  onClick={() => {
+                    handleAddPeri([a]);
+                    setIsClicked(true);
+                  }}>
                   답변
                 </StAddAnswerButton>
                 <StMoreIcon onClick={handleToggle} />
-                <StMiniMenu position={"isPriQ"}>
-                  <StMenuBtn type="button" onClick={() => handleDeletePeri([a])}>
+                <StMiniMenu isclicked={isClicked} position={"isPriQ"}>
+                  <StMenuBtn
+                    type="button"
+                    onClick={() => {
+                      handleDeletePeri([a]);
+                      setIsClicked(true);
+                    }}>
                     삭제
                   </StMenuBtn>
                 </StMiniMenu>
@@ -135,11 +146,21 @@ export default function PeriNote() {
                         onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
                       />
                       <StMoreIcon onClick={handleToggle} />
-                      <StMiniMenu position={"isPriA"}>
-                        <StMenuBtn type="button" onClick={() => handleAddPeri([a, b])}>
+                      <StMiniMenu isclicked={isClicked} position={"isPriA"}>
+                        <StMenuBtn
+                          type="button"
+                          onClick={() => {
+                            handleAddPeri([a, b]);
+                            setIsClicked(true);
+                          }}>
                           꼬리질문 추가
                         </StMenuBtn>
-                        <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b])}>
+                        <StMenuBtn
+                          type="button"
+                          onClick={() => {
+                            handleDeletePeri([a, b]);
+                            setIsClicked(true);
+                          }}>
                           삭제
                         </StMenuBtn>
                       </StMiniMenu>
@@ -156,12 +177,22 @@ export default function PeriNote() {
                                 value={question1.question}
                                 onChange={(event) => handleChangePeri("question", event.target.value, [a, b, c])}
                               />
-                              <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c])}>
+                              <StAddAnswerButton
+                                type="button"
+                                onClick={() => {
+                                  handleAddPeri([a, b, c]);
+                                  setIsClicked(true);
+                                }}>
                                 답변
                               </StAddAnswerButton>
                               <StMoreIcon onClick={handleToggle} />
-                              <StMiniMenu>
-                                <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c])}>
+                              <StMiniMenu isclicked={isClicked}>
+                                <StMenuBtn
+                                  type="button"
+                                  onClick={() => {
+                                    handleDeletePeri([a, b, c]);
+                                    setIsClicked(true);
+                                  }}>
                                   삭제
                                 </StMenuBtn>
                               </StMiniMenu>
@@ -178,11 +209,21 @@ export default function PeriNote() {
                                   onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
                                 />
                                 <StMoreIcon onClick={handleToggle} />
-                                <StMiniMenu>
-                                  <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d])}>
+                                <StMiniMenu isclicked={isClicked}>
+                                  <StMenuBtn
+                                    type="button"
+                                    onClick={() => {
+                                      handleAddPeri([a, b, c, d]);
+                                      setIsClicked(true);
+                                    }}>
                                     꼬리질문 추가
                                   </StMenuBtn>
-                                  <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d])}>
+                                  <StMenuBtn
+                                    type="button"
+                                    onClick={() => {
+                                      handleDeletePeri([a, b, c, d]);
+                                      setIsClicked(true);
+                                    }}>
                                     삭제
                                   </StMenuBtn>
                                 </StMiniMenu>
@@ -200,12 +241,22 @@ export default function PeriNote() {
                                           handleChangePeri("question", event.target.value, [a, b, c, d, e])
                                         }
                                       />
-                                      <StAddAnswerButton type="button" onClick={() => handleAddPeri([a, b, c, d, e])}>
+                                      <StAddAnswerButton
+                                        type="button"
+                                        onClick={() => {
+                                          handleAddPeri([a, b, c, d, e]);
+                                          setIsClicked(true);
+                                        }}>
                                         답변
                                       </StAddAnswerButton>
                                       <StMoreIcon onClick={handleToggle} />
-                                      <StMiniMenu>
-                                        <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e])}>
+                                      <StMiniMenu isclicked={isClicked}>
+                                        <StMenuBtn
+                                          type="button"
+                                          onClick={() => {
+                                            handleDeletePeri([a, b, c, d, e]);
+                                            setIsClicked(true);
+                                          }}>
                                           삭제
                                         </StMenuBtn>
                                       </StMiniMenu>
@@ -224,11 +275,21 @@ export default function PeriNote() {
                                           }
                                         />
                                         <StMoreIcon onClick={handleToggle} />
-                                        <StMiniMenu>
-                                          <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d, e, f])}>
+                                        <StMiniMenu isclicked={isClicked}>
+                                          <StMenuBtn
+                                            type="button"
+                                            onClick={() => {
+                                              handleAddPeri([a, b, c, d, e, f]);
+                                              setIsClicked(true);
+                                            }}>
                                             꼬리질문 추가
                                           </StMenuBtn>
-                                          <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e, f])}>
+                                          <StMenuBtn
+                                            type="button"
+                                            onClick={() => {
+                                              handleDeletePeri([a, b, c, d, e, f]);
+                                              setIsClicked(true);
+                                            }}>
                                             삭제
                                           </StMenuBtn>
                                         </StMiniMenu>
@@ -256,14 +317,20 @@ export default function PeriNote() {
                                               />
                                               <StAddAnswerButton
                                                 type="button"
-                                                onClick={() => handleAddPeri([a, b, c, d, e, f, g])}>
+                                                onClick={() => {
+                                                  handleAddPeri([a, b, c, d, e, f, g]);
+                                                  setIsClicked(true);
+                                                }}>
                                                 답변
                                               </StAddAnswerButton>
                                               <StMoreIcon onClick={handleToggle} />
-                                              <StMiniMenu>
+                                              <StMiniMenu isclicked={isClicked}>
                                                 <StMenuBtn
                                                   type="button"
-                                                  onClick={() => handleDeletePeri([a, b, c, d, e, f, g])}>
+                                                  onClick={() => {
+                                                    handleDeletePeri([a, b, c, d, e, f, g]);
+                                                    setIsClicked(true);
+                                                  }}>
                                                   삭제
                                                 </StMenuBtn>
                                               </StMiniMenu>
@@ -291,15 +358,21 @@ export default function PeriNote() {
                                                   }
                                                 />
                                                 <StMoreIcon onClick={handleToggle} />
-                                                <StMiniMenu>
+                                                <StMiniMenu isclicked={isClicked}>
                                                   <StMenuBtn
                                                     type="button"
-                                                    onClick={() => handleAddPeri([a, b, c, d, e, f, g, h])}>
+                                                    onClick={() => {
+                                                      handleAddPeri([a, b, c, d, e, f, g, h]);
+                                                      setIsClicked(true);
+                                                    }}>
                                                     꼬리질문 추가
                                                   </StMenuBtn>
                                                   <StMenuBtn
                                                     type="button"
-                                                    onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h])}>
+                                                    onClick={() => {
+                                                      handleDeletePeri([a, b, c, d, e, f, g, h]);
+                                                      setIsClicked(true);
+                                                    }}>
                                                     삭제
                                                   </StMenuBtn>
                                                 </StMiniMenu>
@@ -333,14 +406,20 @@ export default function PeriNote() {
                                                       />
                                                       <StAddAnswerButton
                                                         type="button"
-                                                        onClick={() => handleAddPeri([a, b, c, d, e, f, g, h, i])}>
+                                                        onClick={() => {
+                                                          handleAddPeri([a, b, c, d, e, f, g, h, i]);
+                                                          setIsClicked(true);
+                                                        }}>
                                                         답변
                                                       </StAddAnswerButton>
                                                       <StMoreIcon onClick={handleToggle} />
-                                                      <StMiniMenu>
+                                                      <StMiniMenu isclicked={isClicked}>
                                                         <StMenuBtn
                                                           type="button"
-                                                          onClick={() => handleDeletePeri([a, b, c, d, e, f, g, h, i])}>
+                                                          onClick={() => {
+                                                            handleDeletePeri([a, b, c, d, e, f, g, h, i]);
+                                                            setIsClicked(true);
+                                                          }}>
                                                           삭제
                                                         </StMenuBtn>
                                                       </StMiniMenu>
@@ -370,7 +449,7 @@ export default function PeriNote() {
                                                           }
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
-                                                        <StMiniMenu>
+                                                        <StMiniMenu isclicked={isClicked}>
                                                           <StMenuBtn
                                                             type="button"
                                                             onClick={() =>
@@ -402,7 +481,12 @@ export default function PeriNote() {
               </StAnswerWrapper>
             </StQAContainer>
           ))}
-          <StAddQuestionButton type="button" onClick={() => handleAddPeri([])}>
+          <StAddQuestionButton
+            type="button"
+            onClick={() => {
+              handleAddPeri([]);
+              setIsClicked(true);
+            }}>
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
@@ -495,6 +579,7 @@ const StAnswerWrapper = styled.div`
   border-top: none;
   border-radius: 0.8rem;
   padding: 2.8rem;
+  padding-top: 0;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -520,6 +605,7 @@ const StPriAnswerWrapper = styled.div<{ issingle: boolean }>`
           padding-bottom: 2.8rem;
         `
       : ""}
+  padding-top: 2.8rem;
   padding-right: 1.6rem;
   padding-left: 5.6rem;
 `;
@@ -535,7 +621,7 @@ const StPriAnswerInput = styled.input`
 
 const StAnswerIcon = styled(IcPeriAnswer)`
   position: absolute;
-  top: 0;
+  top: 2.8rem;
   left: 1rem;
 `;
 
@@ -663,11 +749,11 @@ const StMoreIcon = styled(IcMore)`
   }
 `;
 
-const StMiniMenu = styled.div<{ position?: string }>`
-  display: none;
+const StMiniMenu = styled.div<{ position?: string; isclicked: boolean }>`
+  display: ${({ isclicked }) => (isclicked ? "none" : "block")};
 
   position: absolute;
-  top: ${({ position }) => (position === "isPriQ" ? "6rem" : position === "isPriA" ? "2.9rem" : "4.3rem")};
+  top: ${({ position }) => (position === "isPriQ" ? "6rem" : position === "isPriA" ? "5.7rem" : "4.3rem")};
   right: ${({ position }) => (position === "isPriQ" ? "4.4rem" : "1.6rem")};
   z-index: 10;
 
