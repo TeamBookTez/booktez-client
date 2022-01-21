@@ -469,7 +469,8 @@ export default function PeriNote() {
             onClick={() => {
               handleAddPeri([]);
               setIsDisabled(true);
-            }}>
+            }}
+            disabled={isDisabled}>
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
@@ -702,7 +703,7 @@ const StAnswerInput = styled.input`
   }
 `;
 
-const StAddQuestionButton = styled(Button)`
+const StAddQuestionButton = styled(Button)<{ disabled: boolean }>`
   margin-top: 1rem;
   padding: 2.35rem 0;
   background-color: ${({ theme }) => theme.colors.white};
@@ -710,7 +711,7 @@ const StAddQuestionButton = styled(Button)`
   border-radius: 1.6rem;
 
   width: 100%;
-  color: ${({ theme }) => theme.colors.gray100};
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.white500 : theme.colors.gray100)};
   ${({ theme }) => theme.fonts.button}
 `;
 
