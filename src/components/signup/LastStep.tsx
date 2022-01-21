@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { ImgSignUpFinish } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
+import { patchData, postData } from "../../utils/lib/api";
 import { Button } from "../common/styled/Button";
 
 export default function LastStep() {
@@ -16,7 +17,26 @@ export default function LastStep() {
     handleIsAniTime(false);
   }, []);
 
+  const addBookReview = async () => {
+    const localToken = localStorage.getItem("booktez-token");
+    const userToken = localToken ? localToken : "";
+    const localBookData = localStorage.getItem("booktez-bookData");
+    const bookData = localBookData ? JSON.parse(localBookData) : null;
+    const localReviewData = localStorage.getItem("booktez-reviewData");
+    const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
+
+    const { data } = await postData("/book", bookData, userToken);
+    const reviewId = data.data.isLogin.reviewId;
+
+    await patchData(userToken, `/review/before/${reviewId}`, {
+      ...reviewData,
+      questionList: [""],
+      progress: 2,
+    });
+  };
+
   const goNextStep = () => {
+    addBookReview();
     handleIsAniTime(true);
     setTimeout(() => nav("/main", { state: "rightpath" }), 1000);
   };

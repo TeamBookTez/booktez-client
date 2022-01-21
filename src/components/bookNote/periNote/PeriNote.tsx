@@ -170,7 +170,7 @@ export default function PeriNote() {
                           setIsDisabled(event.target.value === "");
                           handleChangePeri("answer", event.target.value, [a, b]);
                         }}
-                        onKeyPress={(event) => handleEnterAdd(event, [a, b])}
+                        onKeyPress={(event) => handleEnterAdd(event, [a])}
                       />
                       <StMoreIcon onClick={handleToggle} />
                       <StMiniMenu menuposition={"isPriA"}>
@@ -219,7 +219,7 @@ export default function PeriNote() {
                                   key={`a1-${d}`}
                                   value={answer1.text}
                                   onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
-                                  onKeyPress={(event) => handleEnterAdd(event, [a, b])}
+                                  onKeyPress={(event) => handleEnterAdd(event, [a, b, c])}
                                 />
                                 <StMoreIcon onClick={handleToggle} />
                                 <StMiniMenu>
@@ -271,7 +271,7 @@ export default function PeriNote() {
                                           onChange={(event) =>
                                             handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
                                           }
-                                          onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d])}
+                                          onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e])}
                                         />
                                         <StMoreIcon onClick={handleToggle} />
                                         <StMiniMenu>
@@ -344,7 +344,7 @@ export default function PeriNote() {
                                                       h,
                                                     ])
                                                   }
-                                                  onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e, f])}
+                                                  onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e, f, g])}
                                                 />
                                                 <StMoreIcon onClick={handleToggle} />
                                                 <StMiniMenu>
@@ -428,7 +428,7 @@ export default function PeriNote() {
                                                             ])
                                                           }
                                                           onKeyPress={(event) =>
-                                                            handleEnterAdd(event, [a, b, c, d, e, f, g, h])
+                                                            handleEnterAdd(event, [a, b, c, d, e, f, g, h, i])
                                                           }
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
@@ -563,6 +563,7 @@ const StAnswerWrapper = styled.div`
   border-top: none;
   border-radius: 0.8rem;
   padding: 2.8rem;
+  padding-top: 0;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -588,6 +589,7 @@ const StPriAnswerWrapper = styled.div<{ issingle: boolean }>`
           padding-bottom: 2.8rem;
         `
       : ""}
+  padding-top: 2.8rem;
   padding-right: 1.6rem;
   padding-left: 5.6rem;
 `;
@@ -603,7 +605,7 @@ const StPriAnswerInput = styled.input`
 
 const StAnswerIcon = styled(IcPeriAnswer)`
   position: absolute;
-  top: 0;
+  top: 2.8rem;
   left: 1rem;
 `;
 
