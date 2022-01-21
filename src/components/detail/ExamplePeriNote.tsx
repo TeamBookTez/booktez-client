@@ -33,6 +33,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
         <React.Fragment key={`q0-${idx}`}>
           <StFirstQuestion>
             <LabelQuestion bgColor={theme.colors.orange000} />
+
             {question0.question}
             <StIcToggle onClick={handleToggle} />
           </StFirstQuestion>
@@ -156,6 +157,7 @@ const StFirstQuestion = styled(StQuestion)`
 `;
 
 const StIcToggle = styled(IcToggle)`
+  min-width: 2.6rem;
   margin-left: 1.6rem;
   &:hover {
     cursor: pointer;
