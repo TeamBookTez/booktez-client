@@ -1,28 +1,45 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
+
+import { IsLoginState } from "../../pages/BookNote";
 
 interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
+  isLoginState: IsLoginState;
+  isPrevented: boolean;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav } = props;
+  const { navIndex, onNav, isLoginState, isPrevented } = props;
+
+  const navigate = useNavigate();
+
+  const goToPre = () => {
+    navigate("", { state: isLoginState });
+    onNav(0);
+  };
+
+  const goToPeri = (isPrevented: boolean) => {
+    if (isPrevented) {
+      navigate("peri", { state: isLoginState });
+      onNav(1);
+    }
+  };
 
   return (
     <StNav>
       <StUl>
-        <StList>
-          <StLink1 to="" onClick={() => onNav(0)} index={navIndex}>
+        <li>
+          <StLink1 onClick={() => goToPre()} index={navIndex}>
             독서 전
           </StLink1>
-        </StList>
-        <StList>
-          <StLink2 to="peri" onClick={() => onNav(1)} index={navIndex}>
-            독서 후
+        </li>
+        <li>
+          <StLink2 onClick={() => goToPeri(isPrevented)} index={navIndex}>
+            독서 중
           </StLink2>
-        </StList>
+        </li>
       </StUl>
       <StBottomLine>
         <StOrangLine index={navIndex} />
@@ -44,9 +61,7 @@ const StUl = styled.ul`
   display: flex;
 `;
 
-const StList = styled.li``;
-
-const StLink1 = styled(Link)<{ index: number }>`
+const StLink1 = styled.div<{ index: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,6 +75,8 @@ const StLink1 = styled(Link)<{ index: number }>`
   font-weight: 600;
   line-height: 2.3rem;
   letter-spacing: -0.1;
+
+  cursor: pointer;
 
   ${({ index }) =>
     index === 0

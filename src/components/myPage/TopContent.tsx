@@ -1,69 +1,42 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { UserInfo } from "../../pages/MyPage";
-import { getData } from "../../utils/lib/api";
 import { StLoginLink } from "../common/MainHeader";
 import { Button } from "../common/styled/Button";
 import { TopBanner } from ".";
 
 interface TopContentProps {
   userInfo: UserInfo;
+  isLogin: boolean;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onLogout: () => void;
 }
 
 export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
-  const { userInfo, onImageChange } = props;
+  const { userInfo, isLogin, onImageChange, onLogout } = props;
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
-
-  const [isLogin, setIsLogin] = useState<boolean>(true);
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        setIsLogin(false);
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
-    }
-  };
-
-  const handleMoveLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMoveLogin = () => {
     navigate("/login");
   };
 
-  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogout = () => {
     localStorage.removeItem("booktez-token");
     localStorage.removeItem("booktez-nickname");
-    setIsLogin(false);
+    navigate("/main");
+    onLogout();
   };
-
-  useEffect(() => {
-    getLogin("/auth/check", localToken);
-  }, [isLogin]);
 
   return (
     <StWrapper>
-      <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
-      {!isLogin ? (
-        <StLoginButton type="button" onClick={(e) => handleMoveLogin}>
+      <TopBanner isLogin={isLogin} userInfo={userInfo} onImageChange={onImageChange} />
+      {isLogin ? (
+        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
+      ) : (
+        <StLoginButton type="button" onClick={handleMoveLogin}>
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginButton>
-      ) : (
-        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
       )}
     </StWrapper>
   );
@@ -75,20 +48,19 @@ const StWrapper = styled.section`
   align-items: flex-end;
 
   width: 100%;
-  height: 34.2rem; // 임시
+  height: 29.4rem;
 
-  margin-bottom: 5.3rem;
+  margin-bottom: 10rem;
   padding: 0 4rem;
 `;
 
 const StLoginButton = styled(Button)`
+  width: 13.5rem;
   height: 4.6rem;
-
-  padding: 0 3.75rem;
 
   border-radius: 0.8rem;
 
-  ${({ theme }) => theme.fonts.button2};
+  ${({ theme }) => theme.fonts.button};
 `;
 
 const StLogoutBtn = styled(StLoginButton)`

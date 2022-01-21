@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -12,15 +11,15 @@ import { PublishDate } from "./BookInfoWrapper";
 
 interface ShowModalProps {
   bookInfo: BookInfo;
-  setBookInfo: Dispatch<SetStateAction<BookInfo>>;
   publishDate: PublishDate;
   onToggleModal: () => void;
 }
 
 export default function ShowModal(props: ShowModalProps) {
-  const { bookInfo, setBookInfo, publishDate, onToggleModal } = props;
+  const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
   const bookData = { ...bookInfo, publicationDate: publishDate.toString(), author: authors, translator: translators };
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
@@ -28,13 +27,14 @@ export default function ShowModal(props: ShowModalProps) {
 
   const postAddBooks = async () => {
     try {
-      const res = await postData("/book", bookData, userToken);
+      const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
         localStorage.setItem("booktez-data", JSON.stringify(bookInfo));
       }
+      const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      nav("/book-note");
+      nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

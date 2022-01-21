@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
+import Loading from "../components/common/Loading";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -19,9 +20,34 @@ export default function Bookcase() {
   const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
+  const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const handleBookDelete = () => {
+    setBookDelete(!bookDelete);
+  };
 
   const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const localToken = TOKEN ? TOKEN : "";
+  const authCheckKey = "/auth/check";
+
+  const getLogin = async (key: string, token: string) => {
+    try {
+      const { data } = await getData(key, token);
+      const status = data.status;
+
+      if (!localToken) {
+        setIsLogin(false);
+      }
+      if (!(status === 200)) {
+        setIsLogin(false);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
+    }
+  };
 
   const getBookcase = async (key: string, token: string) => {
     try {
@@ -43,21 +69,32 @@ export default function Bookcase() {
         console.log("err", err.response?.data);
       }
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    getBookcase("/book", userToken);
-  }, []);
+    getBookcase("/book", localToken);
+  }, [bookDelete]);
 
   const handleBookDelete = () => {
-    getBookcase("/book", userToken);
+    getBookcase("/book", localToken);
   };
+
+  useEffect(() => {
+    getLogin(authCheckKey, localToken);
+  }, []);
 
   return (
     <>
-      <MainHeader>서재</MainHeader>
-      <Navigation />
-      <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete]} />
+      {isLogin && isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>서재</MainHeader>
+          <Navigation />
+          <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete, isLogin]} />
+        </>
+      )}
     </>
   );
 }

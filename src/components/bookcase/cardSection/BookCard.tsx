@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
@@ -8,34 +9,58 @@ import { PopUpDelete } from "../../common";
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
   handleBookDelete: () => void;
+  isLogin: boolean;
 }
+
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, handleBookDelete } = props;
-  const { author, reviewId, thumbnail, title } = bookcaseInfo;
+  const { bookcaseInfo, handleBookDelete, isLogin } = props;
+  const { author, reviewId, thumbnail, title, state } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const reviewUrl = state === 2 ? "/book-note" : state === 3 ? "/book-note/peri" : "/detail-book-note";
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
+  const moveBookNoteHandler = () => {
+    if (isLogin) {
+      navigate(reviewUrl, { state: { isLogin, reviewId, fromUrl: pathname } });
+    }
+  };
+
   return (
-    <>
-      <StBookCard>
+    <StCardWrapper>
+      <StBookCard onClick={moveBookNoteHandler}>
         <StImgWrapper>
-          <StImg src={thumbnail} alt="다음 책을 쌓아볼까요?" />
+          <StImg src={thumbnail} alt={`도서 ${title}의 이미지`} />
         </StImgWrapper>
         <StTextWrapper>
           <StTitleWrapper>
             <StCardTitle>{title}</StCardTitle>
             <StCardAuthor>{author}</StCardAuthor>
           </StTitleWrapper>
-          <StIcBin onClick={handlePopUp} />
         </StTextWrapper>
       </StBookCard>
+      <StIcBin onClick={handlePopUp} />
       {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
-    </>
+    </StCardWrapper>
   );
 }
+
+const StCardWrapper = styled.div`
+  position: relative;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.orange200};
+    cursor: pointer;
+  }
+  &:hover > svg {
+    display: block;
+  }
+`;
 
 const StBookCard = styled.article`
   display: flex;
@@ -48,16 +73,8 @@ const StBookCard = styled.article`
 
   border-radius: 1.6rem;
 
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.orange200};
-  }
   &:hover > div > header {
     width: 16.8rem;
-  }
-  &:hover > div > svg {
-    display: inherit;
   }
 `;
 
@@ -107,5 +124,9 @@ const StCardAuthor = styled.p`
 `;
 
 const StIcBin = styled(IcBin)`
+  position: absolute;
+  right: 2.2rem;
+  bottom: 2.2rem;
+
   display: none;
 `;

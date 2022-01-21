@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
+import BookEmpty from "./BookEmpty";
 import BookInfoWrapper from "./BookInfoWrapper";
 
 interface BookListProps {
@@ -9,6 +10,8 @@ interface BookListProps {
 
 export default function BookList(props: BookListProps) {
   const { books } = props;
+
+  if (books.length === 0) return <BookEmpty />;
 
   return (
     <StListWrapper>

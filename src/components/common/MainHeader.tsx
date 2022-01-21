@@ -51,7 +51,9 @@ export default function MainHeader(props: MainHeaderProps) {
   return (
     <StHeader isBookcase={isBookcase}>
       <StHeading2>{children}</StHeading2>
-      {isLogin ? null : (
+      {isLogin ? (
+        <></>
+      ) : (
         <StLoginBtn isMypage={isMypage}>
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginBtn>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { StepUpOnExample } from ".";
-import { StBtnStepUp, StIcStepUp } from "./StepUpOnExample";
+import { StepUp } from "../bookNote";
 
 interface DetailArticleWrapperLabelingProps {
   title: string;
@@ -24,10 +23,7 @@ export default function DetailArticleWrapperLabeling(props: DetailArticleWrapper
         {/* 이미지 div */}
         <IIIIIII></IIIIIII>
         <StTitle>{title}</StTitle>
-        <StBtnStepUp onClick={handlePeriCarousel}>
-          <StIcStepUp />
-          Step Up
-        </StBtnStepUp>
+        <StepUp onToggleModal={handlePeriCarousel} />
       </StTitleWrapper>
       {children}
     </section>

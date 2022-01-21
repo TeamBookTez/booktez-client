@@ -7,9 +7,10 @@ import Empty from "./cardSection/Empty";
 interface CardsProps {
   bookcaseInfo: BookcaseInfo[];
   handleBookDelete: () => void;
+  isLogin: boolean;
 }
 export default function Cards(props: CardsProps) {
-  const { bookcaseInfo, handleBookDelete } = props;
+  const { bookcaseInfo, handleBookDelete, isLogin } = props;
 
   if (bookcaseInfo.length === 0) {
     return (
@@ -22,7 +23,7 @@ export default function Cards(props: CardsProps) {
       <StSection>
         <AddBookCard />
         {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
-          <BookCard key={idx} bookcaseInfo={bookcaseInfo} handleBookDelete={handleBookDelete} />
+          <BookCard key={idx} bookcaseInfo={bookcaseInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
         ))}
       </StSection>
     );

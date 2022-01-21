@@ -40,6 +40,8 @@ const StNav = styled.nav`
   position: sticky;
   top: 0;
 
+  z-index: 10;
+
   padding-top: 3.3rem;
   padding-left: 4rem;
 

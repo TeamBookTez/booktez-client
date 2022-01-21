@@ -15,16 +15,14 @@ import {
 import Landing from "../pages/Landing";
 import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
-import { CommonLayout } from "./common";
+import { CommonLayout, Error404 } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
-  const isLogin = false;
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={isLogin ? <Navigate to="/main" /> : <Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/main/*" element={<CommonLayout />}>
           {/* /main */}
           <Route path="" element={<Main />} />
@@ -34,7 +32,7 @@ export default function Router() {
             <Route path="pre" element={<PreRead />} />
             <Route path="peri" element={<PeriRead />} />
             <Route path="post" element={<PostRead />} />
-            <Route path="*" element={<Navigate to="" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}
@@ -59,7 +57,7 @@ export default function Router() {
           <Route path="4" element={<LastStep />} />
           <Route path="*" element={<Navigate to="" />} />
         </Route>
-        <Route path="*" element={<p>404 에러 얍얍</p>} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );

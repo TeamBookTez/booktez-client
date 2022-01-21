@@ -24,7 +24,9 @@ export default function ToBe() {
               북스테어즈는 꾸준히 달립니다.
             </StExplain>
           </div>
-          <StAnchor href="" target="_blank">
+          <StAnchor
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdlnQz0Nwx8vtqmHtgNEkzPwUy-LsTMjt9KXlmsAGZiu1FJRw/viewform"
+            target="_blank">
             응원과 피드백 하러 가기
           </StAnchor>
         </Starticle>
@@ -66,6 +68,8 @@ const StLine = styled.div`
 
   border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
   border-radius: 0.2rem;
+
+  background-color: ${({ theme }) => theme.colors.gray300};
 `;
 
 const StH3 = styled.h3`

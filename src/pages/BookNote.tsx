@@ -1,17 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
-import { IcSave } from "../assets/icons";
-import { DrawerWrapper, Navigator } from "../components/bookNote";
-import PopUpPreDone from "../components/bookNote/preNote/PopUpPreDone";
+import { IcCheckSave, IcSave } from "../assets/icons";
+import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
 
 interface ObjKey {
   [key: string]: string | string[] | number;
+}
+
+export interface IsLoginState {
+  isLogin: boolean;
+  reviewId: number;
+  fromUrl: string;
 }
 
 export interface PreNoteData extends ObjKey {
@@ -22,14 +27,21 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function BookNote() {
-  const REVIEWID = 34;
+  const navigate = useNavigate();
+  const { pathname, state } = useLocation();
+  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const [navIndex, setNavIndex] = useState<number>(initIndex);
+
+  const isLoginState = state as IsLoginState;
+  const { isLogin, reviewId, fromUrl } = isLoginState;
+
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
-  const [isPrevented, setIsPrevented] = useState(false);
-  const [ablePatch, setAblePatch] = useState(false);
+  const [isPrevented, setIsPrevented] = useState<boolean>(false);
+  const [ablePatch, setAblePatch] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
@@ -39,18 +51,13 @@ export default function BookNote() {
   const [periNote, setPeriNote] = useState<Question[]>([]);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const { pathname } = useLocation();
-  const initIndex = pathname === "/book-note/peri" ? 1 : 0;
-  const [navIndex, setNavIndex] = useState<number>(initIndex);
+  const [isSave, setIsSave] = useState<boolean>(false);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
   };
 
-  const navigate = useNavigate();
-
-  const handleOpenDrawer = (i: number) => {
+  const handleToggleDrawer = (i: number) => {
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -69,22 +76,35 @@ export default function BookNote() {
     });
   };
 
-  const getReview = async (key: string, token: string) => {
+  const getReview = async () => {
     try {
-      const { data } = await getData(key, token);
-      const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
+      if (!isLogin) {
+        const localData = localStorage.getItem("booktez-data");
+        const bookTitle = localData ? JSON.parse(localData).title : "";
 
-      setPreNote({ answerOne, answerTwo, questionList, progress: reviewState });
-      setPeriNote(answerThree.root);
-      setTitle(bookTitle);
-
-      // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
-      // 답변 추가/삭제 막기
-      if (answerOne) {
-        setIsPrevented(true);
-        setAblePatch(true);
+        setTitle(bookTitle);
       } else {
-        handleChangeReview("questionList", [""]);
+        const { data } = await getData(`/review/${reviewId}`, userToken);
+        const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
+        const questions = questionList.length ? questionList : [""];
+
+        setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
+        setTitle(bookTitle);
+
+        if (answerThree) {
+          setPeriNote(answerThree.root);
+        } else {
+          setPeriNote([]);
+        }
+
+        // 요청에 성공했으나, 답변이 하나라도 채워져있다면 이전에 작성한 적이 있던 것.
+        // 답변 추가/삭제 막기
+        if (answerOne && answerTwo && questionList.length) {
+          setIsPrevented(true);
+          setAblePatch(true);
+        } else {
+          handleChangeReview("questionList", [""]);
+        }
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -97,34 +117,45 @@ export default function BookNote() {
     }
   };
 
-  // 저장만 하기 - 수정 완료는 아님
-  const saveReview = async () => {
-    const res = await patchData(userToken, `/review/${REVIEWID}`, { ...preNote, answerThree: { root: periNote } });
-
-    console.log("saveReview res", res);
-  };
-
-  const patchReview = async () => {
-    await patchData(userToken, `/review/before/${REVIEWID}`, preNote);
-
+  const syncQuestion = () => {
     if (!isPrevented) {
       const newData: Question[] = [];
 
       preNote.questionList.map((question) => {
-        newData.push({ depth: 1, question, answer: [] });
+        newData.push({ depth: 1, question, answer: [{ text: "", children: [] }] });
       });
       setPeriNote(newData);
     }
+  };
+
+  // 저장만 하기 - 수정 완료는 아님
+  const saveReview = async () => {
+    const { answerOne, answerTwo } = preNote;
+
+    await patchData(userToken, `/review/${reviewId}`, {
+      answerOne,
+      answerTwo,
+      answerThree: { root: periNote },
+    });
+
+    setIsSave(true);
+    setTimeout(() => {
+      setIsSave(false);
+    }, 3000);
+  };
+
+  const patchReview = async () => {
+    await patchData(userToken, `/review/before/${reviewId}`, preNote);
+    syncQuestion();
     setIsPrevented(true);
-    // 연결 확인 용
-    // console.log("res", res);
   };
 
   const handleSubmit = () => {
     handleChangeReview("progress", 3);
     patchReview();
     setOpenModal(false);
-    navigate("/book-note/peri");
+    setIsDrawerOpen(false);
+    navigate("/book-note/peri", { state: isLoginState });
     handleNav(1);
   };
 
@@ -186,6 +217,9 @@ export default function BookNote() {
     const newRoot = [...periNote];
 
     switch (idxList.length) {
+      default:
+        newRoot.push({ depth: 1, question: "", answer: [{ text: "", children: [] }] });
+        break;
       case 1:
         newRoot[idxList[0]].answer.push({ text: "", children: [] });
         break;
@@ -291,26 +325,37 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    getReview(`/review/${REVIEWID}`, userToken);
-  }, []);
-
-  useEffect(() => {
+    // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
+    // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
       setAblePatch(true);
     }
   }, [preNote]);
 
+  useEffect(() => {
+    getReview();
+  }, []);
+
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen}>
-      <StIcCancelWhite onClick={() => navigate(-1)} />
+    <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
+      <Link to={fromUrl}>
+        <StIcCancelWhite />
+      </Link>
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator navIndex={navIndex} onNav={handleNav} />
-        <IcSave onClick={saveReview} />
+        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
+        {isSave && (
+          <StSave>
+            <StIcCheckSave />
+            작성한 내용이 저장되었어요.
+          </StSave>
+        )}
+        <StIcSave onClick={saveReview} />
       </StNavWrapper>
       <Outlet
         context={[
-          handleOpenDrawer,
+          isLogin,
+          handleToggleDrawer,
           preNote,
           handleChangeReview,
           setOpenModal,
@@ -320,6 +365,8 @@ export default function BookNote() {
           handleChangePeri,
           handleAddPeri,
           handleDeletePeri,
+          userToken,
+          fromUrl,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
@@ -328,18 +375,18 @@ export default function BookNote() {
   );
 }
 
-export const reducewidth = keyframes`
+export const reducewidth = (width: number) => keyframes`
   0% {
     width: 100%;
     padding: 10rem 9.5rem;
   }
   100% {
-    width: calc(100% - 39rem);
+    width: calc(100% - ${width}rem);
     padding: 10rem 3.4rem 10rem 9.5rem;
   }
 `;
 
-const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
+const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -348,25 +395,61 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean }>`
   padding: 10rem ${({ isopen }) => (isopen ? "3.4rem" : "9.5rem")} 10rem 9.5rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
-  ${({ isopen }) =>
+  min-height: 100vh;
+  ${({ isopen, width }) =>
     isopen
       ? css`
-          animation: ${reducewidth} 300ms linear 1;
+          animation: ${reducewidth(width)} 300ms linear 1;
           animation-fill-mode: forwards;
         `
       : ""}
 `;
 
 const StNavWrapper = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 
-  width: 100%;
+  height: 4.8rem;
+
+  margin-top: 4.3rem;
 `;
 
 const StBookTitle = styled.h1`
   width: 100%;
 
   ${({ theme }) => theme.fonts.header0};
+`;
+
+const StIcCheckSave = styled(IcCheckSave)`
+  margin-right: 1rem;
+`;
+
+const StSave = styled.div`
+  position: absolute;
+  left: 76%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 23.7rem;
+  height: 3.8rem;
+
+  margin-bottom: 0.5rem;
+  margin-right: 1.6rem;
+
+  border-radius: 0.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.14);
+
+  ${({ theme }) => theme.fonts.caption};
+  color: ${({ theme }) => theme.colors.gray200};
+`;
+
+const StIcSave = styled(IcSave)`
+  cursor: pointer;
 `;

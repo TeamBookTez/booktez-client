@@ -17,6 +17,8 @@ export const StPopUp = styled.article`
   width: 43.5rem;
   height: 35.2rem;
 
+  padding: 3rem;
+
   border-radius: 2.1rem;
 
   background-color: ${({ theme }) => theme.colors.white};

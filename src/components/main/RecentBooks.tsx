@@ -7,15 +7,20 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
-import { Button } from "../common/styled/Button";
+import Loading from "../common/Loading";
 
-export default function RecentBooks() {
+interface RecentProps {
+  isLogin: boolean;
+}
+export default function RecentBooks(props: RecentProps) {
+  const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
+  // const [bookDelete, setBookDelete] = useState<boolean>(false);
+  const [isDefault, setIsDefault] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
-  // // 로그인 여부 맞춰서 아래 isDefault를 조작
-  const isDefault = false;
 
   const getBookRecent = async (key: string, token: string) => {
     try {
@@ -25,15 +30,17 @@ export default function RecentBooks() {
         },
       } = await getData(key, token);
 
-      setBooksRecent(books.slice(0, 5));
+      setBooksRecent(books);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getBookRecent("/book", userToken);
   }, []);
 
@@ -41,25 +48,33 @@ export default function RecentBooks() {
     getBookRecent("/book", userToken);
   };
 
+  useEffect(() => {
+    setIsDefault(!(booksRecent.length > 0));
+  }, [booksRecent]);
+
   return (
     <section>
-      <StHeader>
-        <StHeading3>최근 작성한 북노트</StHeading3>
-        {!isDefault ? (
-          <StButton type="button">
-            <Link to="/main/bookcase">전체보기</Link>
-          </StButton>
-        ) : null}
-      </StHeader>
-      <StBookWrapper isdefault={isDefault}>
-        {isDefault ? (
-          <Empty />
-        ) : (
-          booksRecent.map((tempInfo, idx) => (
-            <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
-          ))
-        )}
-      </StBookWrapper>
+      {isLogin && isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <StHeader>
+            <StHeading3>최근 작성한 북노트</StHeading3>
+            {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
+          </StHeader>
+          <StBookWrapper isdefault={isDefault}>
+            {!isDefault ? (
+              booksRecent
+                .slice(0, 5)
+                .map((tempInfo, idx) => (
+                  <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+                ))
+            ) : (
+              <Empty />
+            )}
+          </StBookWrapper>
+        </>
+      )}
     </section>
   );
 }
@@ -78,11 +93,20 @@ const StHeading3 = styled.h3`
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StButton = styled(Button)`
+const StLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 8.8rem;
+  height: 3.6rem;
+
   border: 0.2rem solid ${({ theme }) => theme.colors.gray300};
   border-radius: 2.4rem;
-  padding: 0.9rem 2.1rem;
+
   background-color: ${({ theme }) => theme.colors.white};
+
+  ${({ theme }) => theme.fonts.button2};
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
@@ -91,5 +115,7 @@ const StBookWrapper = styled.section<{ isdefault: boolean }>`
   flex-wrap: wrap;
   flex-direction: ${({ isdefault }) => (isdefault ? "column" : "row")};
   align-items: center;
-  justify-content: center;
+  justify-content: ${({ isdefault }) => (isdefault ? "center" : "normal")};
+
+  margin-left: 2rem;
 `;

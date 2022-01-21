@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
 
@@ -24,4 +26,27 @@ export const patchData = (token: string, key: string, patchBody: PatchBody | For
 
 export const deleteData = (key: string, token: string | null) => {
   return client(token).delete(key);
+};
+
+// 활용할 때 검수 필요!!!!!!!!!!!!!!!!!!!!
+export const useLoginChecking = async (localToken: string | null) => {
+  // const localToken = localStorage.getItem("booktez-token");
+  const _token = localToken ? localToken : "";
+
+  try {
+    const { data } = await getData("/auth/check", _token);
+
+    console.log(data);
+    if (data.status === 200) {
+      if (data.data.isLogin === true) {
+        return true;
+      }
+    }
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.log("err", err.response?.data);
+    }
+  }
+
+  return false;
 };

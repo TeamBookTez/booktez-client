@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { MainHeader } from "../components/common";
+import Loading from "../components/common/Loading";
 import { BottomContent, TopContent } from "../components/myPage";
 import { getData, patchData } from "../utils/lib/api";
 
@@ -19,30 +20,42 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.
-  const [dataa, setDataa] = useState<string>("");
+  const [tempImg, setTempImg] = useState<string>("");
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const localToken = tempToken ? tempToken : "";
 
-  const infoKey = "/user/myInfo";
-  const patchImgKey = "/user/img";
+  const handleLogout = () => {
+    setIsLogin(false);
+  };
 
-  const getInfo = async (token: string, key: string) => {
+  useEffect(() => {
+    getInfo("/user/myInfo", localToken);
+  }, [tempImg]);
+
+  const getInfo = async (key: string, token: string) => {
     try {
       const { data } = await getData(key, token);
 
-      setUserInfo(data.data);
+      if (data.success) {
+        setUserInfo(data.data);
+      }
     } catch (err) {
+      setIsLogin(false);
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);
       }
     }
+    setIsLoading(false);
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isLogin === false) return;
+
     const formData = new FormData();
 
     if (e.target.files !== null) {
@@ -51,10 +64,10 @@ export default function MyPage() {
       formData.append("img", imgFile);
 
       try {
-        const { data } = await patchData(token, patchImgKey, formData);
+        const { data } = await patchData(localToken, "/user/img", formData);
 
         if (data.success) {
-          setDataa(data.img);
+          setTempImg(data.img);
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
@@ -65,15 +78,17 @@ export default function MyPage() {
     }
   };
 
-  useEffect(() => {
-    getInfo(token, infoKey);
-  }, [dataa]);
-
   return (
     <>
-      <MainHeader>마이페이지</MainHeader>
-      <TopContent userInfo={userInfo} onImageChange={handleImageChange} />
-      <BottomContent userInfo={userInfo} />
+      {isLogin && isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>마이페이지</MainHeader>
+          <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
+          <BottomContent userInfo={userInfo} isLogin={isLogin} />
+        </>
+      )}
     </>
   );
 }

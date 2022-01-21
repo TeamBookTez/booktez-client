@@ -78,7 +78,7 @@ const StArticle = styled.article`
   padding: 2.6rem 1.4rem;
 `;
 
-const StStepModalWrapper = styled(StModalWrapper)`
+export const StStepModalWrapper = styled(StModalWrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
