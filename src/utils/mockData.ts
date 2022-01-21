@@ -102,7 +102,7 @@ export const after1 = [
 ];
 
 export const reviewData = {
-  bookTitle: "나는 왜 이 일을 하는가? 2",
+  bookTitle: "나는 왜 이 일을 하는가?",
   answerOne:
     "상황에 따라 변하는 '동기'를 한 곳에 잡아 두고 싶다\n앞으로의 모든 업무에 대해 내가 이 일을 왜 하는지 명확하게 할 수 있는 힌트를 얻고 싶다.",
   answerTwo:

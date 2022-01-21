@@ -57,7 +57,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
       {idx === 4 ? <StImg src={ImgDrawer} idx={idx} /> : <StImg src={ImgDrawerSmall} idx={idx} />}
       <StTitleWrapper>
         <IcBooks />
-        나는 왜 이 일을 하는가? 2
+        나는 왜 이 일을 하는가?
       </StTitleWrapper>
       <StArticle idx={idx}>{idx === 4 ? <PeriNoteExample /> : <DrawerPre qaPair={qaPair} idx={idx} />}</StArticle>
     </StDrawerWrapper>
