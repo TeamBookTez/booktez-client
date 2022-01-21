@@ -19,6 +19,7 @@ export default function PopUpExit(props: PopUpExitProps) {
   return (
     <StPopUpWrpper>
       <StPopUp>
+        <StImg src={ImgExit} alt="독서 전 단계 완료" />
         <StQuestion>현재 페이지에서 나가시겠어요?</StQuestion>
         <StDetail>변경사항이 저장되지 않을 수도 있어요!</StDetail>
         <StBtnWrapper>
