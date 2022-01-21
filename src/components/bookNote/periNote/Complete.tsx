@@ -33,7 +33,15 @@ export default function Complete(props: CompleteProps) {
         <StTitle>{title}</StTitle>
         <StSubWrapper>
           <StAuthor>{authors.join(" ")} 지음</StAuthor>
-          {translators.length && <StTranslator>{translators.join(" ")} 옮김</StTranslator>}
+          {translators.length ? (
+            translators.length === 1 ? (
+              <StTranslator>{translators[0]} 옮김</StTranslator>
+            ) : (
+              <StTranslator>
+                {translators[0]} 외 {translators.length - 1}명 옮김
+              </StTranslator>
+            )
+          ) : null}
         </StSubWrapper>
         <StDate>{publicationDt} 출간</StDate>
         <StButtonWrapper>
