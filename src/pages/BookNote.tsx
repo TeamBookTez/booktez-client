@@ -228,7 +228,11 @@ export default function BookNote() {
         newRoot[idxList[0]].answer.push({ text: "", children: [] });
         break;
       case 2:
-        newRoot[idxList[0]].answer[idxList[1]].children.push({ depth: 2, question: "", answer: [] });
+        newRoot[idxList[0]].answer[idxList[1]].children.push({
+          depth: 2,
+          question: "",
+          answer: [{ text: "", children: [] }],
+        });
         break;
       case 3:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.push({ text: "", children: [] });
@@ -237,7 +241,7 @@ export default function BookNote() {
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.push({
           depth: 2,
           question: "",
-          answer: [],
+          answer: [{ text: "", children: [] }],
         });
         break;
       case 5:
@@ -248,7 +252,7 @@ export default function BookNote() {
       case 6:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
           idxList[5]
-        ].children.push({ depth: 3, question: "", answer: [] });
+        ].children.push({ depth: 3, question: "", answer: [{ text: "", children: [] }] });
         break;
       case 7:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
@@ -258,7 +262,11 @@ export default function BookNote() {
       case 8:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
           idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children.push({ depth: 4, question: "", answer: [] });
+        ].children[idxList[6]].answer[idxList[7]].children.push({
+          depth: 4,
+          question: "",
+          answer: [{ text: "", children: [] }],
+        });
         break;
       case 9:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
@@ -271,7 +279,7 @@ export default function BookNote() {
         ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].children.push({
           depth: 5,
           question: "",
-          answer: [],
+          answer: [{ text: "", children: [] }],
         });
         break;
     }
