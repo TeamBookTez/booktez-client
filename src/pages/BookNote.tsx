@@ -5,6 +5,7 @@ import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
+import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
@@ -151,10 +152,17 @@ export default function BookNote() {
     await patchData(userToken, `/review/before/${reviewId}`, preNote);
 
     setIsSave(true);
-    setTimeout(() => {
-      setIsSave(false);
-    }, 3000);
   };
+
+  useEffect(() => {
+    const saveToast = setTimeout(() => {
+      setIsSave(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(saveToast);
+    };
+  }, [saveReview]);
 
   const patchReview = async () => {
     await patchData(userToken, `/review/before/${reviewId}`, preNote);
@@ -353,11 +361,15 @@ export default function BookNote() {
     getReview();
   }, []);
 
+  const [openExitModal, setOpenExitModal] = useState<boolean>(false);
+  const handleExit = () => {
+    setOpenExitModal(!openExitModal);
+  };
+
   return (
     <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
-      <Link to={fromUrl}>
-        <StIcCancelWhite />
-      </Link>
+      {openExitModal && <PopUpExit onExit={handleExit} />}
+      <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
         <Navigator

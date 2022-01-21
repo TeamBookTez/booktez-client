@@ -53,6 +53,8 @@ export default function BookCard(props: BookCardProps) {
 const StCardWrapper = styled.div`
   position: relative;
 
+  border-radius: 1.6rem;
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.orange200};
     cursor: pointer;
@@ -70,8 +72,6 @@ const StBookCard = styled.article`
   height: 39.3rem;
 
   padding: 1.6rem 2rem;
-
-  border-radius: 1.6rem;
 
   &:hover > div > header {
     width: 16.8rem;

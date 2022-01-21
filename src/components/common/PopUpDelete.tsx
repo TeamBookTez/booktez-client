@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import { ImgdeletePopUp } from "../../assets/images";
 import { deleteData } from "../../utils/lib/api";
-import { StImg } from "../bookcase/cardSection/BookCard";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
 
 interface PopUpDeleteProps {
@@ -25,7 +25,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      handleBookDelete();
+      handleBookDelete(); //리렌더링
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }
@@ -54,3 +54,10 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
     </StPopUpWrpper>
   );
 }
+
+const StImg = styled.img`
+  width: 12.6rem;
+  height: 12.6rem;
+
+  margin-bottom: 2.1rem;
+`;
