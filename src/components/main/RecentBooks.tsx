@@ -12,10 +12,10 @@ import Loading from "../common/Loading";
 interface RecentProps {
   isLogin: boolean;
 }
-export default function Recent(props: RecentProps) {
+export default function RecentBooks(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
-  const [bookDelete, setBookDelete] = useState<boolean>(false);
+  // const [bookDelete, setBookDelete] = useState<boolean>(false);
   const [isDefault, setIsDefault] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -39,14 +39,14 @@ export default function Recent(props: RecentProps) {
     setIsLoading(false);
   };
 
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
-
   useEffect(() => {
     setIsLoading(true);
     getBookRecent("/book", userToken);
-  }, [bookDelete]);
+  }, []);
+
+  const handleBookDelete = () => {
+    getBookRecent("/book", userToken);
+  };
 
   useEffect(() => {
     setIsDefault(!(booksRecent.length > 0));

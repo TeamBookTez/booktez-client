@@ -2,6 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
+import { before21Image } from "../../../assets/images/before21Image.png";
+import { before22Image } from "../../../assets/images/before22Image.png";
+import { before23Image } from "../../../assets/images/before23Image.png";
 import { before2 } from "../../../utils/mockData";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
@@ -40,7 +43,7 @@ export default function ThreeCaseModal(props: StepUpProps) {
       <StModalIcCancel onClick={onToggleModal} />
       <StLeftWrapper>
         <StImgWrapper>
-          <img src="" alt="" />
+          <img src={data.img} alt="" />
         </StImgWrapper>
         <StLifeQuotes>{data.lifeQuote}</StLifeQuotes>
         <StPublic>{data.public}</StPublic>

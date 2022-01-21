@@ -6,6 +6,21 @@ export const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.8rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    height: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 10rem;
+    border-radius: 1.6rem;
+    background-color: ${({ theme }) => theme.colors.white500};
+  }
   }
 
   /* @font-face {
