@@ -119,7 +119,7 @@ const StImage = styled.img`
 `;
 
 const StHeading2 = styled.h2`
-  margin-bottom: 3.2rem;
+  margin-bottom: 2.4rem;
 
   white-space: pre-wrap;
   text-align: center;

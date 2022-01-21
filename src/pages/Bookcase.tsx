@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -47,9 +46,7 @@ export default function Bookcase() {
         setIsLogin(false);
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 
@@ -69,9 +66,7 @@ export default function Bookcase() {
         if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
       });
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
     setIsLoading(false);
   };

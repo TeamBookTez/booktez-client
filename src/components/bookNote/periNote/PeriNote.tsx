@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
-import { IsLoginState, PreNoteData } from "../../../pages/BookNote";
+import { PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
@@ -52,6 +52,7 @@ export default function PeriNote() {
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bookData, setBookData] = useState({
     authors: [],
     publicationDt: "",
@@ -87,10 +88,40 @@ export default function PeriNote() {
     else miniMenu.style.display = "none";
   };
 
+  const handleSelected = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const menuBtn = e.currentTarget.parentElement;
+
+    if (menuBtn === null || menuBtn === undefined) return;
+    if (!(menuBtn instanceof HTMLElement)) return;
+
+    const whatValue = menuBtn.style.display;
+
+    if (whatValue !== "none") menuBtn.style.display = "none";
+  };
+
+  const handleEnterAdd = (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => {
+    if (event.key === "Enter") {
+      handleAddPeri(idxList);
+    }
+  };
+
   const submitComplete = () => {
     submitReview(true);
     setIsComplete(true);
   };
+
+  useEffect(() => {
+    periNote.forEach((element) => {
+      if (element.question !== "") {
+        return setIsDisabled(false);
+      }
+      element.answer.forEach((a) => {
+        if (a.text === "") {
+          return setIsDisabled(false);
+        }
+      });
+    });
+  }, []);
 
   return (
     <>
@@ -111,13 +142,16 @@ export default function PeriNote() {
                   placeholder="질문을 입력해주세요"
                   key={`q0-${a}`}
                   value={question0.question}
-                  onChange={(event) => handleChangePeri("question", event.target.value, [a])}
+                  onChange={(event) => {
+                    setIsDisabled(event.target.value === "");
+                    handleChangePeri("question", event.target.value, [a]);
+                  }}
                 />
                 <StAddAnswerButton type="button" onClick={() => handleAddPeri([a])}>
                   답변
                 </StAddAnswerButton>
                 <StMoreIcon onClick={handleToggle} />
-                <StMiniMenu position={"isPriQ"}>
+                <StMiniMenu menuposition={"isPriQ"}>
                   <StMenuBtn type="button" onClick={() => handleDeletePeri([a])}>
                     삭제
                   </StMenuBtn>
@@ -132,11 +166,20 @@ export default function PeriNote() {
                         placeholder="답변을 입력해주세요"
                         key={`a0-${b}`}
                         value={answer0.text}
-                        onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
+                        onChange={(event) => {
+                          setIsDisabled(event.target.value === "");
+                          handleChangePeri("answer", event.target.value, [a, b]);
+                        }}
+                        onKeyPress={(event) => handleEnterAdd(event, [a])}
                       />
                       <StMoreIcon onClick={handleToggle} />
-                      <StMiniMenu position={"isPriA"}>
-                        <StMenuBtn type="button" onClick={() => handleAddPeri([a, b])}>
+                      <StMiniMenu menuposition={"isPriA"}>
+                        <StMenuBtn
+                          type="button"
+                          onClick={(event) => {
+                            handleAddPeri([a, b]);
+                            handleSelected(event);
+                          }}>
                           꼬리질문 추가
                         </StMenuBtn>
                         <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b])}>
@@ -176,10 +219,16 @@ export default function PeriNote() {
                                   key={`a1-${d}`}
                                   value={answer1.text}
                                   onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
+                                  onKeyPress={(event) => handleEnterAdd(event, [a, b, c])}
                                 />
                                 <StMoreIcon onClick={handleToggle} />
                                 <StMiniMenu>
-                                  <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d])}>
+                                  <StMenuBtn
+                                    type="button"
+                                    onClick={(event) => {
+                                      handleAddPeri([a, b, c, d]);
+                                      handleSelected(event);
+                                    }}>
                                     꼬리질문 추가
                                   </StMenuBtn>
                                   <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d])}>
@@ -222,10 +271,16 @@ export default function PeriNote() {
                                           onChange={(event) =>
                                             handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
                                           }
+                                          onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e])}
                                         />
                                         <StMoreIcon onClick={handleToggle} />
                                         <StMiniMenu>
-                                          <StMenuBtn type="button" onClick={() => handleAddPeri([a, b, c, d, e, f])}>
+                                          <StMenuBtn
+                                            type="button"
+                                            onClick={(event) => {
+                                              handleAddPeri([a, b, c, d, e, f]);
+                                              handleSelected(event);
+                                            }}>
                                             꼬리질문 추가
                                           </StMenuBtn>
                                           <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b, c, d, e, f])}>
@@ -289,12 +344,16 @@ export default function PeriNote() {
                                                       h,
                                                     ])
                                                   }
+                                                  onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e, f, g])}
                                                 />
                                                 <StMoreIcon onClick={handleToggle} />
                                                 <StMiniMenu>
                                                   <StMenuBtn
                                                     type="button"
-                                                    onClick={() => handleAddPeri([a, b, c, d, e, f, g, h])}>
+                                                    onClick={(event) => {
+                                                      handleAddPeri([a, b, c, d, e, f, g, h]);
+                                                      handleSelected(event);
+                                                    }}>
                                                     꼬리질문 추가
                                                   </StMenuBtn>
                                                   <StMenuBtn
@@ -368,6 +427,9 @@ export default function PeriNote() {
                                                               j,
                                                             ])
                                                           }
+                                                          onKeyPress={(event) =>
+                                                            handleEnterAdd(event, [a, b, c, d, e, f, g, h, i])
+                                                          }
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
                                                         <StMiniMenu>
@@ -402,11 +464,17 @@ export default function PeriNote() {
               </StAnswerWrapper>
             </StQAContainer>
           ))}
-          <StAddQuestionButton type="button" onClick={() => handleAddPeri([])}>
+          <StAddQuestionButton
+            type="button"
+            onClick={() => {
+              handleAddPeri([]);
+              setIsDisabled(true);
+            }}
+            disabled={isDisabled}>
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
-        <StDoneButton type="button" onClick={submitComplete}>
+        <StDoneButton type="button" onClick={submitComplete} disabled={isDisabled}>
           작성 완료
         </StDoneButton>
       </StNoteForm>
@@ -495,11 +563,8 @@ const StAnswerWrapper = styled.div`
   border-top: none;
   border-radius: 0.8rem;
   padding: 2.8rem;
+  padding-top: 0;
   background-color: ${({ theme }) => theme.colors.white};
-
-  /* &:hover {
-    border-color: ${({ theme }) => theme.colors.orange100};
-  } */
 `;
 
 const StPriQuestionInput = styled.input`
@@ -524,6 +589,7 @@ const StPriAnswerWrapper = styled.div<{ issingle: boolean }>`
           padding-bottom: 2.8rem;
         `
       : ""}
+  padding-top: 2.8rem;
   padding-right: 1.6rem;
   padding-left: 5.6rem;
 `;
@@ -539,7 +605,7 @@ const StPriAnswerInput = styled.input`
 
 const StAnswerIcon = styled(IcPeriAnswer)`
   position: absolute;
-  top: 0;
+  top: 2.8rem;
   left: 1rem;
 `;
 
@@ -639,7 +705,7 @@ const StAnswerInput = styled.input`
   }
 `;
 
-const StAddQuestionButton = styled(Button)`
+const StAddQuestionButton = styled(Button)<{ disabled: boolean }>`
   margin-top: 1rem;
   padding: 2.35rem 0;
   background-color: ${({ theme }) => theme.colors.white};
@@ -647,11 +713,11 @@ const StAddQuestionButton = styled(Button)`
   border-radius: 1.6rem;
 
   width: 100%;
-  color: ${({ theme }) => theme.colors.gray100};
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.white500 : theme.colors.gray100)};
   ${({ theme }) => theme.fonts.button}
 `;
 
-const StDoneButton = styled(Button)`
+const StDoneButton = styled(Button)<{ disabled: boolean }>`
   margin-top: 6rem;
   margin-left: auto;
   border-radius: 1rem;
@@ -659,6 +725,9 @@ const StDoneButton = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
   ${({ theme }) => theme.fonts.button}
+
+  background-color: ${({ disabled, theme }) => (disabled ? theme.colors.white400 : theme.colors.orange100)};
+  color: ${({ disabled, theme }) => (disabled ? theme.colors.gray300 : theme.colors.white)};
 `;
 
 const StMoreIcon = styled(IcMore)`
@@ -667,12 +736,12 @@ const StMoreIcon = styled(IcMore)`
   }
 `;
 
-const StMiniMenu = styled.div<{ position?: string }>`
+const StMiniMenu = styled.div<{ menuposition?: string }>`
   display: none;
 
   position: absolute;
-  top: ${({ position }) => (position === "isPriQ" ? "6rem" : position === "isPriA" ? "2.9rem" : "4.3rem")};
-  right: ${({ position }) => (position === "isPriQ" ? "4.4rem" : "1.6rem")};
+  top: ${({ menuposition }) => (menuposition === "isPriQ" ? "6rem" : menuposition === "isPriA" ? "2.9rem" : "4.3rem")};
+  right: ${({ menuposition }) => (menuposition === "isPriQ" ? "4.4rem" : "1.6rem")};
   z-index: 10;
 
   border: 0.1rem solid ${({ theme }) => theme.colors.gray200};

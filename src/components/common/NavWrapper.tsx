@@ -24,7 +24,7 @@ export default function NavWrapper() {
 
   return (
     <StSection>
-      <NavHeader logocolor={"#FFFFFF"} />
+      <NavHeader logocolor={theme.colors.white} />
       <StNav>
         <StUl>
           <StItem color={getColor("")}>

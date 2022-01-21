@@ -24,7 +24,6 @@ export default function LandingOne() {
 
 const StWrapper = styled.section`
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
 
   width: 100%;

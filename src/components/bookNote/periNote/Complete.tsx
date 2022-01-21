@@ -23,11 +23,12 @@ export default function Complete(props: CompleteProps) {
   const navigate = useNavigate();
   const { bookData, isLoginState } = props;
   const { authors, publicationDt, thumbnail, title, translators } = bookData;
+  const { fromUrl } = isLoginState;
 
   return (
     <StModalWrapper>
       <StAniWrapper>
-        <StIcCancel onClick={() => navigate(-1)} />
+        <StIcCancel onClick={() => navigate(fromUrl)} />
         <StHeader>북노트 작성을 완료했어요!</StHeader>
         <StImgWrapper thumbnail={thumbnail} />
         <StTitle>{title}</StTitle>
@@ -89,7 +90,6 @@ const StImgWrapper = styled.div<{ thumbnail: string }>`
   position: relative;
 
   margin-bottom: 3.5rem;
-  /* padding-top: 20%; */
 
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;

@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { ImgReadNum } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";

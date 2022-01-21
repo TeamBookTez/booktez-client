@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
@@ -88,7 +87,7 @@ export default function BookNote() {
       // 로컬스토리지에서 책 정보를 불러옴 - okay
       // 로컬스토리지에서 리뷰 정보를 불러옴 - yet
       if (!isLogin) {
-        const localData = localStorage.getItem("booktez-data");
+        const localData = localStorage.getItem("booktez-bookData");
         const bookTitle = localData ? JSON.parse(localData).title : "";
 
         setTitle(bookTitle);
@@ -120,9 +119,7 @@ export default function BookNote() {
         }
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
     // get 요청이 끝날 시 loading 끝
     setIsLoading(false);
@@ -130,7 +127,6 @@ export default function BookNote() {
 
   // 서버에의 저장을 관리
   const patchReview = async (progress: number) => {
-    console.log("patchData", { ...preNote, progress });
     // answerOne, answerTwo, questionList, progress update
     await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress });
   };
@@ -156,6 +152,13 @@ export default function BookNote() {
     navigate("/book-note/peri", { state: isLoginState });
     // navigator 변경
     handleNav(1);
+
+    const defaultQuestions: Question[] = [];
+
+    preNote.questionList.map((question: string) =>
+      defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+    );
+    setPeriNote(defaultQuestions);
   };
 
   // 모달 내 '취소' 버튼 - 모달을 끄는 용도
@@ -379,7 +382,7 @@ export default function BookNote() {
             작성한 내용이 저장되었어요.
           </StSave>
         )}
-        <StIcSave onClick={saveReview} />
+        {isLogin && <StIcSave onClick={saveReview} />}
       </StNavWrapper>
       {isLoading ? (
         <Loading />

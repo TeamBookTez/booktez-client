@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { ImgLogin } from "../../assets/images";
+import theme from "../../styles/theme";
 import { NavHeader } from "../common";
 import { Button } from "../common/styled/Button";
 
@@ -22,7 +23,7 @@ export default function SignupNav(props: SignupNavProps) {
 
   return (
     <StSection isAniTime={isAniTime}>
-      <NavHeader logocolor={"#242424"} />
+      <NavHeader logocolor={theme.colors.white} />
       <StArticle>
         <StH2>
           나만의 서재를
