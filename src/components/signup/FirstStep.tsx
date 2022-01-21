@@ -29,9 +29,7 @@ export default function FirstStep() {
       setValidEmail(resData.data.isValid);
       setErrorMessage(resData.message);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 

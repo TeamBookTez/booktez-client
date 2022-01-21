@@ -33,9 +33,7 @@ export default function RecentBooks(props: RecentProps) {
 
       setBooksRecent(books);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
     setIsLoading(false);
   };

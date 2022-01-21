@@ -46,9 +46,7 @@ export default function MyPage() {
       }
     } catch (err) {
       setIsLogin(false);
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
     setIsLoading(false);
   };
@@ -71,9 +69,7 @@ export default function MyPage() {
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.log("err", err.response?.data);
-        }
+        console.log("err", err);
       }
     }
   };

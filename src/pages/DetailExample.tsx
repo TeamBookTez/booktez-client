@@ -33,9 +33,7 @@ export default function DetailExample() {
       }
       setIsLogin(true);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 

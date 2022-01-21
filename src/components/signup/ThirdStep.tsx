@@ -41,9 +41,7 @@ export default function ThirdStep() {
       const res = await postData("/auth/signup", userData);
       const resData = res.data.data;
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 
@@ -60,9 +58,7 @@ export default function ThirdStep() {
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("err", err.response?.data);
-      }
+      console.log("err", err);
     }
   };
 
