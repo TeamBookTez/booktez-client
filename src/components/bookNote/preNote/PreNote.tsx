@@ -91,9 +91,9 @@ export default function PreNote() {
         ) : (
           <StLinkWrapper>
             <StSignupText>
-              독서가들의 기대를 채워줄 책의 내용들은
+              내 기대를 채워줄 책의 내용들은
               <br />
-              어떻게 구체화 되어갈까요?
+              앞으로 어떻게 구체화 될까요?
             </StSignupText>
             <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
           </StLinkWrapper>
