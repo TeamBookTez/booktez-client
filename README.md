@@ -8,6 +8,10 @@
 <br/>
 <br/>
 
+## 🧩 워크플로우
+![150529139-ece76c3d-dd7d-4f6e-bde0-6067adb67e72](https://user-images.githubusercontent.com/73876068/150552674-bbed29b9-629c-4bb2-bb67-430c2de4ae22.png)
+<br />
+<br />
 ## 💻 프로젝트 뷰
 ### 1. 랜딩 페이지
 ![book-stairs com_ (1)](https://user-images.githubusercontent.com/73876068/150489230-1a83d582-1985-454d-bb86-e4395e842ffe.png)
