@@ -1,3 +1,4 @@
+export { ReactComponent as Ic404 } from "./404Icon.svg";
 export { ReactComponent as IcAlert } from "./alertIcon.svg";
 export { ReactComponent as IcAnswerLabel } from "./answerLabelIcon.svg";
 export { ReactComponent as IcBin } from "./binIcon.svg";
