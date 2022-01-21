@@ -1,48 +1,30 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navigation() {
-  const { pathname } = useLocation();
   const [navIndex, setNavIndex] = useState<number>(0);
-
-  useEffect(() => {
-    switch (pathname) {
-      case "/main/bookcase/pre":
-        setNavIndex(1);
-        break;
-      case "/main/bookcase/peri":
-        setNavIndex(2);
-        break;
-      case "/main/bookcase/post":
-        setNavIndex(3);
-        break;
-      default:
-        setNavIndex(0);
-        break;
-    }
-  }, []);
 
   return (
     <StNav>
       <StUl>
         <StList>
-          <StLink to="" onClick={() => setNavIndex(0)}>
+          <StLink to="/main/bookcase" onClick={() => setNavIndex(0)}>
             전체
           </StLink>
         </StList>
         <StList>
-          <StLink to="pre" onClick={() => setNavIndex(1)}>
+          <StLink to="/main/bookcase/pre" onClick={() => setNavIndex(1)}>
             독서 전
           </StLink>
         </StList>
         <StList>
-          <StLink to="peri" onClick={() => setNavIndex(2)}>
+          <StLink to="/main/bookcase/peri" onClick={() => setNavIndex(2)}>
             독서 중
           </StLink>
         </StList>
         <StList>
-          <StLink to="post" onClick={() => setNavIndex(3)}>
+          <StLink to="/main/bookcase/post" onClick={() => setNavIndex(3)}>
             독서 완료
           </StLink>
         </StList>

@@ -25,7 +25,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      handleBookDelete();
+      handleBookDelete(); //리렌더링
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }

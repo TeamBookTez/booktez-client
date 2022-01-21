@@ -517,6 +517,8 @@ const StPriAnswerWrapper = styled.div`
 `;
 
 const StPriAnswerInput = styled.input`
+  width: 100%;
+
   ${({ theme }) => theme.fonts.body1}
 
   &:placeholder {

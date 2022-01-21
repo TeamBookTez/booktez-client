@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -25,13 +26,6 @@ export default function DetailBookNote() {
 
   const navigate = useNavigate();
 
-  //이 부분은 props를 필수로 내려주기 위해 작성한 코드
-  const [bookDelete, setBookDelete] = useState<boolean>(false);
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
-  //
-
   const getReview = async (key: string, token: string) => {
     try {
       const {
@@ -40,7 +34,9 @@ export default function DetailBookNote() {
 
       setReviewData(data);
     } catch (err) {
-      alert(err);
+      if (axios.isAxiosError(err)) {
+        console.log("err", err.response?.data);
+      }
     }
     setIsLoading(false);
   };
@@ -51,6 +47,10 @@ export default function DetailBookNote() {
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
+  };
+
+  const handleBookDelete = () => {
+    getReview(`review/${reviewId}`, token); //리렌더링
   };
 
   return (

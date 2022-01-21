@@ -20,19 +20,20 @@ export default function Bookcase() {
   const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
-  const [bookDelete, setBookDelete] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const handleBookDelete = () => {
-    setBookDelete(!bookDelete);
-  };
-  // 로그인 정보를 이용할때 아래 두 줄의 코드
-  // const userToken = localStorage.getItem("booktez-token");
-  // const token = `${userToken}`;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
-  const authCheckKey = "/auth/check";
+
+  const handleBookDelete = () => {
+    getBookcase("/book", localToken);
+  };
+
+  useEffect(() => {
+    getBookcase("/book", localToken);
+    getLogin("/auth/check", localToken);
+  }, []);
 
   const getLogin = async (key: string, token: string) => {
     try {
@@ -74,14 +75,6 @@ export default function Bookcase() {
     }
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    getBookcase("/book", localToken);
-  }, [bookDelete]);
-
-  useEffect(() => {
-    getLogin(authCheckKey, localToken);
-  }, []);
 
   return (
     <>

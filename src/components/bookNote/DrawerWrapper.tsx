@@ -51,7 +51,9 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
 
   return (
     <StDrawerWrapper isopen={isOpen} idx={idx}>
-      <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+      <StIcWrapper>
+        <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+      </StIcWrapper>
       <StImg src={ImgGraphic} idx={idx} />
       <StTitleWrapper>
         <IcBooks />
@@ -62,7 +64,15 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   );
 }
 
+const StIcWrapper = styled.div`
+  text-align: left;
+  margin-bottom: 3.2rem;
+`;
+
 const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
+  overflow-y: scroll;
+  max-height: 100vh;
+
   position: fixed;
   top: 0;
   right: 0;
@@ -107,10 +117,6 @@ const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
   }
 `;
 
-const StTemp = styled.div`
-  overflow-y: scroll;
-`;
-
 const StImg = styled.img<{ idx: number }>`
   width: ${({ idx }) => (idx === 4 ? "53.4rem" : "32.4rem")};
   height: ${({ idx }) => (idx === 4 ? "12.5rem" : "11.9rem")};
@@ -134,6 +140,8 @@ const StTitleWrapper = styled.header`
 `;
 
 const StArticle = styled.article<{ idx: number }>`
+  height: 100%;
+
   display: flex;
   flex-direction: column;
   ${({ idx }) =>
@@ -145,6 +153,7 @@ const StArticle = styled.article<{ idx: number }>`
           } */
         `
       : ""}
+
   border-radius: 2rem;
   padding: ${({ idx }) => (idx === 4 ? "4rem 1.5rem" : "3.2rem")};
   background-color: ${({ theme }) => theme.colors.white200};
