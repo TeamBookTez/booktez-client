@@ -308,7 +308,9 @@ export default function PeriNote() {
                                               {answer3.children.map((question4, i) => (
                                                 <StArticle key={i} isFirst={false}>
                                                   <StQuestionLabelWrapper>
-                                                    <StQuestionLabel bgcolor={theme.colors.orange500}>
+                                                    <StQuestionLabel
+                                                      bgcolor={theme.colors.orange500}
+                                                      color={theme.colors.orange100}>
                                                       질문
                                                     </StQuestionLabel>
                                                     <StQuestionInputWrapper>
@@ -317,7 +319,7 @@ export default function PeriNote() {
                                                         key={`q3-${i}`}
                                                         value={question4.question}
                                                         onChange={(event) =>
-                                                          handleChangePeri("answer", event.target.value, [
+                                                          handleChangePeri("question", event.target.value, [
                                                             a,
                                                             b,
                                                             c,
@@ -370,13 +372,6 @@ export default function PeriNote() {
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
                                                         <StMiniMenu>
-                                                          <StMenuBtn
-                                                            type="button"
-                                                            onClick={() =>
-                                                              handleAddPeri([a, b, c, d, e, f, g, h, i, j])
-                                                            }>
-                                                            꼬리질문 추가
-                                                          </StMenuBtn>
                                                           <StMenuBtn
                                                             type="button"
                                                             onClick={() =>
@@ -508,9 +503,11 @@ const StAnswerWrapper = styled.div`
   } */
 `;
 
-const StPriQuestionInput = styled.input`
+const StPriQuestionInput = styled.textarea`
   flex: 1;
   ${({ theme }) => theme.fonts.header4}
+
+  overflow-y: visible;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
@@ -561,7 +558,7 @@ const StArticle = styled.article<{ isFirst: boolean }>`
         `}
 `;
 
-const StQuestionLabel = styled.label<{ bgcolor: string }>`
+const StQuestionLabel = styled.label<{ bgcolor: string; color?: string }>`
   margin-right: 1.6rem;
   border-radius: 0.8rem;
   padding: 0.4rem 1.8rem;
@@ -569,7 +566,7 @@ const StQuestionLabel = styled.label<{ bgcolor: string }>`
   width: fit-content;
 
   ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ color, theme }) => (color ? color : theme.colors.white)};
 `;
 
 const StQuestionLabelWrapper = styled.div`

@@ -5,6 +5,7 @@ import { IcToggle } from "../../assets/icons";
 import theme from "../../styles/theme";
 import { AnswerThree } from "../../utils/dataType";
 import LabelQuestion from "../common/styled/LabelQuestion";
+import LabelQuestion4Depth from "../common/styled/LabelQuestion4Depth";
 
 interface ExamplePreNoteProps {
   answerThree: AnswerThree | undefined;
@@ -33,6 +34,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
         <React.Fragment key={`q0-${idx}`}>
           <StFirstQuestion>
             <LabelQuestion bgColor={theme.colors.orange000} />
+
             {question0.question}
             <StIcToggle onClick={handleToggle} />
           </StFirstQuestion>
@@ -84,7 +86,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                                               {answer3.children?.map((question4, idx) => (
                                                 <article key={`q4-${idx}`}>
                                                   <StQuestion>
-                                                    <LabelQuestion bgColor={theme.colors.orange500} />
+                                                    <LabelQuestion4Depth />
                                                     {question4.question}
                                                     <StIcToggle onClick={handleToggle} />
                                                   </StQuestion>
@@ -156,6 +158,7 @@ const StFirstQuestion = styled(StQuestion)`
 `;
 
 const StIcToggle = styled(IcToggle)`
+  min-width: 2.6rem;
   margin-left: 1.6rem;
   &:hover {
     cursor: pointer;
