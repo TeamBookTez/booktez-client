@@ -308,7 +308,9 @@ export default function PeriNote() {
                                               {answer3.children.map((question4, i) => (
                                                 <StArticle key={i} isFirst={false}>
                                                   <StQuestionLabelWrapper>
-                                                    <StQuestionLabel bgcolor={theme.colors.orange500}>
+                                                    <StQuestionLabel
+                                                      bgcolor={theme.colors.orange500}
+                                                      color={theme.colors.orange100}>
                                                       질문
                                                     </StQuestionLabel>
                                                     <StQuestionInputWrapper>
@@ -561,7 +563,7 @@ const StArticle = styled.article<{ isFirst: boolean }>`
         `}
 `;
 
-const StQuestionLabel = styled.label<{ bgcolor: string }>`
+const StQuestionLabel = styled.label<{ bgcolor: string; color?: string }>`
   margin-right: 1.6rem;
   border-radius: 0.8rem;
   padding: 0.4rem 1.8rem;
@@ -569,7 +571,7 @@ const StQuestionLabel = styled.label<{ bgcolor: string }>`
   width: fit-content;
 
   ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ color, theme }) => (color ? color : theme.colors.white)};
 `;
 
 const StQuestionLabelWrapper = styled.div`

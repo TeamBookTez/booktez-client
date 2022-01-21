@@ -354,10 +354,6 @@ export default function BookNote() {
   }, [preNote]);
 
   useEffect(() => {
-    console.log("periNote", periNote);
-  }, [periNote]);
-
-  useEffect(() => {
     getReview();
   }, []);
 

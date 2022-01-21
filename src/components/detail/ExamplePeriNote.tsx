@@ -5,6 +5,7 @@ import { IcToggle } from "../../assets/icons";
 import theme from "../../styles/theme";
 import { AnswerThree } from "../../utils/dataType";
 import LabelQuestion from "../common/styled/LabelQuestion";
+import LabelQuestion4Depth from "../common/styled/LabelQuestion4Depth";
 
 interface ExamplePreNoteProps {
   answerThree: AnswerThree | undefined;
@@ -85,7 +86,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
                                               {answer3.children?.map((question4, idx) => (
                                                 <article key={`q4-${idx}`}>
                                                   <StQuestion>
-                                                    <LabelQuestion bgColor={theme.colors.orange500} />
+                                                    <LabelQuestion4Depth />
                                                     {question4.question}
                                                     <StIcToggle onClick={handleToggle} />
                                                   </StQuestion>
