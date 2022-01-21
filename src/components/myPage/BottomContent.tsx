@@ -58,8 +58,14 @@ export default function BottomContent(props: BottomContentProps) {
           </a>
         </StServiceInfo>
         <StServiceInfo>
-          <StInfoTitle>함께하는 사람들</StInfoTitle>
-          <StInfoDesc>북스테어즈를 만들어가는 팀원들을 소개할게요.</StInfoDesc>
+          <a
+            href="https://rose-prepared-583.notion.site/b644acc67642448584a2cc6528dcbd7d"
+            target="_blank"
+            rel="noreferrer">
+            {" "}
+            <StInfoTitle>함께하는 사람들</StInfoTitle>
+            <StInfoDesc>북스테어즈를 만들어가는 팀원들을 소개할게요.</StInfoDesc>
+          </a>
         </StServiceInfo>
       </StServiceWrapper>
     </StWrapper>
