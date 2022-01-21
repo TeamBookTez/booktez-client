@@ -27,7 +27,7 @@ export default function PopUpExit(props: PopUpExitProps) {
             취소
           </StBtnCancel>
           <StBtnDelete type="button">
-            <StLink to="/main/bookcase">다음</StLink>
+            <StLink to="/main/bookcase">나가기</StLink>
           </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
