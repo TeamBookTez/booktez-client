@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/73876068/148671692-f6cdd096-dab3-4d8e-9b51-443eb3b947ba.png)
+![image](https://bookstairs-bucket.s3.ap-northeast-2.amazonaws.com/bookstairs_og_img_2.png)
 
 ## 📚 `북스테어즈`는 어떤 서비스인가요?
 진짜 독서가들의 독서법, 북스테어즈 💡
