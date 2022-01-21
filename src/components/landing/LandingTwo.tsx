@@ -17,7 +17,7 @@ export default function LandingTwo() {
         </LandingCard>
         <LandingCard
           title='"정리가 어려워요"'
-          subTitle="책 속 수많은 지식들을 잘 정리하는 게 어렵고 
+          subTitle="책 속 수많은 지식들을 잘 정리하는 게 어렵고      
           중요한 내용들을 빼먹었을까봐 두려워요.">
           <IcLandingIcon02 />
         </LandingCard>
