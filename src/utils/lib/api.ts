@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
 

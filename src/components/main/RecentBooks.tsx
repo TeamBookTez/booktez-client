@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -16,7 +15,6 @@ interface RecentProps {
 export default function RecentBooks(props: RecentProps) {
   const { isLogin } = props;
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
-  // const [bookDelete, setBookDelete] = useState<boolean>(false);
   const [isDefault, setIsDefault] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

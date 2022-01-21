@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
-import { IsLoginState, PreNoteData } from "../../../pages/BookNote";
+import { PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
@@ -496,10 +496,6 @@ const StAnswerWrapper = styled.div`
   border-radius: 0.8rem;
   padding: 2.8rem;
   background-color: ${({ theme }) => theme.colors.white};
-
-  /* &:hover {
-    border-color: ${({ theme }) => theme.colors.orange100};
-  } */
 `;
 
 const StPriQuestionInput = styled.input`

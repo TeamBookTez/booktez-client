@@ -1,6 +1,4 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { constSelector } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";

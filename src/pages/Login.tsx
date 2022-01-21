@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
@@ -63,7 +62,6 @@ export default function Login() {
   );
 }
 
-// root에 flex?
 const StPageWrapper = styled.div`
   height: 100vh;
   display: flex;

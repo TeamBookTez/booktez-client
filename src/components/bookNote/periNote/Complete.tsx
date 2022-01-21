@@ -89,7 +89,6 @@ const StImgWrapper = styled.div<{ thumbnail: string }>`
   position: relative;
 
   margin-bottom: 3.5rem;
-  /* padding-top: 20%; */
 
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
