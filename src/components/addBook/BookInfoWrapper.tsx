@@ -120,6 +120,8 @@ const InfoSummary = styled.p`
 
   ${({ theme }) => theme.fonts.body4};
 
-  overflow: hidden;
   max-height: 8.1rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { ImgReadNum } from "../../assets/images";
@@ -27,8 +28,14 @@ export default function BottomContent(props: BottomContentProps) {
       )}
       <StServiceWrapper>
         <StServiceInfo>
-          <StInfoTitle>개인정보 처리 방침</StInfoTitle>
-          <StInfoDesc>북스테어즈는 개인정보보호 규정, 가이드라인을 준수하고 있어요.</StInfoDesc>
+          <a
+            href="https://rose-prepared-583.notion.site/6e6807cf2fff4effbd108057e611d5b9"
+            target="_blank"
+            rel="noreferrer">
+            {" "}
+            <StInfoTitle>개인정보 처리 방침</StInfoTitle>
+            <StInfoDesc>북스테어즈는 개인정보보호 규정, 가이드라인을 준수하고 있어요.</StInfoDesc>
+          </a>
         </StServiceInfo>
         <StServiceInfo>
           <StInfoTitle>서비스 문의</StInfoTitle>
@@ -117,6 +124,11 @@ const StServiceInfo = styled.article`
   border-radius: 2rem;
 
   background-color: ${({ theme }) => theme.colors.white200};
+
+  & > a {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const StInfoTitle = styled.h5`
