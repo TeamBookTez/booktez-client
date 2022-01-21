@@ -10,6 +10,7 @@ export { ReactComponent as IcCheck } from "./checkIcon.svg";
 export { ReactComponent as IcCheckSave } from "./checkSaveIcon.svg";
 export { ReactComponent as IcDelete } from "./deleteIcon.svg";
 export { ReactComponent as IcDeleteNote } from "./deleteNoteIcon.svg";
+export { ReactComponent as IcDetail } from "./detailIcon.svg";
 export { ReactComponent as IcEditProfile } from "./editProfileIcon.svg";
 export { ReactComponent as IcGuide } from "./guideIcon.svg";
 export { ReactComponent as IcHome } from "./homeIcon.svg";
