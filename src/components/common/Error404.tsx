@@ -1,11 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { Ic404 } from "../../assets/icons";
 import { ImgErrorBack } from "../../assets/images";
 import theme from "../../styles/theme";
 import { NavHeader } from ".";
+import { Button } from "./styled/Button";
 
 export default function Error404() {
+  const navigate = useNavigate();
+  const GoSignup = () => {
+    navigate("/signup", { state: "rightpath" });
+  };
+
   return (
     <StPage>
       <NavHeader logocolor={theme.colors.gray100} />
@@ -17,6 +24,9 @@ export default function Error404() {
           <br />
           클릭하신 링크가 잘못되었거나 페이지가 삭제되었습니다.
         </StH3>
+        <StBtn type="button" onClick={GoSignup}>
+          홈 바로가기
+        </StBtn>
       </StArticle>
       <StBackImg src={ImgErrorBack} alt="배경 일러스트" />
     </StPage>
@@ -50,19 +60,29 @@ const StArticle = styled.article`
   align-items: center;
 `;
 
-const St404Img = styled.img`
-  width: 28.9rem;
-  height: 11.2rem;
-`;
-
 const StH2 = styled.h2`
+  margin-top: 6.8rem;
+
   ${({ theme }) => theme.fonts.header0}
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const StH3 = styled.h3`
+  margin-top: 1.8rem;
+
   text-align: center;
 
   ${({ theme }) => theme.fonts.body0}
-  color: ${({ theme }) => theme.colors.gray100}
+  color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StBtn = styled(Button)`
+  width: 32.5rem;
+  height: 5.6rem;
+
+  margin-top: 6.3rem;
+
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button}
 `;
