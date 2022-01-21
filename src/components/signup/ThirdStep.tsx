@@ -40,10 +40,6 @@ export default function ThirdStep() {
     try {
       const res = await postData("/auth/signup", userData);
       const resData = res.data.data;
-
-      localStorage.setItem("booktez-token", resData.token);
-      // 메인에서 로그인 온 경우에는 메인으로,
-      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("err", err.response?.data);

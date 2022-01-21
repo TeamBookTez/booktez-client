@@ -31,6 +31,7 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
+
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
@@ -94,7 +95,6 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
 
-        console.log("data", data);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
         const questions: string[] = questionList.length ? questionList : [""];
 
@@ -377,22 +377,24 @@ export default function BookNote() {
         <Loading />
       ) : (
         <Outlet
-          context={[
-            isLogin,
-            handleToggleDrawer,
-            preNote,
-            handleChangeReview,
-            setOpenModal,
-            isPrevented,
-            ablePatch,
-            periNote,
-            handleChangePeri,
-            handleAddPeri,
-            handleDeletePeri,
-            userToken,
-            fromUrl,
-          ]}
-        />
+        context={[
+          isLogin,
+          handleToggleDrawer,
+          preNote,
+          handleChangeReview,
+          setOpenModal,
+          isPrevented,
+          ablePatch,
+          periNote,
+          handleChangePeri,
+          handleAddPeri,
+          handleDeletePeri,
+          userToken,
+          fromUrl,
+          patchReview,
+          reviewId,
+        ]}
+      />
       )}
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
