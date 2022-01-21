@@ -21,7 +21,7 @@ export default function AlertLabel(props: AlertLabelProps) {
 const StLabelWrapper = styled.p<{ isError: boolean }>`
   width: 100%;
   height: 2.4rem;
-  margin-top: 1.6rem;
+  margin-top: 1.3rem;
 
   ${({ isError }) => (isError ? "display: flex;" : "display: none;")};
 `;
