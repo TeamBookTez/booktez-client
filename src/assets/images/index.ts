@@ -1,5 +1,7 @@
 export { default as ImgAddBooksSearch } from "./addBookSearchImage.png";
 export { default as ImgAddBooks } from "./addBooksImage.png";
+export { default as ImgBefore1 } from "./before1Image.png";
+export { default as ImgBefore3 } from "./before3Image.png";
 export { default as ImgdeletePopUp } from "./deleteImage.png";
 export { default as ImgDevice } from "./deviceImage.png";
 export { default as ImgDrawer } from "./drawerImage.png";
