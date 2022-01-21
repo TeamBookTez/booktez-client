@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -52,6 +52,7 @@ export default function PeriNote() {
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bookData, setBookData] = useState({
     authors: [],
     publicationDt: "",
@@ -109,6 +110,19 @@ export default function PeriNote() {
     setIsComplete(true);
   };
 
+  useEffect(() => {
+    periNote.forEach((element) => {
+      if (element.question !== "") {
+        return setIsDisabled(false);
+      }
+      element.answer.forEach((a) => {
+        if (a.text === "") {
+          return setIsDisabled(false);
+        }
+      });
+    });
+  }, []);
+
   return (
     <>
       <StNoteForm onSubmit={(e) => e.preventDefault()}>
@@ -128,7 +142,10 @@ export default function PeriNote() {
                   placeholder="질문을 입력해주세요"
                   key={`q0-${a}`}
                   value={question0.question}
-                  onChange={(event) => handleChangePeri("question", event.target.value, [a])}
+                  onChange={(event) => {
+                    setIsDisabled(event.target.value === "");
+                    handleChangePeri("question", event.target.value, [a]);
+                  }}
                 />
                 <StAddAnswerButton type="button" onClick={() => handleAddPeri([a])}>
                   답변
@@ -149,7 +166,10 @@ export default function PeriNote() {
                         placeholder="답변을 입력해주세요"
                         key={`a0-${b}`}
                         value={answer0.text}
-                        onChange={(event) => handleChangePeri("answer", event.target.value, [a, b])}
+                        onChange={(event) => {
+                          setIsDisabled(event.target.value === "");
+                          handleChangePeri("answer", event.target.value, [a, b]);
+                        }}
                         onKeyPress={(event) => handleEnterAdd(event, [a, b])}
                       />
                       <StMoreIcon onClick={handleToggle} />
@@ -444,11 +464,16 @@ export default function PeriNote() {
               </StAnswerWrapper>
             </StQAContainer>
           ))}
-          <StAddQuestionButton type="button" onClick={() => handleAddPeri([])}>
+          <StAddQuestionButton
+            type="button"
+            onClick={() => {
+              handleAddPeri([]);
+              setIsDisabled(true);
+            }}>
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
-        <StDoneButton type="button" onClick={submitComplete}>
+        <StDoneButton type="button" onClick={submitComplete} disabled={isDisabled}>
           작성 완료
         </StDoneButton>
       </StNoteForm>
@@ -689,7 +714,7 @@ const StAddQuestionButton = styled(Button)`
   ${({ theme }) => theme.fonts.button}
 `;
 
-const StDoneButton = styled(Button)`
+const StDoneButton = styled(Button)<{ disabled: boolean }>`
   margin-top: 6rem;
   margin-left: auto;
   border-radius: 1rem;
@@ -697,6 +722,9 @@ const StDoneButton = styled(Button)`
   width: 32.5rem;
   height: 5.6rem;
   ${({ theme }) => theme.fonts.button}
+
+  background-color: ${({ disabled, theme }) => (disabled ? theme.colors.white400 : theme.colors.orange100)};
+  color: ${({ disabled, theme }) => (disabled ? theme.colors.gray300 : theme.colors.white)};
 `;
 
 const StMoreIcon = styled(IcMore)`

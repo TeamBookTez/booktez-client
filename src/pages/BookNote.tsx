@@ -55,6 +55,7 @@ export default function BookNote() {
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSave, setIsSave] = useState<boolean>(false);
+  const [isPeriActive, setIsPeriActive] = useState<boolean>(false);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
@@ -220,6 +221,7 @@ export default function BookNote() {
   };
 
   const handleAddPeri = (idxList: number[]) => {
+    setIsPeriActive(false);
     const newRoot = [...periNote];
 
     switch (idxList.length) {
