@@ -34,23 +34,19 @@ export const useLoginChecking = async (localToken: string | null) => {
   const _token = localToken ? localToken : "";
 
   try {
-    const {
-      data: { status },
-    } = await getData("/auth/check", _token);
+    const { data } = await getData("/auth/check", _token);
 
-    if (!_token) {
-      return false;
-    }
-    if (!(status === 200)) {
-      return false;
+    console.log(data);
+    if (data.status === 200) {
+      if (data.data.isLogin === true) {
+        return true;
+      }
     }
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.log("err", err.response?.data);
-
-      return false;
     }
   }
 
-  return true;
+  return false;
 };
