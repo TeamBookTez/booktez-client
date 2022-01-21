@@ -6,6 +6,7 @@ import styled, { css, keyframes } from "styled-components";
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
+import Loading from "../components/common/Loading";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
@@ -30,6 +31,7 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
+
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
@@ -50,6 +52,7 @@ export default function BookNote() {
     progress: 2,
   });
   const [periNote, setPeriNote] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSave, setIsSave] = useState<boolean>(false);
@@ -78,6 +81,8 @@ export default function BookNote() {
   };
 
   const getReview = async () => {
+    // get 요청 시작할 시 loading 시작
+    setIsLoading(true);
     try {
       // 비회원인 경우
       // 로컬스토리지에서 책 정보를 불러옴 - okay
@@ -90,7 +95,6 @@ export default function BookNote() {
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
 
-        console.log("data", data);
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
         const questions: string[] = questionList.length ? questionList : [""];
 
@@ -120,6 +124,8 @@ export default function BookNote() {
         console.log("err", err.response?.data);
       }
     }
+    // get 요청이 끝날 시 loading 끝
+    setIsLoading(false);
   };
 
   // 서버에의 저장을 관리
@@ -228,7 +234,11 @@ export default function BookNote() {
         newRoot[idxList[0]].answer.push({ text: "", children: [] });
         break;
       case 2:
-        newRoot[idxList[0]].answer[idxList[1]].children.push({ depth: 2, question: "", answer: [] });
+        newRoot[idxList[0]].answer[idxList[1]].children.push({
+          depth: 2,
+          question: "",
+          answer: [{ text: "", children: [] }],
+        });
         break;
       case 3:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.push({ text: "", children: [] });
@@ -237,7 +247,7 @@ export default function BookNote() {
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.push({
           depth: 2,
           question: "",
-          answer: [],
+          answer: [{ text: "", children: [] }],
         });
         break;
       case 5:
@@ -248,7 +258,7 @@ export default function BookNote() {
       case 6:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
           idxList[5]
-        ].children.push({ depth: 3, question: "", answer: [] });
+        ].children.push({ depth: 3, question: "", answer: [{ text: "", children: [] }] });
         break;
       case 7:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
@@ -258,7 +268,11 @@ export default function BookNote() {
       case 8:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
           idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children.push({ depth: 4, question: "", answer: [] });
+        ].children[idxList[6]].answer[idxList[7]].children.push({
+          depth: 4,
+          question: "",
+          answer: [{ text: "", children: [] }],
+        });
         break;
       case 9:
         newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
@@ -271,7 +285,7 @@ export default function BookNote() {
         ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].children.push({
           depth: 5,
           question: "",
-          answer: [],
+          answer: [{ text: "", children: [] }],
         });
         break;
     }
@@ -367,23 +381,29 @@ export default function BookNote() {
         )}
         <StIcSave onClick={saveReview} />
       </StNavWrapper>
-      <Outlet
-        context={[
-          isLogin,
-          handleToggleDrawer,
-          preNote,
-          handleChangeReview,
-          setOpenModal,
-          isPrevented,
-          ablePatch,
-          periNote,
-          handleChangePeri,
-          handleAddPeri,
-          handleDeletePeri,
-          userToken,
-          fromUrl,
-        ]}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Outlet
+          context={[
+            isLogin,
+            handleToggleDrawer,
+            preNote,
+            handleChangeReview,
+            setOpenModal,
+            isPrevented,
+            ablePatch,
+            periNote,
+            handleChangePeri,
+            handleAddPeri,
+            handleDeletePeri,
+            userToken,
+            fromUrl,
+            patchReview,
+            reviewId,
+          ]}
+        />
+      )}
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
     </StNoteModalWrapper>

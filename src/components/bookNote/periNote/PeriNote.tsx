@@ -27,6 +27,8 @@ export default function PeriNote() {
     handleDeletePeri,
     userToken,
     fromUrl,
+    patchReview,
+    reviewId,
   ] =
     useOutletContext<
       [
@@ -43,13 +45,10 @@ export default function PeriNote() {
         (idxList: number[]) => void,
         string,
         string,
+        () => Promise<void>,
+        number,
       ]
     >();
-
-  const { state } = useLocation();
-
-  const isLoginState = state as IsLoginState;
-  const { reviewId } = isLoginState;
 
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
@@ -127,7 +126,7 @@ export default function PeriNote() {
               <StAnswerWrapper className="answer">
                 {question0.answer.map((answer0, b) => (
                   <React.Fragment key={b}>
-                    <StPriAnswerWrapper>
+                    <StPriAnswerWrapper issingle={answer0.children.length !== 0 || question0.answer.length > 1}>
                       <StAnswerIcon />
                       <StPriAnswerInput
                         placeholder="답변을 입력해주세요"
@@ -503,26 +502,29 @@ const StAnswerWrapper = styled.div`
   } */
 `;
 
-const StPriQuestionInput = styled.textarea`
+const StPriQuestionInput = styled.input`
   flex: 1;
   ${({ theme }) => theme.fonts.header4}
-
-  overflow-y: visible;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
 `;
 
-const StPriAnswerWrapper = styled.div`
+const StPriAnswerWrapper = styled.div<{ issingle: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
 
-  border-bottom: 0.2rem solid ${({ theme }) => theme.colors.white200};
+  ${({ issingle, theme }) =>
+    issingle
+      ? css`
+          border-bottom: 0.2rem solid ${theme.colors.white200};
+          padding-bottom: 2.8rem;
+        `
+      : ""}
   padding-right: 1.6rem;
-  padding-bottom: 2.8rem;
   padding-left: 5.6rem;
 `;
 
@@ -530,7 +532,6 @@ const StPriAnswerInput = styled.input`
   width: 100%;
 
   ${({ theme }) => theme.fonts.body1}
-
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
@@ -591,7 +592,7 @@ const StQuestionInputWrapper = styled.div`
 const StQuestionInput = styled.input`
   flex: 1;
 
-  ${({ theme }) => theme.fonts.body2}
+  ${({ theme }) => theme.fonts.body4}
   color: ${({ theme }) => theme.colors.gray200};
 
   &:placeholder {
