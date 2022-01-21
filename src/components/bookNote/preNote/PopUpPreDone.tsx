@@ -39,5 +39,5 @@ export default function PopUpPreDone(props: PopUpPreDoneProps) {
 }
 
 const StImg = styled.img`
-  margin-bottom: 2.1rem;
+  margin-bottom: 1.3rem;
 `;
