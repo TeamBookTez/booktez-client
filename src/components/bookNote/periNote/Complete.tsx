@@ -33,19 +33,21 @@ export default function Complete(props: CompleteProps) {
         <StTitle>{title}</StTitle>
         <StSubWrapper>
           <StAuthor>{authors.join(" ")} 지음</StAuthor>
-          {translators.length ? (
+          {translators ? (
             translators.length === 1 ? (
               <StTranslator>{translators[0]} 옮김</StTranslator>
-            ) : (
+            ) : translators.length >= 2 ? (
               <StTranslator>
                 {translators[0]} 외 {translators.length - 1}명 옮김
               </StTranslator>
-            )
+            ) : null
           ) : null}
         </StSubWrapper>
         <StDate>{publicationDt} 출간</StDate>
         <StButtonWrapper>
-          <StMainButton>메인으로</StMainButton>
+          <StMainButton type="button" onClick={() => navigate("/main")}>
+            메인으로
+          </StMainButton>
           <StCompleteButton type="button" onClick={() => navigate("/detail-book-note", { state: isLoginState })}>
             북노트 확인
           </StCompleteButton>
@@ -115,8 +117,10 @@ const StSubWrapper = styled.div`
   color: ${({ theme }) => theme.colors.gray400};
 `;
 
-const StAuthor = styled.span`
-  &::after {
+const StAuthor = styled.span``;
+
+const StTranslator = styled.span`
+  &::before {
     content: "";
     display: inline-block;
     clear: both;
@@ -129,8 +133,6 @@ const StAuthor = styled.span`
     background-color: ${({ theme }) => theme.colors.gray400};
   }
 `;
-
-const StTranslator = styled.span``;
 
 const StDate = styled.span`
   margin-bottom: 2.8rem;
