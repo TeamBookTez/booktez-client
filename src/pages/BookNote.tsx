@@ -88,7 +88,7 @@ export default function BookNote() {
       // 로컬스토리지에서 책 정보를 불러옴 - okay
       // 로컬스토리지에서 리뷰 정보를 불러옴 - yet
       if (!isLogin) {
-        const localData = localStorage.getItem("booktez-data");
+        const localData = localStorage.getItem("booktez-bookData");
         const bookTitle = localData ? JSON.parse(localData).title : "";
 
         setTitle(bookTitle);

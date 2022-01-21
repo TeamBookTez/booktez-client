@@ -8,21 +8,7 @@ import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
   const navigate = useNavigate();
-  const [
-    isLogin,
-    handleToggleDrawer,
-    preNote,
-    handleChangeReview,
-    setOpenModal,
-    isPrevented,
-    ablePatch,
-    periNote,
-    handleChangePeri,
-    handleAddPeri,
-    handleDeletePeri,
-    userToken,
-    fromUrl,
-  ] =
+  const [isLogin, handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
     useOutletContext<
       [
         boolean,
@@ -32,12 +18,6 @@ export default function PreNote() {
         React.Dispatch<React.SetStateAction<boolean>>,
         boolean,
         boolean,
-        Question[],
-        (key: string, value: string, idxList: number[]) => void,
-        (idxList: number[]) => void,
-        (idxList: number[]) => void,
-        string,
-        string,
       ]
     >();
   const { answerOne, answerTwo, questionList } = preNote;
@@ -51,6 +31,7 @@ export default function PreNote() {
   };
 
   const handleGoSignup = () => {
+    localStorage.setItem("booktez-reviewData", JSON.stringify({ answerOne, answerTwo }));
     navigate("/signup", { state: "rightpath" });
   };
 

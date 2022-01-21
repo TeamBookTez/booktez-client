@@ -32,7 +32,19 @@ export default function ShowModal(props: ShowModalProps) {
       const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
-        localStorage.setItem("booktez-data", JSON.stringify(bookInfo));
+        const { isbn, thumbnail, title, authors, translators, datetime } = bookInfo;
+
+        localStorage.setItem(
+          "booktez-bookData",
+          JSON.stringify({
+            isbn,
+            thumbnail,
+            title,
+            author: authors,
+            translator: translators,
+            publicationDate: datetime,
+          }),
+        );
       }
       const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
