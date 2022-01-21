@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
-import { ImgDrawer } from "../../assets/images";
+import { ImgDrawer, ImgDrawerSmall } from "../../assets/images";
 import { DrawerPre, PeriNoteExample } from ".";
 
 interface DrawerWrapperProps {
@@ -54,7 +54,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
       <StIcWrapper>
         <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
       </StIcWrapper>
-      <StImg src={ImgDrawer} idx={idx} />
+      {idx === 4 ? <StImg src={ImgDrawer} idx={idx} /> : <StImg src={ImgDrawerSmall} idx={idx} />}
       <StTitleWrapper>
         <IcBooks />
         나는 왜 이 일을 하는가? 2
