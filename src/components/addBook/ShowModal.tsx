@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { constSelector } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
@@ -18,7 +19,14 @@ interface ShowModalProps {
 export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
-  const bookData = { ...bookInfo, publicationDate: publishDate.toString(), author: authors, translator: translators };
+
+  const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
+
+  console.log("shomodal pdt", publicationDt);
+
+  const bookData = { ...bookInfo, publicationDate: publicationDt, author: authors, translator: translators };
+
+  console.log("bookData", bookData);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";

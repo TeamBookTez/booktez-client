@@ -30,6 +30,7 @@ export interface PreNoteData extends ObjKey {
 export default function BookNote() {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
+
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
@@ -86,6 +87,7 @@ export default function BookNote() {
         setTitle(bookTitle);
       } else {
         const { data } = await getData(`/review/${reviewId}`, userToken);
+
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
         const questions = questionList.length ? questionList : [""];
 
@@ -403,6 +405,7 @@ export default function BookNote() {
           userToken,
           fromUrl,
           patchReview,
+          reviewId,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
