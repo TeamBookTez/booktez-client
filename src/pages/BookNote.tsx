@@ -341,6 +341,7 @@ export default function BookNote() {
   }, []);
 
   const [openExitModal, setOpenExitModal] = useState<boolean>(false);
+
   const handleExit = () => {
     setOpenExitModal(!openExitModal);
   };
@@ -381,7 +382,6 @@ export default function BookNote() {
           handleDeletePeri,
           userToken,
           fromUrl,
-          patchReview,
         ]}
       />
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />

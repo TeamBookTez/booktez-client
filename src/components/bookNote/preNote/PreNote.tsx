@@ -22,7 +22,6 @@ export default function PreNote() {
     handleDeletePeri,
     userToken,
     fromUrl,
-    patchReview,
   ] =
     useOutletContext<
       [
@@ -39,7 +38,6 @@ export default function PreNote() {
         (idxList: number[]) => void,
         string,
         string,
-        () => Promise<void>,
       ]
     >();
   const { answerOne, answerTwo, questionList } = preNote;
