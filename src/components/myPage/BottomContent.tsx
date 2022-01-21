@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ImgReadNum } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
@@ -61,7 +61,7 @@ const StCountBook = styled.article`
   flex-direction: column;
   align-items: center;
 
-  width: 25.9rem;
+  min-width: 24.5rem;
   height: 30.3rem;
 
   margin-right: 4rem;
@@ -100,7 +100,7 @@ const StBooksNum = styled.strong`
 `;
 
 const StServiceWrapper = styled.div`
-  width: 100rem;
+  width: 100%;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
