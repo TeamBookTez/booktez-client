@@ -31,7 +31,7 @@ export default function ShowModal(props: ShowModalProps) {
       const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
-        const { isbn, thumbnail, title, authors, translators, datetime } = bookInfo;
+        const { isbn, thumbnail, title, authors, translators, publicationDate } = bookData;
 
         localStorage.setItem(
           "booktez-bookData",
@@ -41,7 +41,7 @@ export default function ShowModal(props: ShowModalProps) {
             title,
             author: authors,
             translator: translators,
-            publicationDate: datetime,
+            publicationDate,
           }),
         );
       }

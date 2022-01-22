@@ -22,6 +22,7 @@ export default function LastStep() {
     const userToken = localToken ? localToken : "";
     const localBookData = localStorage.getItem("booktez-bookData");
     const bookData = localBookData ? JSON.parse(localBookData) : null;
+
     const localReviewData = localStorage.getItem("booktez-reviewData");
     const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
 
@@ -37,6 +38,8 @@ export default function LastStep() {
 
   const goNextStep = () => {
     addBookReview();
+    localStorage.removeItem("booktez-bookData");
+    localStorage.removeItem("booktez-reviewData");
     handleIsAniTime(true);
     setTimeout(() => nav("/main", { state: "rightpath" }), 1000);
   };
