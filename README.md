@@ -101,7 +101,7 @@
 
 완료된 북노트를 확인할 수 있으며, 북노트 삭제 및 수정 기능을 제공합니다.
 
-![book-stairs com_book-note (4)](https://user-images.githubusercontent.com/73876068/150497049-e0bea121-1aa0-42af-a222-a10b3bdef4f0.png)
+![book-stairs com_detail-book-note](https://user-images.githubusercontent.com/73876068/150620355-51e944a7-1420-48ca-8d2a-308803d85fef.png)
 <br />
 <br />
 
@@ -110,6 +110,12 @@
 현재 북스테어즈가 준비 중인 기능을 안내함과 동시에 피드백 통로를 제공합니다.
 
 ![book-stairs com_book-note (5)](https://user-images.githubusercontent.com/73876068/150497399-04065268-bfc4-42a9-bbf0-6cdd53d931ba.png)
+<br />
+<br />
+
+### 13. 404 페이지
+
+![book-stairs com_404](https://user-images.githubusercontent.com/73876068/150620472-512a488e-79a2-4e18-b67d-5fc8181bd547.png)
 <br />
 <br />
 
