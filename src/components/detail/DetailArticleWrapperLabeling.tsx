@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { IcDetail } from "../../assets/icons";
 import { StepUp } from "../bookNote";
 
 interface DetailArticleWrapperLabelingProps {
@@ -8,12 +9,6 @@ interface DetailArticleWrapperLabelingProps {
   children: React.ReactNode;
 }
 
-const IIIIIII = styled.div`
-  width: 5.2rem;
-  height: 5.2rem;
-  background-color: black;
-`;
-
 export default function DetailArticleWrapperLabeling(props: DetailArticleWrapperLabelingProps) {
   const { title, handlePeriCarousel, children } = props;
 
@@ -21,7 +16,7 @@ export default function DetailArticleWrapperLabeling(props: DetailArticleWrapper
     <section>
       <StTitleWrapper>
         {/* 이미지 div */}
-        <IIIIIII></IIIIIII>
+        <IcDetail />
         <StTitle>{title}</StTitle>
         <StepUp onToggleModal={handlePeriCarousel} />
       </StTitleWrapper>
