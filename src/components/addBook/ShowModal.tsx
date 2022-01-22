@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
-import { ImgNull } from "../../assets/images";
 import { BookInfo } from "../../pages/AddBook";
 import { postData } from "../../utils/lib/api";
 import { Button } from "../common/styled/Button";
@@ -57,7 +56,14 @@ export default function ShowModal(props: ShowModalProps) {
   return (
     <>
       <StIcCancel onClick={onToggleModal} />
-      {thumbnail ? <ModalThumbnail src={thumbnail} alt="책 표지" /> : <ModalThumbnail src={ImgNull} alt="책 표지" />}
+      {thumbnail ? (
+        <ModalThumbnail src={thumbnail} alt="책 표지" />
+      ) : (
+        <ModalThumbnail
+          src="https://bookstairs-bucket.s3.ap-northeast-2.amazonaws.com/defaultBookImg.png"
+          alt="책 표지"
+        />
+      )}
       <ModalTitle>{title}</ModalTitle>
       <ModalLabelWrapper>
         <ModalLabel>{authors} 지음</ModalLabel>
