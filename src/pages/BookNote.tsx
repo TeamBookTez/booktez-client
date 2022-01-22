@@ -32,6 +32,7 @@ export default function BookNote() {
   const { pathname, state } = useLocation();
 
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const pathKey = pathname === "/book-note" ? "before" : "now";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   const isLoginState = state as IsLoginState;
@@ -126,21 +127,24 @@ export default function BookNote() {
   };
 
   // 서버에의 저장을 관리
-  const patchReview = async (progress: number) => {
+  const patchReview = async (key: string, body: any) => {
     // answerOne, answerTwo, questionList, progress update
-    await patchData(userToken, `/review/before/${reviewId}`, { ...preNote, progress });
+    await patchData(userToken, `/review/${key}/${reviewId}`, body);
   };
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    patchReview(2);
+    const progress = pathKey === "before" ? 2 : 3;
+    const body = pathKey === "before" ? { ...preNote, progress } : { answerThree: { root: periNote }, progress };
+
+    patchReview(pathKey, body);
     setIsSave(true);
   };
 
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
     handleChangeReview("progress", 3);
-    patchReview(3);
+    patchReview(pathKey, { ...preNote, progress: 3 });
     setIsPrevented(true);
 
     // 현재 모달 닫기

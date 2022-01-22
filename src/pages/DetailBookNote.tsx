@@ -78,7 +78,7 @@ export default function DetailBookNote() {
                 answerOne={reviewData?.answerOne}
                 answerTwo={reviewData?.answerTwo}
                 questionList={reviewData?.questionList}
-                isLogin={true}
+                isLogin={isLogin}
               />
             </DetailArticleWrapper>
             <StMarginTop>
