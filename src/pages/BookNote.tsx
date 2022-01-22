@@ -27,6 +27,11 @@ export interface PreNoteData extends ObjKey {
   progress: number;
 }
 
+interface AnswerThree {
+  root: Question[];
+  progress: number;
+}
+
 export default function BookNote() {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
@@ -127,7 +132,23 @@ export default function BookNote() {
   };
 
   // 서버에의 저장을 관리
-  const patchReview = async (key: string, body: any) => {
+  const patchReview = async (
+    key: string,
+    body:
+      | {
+          progress: number;
+          answerOne: string;
+          answerTwo: string;
+          questionList: string[];
+          answerThree?: undefined;
+        }
+      | {
+          answerThree: {
+            root: Question[];
+          };
+          progress: number;
+        },
+  ) => {
     // answerOne, answerTwo, questionList, progress update
     await patchData(userToken, `/review/${key}/${reviewId}`, body);
   };
