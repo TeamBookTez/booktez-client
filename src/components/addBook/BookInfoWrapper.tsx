@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-import { ImgNull } from "../../assets/images";
 import { BookInfo } from "../../pages/AddBook";
 import ModalWrapper from "./ModalWrapper";
 import ShowModal from "./ShowModal";
@@ -33,7 +32,10 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         {thumbnail ? (
           <StThumbnail src={thumbnail} alt="책 표지" />
         ) : (
-          <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+          <StThumbnail
+            src="https://bookstairs-bucket.s3.ap-northeast-2.amazonaws.com/defaultBookImg.png"
+            alt="책 표지가 없습니다"
+          />
         )}
         <StInfoWrapper>
           <InfoTitle>{title}</InfoTitle>
