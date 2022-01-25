@@ -37,7 +37,7 @@ export default function BookNote() {
   const { pathname, state } = useLocation();
 
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
-  const pathKey = pathname === "/book-note" ? "before" : "now";
+  const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   const isLoginState = state as IsLoginState;
@@ -91,7 +91,6 @@ export default function BookNote() {
     try {
       // 비회원인 경우
       // 로컬스토리지에서 책 정보를 불러옴 - okay
-      // 로컬스토리지에서 리뷰 정보를 불러옴 - yet
       if (!isLogin) {
         const localData = localStorage.getItem("booktez-bookData");
         const bookTitle = localData ? JSON.parse(localData).title : "";
@@ -106,10 +105,13 @@ export default function BookNote() {
         setTitle(bookTitle);
         setPreNote({ answerOne, answerTwo, questionList: questions, progress: reviewState });
 
+        // console.log("answerThree", answerThree);
+        // answerThree가 null이 아닌 경우
         if (answerThree) {
           setPeriNote(answerThree.root);
         } else {
-          // answerThree가 비어있을 때 독서 전의 질문 동기화
+          console.log("answerThree is null");
+          // answerThree가 비어있을 때(null) 독서 전의 질문 동기화
           // 한 번 동기화되고 나서는 빈 상태가 아니라서 동기화되지 않음
           const defaultQuestions: Question[] = [];
 
@@ -119,6 +121,7 @@ export default function BookNote() {
           setPeriNote(defaultQuestions);
         }
 
+        // 독서 중으로 넘어간 경우
         if (reviewState > 2) {
           setIsPrevented(true);
           setAblePatch(true);
@@ -155,7 +158,9 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    const progress = pathKey === "before" ? 2 : 3;
+    // initIndex가 1이면 progress는 3, 0이면 progress는 2
+
+    const progress = preNote.progress === 4 ? 4 : initIndex + 2;
     const body = pathKey === "before" ? { ...preNote, progress } : { answerThree: { root: periNote }, progress };
 
     patchReview(pathKey, body);
@@ -177,13 +182,6 @@ export default function BookNote() {
     navigate("/book-note/peri", { state: isLoginState });
     // navigator 변경
     handleNav(1);
-
-    const defaultQuestions: Question[] = [];
-
-    preNote.questionList.map((question: string) =>
-      defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
-    );
-    setPeriNote(defaultQuestions);
   };
 
   // 모달 내 '취소' 버튼 - 모달을 끄는 용도
