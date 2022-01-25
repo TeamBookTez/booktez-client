@@ -27,11 +27,6 @@ export interface PreNoteData extends ObjKey {
   progress: number;
 }
 
-interface AnswerThree {
-  root: Question[];
-  progress: number;
-}
-
 export default function BookNote() {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
@@ -89,8 +84,7 @@ export default function BookNote() {
     // get 요청 시작할 시 loading 시작
     setIsLoading(true);
     try {
-      // 비회원인 경우
-      // 로컬스토리지에서 책 정보를 불러옴 - okay
+      // 비회원인 경우, 로컬스토리지에서 책 정보를 불러옴
       if (!isLogin) {
         const localData = localStorage.getItem("booktez-bookData");
         const bookTitle = localData ? JSON.parse(localData).title : "";
@@ -171,6 +165,7 @@ export default function BookNote() {
   const handleSubmit = async () => {
     handleChangeReview("progress", 3);
     patchReview(pathKey, { ...preNote, progress: 3 });
+    patchReview("now", { answerThree: { root: periNote }, progress: 3 });
     setIsPrevented(true);
 
     // 현재 모달 닫기
@@ -379,6 +374,12 @@ export default function BookNote() {
   useEffect(() => {
     getReview();
   }, []);
+
+  useEffect(() => {
+    if (navIndex === 1) {
+      console.log(periNote);
+    }
+  }, [navIndex]);
 
   const [openExitModal, setOpenExitModal] = useState<boolean>(false);
 
