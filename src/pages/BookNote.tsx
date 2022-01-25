@@ -104,7 +104,6 @@ export default function BookNote() {
         if (answerThree) {
           setPeriNote(answerThree.root);
         } else {
-          console.log("answerThree is null");
           // answerThree가 비어있을 때(null) 독서 전의 질문 동기화
           // 한 번 동기화되고 나서는 빈 상태가 아니라서 동기화되지 않음
           const defaultQuestions: Question[] = [];
@@ -172,6 +171,15 @@ export default function BookNote() {
     setOpenModal(false);
     // 드로워 닫기
     setIsDrawerOpen(false);
+
+    if (!periNote[0].question) {
+      const defaultQuestions: Question[] = [];
+
+      preNote.questionList.map((question: string) =>
+        defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+      );
+      setPeriNote(defaultQuestions);
+    }
 
     // peri로 넘어가기
     navigate("/book-note/peri", { state: isLoginState });
@@ -374,12 +382,6 @@ export default function BookNote() {
   useEffect(() => {
     getReview();
   }, []);
-
-  useEffect(() => {
-    if (navIndex === 1) {
-      console.log(periNote);
-    }
-  }, [navIndex]);
 
   const [openExitModal, setOpenExitModal] = useState<boolean>(false);
 
