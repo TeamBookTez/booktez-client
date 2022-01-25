@@ -73,7 +73,6 @@ export default function PeriNote() {
       progress,
     });
 
-    console.log("data", data);
     setBookData(data.data.bookData);
   };
 
