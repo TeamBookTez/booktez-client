@@ -376,6 +376,8 @@ export default function BookNote() {
     // 그렇지 않으면 true
     if (preNote.answerOne && preNote.answerTwo && !preNote.questionList.includes("")) {
       setAblePatch(true);
+    } else {
+      setAblePatch(false);
     }
   }, [preNote]);
 

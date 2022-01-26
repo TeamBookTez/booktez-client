@@ -7,11 +7,11 @@ interface QuestionThreeProps {
   onChangeReview: (key: string, value: string | string[] | number) => void;
   onToggleDrawer: (i: number) => void;
   isPrevented: boolean;
-  isFilled: boolean;
+  ablePatch: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onToggleDrawer, isPrevented, isFilled } = props;
+  const { questionList, onChangeReview, onToggleDrawer, isPrevented, ablePatch } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const modified = [...questionList];
@@ -45,7 +45,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
         />
       ))}
       {!isPrevented ? (
-        <StAddButton type="button" disabled={!isFilled} onClick={addInput}>
+        <StAddButton type="button" disabled={!ablePatch} onClick={addInput}>
           + 질문추가
         </StAddButton>
       ) : (
