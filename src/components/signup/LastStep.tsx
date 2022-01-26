@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
@@ -11,6 +11,7 @@ import { Button } from "../common/styled/Button";
 export default function LastStep() {
   const [userData, setUserData, handleIsAniTime] =
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const nav = useNavigate();
 
@@ -38,20 +39,28 @@ export default function LastStep() {
   };
 
   const goNextStep = () => {
+    setIsLoading(true);
     addBookReview();
     localStorage.removeItem("booktez-bookData");
     localStorage.removeItem("booktez-reviewData");
+    setIsLoading(false);
+
     handleIsAniTime(true);
     setTimeout(() => nav("/main", { state: "rightpath" }), 1000);
   };
 
   return (
     <StArticle>
-      <img src={ImgSignUpFinish} alt="회원 가입 완료시 뜨는 그래픽 문구입니다" />
-      <StHomeBtn type="button" onClick={goNextStep}>
-        홈 바로가기
-      </StHomeBtn>
-      <Loading />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <img src={ImgSignUpFinish} alt="회원 가입 완료시 뜨는 그래픽 문구입니다" />
+          <StHomeBtn type="button" onClick={goNextStep}>
+            홈 바로가기
+          </StHomeBtn>
+        </>
+      )}
     </StArticle>
   );
 }
