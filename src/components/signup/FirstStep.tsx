@@ -25,7 +25,7 @@ export default function FirstStep() {
   }, []);
 
   useEffect(() => {
-    setIsEmailError(false);
+    getEmail(userData["email"]);
   }, [userData]);
 
   const getEmail = async (emailData: string) => {
@@ -35,7 +35,6 @@ export default function FirstStep() {
 
       setValidEmail(resData.data.isValid);
       setErrorMessage(resData.message);
-      setIsEmailError(true);
     } catch (err) {
       console.log("err", err);
     }
@@ -43,19 +42,18 @@ export default function FirstStep() {
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    getEmail(userData["email"]);
-
     if (!checkEmailType(userData["email"]) || validEmail === false) {
-      console.log("안농에러");
-    } else {
-      handleIsAniTime(true);
-      setTimeout(() => nav("/signup/2", { state: "rightpath" }), 1000);
+      return setIsEmailError(true);
     }
+
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/2", { state: "rightpath" }), 1000);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsEmailError(false);
     setIsEmailEmpty(targetValue === "");
     setEmail(targetValue);
     setUserData((current) => ({ ...current, email: targetValue }));
