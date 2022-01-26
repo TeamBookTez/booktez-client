@@ -12,28 +12,20 @@ import { LabelHidden } from "../common/styled/LabelHidden";
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [pwd, setPwd] = useState<string>("");
+  const [pwdRe, setPwdRe] = useState<string>("");
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isPwdReEmpty, setIsPwdReEmpty] = useState<boolean>(true);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
-  const [pwd, setPwd] = useState<string>("");
-  const [pwdRe, setPwdRe] = useState<string>("");
 
   const nav = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
-
-  useEffect(() => {
-    setIsPwdError(false);
-  }, [pwd]);
-
-  useEffect(() => {
-    setIsPwdReError(false);
-  }, [pwdRe]);
 
   const postSignup = async () => {
     try {
@@ -77,6 +69,7 @@ export default function ThirdStep() {
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsPwdError(false);
     setIsPwdEmpty(targetValue === "");
     setPwd(targetValue);
     setUserData((current) => ({ ...current, password: targetValue }));
@@ -85,8 +78,14 @@ export default function ThirdStep() {
   const handleOnChangePwdRe = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsPwdReError(false);
     setIsPwdReEmpty(targetValue === "");
     setPwdRe(targetValue);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    goNextStep();
   };
 
   const toggleSightPwd = () => {
@@ -94,11 +93,6 @@ export default function ThirdStep() {
   };
   const toggleSightRePwd = () => {
     setIsPwdReSight((isPwdSight) => !isPwdSight);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    goNextStep();
   };
 
   return (
