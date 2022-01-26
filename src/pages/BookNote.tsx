@@ -428,7 +428,6 @@ export default function BookNote() {
             handleDeletePeri,
             userToken,
             fromUrl,
-            patchReview,
             reviewId,
           ]}
         />

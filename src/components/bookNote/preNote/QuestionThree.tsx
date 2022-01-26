@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
@@ -8,11 +7,11 @@ interface QuestionThreeProps {
   onChangeReview: (key: string, value: string | string[] | number) => void;
   onToggleDrawer: (i: number) => void;
   isPrevented: boolean;
+  isFilled: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onToggleDrawer, isPrevented } = props;
-  const [isFilled, setIsFilled] = useState(false);
+  const { questionList, onChangeReview, onToggleDrawer, isPrevented, isFilled } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const modified = [...questionList];
@@ -32,10 +31,6 @@ export default function QuestionThree(props: QuestionThreeProps) {
     e.preventDefault();
     onChangeReview("questionList", [...questionList, ""]);
   };
-
-  useEffect(() => {
-    setIsFilled(!questionList.includes(""));
-  }, [questionList]);
 
   return (
     <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>

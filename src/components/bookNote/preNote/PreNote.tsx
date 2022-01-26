@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { PreNoteData } from "../../../pages/BookNote";
-import { Question } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
 import { PreNoteForm, QuestionThree } from "..";
 
@@ -20,6 +20,7 @@ export default function PreNote() {
         boolean,
       ]
     >();
+  const [isFilled, setIsFilled] = useState<boolean>(false);
   const { answerOne, answerTwo, questionList } = preNote;
 
   const onChangeReview = (key: string, value: string | string[] | number): void => {
@@ -37,6 +38,10 @@ export default function PreNote() {
 
   const localNick = localStorage.getItem("booktez-nickname");
   const nickname = isLogin && localNick ? localNick : "익명의 독서가";
+
+  useEffect(() => {
+    setIsFilled(!questionList.includes(""));
+  }, [questionList]);
 
   return (
     <StNoteForm onSubmit={(e) => e.preventDefault()}>
@@ -68,6 +73,7 @@ export default function PreNote() {
             onChangeReview={onChangeReview}
             onToggleDrawer={handleToggleDrawer}
             isPrevented={isPrevented}
+            isFilled={isFilled}
           />
         ) : (
           <StLinkWrapper>
@@ -82,7 +88,11 @@ export default function PreNote() {
       </StFormWrapper>
 
       {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn type="button" disabled={!ablePatch} onClick={handleSubmit} isdisabled={!ablePatch}>
+      <StNextBtn
+        type="button"
+        disabled={!ablePatch || !isFilled}
+        onClick={handleSubmit}
+        isdisabled={!ablePatch || !isFilled}>
         다음 계단
       </StNextBtn>
     </StNoteForm>

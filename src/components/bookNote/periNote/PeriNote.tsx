@@ -27,7 +27,6 @@ export default function PeriNote() {
     handleDeletePeri,
     userToken,
     fromUrl,
-    patchReview,
     reviewId,
   ] =
     useOutletContext<
@@ -45,7 +44,6 @@ export default function PeriNote() {
         (idxList: number[]) => void,
         string,
         string,
-        () => Promise<void>,
         number,
       ]
     >();
