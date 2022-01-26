@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { PreNoteData } from "../../../pages/BookNote";
 import { Button } from "../../common/styled/Button";
@@ -88,11 +88,7 @@ export default function PreNote() {
       </StFormWrapper>
 
       {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn
-        type="button"
-        disabled={!ablePatch || !isFilled}
-        onClick={handleSubmit}
-        isdisabled={!ablePatch || !isFilled}>
+      <StNextBtn type="button" disabled={!ablePatch || !isFilled} onClick={handleSubmit}>
         다음 계단
       </StNextBtn>
     </StNoteForm>
@@ -137,15 +133,21 @@ const StTextarea = styled.textarea`
   }
 `;
 
-const StNextBtn = styled(Button)<{ isdisabled: boolean }>`
+const StNextBtn = styled(Button)<{ disabled: boolean }>`
   margin-top: 10rem;
   padding: 1.6rem 13rem;
   border-radius: 1rem;
-  background-color: ${({ isdisabled, theme }) => (isdisabled ? theme.colors.white400 : theme.colors.orange100)};
+  background-color: ${({ disabled, theme }) => (disabled ? theme.colors.white400 : theme.colors.orange100)};
 
   width: 32.5rem;
-  color: ${({ isdisabled, theme }) => (isdisabled ? theme.colors.gray300 : theme.colors.white)};
+  color: ${({ disabled, theme }) => (disabled ? theme.colors.gray300 : theme.colors.white)};
   ${({ theme }) => theme.fonts.button};
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: default;
+    `}
 `;
 
 const StLinkWrapper = styled.section`

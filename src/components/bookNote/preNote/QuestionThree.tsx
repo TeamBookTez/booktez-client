@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
 
@@ -45,7 +45,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
         />
       ))}
       {!isPrevented ? (
-        <StAddButton type="button" disabled={!isFilled} onClick={addInput} isfilled={isFilled}>
+        <StAddButton type="button" disabled={!isFilled} onClick={addInput}>
           + 질문추가
         </StAddButton>
       ) : (
@@ -55,7 +55,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
   );
 }
 
-const StAddButton = styled.button<{ isfilled: boolean }>`
+const StAddButton = styled.button<{ disabled: boolean }>`
   margin-right: 9.1rem;
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 0.8rem;
@@ -63,7 +63,13 @@ const StAddButton = styled.button<{ isfilled: boolean }>`
   background-color: ${({ theme }) => theme.colors.white200};
 
   width: calc(100% - 5rem);
-  color: ${({ isfilled, theme }) => (isfilled ? theme.colors.gray100 : theme.colors.white500)};
+  color: ${({ disabled, theme }) => (!disabled ? theme.colors.gray100 : theme.colors.white500)};
   text-align: start;
   ${({ theme }) => theme.fonts.body4}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: default;
+    `}
 `;
