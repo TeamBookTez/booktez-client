@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -21,6 +20,14 @@ export default function SecondStep() {
 
   const nav = useNavigate();
 
+  useEffect(() => {
+    handleIsAniTime(false);
+  }, []);
+
+  useEffect(() => {
+    setIsNicknameError(false);
+  }, [userData]);
+
   const getNickname = async (nicknameData: string) => {
     try {
       const res = await getData(`/auth/nickname?nickname=${nicknameData}`);
@@ -32,15 +39,6 @@ export default function SecondStep() {
       console.log("err", err);
     }
   };
-
-  useEffect(() => {
-    handleIsAniTime(false);
-  }, []);
-
-  useEffect(() => {
-    setIsNicknameError(false);
-    getNickname(userData["nickname"]);
-  }, [userData]);
 
   const goNextStep = () => {
     if (isNicknameEmpty) return;

@@ -20,6 +20,14 @@ export default function FirstStep() {
 
   const nav = useNavigate();
 
+  useEffect(() => {
+    handleIsAniTime(false);
+  }, []);
+
+  useEffect(() => {
+    setIsEmailError(false);
+  }, [userData]);
+
   const getEmail = async (emailData: string) => {
     try {
       const res = await getData(`/auth/email?email=${emailData}`);
@@ -31,15 +39,6 @@ export default function FirstStep() {
       console.log("err", err);
     }
   };
-
-  useEffect(() => {
-    handleIsAniTime(false);
-  }, []);
-
-  useEffect(() => {
-    setIsEmailError(false);
-    getEmail(userData["email"]);
-  }, [userData]);
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
