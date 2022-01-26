@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ImgSignUpFinish } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
 import { patchData, postData } from "../../utils/lib/api";
+import { Loading } from "../common";
 import { Button } from "../common/styled/Button";
 
 export default function LastStep() {
@@ -50,6 +51,7 @@ export default function LastStep() {
       <StHomeBtn type="button" onClick={goNextStep}>
         홈 바로가기
       </StHomeBtn>
+      <Loading />
     </StArticle>
   );
 }

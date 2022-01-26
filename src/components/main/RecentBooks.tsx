@@ -6,7 +6,7 @@ import { BookcaseInfo } from "../../pages/Bookcase";
 import { getData } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
-import Loading from "../common/Loading";
+import { Loading } from "../common";
 
 interface RecentProps {
   isLogin: boolean;

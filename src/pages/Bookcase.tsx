@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
-import { MainHeader } from "../components/common";
-import Loading from "../components/common/Loading";
+import { Loading, MainHeader } from "../components/common";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {

@@ -4,8 +4,7 @@ import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
-import { PopUpExit } from "../components/common";
-import Loading from "../components/common/Loading";
+import { Loading, PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";

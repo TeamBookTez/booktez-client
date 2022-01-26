@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { MainHeader } from "../components/common";
-import Loading from "../components/common/Loading";
+import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
 import { getData, patchData } from "../utils/lib/api";
 
