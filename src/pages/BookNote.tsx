@@ -4,8 +4,7 @@ import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
-import { PopUpExit } from "../components/common";
-import Loading from "../components/common/Loading";
+import { Loading, PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
 import { getData, patchData } from "../utils/lib/api";
@@ -29,22 +28,21 @@ export interface PreNoteData extends ObjKey {
 
 export default function BookNote() {
   const navigate = useNavigate();
-  const { pathname, state } = useLocation();
 
+  // 현재 페이지를 확인하여 navigator를 움직이고 patch할 때 필요한 아이들
+  const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
   const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
+  // recoil로 관리하면 어떨까?
   const isLoginState = state as IsLoginState;
   const { isLogin, reviewId, fromUrl } = isLoginState;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
-  const [isPrevented, setIsPrevented] = useState<boolean>(false);
-  const [ablePatch, setAblePatch] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
+  // pre/peri note 데이터가 들어갈 곳
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
@@ -52,16 +50,27 @@ export default function BookNote() {
     progress: 2,
   });
   const [periNote, setPeriNote] = useState<Question[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [title, setTitle] = useState<string>("");
+
+  const [isPrevented, setIsPrevented] = useState<boolean>(false);
+  const [ablePatch, setAblePatch] = useState<boolean>(false);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [openExitModal, setOpenExitModal] = useState<boolean>(false);
+
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const [isSave, setIsSave] = useState<boolean>(false);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
   };
 
-  const handleToggleDrawer = (i: number) => {
+  const handleOpenDrawer = (i: number) => {
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -164,6 +173,7 @@ export default function BookNote() {
   const handleSubmit = async () => {
     handleChangeReview("progress", 3);
     patchReview(pathKey, { ...preNote, progress: 3 });
+    // 현재 periNote의 내용을 저장해야 함
     patchReview("now", { answerThree: { root: periNote }, progress: 3 });
     setIsPrevented(true);
 
@@ -202,6 +212,7 @@ export default function BookNote() {
     };
   }, [saveReview]);
 
+  // 똥페리 switch문
   const handleChangePeri = (key: string, value: string, idxList: number[]) => {
     const newRoot = [...periNote];
 
@@ -385,8 +396,6 @@ export default function BookNote() {
     getReview();
   }, []);
 
-  const [openExitModal, setOpenExitModal] = useState<boolean>(false);
-
   const handleExit = () => {
     setOpenExitModal(!openExitModal);
   };
@@ -418,7 +427,7 @@ export default function BookNote() {
         <Outlet
           context={[
             isLogin,
-            handleToggleDrawer,
+            handleOpenDrawer,
             preNote,
             handleChangeReview,
             setOpenModal,
@@ -462,12 +471,11 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
 
   min-height: 100vh;
   ${({ isopen, width }) =>
-    isopen
-      ? css`
-          animation: ${reducewidth(width)} 300ms linear 1;
-          animation-fill-mode: forwards;
-        `
-      : ""}
+    isopen &&
+    css`
+      animation: ${reducewidth(width)} 300ms linear 1;
+      animation-fill-mode: forwards;
+    `}
 `;
 
 const StNavWrapper = styled.div`

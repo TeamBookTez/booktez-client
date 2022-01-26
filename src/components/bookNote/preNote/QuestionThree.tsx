@@ -5,13 +5,13 @@ import { InputQuestion, PreNoteForm } from "..";
 interface QuestionThreeProps {
   questionList: string[];
   onChangeReview: (key: string, value: string | string[] | number) => void;
-  onToggleDrawer: (i: number) => void;
+  onOpenDrawer: (i: number) => void;
   isPrevented: boolean;
   ablePatch: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onToggleDrawer, isPrevented, ablePatch } = props;
+  const { questionList, onChangeReview, onOpenDrawer, isPrevented, ablePatch } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const modified = [...questionList];
@@ -33,7 +33,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
   };
 
   return (
-    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>
+    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onOpenDrawer={onOpenDrawer}>
       {questionList.map((question, idx) => (
         <InputQuestion
           key={idx}

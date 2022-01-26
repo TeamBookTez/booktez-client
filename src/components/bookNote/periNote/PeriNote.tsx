@@ -15,7 +15,7 @@ import PeriModal from "../stepUp/PeriModal";
 export default function PeriNote() {
   const [
     isLogin,
-    handleToggleDrawer,
+    handleOpenDrawer,
     preNote,
     handleChangeReview,
     setOpenModal,
@@ -129,7 +129,7 @@ export default function PeriNote() {
             <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
             <StepUp onToggleModal={handlePeriCarousel} />
           </StLabelContainer>
-          <ExButton idx={4} onToggleDrawer={handleToggleDrawer} />
+          <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
         </StLabelWrapper>
         <StQAWrapper>
           {periNote.map((question0, a) => (
