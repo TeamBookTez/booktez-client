@@ -16,7 +16,7 @@ export default function FirstStep() {
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [validEmail, setValidEmail] = useState<boolean>(true);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
   const nav = useNavigate();
 
@@ -33,7 +33,7 @@ export default function FirstStep() {
       const res = await getData(`/auth/email?email=${emailData}`);
       const resData = res.data;
 
-      setValidEmail(resData.data.isValid);
+      setIsEmailValid(resData.data.isValid);
       setErrorMessage(resData.message);
     } catch (err) {
       console.log("err", err);
@@ -42,7 +42,7 @@ export default function FirstStep() {
 
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!checkEmailType(userData["email"]) || validEmail === false) {
+    if (!checkEmailType(userData["email"]) || isEmailValid === false) {
       return setIsEmailError(true);
     }
 
