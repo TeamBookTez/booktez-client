@@ -172,7 +172,7 @@ export default function BookNote() {
     // 드로워 닫기
     setIsDrawerOpen(false);
 
-    if (!periNote[0].question) {
+    if (preNote.progress === 2) {
       const defaultQuestions: Question[] = [];
 
       preNote.questionList.map((question: string) =>
