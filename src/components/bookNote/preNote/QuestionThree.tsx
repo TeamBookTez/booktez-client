@@ -31,8 +31,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
     onChangeReview("questionList", newArray);
   };
 
-  const addInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleAddInput = () => {
     onChangeReview("questionList", [...questionList, ""]);
     setIsAdded(true);
   };
@@ -48,10 +47,11 @@ export default function QuestionThree(props: QuestionThreeProps) {
           onDelete={handleDelete}
           isPrevented={isPrevented}
           isAdded={isAdded}
+          onAddInput={handleAddInput}
         />
       ))}
       {!isPrevented ? (
-        <StAddButton type="button" disabled={!ablePatch} onClick={addInput}>
+        <StAddButton type="button" disabled={!ablePatch} onClick={handleAddInput}>
           + 질문추가
         </StAddButton>
       ) : (
