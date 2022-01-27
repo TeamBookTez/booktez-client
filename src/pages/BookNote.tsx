@@ -385,6 +385,16 @@ export default function BookNote() {
     setPeriNote(newRoot);
   };
 
+  const handleExit = () => {
+    setOpenExitModal(!openExitModal);
+  };
+
+  // 꼬리 질문 추가에서는 질문에만 focus가 되도록 answer에는 autoFocus가 반대로 적용되어 있음
+  // Enter에 대해서, 즉 답변만 추가될 때는 답변에만 focus가 되도록 하기
+  const handleAutoFocus = () => {
+    setIsAdded(false);
+  };
+
   useEffect(() => {
     // 질문 리스트가 비어있으면 다음단계 버튼 비활성화(ablePatch <- false)
     // 그렇지 않으면 true
@@ -398,10 +408,6 @@ export default function BookNote() {
   useEffect(() => {
     getReview();
   }, []);
-
-  const handleExit = () => {
-    setOpenExitModal(!openExitModal);
-  };
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
@@ -444,6 +450,7 @@ export default function BookNote() {
             fromUrl,
             reviewId,
             isAdded,
+            handleAutoFocus,
           ]}
         />
       )}

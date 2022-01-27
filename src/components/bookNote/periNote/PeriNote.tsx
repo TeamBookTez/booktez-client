@@ -29,6 +29,7 @@ export default function PeriNote() {
     fromUrl,
     reviewId,
     isAdded,
+    handleAutoFocus,
   ] =
     useOutletContext<
       [
@@ -47,6 +48,7 @@ export default function PeriNote() {
         string,
         number,
         boolean,
+        () => void,
       ]
     >();
 
@@ -102,6 +104,7 @@ export default function PeriNote() {
   const handleEnterAdd = (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => {
     if (event.key === "Enter") {
       handleAddPeri(idxList);
+      handleAutoFocus();
     }
   };
 
@@ -172,7 +175,7 @@ export default function PeriNote() {
                           handleChangePeri("answer", event.target.value, [a, b]);
                         }}
                         onKeyPress={(event) => handleEnterAdd(event, [a])}
-                        autoFocus={isAdded}
+                        autoFocus={!isAdded}
                       />
                       <StMoreIcon onClick={handleToggle} />
                       <StMiniMenu menuposition={"isPriA"}>
@@ -223,7 +226,7 @@ export default function PeriNote() {
                                   value={answer1.text}
                                   onChange={(event) => handleChangePeri("answer", event.target.value, [a, b, c, d])}
                                   onKeyPress={(event) => handleEnterAdd(event, [a, b, c])}
-                                  autoFocus={isAdded}
+                                  autoFocus={!isAdded}
                                 />
                                 <StMoreIcon onClick={handleToggle} />
                                 <StMiniMenu>
@@ -277,7 +280,7 @@ export default function PeriNote() {
                                             handleChangePeri("answer", event.target.value, [a, b, c, d, e, f])
                                           }
                                           onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e])}
-                                          autoFocus={isAdded}
+                                          autoFocus={!isAdded}
                                         />
                                         <StMoreIcon onClick={handleToggle} />
                                         <StMiniMenu>
@@ -352,7 +355,7 @@ export default function PeriNote() {
                                                     ])
                                                   }
                                                   onKeyPress={(event) => handleEnterAdd(event, [a, b, c, d, e, f, g])}
-                                                  autoFocus={isAdded}
+                                                  autoFocus={!isAdded}
                                                 />
                                                 <StMoreIcon onClick={handleToggle} />
                                                 <StMiniMenu>
@@ -439,7 +442,7 @@ export default function PeriNote() {
                                                           onKeyPress={(event) =>
                                                             handleEnterAdd(event, [a, b, c, d, e, f, g, h, i])
                                                           }
-                                                          autoFocus={isAdded}
+                                                          autoFocus={!isAdded}
                                                         />
                                                         <StMoreIcon onClick={handleToggle} />
                                                         <StMiniMenu>
