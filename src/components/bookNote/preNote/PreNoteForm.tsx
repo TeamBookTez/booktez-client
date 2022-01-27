@@ -16,6 +16,7 @@ interface PreNoteFormProps {
 export default function PreNoteForm(props: PreNoteFormProps) {
   const { question, idx, onOpenDrawer, children } = props;
 
+  // periNote의 handlePeriCarousel과 동일
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const onToggleModal = useCallback(() => {

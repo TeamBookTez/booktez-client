@@ -66,6 +66,8 @@ export default function BookNote() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const [isAdded, setIsAdded] = useState<boolean>(false);
+
   const handleNav = (idx: number) => {
     setNavIndex(idx);
   };
@@ -331,6 +333,7 @@ export default function BookNote() {
     }
 
     setPeriNote(newRoot);
+    setIsAdded(true);
   };
 
   const handleDeletePeri = (idxList: number[]) => {
@@ -440,6 +443,7 @@ export default function BookNote() {
             userToken,
             fromUrl,
             reviewId,
+            isAdded,
           ]}
         />
       )}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled, { css } from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
@@ -13,7 +14,10 @@ interface QuestionThreeProps {
 export default function QuestionThree(props: QuestionThreeProps) {
   const { questionList, onChangeReview, onOpenDrawer, isPrevented, ablePatch } = props;
 
+  const [isAdded, setIsAdded] = useState<boolean>(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+    setIsAdded(true);
     const modified = [...questionList];
 
     modified[idx] = e.target.value;
@@ -30,6 +34,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
   const addInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     onChangeReview("questionList", [...questionList, ""]);
+    setIsAdded(true);
   };
 
   return (
@@ -42,6 +47,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
           onChangeValue={handleChange}
           onDelete={handleDelete}
           isPrevented={isPrevented}
+          isAdded={isAdded}
         />
       ))}
       {!isPrevented ? (
