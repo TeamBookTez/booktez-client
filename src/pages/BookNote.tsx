@@ -66,7 +66,7 @@ export default function BookNote() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [isAdded, setIsAdded] = useState<boolean>(false);
+  const [isAdded, setIsAdded] = useState<boolean>(true);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);
