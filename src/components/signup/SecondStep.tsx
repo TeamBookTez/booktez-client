@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -17,45 +16,44 @@ export default function SecondStep() {
   const [isNicknameEmpty, setIsNicknameEmpty] = useState<boolean>(true);
   const [isNicknameError, setIsNicknameError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [validNickname, setValidNickname] = useState<boolean>(true);
+  const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
 
   const nav = useNavigate();
-
-  const getNickname = async (nicknameData: string) => {
-    try {
-      const res = await getData(`/auth/nickname?nickname=${nicknameData}`);
-      const resData = res.data;
-
-      setValidNickname(resData.data.isValid);
-      setErrorMessage(resData.message);
-    } catch (err) {
-      console.log("err", err);
-    }
-  };
 
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
 
   useEffect(() => {
-    setIsNicknameError(false);
     getNickname(userData["nickname"]);
   }, [userData]);
 
+  const getNickname = async (nicknameData: string) => {
+    try {
+      const res = await getData(`/auth/nickname?nickname=${nicknameData}`);
+      const resData = res.data;
+
+      setIsNicknameValid(resData.data.isValid);
+      setErrorMessage(resData.message);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
   const goNextStep = () => {
     if (isNicknameEmpty) return;
-    if (checkNicknameType(userData["nickname"]) || validNickname === false) {
-      getNickname(userData["nickname"]);
-      setIsNicknameError(true);
-    } else {
-      handleIsAniTime(true);
-      setTimeout(() => nav("/signup/3", { state: "rightpath" }), 1000);
+    if (checkNicknameType(userData["nickname"]) || isNicknameValid === false) {
+      return setIsNicknameError(true);
     }
+
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/3", { state: "rightpath" }), 1000);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsNicknameError(false);
     setIsNicknameEmpty(targetValue === "");
     setNickname(targetValue);
     setUserData((current) => ({ ...current, nickname: targetValue }));

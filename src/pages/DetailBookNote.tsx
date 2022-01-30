@@ -3,8 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
-import { PopUpDelete } from "../components/common";
-import Loading from "../components/common/Loading";
+import { Loading, PopUpDelete } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";

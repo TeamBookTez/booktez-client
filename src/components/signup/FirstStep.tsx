@@ -16,45 +16,44 @@ export default function FirstStep() {
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [validEmail, setValidEmail] = useState<boolean>(true);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
   const nav = useNavigate();
-
-  const getEmail = async (emailData: string) => {
-    try {
-      const res = await getData(`/auth/email?email=${emailData}`);
-      const resData = res.data;
-
-      setValidEmail(resData.data.isValid);
-      setErrorMessage(resData.message);
-    } catch (err) {
-      console.log("err", err);
-    }
-  };
 
   useEffect(() => {
     handleIsAniTime(false);
   }, []);
 
   useEffect(() => {
-    setIsEmailError(false);
     getEmail(userData["email"]);
   }, [userData]);
 
+  const getEmail = async (emailData: string) => {
+    try {
+      const res = await getData(`/auth/email?email=${emailData}`);
+      const resData = res.data;
+
+      setIsEmailValid(resData.data.isValid);
+      setErrorMessage(resData.message);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
   const goNextStep = () => {
     if (isEmailEmpty) return;
-    if (!checkEmailType(userData["email"]) || validEmail === false) {
-      getEmail(userData["email"]);
-      setIsEmailError(true);
-    } else {
-      handleIsAniTime(true);
-      setTimeout(() => nav("/signup/2", { state: "rightpath" }), 1000);
+    if (!checkEmailType(userData["email"]) || isEmailValid === false) {
+      return setIsEmailError(true);
     }
+
+    handleIsAniTime(true);
+    setTimeout(() => nav("/signup/2", { state: "rightpath" }), 1000);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsEmailError(false);
     setIsEmailEmpty(targetValue === "");
     setEmail(targetValue);
     setUserData((current) => ({ ...current, email: targetValue }));
