@@ -22,6 +22,7 @@ interface CompleteProps {
 export default function Complete(props: CompleteProps) {
   const navigate = useNavigate();
   const { bookData, isLoginState } = props;
+
   const { authors, publicationDt, thumbnail, title, translators } = bookData;
   const { fromUrl } = isLoginState;
 
