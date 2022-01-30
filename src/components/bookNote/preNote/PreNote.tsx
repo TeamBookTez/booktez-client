@@ -7,7 +7,7 @@ import { PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
   const navigate = useNavigate();
-  const [isLogin, handleToggleDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
+  const [isLogin, handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
     useOutletContext<
       [
         boolean,
@@ -21,10 +21,6 @@ export default function PreNote() {
     >();
   const { answerOne, answerTwo, questionList } = preNote;
 
-  const onChangeReview = (key: string, value: string | string[] | number): void => {
-    handleChangeReview(key, value);
-  };
-
   const handleSubmit = () => {
     setOpenModal(true);
   };
@@ -37,10 +33,6 @@ export default function PreNote() {
   const localNick = localStorage.getItem("booktez-nickname");
   const nickname = isLogin && localNick ? localNick : "익명의 독서가";
 
-  // useEffect(() => {
-  //   setIsFilled(!questionList.includes(""));
-  // }, [questionList]);
-
   return (
     <StNoteForm onSubmit={(e) => e.preventDefault()}>
       <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
@@ -48,28 +40,28 @@ export default function PreNote() {
         <PreNoteForm
           question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
           idx={1}
-          onToggleDrawer={handleToggleDrawer}>
+          onOpenDrawer={handleOpenDrawer}>
           <StTextarea
             placeholder="답변을 입력해주세요."
             value={answerOne}
-            onChange={(e) => onChangeReview("answerOne", e.target.value)}
+            onChange={(e) => handleChangeReview("answerOne", e.target.value)}
           />
         </PreNoteForm>
         <PreNoteForm
           question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
           idx={2}
-          onToggleDrawer={handleToggleDrawer}>
+          onOpenDrawer={handleOpenDrawer}>
           <StTextarea
             placeholder="답변을 입력해주세요."
             value={answerTwo}
-            onChange={(e) => onChangeReview("answerTwo", e.target.value)}
+            onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
           />
         </PreNoteForm>
         {isLogin ? (
           <QuestionThree
             questionList={questionList}
-            onChangeReview={onChangeReview}
-            onToggleDrawer={handleToggleDrawer}
+            onChangeReview={handleChangeReview}
+            onOpenDrawer={handleOpenDrawer}
             isPrevented={isPrevented}
             ablePatch={ablePatch}
           />

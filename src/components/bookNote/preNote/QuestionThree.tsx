@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled, { css } from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
@@ -5,15 +6,18 @@ import { InputQuestion, PreNoteForm } from "..";
 interface QuestionThreeProps {
   questionList: string[];
   onChangeReview: (key: string, value: string | string[] | number) => void;
-  onToggleDrawer: (i: number) => void;
+  onOpenDrawer: (i: number) => void;
   isPrevented: boolean;
   ablePatch: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onToggleDrawer, isPrevented, ablePatch } = props;
+  const { questionList, onChangeReview, onOpenDrawer, isPrevented, ablePatch } = props;
+
+  const [isAdded, setIsAdded] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+    setIsAdded(true);
     const modified = [...questionList];
 
     modified[idx] = e.target.value;
@@ -27,13 +31,13 @@ export default function QuestionThree(props: QuestionThreeProps) {
     onChangeReview("questionList", newArray);
   };
 
-  const addInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleAddInput = () => {
     onChangeReview("questionList", [...questionList, ""]);
+    setIsAdded(true);
   };
 
   return (
-    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>
+    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onOpenDrawer={onOpenDrawer}>
       {questionList.map((question, idx) => (
         <InputQuestion
           key={idx}
@@ -42,10 +46,12 @@ export default function QuestionThree(props: QuestionThreeProps) {
           onChangeValue={handleChange}
           onDelete={handleDelete}
           isPrevented={isPrevented}
+          isAdded={isAdded}
+          onAddInput={handleAddInput}
         />
       ))}
       {!isPrevented ? (
-        <StAddButton type="button" disabled={!ablePatch} onClick={addInput}>
+        <StAddButton type="button" disabled={!ablePatch} onClick={handleAddInput}>
           + 질문추가
         </StAddButton>
       ) : (
