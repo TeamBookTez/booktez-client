@@ -88,8 +88,9 @@ const StImgWrapper = styled.div`
 `;
 
 export const StImg = styled.img`
-  width: 100%;
-  height: 100%;
+  object-fit: cover;
+  width: 20.5rem;
+  height: 30rem;
 
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
