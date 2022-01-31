@@ -17,7 +17,7 @@ export default function LandingFive() {
           내가 읽은 책들을 모두 흡수해보세요.
         </StParagraph>
       </div>
-      <img src={ImgLandingBookcase} alt="서재 이미지" />
+      <StImgLandingBookcase src={ImgLandingBookcase} alt="서재 이미지" />
     </StSection>
   );
 }
@@ -28,4 +28,9 @@ const StSection = styled(StWrapper)`
 
 const StParagraph = styled.p`
   ${({ theme }) => theme.fonts.body00}
+`;
+
+const StImgLandingBookcase = styled.img`
+  width: 58.3rem;
+  height: 46.7rem;
 `;
