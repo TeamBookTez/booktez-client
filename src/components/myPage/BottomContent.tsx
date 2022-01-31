@@ -150,7 +150,7 @@ const StServiceInfo = styled.article`
   }
 `;
 
-const StInfoTitle = styled.h5`
+const StInfoTitle = styled.h4`
   margin-bottom: 1.5rem;
 
   ${({ theme }) => theme.fonts.header4};
