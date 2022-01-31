@@ -53,10 +53,10 @@ export default function ThirdStep() {
   };
 
   const goNextStep = () => {
+    if (isPwdEmpty || isPwdReEmpty) return;
     if (pwd !== pwdRe) {
       return setIsPwdReError(true);
     }
-    if (isPwdEmpty || isPwdReEmpty) return;
     if (!checkPwdType(userData["password"])) {
       return setIsPwdError(true);
     }
@@ -132,10 +132,7 @@ export default function ThirdStep() {
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
-        <StNextStepBtn
-          type="button"
-          active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError}
-          onClick={goNextStep}>
+        <StNextStepBtn active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
