@@ -69,7 +69,7 @@ const StExampleWrapper = styled.article`
   }
 `;
 
-const StQuestion = styled.ul`
+const StQuestion = styled.h3`
   margin-top: 2.4rem;
 
   ${({ theme }) => theme.fonts.body2};
@@ -85,7 +85,7 @@ const StFirstQuestion = styled(StQuestion)`
   }
 `;
 
-const StAnswer = styled.li`
+const StAnswer = styled.h4`
   list-style: none;
 
   position: relative;
