@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -18,6 +18,8 @@ export default function LoginForm() {
   const nav = useNavigate();
 
   const postLogin = async () => {
+    if (isEmailEmpty || isPwdEmpty) return;
+
     const loginBody = {
       email,
       password: pwd,
@@ -48,42 +50,30 @@ export default function LoginForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (isEmailEmpty || isPwdEmpty) return;
-    postLogin();
-  };
-
-  // --------------------------------------------------
-
   const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsEmailError(false);
     setIsEmailEmpty(targetValue === "");
     setEmail(targetValue);
-  };
-
-  // --------------------------------------------------
-
-  const toggleSightPwd = () => {
-    setIsPwdSight((isPwdSight) => !isPwdSight);
   };
 
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsPwdError(false);
     setIsPwdEmpty(targetValue === "");
     setPwd(targetValue);
   };
 
-  useEffect(() => {
-    setIsEmailError(false);
-  }, [email]);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    postLogin();
+  };
 
-  useEffect(() => {
-    setIsPwdError(false);
-  }, [pwd]);
+  const toggleSightPwd = () => {
+    setIsPwdSight((isPwdSight) => !isPwdSight);
+  };
 
   return (
     <StForm onSubmit={handleSubmit}>
