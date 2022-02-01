@@ -86,7 +86,6 @@ export default function BookNoteRefactor() {
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
     // initIndex가 1이면 progress는 3, 0이면 progress는 2
-
     const progress = preNote.progress === 4 ? 4 : initIndex + 2;
     const body = pathKey === "before" ? { ...preNote, progress } : { answerThree: { root: periNote }, progress };
 

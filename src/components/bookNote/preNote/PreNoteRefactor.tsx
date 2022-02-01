@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { Question } from "../../../utils/dataType";
-import { patchPeriNote, patchPreNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
+import { patchBookNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
 import { Button } from "../../common/styled/Button";
 import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
@@ -50,7 +50,7 @@ export default function PreNoteRefactor() {
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
     handleChangeReview("progress", 3);
-    patchPreNote(userToken, "/pre/20", { ...note, progress: 3 });
+    patchBookNote(userToken, "/pre/20", { ...note, progress: 3 });
 
     if (preNote.progress === 2) {
       const defaultQuestions: Question[] = [];
@@ -58,7 +58,7 @@ export default function PreNoteRefactor() {
       preNote.questionList.map((question: string) =>
         defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
       );
-      patchPeriNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
+      patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
     }
 
     setIsPrevented(true);

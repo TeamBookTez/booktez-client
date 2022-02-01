@@ -6,7 +6,7 @@ import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../as
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
-import { patchPeriNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
+import { patchBookNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { Complete, ExButton, StepUp } from "..";
@@ -21,7 +21,6 @@ export default function PeriNote() {
 
   const [note, setNote] = useState<Question[]>([]);
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isAdded, setIsAdded] = useState(true);
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
@@ -218,7 +217,9 @@ export default function PeriNote() {
     console.log("submitReview: isComplete", isComplete);
     const progress = isComplete ? 4 : 3;
 
-    await patchPeriNote(userToken, "/peri/20", { answerThree: { root: note }, progress });
+    await patchBookNote(userToken, "/peri/20", { answerThree: { root: note }, progress });
+
+    // 실제 서버 사용시 patch 후 넘어오는 response body의 bookdata를 setBookData에 넣기
     // setBookData({
     //   authors: ["테스트령"],
     //   publicationDt: "2022년 2월 1일",
