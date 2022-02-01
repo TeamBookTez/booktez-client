@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { PreNoteData } from "../../components/bookNote/preNote/PreNoteRefactor";
 import { mockClient } from "../lib";
 
 interface MockPreNote {
@@ -32,7 +33,7 @@ export const useGetBookNoteTitle = (token: string, key: string) => {
 };
 
 export const useGetPreNote = (token: string, key: string) => {
-  const [preNote, setPreNote] = useState<MockPreNote>({
+  const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
     questionList: [""],
@@ -52,4 +53,8 @@ export const useGetPreNote = (token: string, key: string) => {
   }, []);
 
   return [preNote];
+};
+
+export const patchPreNote = async (token: string, key: string, body: MockPreNote) => {
+  await mockClient(token).patch(key, body);
 };

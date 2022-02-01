@@ -60,8 +60,6 @@ export default function BookNoteRefactor() {
 
   const [drawerIdx, setDrawerIdx] = useState(1);
 
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
   const handleNav = (idx: number) => {
     setNavIndex(idx);
   };
@@ -72,49 +70,6 @@ export default function BookNoteRefactor() {
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false);
-  };
-
-  const handleChangeReview = (key: string, value: string | string[] | number): void => {
-    setPreNote((currentNote) => {
-      const newData = { ...currentNote };
-
-      newData[key] = value;
-
-      return newData;
-    });
-  };
-
-  // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
-  const handleSubmit = async () => {
-    handleChangeReview("progress", 3);
-    patchReview(pathKey, { ...preNote, progress: 3 });
-    // 현재 periNote의 내용을 저장해야 함
-    patchReview("now", { answerThree: { root: periNote }, progress: 3 });
-    setIsPrevented(true);
-
-    // 현재 모달 닫기
-    setOpenModal(false);
-    // 드로워 닫기
-    setIsDrawerOpen(false);
-
-    if (preNote.progress === 2) {
-      const defaultQuestions: Question[] = [];
-
-      preNote.questionList.map((question: string) =>
-        defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
-      );
-      setPeriNote(defaultQuestions);
-    }
-
-    // peri로 넘어가기
-    navigate("/book-note/peri", { state: isLoginState });
-    // navigator 변경
-    handleNav(1);
-  };
-
-  // 모달 내 '취소' 버튼 - 모달을 끄는 용도
-  const handleCancel = () => {
-    setOpenModal(false);
   };
 
   const handleOpenDrawer = (i: number) => {
@@ -163,11 +118,11 @@ export default function BookNoteRefactor() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Outlet context={[isLogin, userToken, handleOpenDrawer, handleChangeReview, setOpenModal]} />
+        <Outlet context={[isLogin, userToken, handleNav, handleOpenDrawer, handleCloseDrawer]} />
       )}
       /
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
-      {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />}
+      {/* {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />} */}
     </StNoteModalWrapper>
   );
 }
