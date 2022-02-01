@@ -1,6 +1,7 @@
 export { default as AddBook } from "./AddBook";
 export { default as Bookcase } from "./Bookcase";
 export { default as BookNote } from "./BookNote";
+export { default as BookNoteRefactor } from "./BookNoteRefactor";
 export { default as DetailBookNote } from "./DetailBookNote";
 export { default as DetailExample } from "./DetailExample";
 export { default as Login } from "./Login";

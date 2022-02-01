@@ -1,5 +1,5 @@
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
-import { client, KAKAO } from ".";
+import { client, KAKAO, mockClient } from ".";
 
 export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });

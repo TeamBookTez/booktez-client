@@ -5,32 +5,34 @@
       "title": "mock 테스트 책 제목"
     }
   ],
-  "review/pre": [
+  "pre": [
     {
       "id": 20,
-      "answerOne": "",
-      "answerTwo": "",
-      "questionList": [""],
+      "answerOne": "답변 1",
+      "answerTwo": "답변 2",
+      "questionList": [
+        "질문 리스트 1"
+      ],
       "progress": 2
     }
   ],
-  "review/peri": [
+  "peri": [
     {
       "id": 20,
       "answerThree": {
         "root": [
-            {
-                "depth": 1,
-                "question": "",
-                "answer": [
-                    {
-                        "text": "",
-                        "children": []
-                    }
-                ]
-            }
+          {
+            "depth": 1,
+            "question": "",
+            "answer": [
+              {
+                "text": "",
+                "children": []
+              }
+            ]
+          }
         ]
-    },
+      },
       "progress": 3
     }
   ]
