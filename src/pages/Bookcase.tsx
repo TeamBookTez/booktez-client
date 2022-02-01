@@ -45,7 +45,7 @@ export default function Bookcase() {
         setIsLogin(false);
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
@@ -65,7 +65,7 @@ export default function Bookcase() {
         if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
       });
     } catch (err) {
-      console.log("err", err);
+      return setIsLoading(false);
     }
     setIsLoading(false);
   };

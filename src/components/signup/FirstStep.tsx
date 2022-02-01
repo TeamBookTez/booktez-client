@@ -36,7 +36,7 @@ export default function FirstStep() {
       setIsEmailValid(resData.data.isValid);
       setErrorMessage(resData.message);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 

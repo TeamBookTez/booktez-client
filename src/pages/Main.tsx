@@ -23,7 +23,7 @@ export default function Main() {
       }
       setIsLogin(true);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 

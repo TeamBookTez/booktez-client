@@ -24,7 +24,7 @@ export default function Login() {
         }
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
     setIsLoading(false);
   };

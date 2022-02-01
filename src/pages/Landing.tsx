@@ -29,7 +29,7 @@ export default function Landing() {
         }
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
