@@ -1,0 +1,37 @@
+{
+  "review": [
+    {
+      "id": 20,
+      "title": "mock 테스트 책 제목"
+    }
+  ],
+  "review/pre": [
+    {
+      "id": 20,
+      "answerOne": "",
+      "answerTwo": "",
+      "questionList": [""],
+      "progress": 2
+    }
+  ],
+  "review/peri": [
+    {
+      "id": 20,
+      "answerThree": {
+        "root": [
+            {
+                "depth": 1,
+                "question": "",
+                "answer": [
+                    {
+                        "text": "",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+      "progress": 3
+    }
+  ]
+}

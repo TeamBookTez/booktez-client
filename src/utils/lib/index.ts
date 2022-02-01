@@ -27,3 +27,13 @@ export const client = (token?: string | null) => {
     headers,
   });
 };
+
+export const mockClient = (token: string) => {
+  return axios.create({
+    baseURL: "http://localhost:3001",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+};
