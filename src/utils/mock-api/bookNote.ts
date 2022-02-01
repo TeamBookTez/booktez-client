@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { PreNoteData } from "../../components/bookNote/preNote/PreNoteRefactor";
+import { Question } from "../dataType";
 import { mockClient } from "../lib";
-
-interface MockPreNote {
-  answerOne: string;
-  answerTwo: string;
-  questionList: string[];
-  progress: number;
-}
 
 export const useGetBookNoteTitle = (token: string, key: string) => {
   const [title, setTitle] = useState("");
@@ -55,6 +49,25 @@ export const useGetPreNote = (token: string, key: string) => {
   return [preNote];
 };
 
-export const patchPreNote = async (token: string, key: string, body: MockPreNote) => {
+// preNote get과 매우 유사 - 중복 제거 필요
+export const useGetPeriNote = (token: string, key: string) => {
+  const [periNote, setPeriNote] = useState<Question[]>([]);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const { data } = await mockClient(token).get(key);
+
+        setPeriNote(data);
+      } catch (err) {
+        console.log("err", err);
+      }
+    })();
+  }, []);
+
+  return [periNote];
+};
+
+export const patchPreNote = async (token: string, key: string, body: PreNoteData) => {
   await mockClient(token).patch(key, body);
 };

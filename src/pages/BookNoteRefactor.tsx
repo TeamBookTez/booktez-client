@@ -122,7 +122,6 @@ export default function BookNoteRefactor() {
       )}
       /
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
-      {/* {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancel} />} */}
     </StNoteModalWrapper>
   );
 }
