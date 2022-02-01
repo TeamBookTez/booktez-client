@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { patchPreNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
+import { Question } from "../../../utils/dataType";
+import { patchPeriNote, patchPreNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
 import { Button } from "../../common/styled/Button";
 import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
@@ -50,6 +51,15 @@ export default function PreNoteRefactor() {
   const handleSubmit = async () => {
     handleChangeReview("progress", 3);
     patchPreNote(userToken, "/pre/20", { ...note, progress: 3 });
+
+    if (preNote.progress === 2) {
+      const defaultQuestions: Question[] = [];
+
+      preNote.questionList.map((question: string) =>
+        defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+      );
+      patchPeriNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
+    }
 
     setIsPrevented(true);
 

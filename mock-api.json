@@ -12,7 +12,7 @@
       "answerTwo": "답변 2",
       "questionList": [
         "질문 리스트 1",
-        "질문 리스트 2"
+        "질문 리스트 3"
       ],
       "progress": 3
     }
@@ -24,17 +24,27 @@
         "root": [
           {
             "depth": 1,
-            "question": "",
+            "question": "질문 리스트 1",
             "answer": [
               {
-                "text": "",
+                "text": "ㅇ",
+                "children": []
+              }
+            ]
+          },
+          {
+            "depth": 1,
+            "question": "질문 리스트 2",
+            "answer": [
+              {
+                "text": "ㅇ",
                 "children": []
               }
             ]
           }
         ]
       },
-      "progress": 3
+      "progress": 4
     }
   ]
 }

@@ -6,7 +6,8 @@ import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../as
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchData } from "../../../utils/lib/api";
-import { useGetPeriNote } from "../../../utils/mock-api/bookNote";
+import { patchPeriNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
+import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { Complete, ExButton, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
@@ -20,16 +21,17 @@ export default function PeriNote() {
 
   const [note, setNote] = useState<Question[]>([]);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [isAdded, setIsAdded] = useState(true);
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bookData, setBookData] = useState({
-    authors: [],
-    publicationDt: "",
-    thumbnail: "",
-    title: "",
-    translators: [],
+    authors: ["테스트령"],
+    publicationDt: "2022년 2월 1일",
+    thumbnail: "https://bookstairs-bucket.s3.amazonaws.com/user_profile/1642340891758.jpg",
+    title: "테스트 책 제목",
+    translators: ["령좜언귬"],
   });
 
   // 꼬리 질문 추가에서는 질문에만 focus가 되도록 answer에는 autoFocus가 반대로 적용되어 있음
@@ -39,7 +41,7 @@ export default function PeriNote() {
   };
 
   const handleChangePeri = (key: string, value: string, idxList: number[]) => {
-    const newRoot = [...periNote];
+    const newRoot = [...note];
 
     switch (idxList.length) {
       case 1:
@@ -89,7 +91,7 @@ export default function PeriNote() {
   };
 
   const handleAddPeri = (idxList: number[]) => {
-    const newRoot = [...periNote];
+    const newRoot = [...note];
 
     switch (idxList.length) {
       default:
@@ -160,7 +162,7 @@ export default function PeriNote() {
   };
 
   const handleDeletePeri = (idxList: number[]) => {
-    const newRoot = [...periNote];
+    const newRoot = [...note];
 
     switch (idxList.length) {
       case 1:
@@ -214,14 +216,16 @@ export default function PeriNote() {
 
   const submitReview = async (isComplete: boolean) => {
     console.log("submitReview: isComplete", isComplete);
-    // const progress = isComplete ? 4 : 3;
+    const progress = isComplete ? 4 : 3;
 
-    // const { data } = await patchData(userToken, `/review/now/${reviewId}`, {
-    //   answerThree: { root: periNote },
-    //   progress,
+    await patchPeriNote(userToken, "/peri/20", { answerThree: { root: note }, progress });
+    // setBookData({
+    //   authors: ["테스트령"],
+    //   publicationDt: "2022년 2월 1일",
+    //   thumbnail: "https://bookstairs-bucket.s3.amazonaws.com/user_profile/1642340891758.jpg",
+    //   title: "테스트 책 제목",
+    //   translators: ["령좜언귬"],
     // });
-
-    // setBookData(data.data.bookData);
   };
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -260,7 +264,7 @@ export default function PeriNote() {
   };
 
   useEffect(() => {
-    periNote.forEach((element) => {
+    note.forEach((element) => {
       if (element.question !== "") {
         return setIsDisabled(false);
       }
@@ -283,7 +287,7 @@ export default function PeriNote() {
   }, []);
 
   useEffect(() => {
-    setNote(periNote);
+    setNote(periNote.answerThree.root);
   }, [periNote]);
 
   return (
@@ -661,7 +665,7 @@ export default function PeriNote() {
           <PeriModal onToggleModal={handlePeriCarousel} />
         </StStepModalWrapper>
       )}
-      {/* {isComplete && <Complete bookData={bookData} isLoginState={{ reviewId, isLogin, fromUrl }} />} */}
+      {isComplete && <Complete bookData={bookData} isLoginState={{ reviewId: 20, isLogin, fromUrl: "" }} />}
     </>
   );
 }
