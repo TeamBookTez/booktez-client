@@ -20,7 +20,6 @@ export default function PeriNote() {
     isPrevented,
     handleIsPrevented,
     handleSaveBody,
-    handleNav,
     handleOpenDrawer,
     handleCloseDrawer,
   ] =
@@ -33,7 +32,6 @@ export default function PeriNote() {
         boolean,
         (shouldPrevent: boolean) => void,
         <T>(body: T) => void,
-        (idx: number) => void,
         (i: number) => void,
         () => void,
       ]

@@ -111,6 +111,10 @@ export default function BookNoteRefactor() {
     };
   }, [saveReview]);
 
+  useEffect(() => {
+    setNavIndex(initIndex);
+  }, [initIndex]);
+
   return (
     <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
       {openExitModal && <PopUpExit onExit={handleExit} />}
@@ -138,7 +142,6 @@ export default function BookNoteRefactor() {
             isPrevented,
             handleIsPrevented,
             handleSaveBody,
-            handleNav,
             handleOpenDrawer,
             handleCloseDrawer,
           ]}

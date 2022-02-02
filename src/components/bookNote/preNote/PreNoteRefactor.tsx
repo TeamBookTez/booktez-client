@@ -30,7 +30,6 @@ export default function PreNoteRefactor() {
     isPrevented,
     handleIsPrevented,
     handleSaveBody,
-    handleNav,
     handleOpenDrawer,
     handleCloseDrawer,
   ] =
@@ -43,7 +42,6 @@ export default function PreNoteRefactor() {
         boolean,
         (shouldPrevent: boolean) => void,
         <T>(body: T) => void,
-        (idx: number) => void,
         (i: number) => void,
         () => void,
       ]
@@ -93,8 +91,6 @@ export default function PreNoteRefactor() {
 
     // peri로 넘어가기
     navigate("/book-note/peri", { state: { isLogin, reviewId: 20, fromUrl: "" } });
-    // navigator 변경
-    handleNav(1);
   };
 
   const handleOpenModal = () => {
