@@ -64,7 +64,7 @@ export const useGetPeriNote = (token: string, key: string) => {
 
         setPeriNote(data);
       } catch (err) {
-        console.log("err", err);
+        return;
       }
     })();
   }, []);
@@ -73,8 +73,5 @@ export const useGetPeriNote = (token: string, key: string) => {
 };
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
-  console.log("body", body);
-  const { data } = await mockClient(token).patch(key, body);
-
-  console.log("data", data);
+  await mockClient(token).patch(key, body);
 };
