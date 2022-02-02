@@ -8,11 +8,10 @@
   "pre": [
     {
       "id": 20,
-      "answerOne": "답변 1",
-      "answerTwo": "답변 2",
+      "answerOne": "테스트 답변 1",
+      "answerTwo": "테스트 답변 2",
       "questionList": [
-        "질문 리스트 1",
-        "질문 리스트 3"
+        "테스트 질문 리스트 1"
       ],
       "progress": 3
     }
@@ -24,27 +23,17 @@
         "root": [
           {
             "depth": 1,
-            "question": "질문 리스트 1",
+            "question": "테스트 질문 리스트 1",
             "answer": [
               {
-                "text": "ㅇ",
-                "children": []
-              }
-            ]
-          },
-          {
-            "depth": 1,
-            "question": "질문 리스트 2",
-            "answer": [
-              {
-                "text": "ㅇ",
+                "text": "",
                 "children": []
               }
             ]
           }
         ]
       },
-      "progress": 4
+      "progress": 3
     }
   ]
 }

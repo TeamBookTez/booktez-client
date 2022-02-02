@@ -8,11 +8,10 @@ interface NavigatorProps {
   onNav: (idx: number) => void;
   isLoginState: IsLoginState;
   isPrevented: boolean;
-  isPeriEmpty: boolean;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isLoginState, isPrevented, isPeriEmpty } = props;
+  const { navIndex, onNav, isLoginState, isPrevented } = props;
 
   const navigate = useNavigate();
 
@@ -22,7 +21,7 @@ export default function Navigator(props: NavigatorProps) {
   };
 
   const goToPeri = (isPrevented: boolean) => {
-    if (isPrevented && !isPeriEmpty) {
+    if (!isPrevented) {
       navigate("peri", { state: isLoginState });
       onNav(1);
     }

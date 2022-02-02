@@ -22,14 +22,37 @@ export default function PreNoteRefactor() {
   // 삭제 필요
   const ablePatch = true;
 
-  const [isLogin, userToken, handleNav, handleOpenDrawer, handleCloseDrawer] =
-    useOutletContext<[boolean, string, (idx: number) => void, (i: number) => void, () => void]>();
+  const [
+    isLogin,
+    userToken,
+    initIndex,
+    isSave,
+    isPrevented,
+    handleIsPrevented,
+    handleSaveBody,
+    handleNav,
+    handleOpenDrawer,
+    handleCloseDrawer,
+  ] =
+    useOutletContext<
+      [
+        boolean,
+        string,
+        number,
+        boolean,
+        boolean,
+        (shouldPrevent: boolean) => void,
+        <T>(body: T) => void,
+        (idx: number) => void,
+        (i: number) => void,
+        () => void,
+      ]
+    >();
 
   const [preNote] = useGetPreNote(userToken, "/pre/20");
   const { answerOne, answerTwo, questionList, progress } = preNote;
 
   const [note, setNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, progress });
-  const [isPrevented, setIsPrevented] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -61,7 +84,7 @@ export default function PreNoteRefactor() {
       patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
     }
 
-    setIsPrevented(true);
+    handleIsPrevented(false);
 
     // 현재 모달 닫기
     setOpenModal(false);
@@ -91,9 +114,15 @@ export default function PreNoteRefactor() {
     setNote(preNote);
 
     if (progress > 2) {
-      setIsPrevented(true);
+      handleIsPrevented(false);
     }
   }, [preNote]);
+
+  useEffect(() => {
+    if (!initIndex && isSave) {
+      handleSaveBody(note);
+    }
+  }, [isSave]);
 
   return (
     <>

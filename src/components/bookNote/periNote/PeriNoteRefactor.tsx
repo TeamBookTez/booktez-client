@@ -5,17 +5,37 @@ import styled, { css } from "styled-components";
 import { IcAnswerLabel, IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
-import { patchData } from "../../../utils/lib/api";
 import { patchBookNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
-import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { Complete, ExButton, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 import PeriModal from "../stepUp/PeriModal";
 
 export default function PeriNote() {
-  const [isLogin, userToken, handleNav, handleOpenDrawer, handleCloseDrawer] =
-    useOutletContext<[boolean, string, (idx: number) => void, (i: number) => void, () => void]>();
+  const [
+    isLogin,
+    userToken,
+    initIndex,
+    isSave,
+    handleIsPrevented,
+    handleSaveBody,
+    handleNav,
+    handleOpenDrawer,
+    handleCloseDrawer,
+  ] =
+    useOutletContext<
+      [
+        boolean,
+        string,
+        number,
+        boolean,
+        (shouldPrevent: boolean) => void,
+        <T>(body: T) => void,
+        (idx: number) => void,
+        (i: number) => void,
+        () => void,
+      ]
+    >();
 
   const [periNote] = useGetPeriNote(userToken, "/peri/20");
 
@@ -290,6 +310,12 @@ export default function PeriNote() {
   useEffect(() => {
     setNote(periNote.answerThree.root);
   }, [periNote]);
+
+  useEffect(() => {
+    if (initIndex && isSave) {
+      handleSaveBody({ answerThree: { root: note }, progress: 3 });
+    }
+  }, [isSave]);
 
   return (
     <>

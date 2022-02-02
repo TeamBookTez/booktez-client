@@ -50,12 +50,10 @@ export default function QuestionThree(props: QuestionThreeProps) {
           onAddInput={handleAddInput}
         />
       ))}
-      {!isPrevented ? (
+      {isPrevented && (
         <StAddButton type="button" disabled={!ablePatch} onClick={handleAddInput}>
           + 질문추가
         </StAddButton>
-      ) : (
-        ""
       )}
     </PreNoteForm>
   );

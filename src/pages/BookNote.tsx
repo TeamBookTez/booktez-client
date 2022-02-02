@@ -415,13 +415,7 @@ export default function BookNote() {
       <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator
-          navIndex={navIndex}
-          onNav={handleNav}
-          isLoginState={isLoginState}
-          isPrevented={isPrevented}
-          isPeriEmpty={!periNote.length}
-        />
+        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
         {isSave && (
           <StSave>
             <StIcCheckSave />

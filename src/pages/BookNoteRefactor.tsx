@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
-import { DrawerWrapper, Navigator, PopUpPreDone } from "../components/bookNote";
+import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { Loading, PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
-import { patchData } from "../utils/lib/api";
-import { useGetBookNoteTitle } from "../utils/mock-api/bookNote";
-
-interface ObjKey {
-  [key: string]: string | string[] | number;
-}
+import { patchBookNote, useGetBookNoteTitle } from "../utils/mock-api/bookNote";
 
 export interface IsLoginState {
   isLogin: boolean;
   reviewId: number;
   fromUrl: string;
+}
+
+// 시간이 된다면 keyof 꼭 활용해보기
+interface ObjKey {
+  [key: string]: string | string[] | number;
 }
 
 export interface PreNoteData extends ObjKey {
@@ -27,11 +27,15 @@ export interface PreNoteData extends ObjKey {
   progress: number;
 }
 
+interface PeriNoteData {
+  answerThree: { root: Question[] };
+  progress: number;
+}
+
 export default function BookNoteRefactor() {
-  const navigate = useNavigate();
   const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
-  const pathKey = initIndex ? "now" : "before";
+  // const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   const isLoginState = state as IsLoginState;
@@ -41,14 +45,12 @@ export default function BookNoteRefactor() {
   const userToken = TOKEN ? TOKEN : "";
 
   const [title, isLoading, isError] = useGetBookNoteTitle(userToken, "/review/20");
-
-  const [preNote, setPreNote] = useState<PreNoteData>({
+  const [saveBody, setSaveBody] = useState<PreNoteData | PeriNoteData>({
     answerOne: "",
     answerTwo: "",
     questionList: [""],
     progress: 2,
   });
-  const [periNote, setPeriNote] = useState<Question[]>([]);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -56,7 +58,7 @@ export default function BookNoteRefactor() {
 
   const [isSave, setIsSave] = useState<boolean>(false);
 
-  const [isPrevented, setIsPrevented] = useState<boolean>(false);
+  const [isPrevented, setIsPrevented] = useState<boolean>(true);
 
   const [drawerIdx, setDrawerIdx] = useState(1);
 
@@ -77,21 +79,36 @@ export default function BookNoteRefactor() {
     setDrawerIdx(i);
   };
 
-  // 서버에의 저장을 관리
-  const patchReview = async (key: string, body: any) => {
-    // answerOne, answerTwo, questionList, progress update
-    await patchData(userToken, `/review/${key}/${reviewId}`, body);
+  // 임시 저장에 들어갈 body를 설정해주는 함수
+  // extends 부분이 맘에 들지 않음 완벽한 제네릭 구현 필요
+  function handleSaveBody<T extends PreNoteData>(body: T) {
+    setSaveBody(body);
+  }
+
+  // isPrevented가 사용되는 곳은 다음과 같습니당
+  // progress가 2라면 peri로 이동할 수 없게 하기
+  // 모든 답변이 채워지지 않으면 다음 단계로 이동할 수 없게 하기
+  const handleIsPrevented = (shouldPrevent: boolean) => {
+    setIsPrevented(shouldPrevent);
   };
 
   // 저장만 하기 - 수정 완료는 아님
   const saveReview = async () => {
-    // initIndex가 1이면 progress는 3, 0이면 progress는 2
-    const progress = preNote.progress === 4 ? 4 : initIndex + 2;
-    const body = pathKey === "before" ? { ...preNote, progress } : { answerThree: { root: periNote }, progress };
+    const apiKey = initIndex ? "peri" : "pre";
 
-    patchReview(pathKey, body);
+    patchBookNote(userToken, `/${apiKey}/20`, saveBody);
     setIsSave(true);
   };
+
+  useEffect(() => {
+    const saveToast = setTimeout(() => {
+      setIsSave(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(saveToast);
+    };
+  }, [saveReview]);
 
   return (
     <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
@@ -99,13 +116,7 @@ export default function BookNoteRefactor() {
       <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
       <StNavWrapper>
-        <Navigator
-          navIndex={navIndex}
-          onNav={handleNav}
-          isLoginState={isLoginState}
-          isPrevented={isPrevented}
-          isPeriEmpty={!periNote.length}
-        />
+        <Navigator navIndex={navIndex} onNav={handleNav} isLoginState={isLoginState} isPrevented={isPrevented} />
         {isSave && (
           <StSave>
             <StIcCheckSave />
@@ -117,7 +128,20 @@ export default function BookNoteRefactor() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Outlet context={[isLogin, userToken, handleNav, handleOpenDrawer, handleCloseDrawer]} />
+        <Outlet
+          context={[
+            isLogin,
+            userToken,
+            initIndex,
+            isSave,
+            isPrevented,
+            handleIsPrevented,
+            handleSaveBody,
+            handleNav,
+            handleOpenDrawer,
+            handleCloseDrawer,
+          ]}
+        />
       )}
       /
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
