@@ -15,7 +15,6 @@ export interface BookcaseInfo {
 
 export default function Bookcase() {
   const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
-  const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -26,6 +25,10 @@ export default function Bookcase() {
 
   const handleBookDelete = () => {
     getBookcase("/book", localToken);
+  };
+
+  const handleIsLoading = () => {
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -58,12 +61,6 @@ export default function Bookcase() {
       } = await getData(key, token);
 
       setBookcaseTotal(books);
-
-      books.forEach((book: BookcaseInfo) => {
-        if (book.state === 2) setBookcasePre((currentBook) => [...currentBook, book]);
-        if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
-        if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
-      });
     } catch (err) {
       console.log("err", err);
     }
@@ -78,7 +75,7 @@ export default function Bookcase() {
         <>
           <MainHeader>서재</MainHeader>
           <Navigation />
-          <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete, isLogin]} />
+          <Outlet context={[bookcaseTotal, bookcasePeri, bookcasePost, handleIsLoading, handleBookDelete, isLogin]} />
         </>
       )}
     </>
