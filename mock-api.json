@@ -11,7 +11,7 @@
       "answerOne": "테스트 답변 1",
       "answerTwo": "테스트 답변 2",
       "questionList": [
-        "테스트 질문 리스트 1"
+        "테스트 질문 리스트 2"
       ],
       "progress": 3
     }
@@ -26,14 +26,14 @@
             "question": "테스트 질문 리스트 1",
             "answer": [
               {
-                "text": "",
+                "text": "d",
                 "children": []
               }
             ]
           }
         ]
       },
-      "progress": 3
+      "progress": 4
     }
   ]
 }

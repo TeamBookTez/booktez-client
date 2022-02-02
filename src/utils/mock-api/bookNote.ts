@@ -12,7 +12,6 @@ interface PeriNoteData {
 export const useGetBookNoteTitle = (token: string, key: string) => {
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -22,13 +21,13 @@ export const useGetBookNoteTitle = (token: string, key: string) => {
 
         setTitle(data.title);
       } catch (err) {
-        setIsError(true);
+        return;
       }
       setIsLoading(false);
     })();
   }, []);
 
-  return [title, isLoading, isError];
+  return [title, isLoading];
 };
 
 export const useGetPreNote = (token: string, key: string) => {
@@ -46,7 +45,7 @@ export const useGetPreNote = (token: string, key: string) => {
 
         setPreNote(data);
       } catch (err) {
-        console.log("err", err);
+        return;
       }
     })();
   }, []);

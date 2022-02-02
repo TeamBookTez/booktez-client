@@ -38,13 +38,14 @@ export default function BookNoteRefactor() {
   // const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
+  // recoil로 관리했으면 하는 부분
   const isLoginState = state as IsLoginState;
   const { isLogin, reviewId, fromUrl } = isLoginState;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
-  const [title, isLoading, isError] = useGetBookNoteTitle(userToken, "/review/20");
+  const [title, isLoading] = useGetBookNoteTitle(userToken, "/review/20");
   const [saveBody, setSaveBody] = useState<PreNoteData | PeriNoteData>({
     answerOne: "",
     answerTwo: "",

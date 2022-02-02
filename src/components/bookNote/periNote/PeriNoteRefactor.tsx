@@ -17,6 +17,7 @@ export default function PeriNote() {
     userToken,
     initIndex,
     isSave,
+    isPrevented,
     handleIsPrevented,
     handleSaveBody,
     handleNav,
@@ -28,6 +29,7 @@ export default function PeriNote() {
         boolean,
         string,
         number,
+        boolean,
         boolean,
         (shouldPrevent: boolean) => void,
         <T>(body: T) => void,
@@ -44,7 +46,6 @@ export default function PeriNote() {
   const [isAdded, setIsAdded] = useState(true);
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bookData, setBookData] = useState({
     authors: ["테스트령"],
     publicationDt: "2022년 2월 1일",
@@ -234,7 +235,7 @@ export default function PeriNote() {
   };
 
   const submitReview = async (isComplete: boolean) => {
-    console.log("submitReview: isComplete", isComplete);
+    handleCloseDrawer();
     const progress = isComplete ? 4 : 3;
 
     await patchBookNote(userToken, "/peri/20", { answerThree: { root: note }, progress });
@@ -287,11 +288,11 @@ export default function PeriNote() {
   useEffect(() => {
     note.forEach((element) => {
       if (element.question !== "") {
-        return setIsDisabled(false);
+        return handleIsPrevented(false);
       }
       element.answer.forEach((a) => {
         if (a.text === "") {
-          return setIsDisabled(false);
+          return handleIsPrevented(false);
         }
       });
     });
@@ -338,7 +339,7 @@ export default function PeriNote() {
                     key={`q0-${a}`}
                     value={question0.question}
                     onChange={(event) => {
-                      setIsDisabled(event.target.value === "");
+                      handleIsPrevented(event.target.value === "");
                       handleChangePeri("question", event.target.value, [a]);
                     }}
                     autoFocus={isAdded}
@@ -363,7 +364,7 @@ export default function PeriNote() {
                           key={`a0-${b}`}
                           value={answer0.text}
                           onChange={(event) => {
-                            setIsDisabled(event.target.value === "");
+                            handleIsPrevented(event.target.value === "");
                             handleChangePeri("answer", event.target.value, [a, b]);
                           }}
                           onKeyPress={(event) => handleEnterAdd(event, [a])}
@@ -677,13 +678,13 @@ export default function PeriNote() {
             type="button"
             onClick={() => {
               handleAddPeri([]);
-              setIsDisabled(true);
+              handleIsPrevented(true);
             }}
-            disabled={isDisabled}>
+            disabled={isPrevented}>
             + 질문 리스트 추가
           </StAddQuestionButton>
         </StQAWrapper>
-        <StDoneButton type="button" onClick={submitComplete} disabled={isDisabled}>
+        <StDoneButton type="button" onClick={submitComplete} disabled={isPrevented}>
           작성 완료
         </StDoneButton>
       </StNoteForm>
