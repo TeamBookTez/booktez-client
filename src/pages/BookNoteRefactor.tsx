@@ -53,15 +53,14 @@ export default function BookNoteRefactor() {
     progress: 2,
   });
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-
-  const [openExitModal, setOpenExitModal] = useState<boolean>(false);
-
   const [isSave, setIsSave] = useState<boolean>(false);
 
   const [isPrevented, setIsPrevented] = useState<boolean>(true);
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [drawerIdx, setDrawerIdx] = useState(1);
+
+  const [openExitModal, setOpenExitModal] = useState<boolean>(false);
 
   const handleNav = (idx: number) => {
     setNavIndex(idx);

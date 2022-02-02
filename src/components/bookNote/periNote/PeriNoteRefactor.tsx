@@ -61,119 +61,11 @@ export default function PeriNote() {
   const handleChangePeri = (key: string, value: string, idxList: number[]) => {
     const newRoot = [...note];
 
-    switch (idxList.length) {
-      case 1:
-        newRoot[idxList[0]][key] = value;
-        break;
-      case 2:
-        newRoot[idxList[0]].answer[idxList[1]].text = value;
-        break;
-      case 3:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]][key] = value;
-        break;
-      case 4:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].text = value;
-        break;
-      case 5:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]][key] =
-          value;
-        break;
-      case 6:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].text = value;
-        break;
-      case 7:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]][key] = value;
-        break;
-      case 8:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].text = value;
-        break;
-      case 9:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]][key] = value;
-        break;
-      case 10:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].text = value;
-        break;
-    }
-
     setNote(newRoot);
   };
 
   const handleAddPeri = (idxList: number[]) => {
     const newRoot = [...note];
-
-    switch (idxList.length) {
-      default:
-        newRoot.push({ depth: 1, question: "", answer: [{ text: "", children: [] }] });
-        break;
-      case 1:
-        newRoot[idxList[0]].answer.push({ text: "", children: [] });
-        break;
-      case 2:
-        newRoot[idxList[0]].answer[idxList[1]].children.push({
-          depth: 2,
-          question: "",
-          answer: [{ text: "", children: [] }],
-        });
-        break;
-      case 3:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.push({ text: "", children: [] });
-        break;
-      case 4:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.push({
-          depth: 2,
-          question: "",
-          answer: [{ text: "", children: [] }],
-        });
-        break;
-      case 5:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer.push(
-          { text: "", children: [] },
-        );
-        break;
-      case 6:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children.push({ depth: 3, question: "", answer: [{ text: "", children: [] }] });
-        break;
-      case 7:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer.push({ text: "", children: [] });
-        break;
-      case 8:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children.push({
-          depth: 4,
-          question: "",
-          answer: [{ text: "", children: [] }],
-        });
-        break;
-      case 9:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer.push({ text: "", children: [] });
-        break;
-      case 10:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer[idxList[9]].children.push({
-          depth: 5,
-          question: "",
-          answer: [{ text: "", children: [] }],
-        });
-        break;
-    }
 
     setNote(newRoot);
     setIsAdded(true);
@@ -181,49 +73,6 @@ export default function PeriNote() {
 
   const handleDeletePeri = (idxList: number[]) => {
     const newRoot = [...note];
-
-    switch (idxList.length) {
-      case 1:
-        newRoot.splice(idxList[0], 1);
-        break;
-      case 2:
-        newRoot[idxList[0]].answer.splice(idxList[1], 1);
-        break;
-      case 3:
-        newRoot[idxList[0]].answer[idxList[1]].children.splice(idxList[2], 1);
-        break;
-      case 4:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer.splice(idxList[3], 1);
-        break;
-      case 5:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children.splice(idxList[4], 1);
-        break;
-      case 6:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[
-          idxList[4]
-        ].answer.splice(idxList[5], 1);
-        break;
-      case 7:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children.splice(idxList[6], 1);
-        break;
-      case 8:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer.splice(idxList[7], 1);
-        break;
-      case 9:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children.splice(idxList[8], 1);
-        break;
-      case 10:
-        newRoot[idxList[0]].answer[idxList[1]].children[idxList[2]].answer[idxList[3]].children[idxList[4]].answer[
-          idxList[5]
-        ].children[idxList[6]].answer[idxList[7]].children[idxList[8]].answer.splice(idxList[9], 1);
-        break;
-    }
 
     setNote(newRoot);
   };
