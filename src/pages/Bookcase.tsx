@@ -14,23 +14,21 @@ export interface BookcaseInfo {
 }
 
 export default function Bookcase() {
-  const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
 
-  const handleBookDelete = () => {
-    getBookcase("/book", localToken);
-  };
+  // const handleBookDelete = () => {
+  //   getBookcase("/book", localToken);
+  // };
 
   const handleIsLoading = () => {
     setIsLoading(false);
   };
 
   useEffect(() => {
-    getBookcase("/book", localToken);
     getLogin("/auth/check", localToken);
   }, []);
 
@@ -50,21 +48,6 @@ export default function Bookcase() {
     }
   };
 
-  const getBookcase = async (key: string, token: string) => {
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, token);
-
-      setBookcaseTotal(books);
-    } catch (err) {
-      console.log("err", err);
-    }
-    setIsLoading(false);
-  };
-
   return (
     <>
       {isLogin && isLoading ? (
@@ -73,7 +56,7 @@ export default function Bookcase() {
         <>
           <MainHeader>서재</MainHeader>
           <Navigation />
-          <Outlet context={[bookcaseTotal, handleIsLoading, handleBookDelete, isLogin]} />
+          <Outlet context={[handleIsLoading, isLogin]} />
         </>
       )}
     </>
