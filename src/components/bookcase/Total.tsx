@@ -6,14 +6,18 @@ import { getMockData } from "../../utils/lib/api";
 import Cards from "./Cards";
 
 export default function Total() {
-  const [handleIsLoading, handleBookDelete, isLogin] = useOutletContext<[() => void, () => void, boolean]>();
+  const [handleIsLoading, isLogin] = useOutletContext<[() => void, boolean]>();
   const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
 
+  const handleBookDelete = () => {
+    getBookcaseTotal("/book", localToken);
+  };
+
   useEffect(() => {
-    getBookcaseTotal("/totalbook", localToken);
+    getBookcaseTotal("/book", localToken);
   }, []);
 
   const getBookcaseTotal = async (key: string, token: string) => {

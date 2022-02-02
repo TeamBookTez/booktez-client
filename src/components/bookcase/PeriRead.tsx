@@ -6,11 +6,15 @@ import { getMockData } from "../../utils/lib/api";
 import Cards from "./Cards";
 
 export default function PeriRead() {
-  const [handleIsLoading, handleBookDelete, isLogin] = useOutletContext<[() => void, () => void, boolean]>();
+  const [handleIsLoading, isLogin] = useOutletContext<[() => void, boolean]>();
   const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
+
+  const handleBookDelete = () => {
+    getBookcasePeri("/peribook", localToken);
+  };
 
   useEffect(() => {
     getBookcasePeri("/peribook", localToken);

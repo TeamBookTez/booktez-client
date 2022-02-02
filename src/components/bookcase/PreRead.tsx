@@ -6,11 +6,15 @@ import { getMockData } from "../../utils/lib/api";
 import Cards from "./Cards";
 
 export default function PreRead() {
-  const [handleIsLoading, handleBookDelete, isLogin] = useOutletContext<[() => void, () => void, boolean]>();
+  const [handleIsLoading, isLogin] = useOutletContext<[() => void, boolean]>();
   const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
+
+  const handleBookDelete = () => {
+    getBookcasePre("/prebook", localToken);
+  };
 
   useEffect(() => {
     getBookcasePre("/prebook", localToken);

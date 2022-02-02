@@ -6,11 +6,15 @@ import { getMockData } from "../../utils/lib/api";
 import Cards from "./Cards";
 
 export default function PostRead() {
-  const [handleIsLoading, handleBookDelete, isLogin] = useOutletContext<[() => void, () => void, boolean]>();
+  const [handleIsLoading, isLogin] = useOutletContext<[() => void, boolean]>();
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
+
+  const handleBookDelete = () => {
+    getBookcasePost("/postbook", localToken);
+  };
 
   useEffect(() => {
     getBookcasePost("/postbook", localToken);
