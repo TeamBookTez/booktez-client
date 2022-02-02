@@ -19,6 +19,10 @@ export default function PeriRead() {
 
   useEffect(() => {
     getBookcasePeri("/peribook", localToken);
+
+    return () => {
+      handleIsLoading();
+    };
   }, []);
 
   const getBookcasePeri = async (key: string, token: string) => {

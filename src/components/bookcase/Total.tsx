@@ -21,9 +21,9 @@ export default function Total() {
     getBookcaseTotal("/book", localToken);
 
     return () => {
-      getBookcaseTotal("/book", localToken);
+      handleIsLoading();
     };
-  }, [bookcaseTotal]);
+  }, []);
 
   const getBookcaseTotal = async (key: string, token: string) => {
     try {

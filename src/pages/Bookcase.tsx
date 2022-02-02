@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
-import { Loading, MainHeader } from "../components/common";
-import { getData, getMockData } from "../utils/lib/api";
+import { MainHeader } from "../components/common";
+import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
@@ -26,7 +26,7 @@ export default function Bookcase() {
   // 코드 리뷰 후 해당 주석 삭제 예정
 
   const handleIsLoading = () => {
-    setIsLoading(false);
+    setIsLoading((e) => !e);
   };
 
   useEffect(() => {

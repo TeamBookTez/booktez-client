@@ -19,6 +19,10 @@ export default function PostRead() {
 
   useEffect(() => {
     getBookcasePost("/postbook", localToken);
+
+    return () => {
+      handleIsLoading();
+    };
   }, []);
 
   const getBookcasePost = async (key: string, token: string) => {

@@ -19,6 +19,10 @@ export default function PreRead() {
 
   useEffect(() => {
     getBookcasePre("/prebook", localToken);
+
+    return () => {
+      handleIsLoading();
+    };
   }, []);
 
   const getBookcasePre = async (key: string, token: string) => {
