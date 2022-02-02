@@ -15,7 +15,6 @@ export interface BookcaseInfo {
 
 export default function Bookcase() {
   const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
-  const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
   const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -75,7 +74,7 @@ export default function Bookcase() {
         <>
           <MainHeader>서재</MainHeader>
           <Navigation />
-          <Outlet context={[bookcaseTotal, bookcasePeri, bookcasePost, handleIsLoading, handleBookDelete, isLogin]} />
+          <Outlet context={[bookcaseTotal, bookcasePost, handleIsLoading, handleBookDelete, isLogin]} />
         </>
       )}
     </>
