@@ -3,10 +3,11 @@ import { useOutletContext } from "react-router-dom";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { getMockData } from "../../utils/lib/api";
+import { Loading } from "../common";
 import Cards from "./Cards";
 
 export default function PreRead() {
-  const [handleIsLoading, isLogin] = useOutletContext<[() => void, boolean]>();
+  const [isLoading, handleIsLoading, isLogin] = useOutletContext<[boolean, () => void, boolean]>();
   const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
 
   const TOKEN = localStorage.getItem("booktez-token");
@@ -37,7 +38,11 @@ export default function PreRead() {
 
   return (
     <>
-      <Cards bookcaseInfo={bookcasePre} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Cards bookcaseInfo={bookcasePre} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+      )}
     </>
   );
 }

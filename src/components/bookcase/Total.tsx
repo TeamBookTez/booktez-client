@@ -3,10 +3,11 @@ import { useOutletContext } from "react-router-dom";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { getMockData } from "../../utils/lib/api";
+import { Loading } from "../common";
 import Cards from "./Cards";
 
 export default function Total() {
-  const [handleIsLoading, isLogin] = useOutletContext<[() => void, boolean]>();
+  const [isLoading, handleIsLoading, isLogin] = useOutletContext<[boolean, () => void, boolean]>();
   const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
 
   const TOKEN = localStorage.getItem("booktez-token");
@@ -18,7 +19,11 @@ export default function Total() {
 
   useEffect(() => {
     getBookcaseTotal("/book", localToken);
-  }, []);
+
+    return () => {
+      getBookcaseTotal("/book", localToken);
+    };
+  }, [bookcaseTotal]);
 
   const getBookcaseTotal = async (key: string, token: string) => {
     try {
@@ -37,7 +42,11 @@ export default function Total() {
 
   return (
     <>
-      <Cards bookcaseInfo={bookcaseTotal} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Cards bookcaseInfo={bookcaseTotal} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+      )}
     </>
   );
 }

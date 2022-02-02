@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
-import { getData } from "../utils/lib/api";
+import { getData, getMockData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
@@ -23,6 +23,7 @@ export default function Bookcase() {
   // const handleBookDelete = () => {
   //   getBookcase("/book", localToken);
   // };
+  // 코드 리뷰 후 해당 주석 삭제 예정
 
   const handleIsLoading = () => {
     setIsLoading(false);
@@ -50,15 +51,9 @@ export default function Bookcase() {
 
   return (
     <>
-      {isLogin && isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <MainHeader>서재</MainHeader>
-          <Navigation />
-          <Outlet context={[handleIsLoading, isLogin]} />
-        </>
-      )}
+      <MainHeader>서재</MainHeader>
+      <Navigation />
+      <Outlet context={[isLoading, handleIsLoading, isLogin]} />
     </>
   );
 }
