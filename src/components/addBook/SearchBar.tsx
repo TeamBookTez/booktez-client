@@ -14,10 +14,17 @@ export default function SearchBar(props: SearchBarProps) {
   const shadowingAni = useAnimation();
   const { scrollY } = useViewportScroll();
 
-  // useEffect를 쓰는 것은 자유 (return 문에 조건문으로 끝내도 됨)
   useEffect(() => {
     scrollY.onChange(() => {
-      console.log(scrollY.get());
+      if (scrollY.get() > 109) {
+        shadowingAni.start({
+          boxShadow: "0rem 0.6rem 1rem rgba(0, 0, 0, 0.17)",
+        });
+      } else {
+        shadowingAni.start({
+          boxShadow: "initial",
+        });
+      }
     });
   }, [scrollY]);
 
@@ -32,7 +39,7 @@ export default function SearchBar(props: SearchBarProps) {
   };
 
   return (
-    <StWrapper>
+    <StWrapper animate={shadowingAni} initial={{ boxShadow: "initial" }}>
       <SearchBarWrapper isqueryempty={debounceQuery}>
         <StIcSearch isqueryempty={debounceQuery} />
 
