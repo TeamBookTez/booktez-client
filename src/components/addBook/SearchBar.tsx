@@ -1,3 +1,4 @@
+import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
