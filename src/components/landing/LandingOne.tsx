@@ -17,7 +17,7 @@ export default function LandingOne() {
           <StButton>북스테어즈 시작</StButton>
         </Link>
       </StArticle>
-      <img src={ImgLanding01} alt="여긴 어떤 이미지가 들어갈까요?" />
+      <StImgLanding01 src={ImgLanding01} alt="여긴 어떤 이미지가 들어갈까요?" />
     </StWrapper>
   );
 }
@@ -43,4 +43,9 @@ const StButton = styled(Button)`
   padding: 1.8rem 2.5rem;
 
   ${({ theme }) => theme.fonts.header3}
+`;
+
+const StImgLanding01 = styled.img`
+  width: 75.4rem;
+  height: 76.1rem;
 `;

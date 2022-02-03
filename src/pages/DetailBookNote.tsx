@@ -32,7 +32,7 @@ export default function DetailBookNote() {
 
       setReviewData(data);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
     setIsLoading(false);
   };

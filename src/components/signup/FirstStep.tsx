@@ -36,7 +36,7 @@ export default function FirstStep() {
       setIsEmailValid(resData.data.isValid);
       setErrorMessage(resData.message);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
@@ -79,7 +79,7 @@ export default function FirstStep() {
           handleOnChange={handleOnChange}
         />
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
-        <StNextStepBtn type="button" active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
+        <StNextStepBtn active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>

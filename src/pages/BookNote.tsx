@@ -132,7 +132,7 @@ export default function BookNote() {
         }
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
     // get 요청이 끝날 시 loading 끝
     setIsLoading(false);

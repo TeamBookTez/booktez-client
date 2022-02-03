@@ -32,7 +32,7 @@ export default function DetailExample() {
       }
       setIsLogin(true);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 

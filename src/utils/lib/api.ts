@@ -44,7 +44,7 @@ export const useLoginChecking = async (localToken: string | null) => {
       }
     }
   } catch (err) {
-    console.log("err", err);
+    return false;
   }
 
   return false;

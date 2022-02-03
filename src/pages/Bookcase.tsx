@@ -45,7 +45,7 @@ export default function Bookcase() {
         setIsLogin(false);
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 

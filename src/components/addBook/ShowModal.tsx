@@ -49,7 +49,7 @@ export default function ShowModal(props: ShowModalProps) {
 
       nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 

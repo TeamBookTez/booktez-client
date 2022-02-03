@@ -13,7 +13,7 @@ export default function LandingCard(props: LandingCardProps) {
     <StCard>
       {children}
       <div>
-        <StH4>{title}</StH4>
+        <StH3>{title}</StH3>
         <StSubtitle>{subTitle}</StSubtitle>
       </div>
     </StCard>
@@ -45,7 +45,7 @@ const StCard = styled.article`
   }
 `;
 
-const StH4 = styled.h4`
+const StH3 = styled.h3`
   margin-bottom: 2.2rem;
   ${({ theme }) => theme.fonts.header3}
   color: ${({ theme }) => theme.colors.gray100};

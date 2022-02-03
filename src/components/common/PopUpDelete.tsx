@@ -29,7 +29,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
         navigate("/main/bookcase");
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 

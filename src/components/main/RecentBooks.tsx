@@ -31,7 +31,7 @@ export default function RecentBooks(props: RecentProps) {
 
       setBooksRecent(books);
     } catch (err) {
-      console.log("err", err);
+      return setIsLoading(false);
     }
     setIsLoading(false);
   };

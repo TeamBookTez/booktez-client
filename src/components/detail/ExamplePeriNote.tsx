@@ -16,7 +16,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
   const root = answerThree?.root;
 
   const handleToggle = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const questionElement = e.currentTarget.closest("ul")?.nextElementSibling;
+    const questionElement = e.currentTarget.closest("h3")?.nextElementSibling;
 
     if (questionElement === null || questionElement === undefined) return;
     if (!(questionElement instanceof HTMLElement)) return;
@@ -138,7 +138,7 @@ const StExampleWrapper = styled.article`
   }
 `;
 
-const StQuestion = styled.ul`
+const StQuestion = styled.h3`
   display: flex;
   align-items: center;
 
@@ -165,7 +165,7 @@ const StIcToggle = styled(IcToggle)`
   }
 `;
 
-const StAnswer = styled.li`
+const StAnswer = styled.h4`
   list-style: none;
 
   position: relative;
