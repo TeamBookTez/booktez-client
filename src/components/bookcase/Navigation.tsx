@@ -1,10 +1,28 @@
+import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navigation() {
-  const location = useLocation();
   const [navIndex, setNavIndex] = useState<number>(0);
+  const location = useLocation();
+  const shadowingAni = useAnimation();
+  const { scrollY } = useViewportScroll();
+  const MAIN_HEADER_HEIGHT = 109;
+
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > MAIN_HEADER_HEIGHT) {
+        shadowingAni.start({
+          boxShadow: "0rem 0.6rem 1rem rgba(0, 0, 0, 0.17)",
+        });
+      } else {
+        shadowingAni.start({
+          boxShadow: "initial",
+        });
+      }
+    });
+  }, [scrollY]);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -24,7 +42,7 @@ export default function Navigation() {
   }, [location.pathname]);
 
   return (
-    <StNav>
+    <StNav animate={shadowingAni} initial={{ boxShadow: "initial" }}>
       <StUl>
         <StList>
           <StLink to="/main/bookcase">전체</StLink>
@@ -46,7 +64,7 @@ export default function Navigation() {
   );
 }
 
-const StNav = styled.nav`
+const StNav = styled(motion.nav)`
   position: sticky;
   top: 0;
 
@@ -56,8 +74,6 @@ const StNav = styled.nav`
   padding-left: 4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
-
-  width: 100%;
 `;
 
 const StUl = styled.ul`
