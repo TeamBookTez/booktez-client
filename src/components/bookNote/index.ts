@@ -1,6 +1,8 @@
 export { default as DrawerWrapper } from "./DrawerWrapper";
 export { default as ExButton } from "./ExButton";
 export { default as Navigator } from "./Navigator";
+export { default as AddedAnswer } from "./periNote/AddedAnswer";
+export { default as AddedQuestion } from "./periNote/AddedQuestion";
 export { default as Complete } from "./periNote/Complete";
 export { default as PeriNote } from "./periNote/PeriNote";
 export { default as PeriNoteRefactor } from "./periNote/PeriNoteRefactor";
@@ -15,3 +17,7 @@ export { default as PreNoteForm } from "./preNote/PreNoteForm";
 export { default as PreNoteRefactor } from "./preNote/PreNoteRefactor";
 export { default as QuestionThree } from "./preNote/QuestionThree";
 export { default as StepUp } from "./StepUp";
+export { default as CarouselDots } from "./stepUp/CarouselDots";
+export { default as OneCaseModal } from "./stepUp/OneCaseModal";
+export { default as PeriModal } from "./stepUp/PeriModal";
+export { default as ThreeCaseModal } from "./stepUp/ThreeCaseModal";

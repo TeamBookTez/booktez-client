@@ -26,8 +26,19 @@
             "question": "테스트 질문 리스트 1",
             "answer": [
               {
-                "text": "d",
-                "children": []
+                "text": "",
+                "children": [
+                  {
+                    "depth": 2,
+                    "question": "테스트 질문 리스트 1-1",
+                    "answer": [
+                      {
+                        "text": "",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
