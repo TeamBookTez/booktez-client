@@ -85,7 +85,7 @@ export default function ShowModal(props: ShowModalProps) {
         ) : translators.length > 0 ? (
           <ModalLabel>
             <DivideLine>|</DivideLine>
-            {translators} 옮김
+            {translators[0]} {translators[1]} 옮김
           </ModalLabel>
         ) : null}
       </ModalLabelWrapper>
