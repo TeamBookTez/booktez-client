@@ -31,6 +31,8 @@ export default function BookCard(props: BookCardProps) {
     }
   };
 
+  console.log(author.length);
+
   return (
     <StCardWrapper>
       <StBookCard onClick={moveBookNoteHandler}>
@@ -40,7 +42,13 @@ export default function BookCard(props: BookCardProps) {
         <StTextWrapper>
           <StTitleWrapper>
             <StCardTitle>{title}</StCardTitle>
-            <StCardAuthor>{author}</StCardAuthor>
+            {author.length > 2 ? (
+              <StCardAuthor>
+                {author[0]} 외 {author.length - 1}명
+              </StCardAuthor>
+            ) : (
+              <StCardAuthor>{author}</StCardAuthor>
+            )}
           </StTitleWrapper>
         </StTextWrapper>
       </StBookCard>
