@@ -40,7 +40,13 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         <StInfoWrapper>
           <InfoTitle>{title}</InfoTitle>
           <InfoLabelWrapper>
-            <InfoLabel>{authors}</InfoLabel>
+            {authors.length > 2 ? (
+              <InfoLabel>
+                {authors[0]} 외 {authors.length - 1}명
+              </InfoLabel>
+            ) : (
+              <InfoLabel>{authors}</InfoLabel>
+            )}
             <DivideLine></DivideLine>
             <InfoLabel>
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
