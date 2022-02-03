@@ -1,3 +1,5 @@
+import { motion, useAnimation, useViewportScroll } from "framer-motion";
+import { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
@@ -9,6 +11,23 @@ interface SearchBarProps {
 }
 export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, onDebounceQuery } = props;
+  const shadowingAni = useAnimation();
+  const { scrollY } = useViewportScroll();
+  const MAIN_HEADER_HEIGHT = 109;
+
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > MAIN_HEADER_HEIGHT) {
+        shadowingAni.start({
+          boxShadow: "0rem 0.6rem 1rem rgba(0, 0, 0, 0.17)",
+        });
+      } else {
+        shadowingAni.start({
+          boxShadow: "initial",
+        });
+      }
+    });
+  }, [scrollY]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
@@ -21,7 +40,7 @@ export default function SearchBar(props: SearchBarProps) {
   };
 
   return (
-    <StWrapper>
+    <StWrapper animate={shadowingAni} initial={{ boxShadow: "initial" }}>
       <SearchBarWrapper isqueryempty={debounceQuery}>
         <StIcSearch isqueryempty={debounceQuery} />
 
@@ -39,13 +58,14 @@ export default function SearchBar(props: SearchBarProps) {
   );
 }
 
-const StWrapper = styled.section`
+const StWrapper = styled(motion.section)`
   position: sticky;
   top: 0;
 
-  background-color: ${({ theme }) => theme.colors.white};
   padding-top: 3.1rem;
   padding-bottom: 3.5rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const SearchBarWrapper = styled.div<{ isqueryempty: string }>`

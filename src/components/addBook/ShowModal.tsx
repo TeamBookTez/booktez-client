@@ -49,7 +49,7 @@ export default function ShowModal(props: ShowModalProps) {
 
       nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
@@ -66,13 +66,31 @@ export default function ShowModal(props: ShowModalProps) {
       )}
       <ModalTitle>{title}</ModalTitle>
       <ModalLabelWrapper>
-        <ModalLabel>{authors} 지음</ModalLabel>
-        {translators.length > 0 && (
+        <ModalLabel>
+          {authors.length > 2 ? (
+            <>
+              {authors[0]} 외 {authors.length - 1}명 지음
+            </>
+          ) : (
+            <>
+              {authors[0]} {authors[1]} 지음
+            </>
+          )}
+        </ModalLabel>
+        {translators.length > 0 ? (
           <ModalLabel>
             <DivideLine>|</DivideLine>
-            {translators} 옮김
+            {translators.length > 2 ? (
+              <>
+                {translators[0]} 외 {translators.length - 1}명 옮김
+              </>
+            ) : (
+              <>
+                {translators[0]} {translators[1]} 옮김
+              </>
+            )}
           </ModalLabel>
-        )}
+        ) : null}
       </ModalLabelWrapper>
       <ModalDate>
         {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간

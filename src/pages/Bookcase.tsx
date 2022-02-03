@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import Loading from "../components/common/Loading";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -15,22 +14,22 @@ export interface BookcaseInfo {
 }
 
 export default function Bookcase() {
-  const [bookcaseTotal, setBookcaseTotal] = useState<BookcaseInfo[]>([]);
-  const [bookcasePre, setBookcasePre] = useState<BookcaseInfo[]>([]);
-  const [bookcasePeri, setBookcasePeri] = useState<BookcaseInfo[]>([]);
-  const [bookcasePost, setBookcasePost] = useState<BookcaseInfo[]>([]);
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
 
-  const handleBookDelete = () => {
-    getBookcase("/book", localToken);
+  // const handleBookDelete = () => {
+  //   getBookcase("/book", localToken);
+  // };
+  // 코드 리뷰 후 해당 주석 삭제 예정
+
+  const handleIsLoading = () => {
+    setIsLoading((e) => !e);
   };
 
   useEffect(() => {
-    getBookcase("/book", localToken);
     getLogin("/auth/check", localToken);
   }, []);
 
@@ -46,42 +45,15 @@ export default function Bookcase() {
         setIsLogin(false);
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
-  };
-
-  const getBookcase = async (key: string, token: string) => {
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, token);
-
-      setBookcaseTotal(books);
-
-      books.forEach((book: BookcaseInfo) => {
-        if (book.state === 2) setBookcasePre((currentBook) => [...currentBook, book]);
-        if (book.state === 3) setBookcasePeri((currentBook) => [...currentBook, book]);
-        if (book.state === 4) setBookcasePost((currentBook) => [...currentBook, book]);
-      });
-    } catch (err) {
-      console.log("err", err);
-    }
-    setIsLoading(false);
   };
 
   return (
     <>
-      {isLogin && isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <MainHeader>서재</MainHeader>
-          <Navigation />
-          <Outlet context={[bookcaseTotal, bookcasePre, bookcasePeri, bookcasePost, handleBookDelete, isLogin]} />
-        </>
-      )}
+      <MainHeader>서재</MainHeader>
+      <Navigation />
+      <Outlet context={[isLoading, handleIsLoading, isLogin]} />
     </>
   );
 }

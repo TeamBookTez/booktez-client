@@ -10,6 +10,10 @@ export const searchBook = (params: KAKAOParams) => {
 // "Content-Type": "multipart/form-data"
 // "Authorization": "토큰"
 
+export const getMockData = (key: string, token?: string) => {
+  return mockClient(token).get(key);
+};
+
 export const getData = (key: string, token?: string) => {
   return client(token).get(key);
 };

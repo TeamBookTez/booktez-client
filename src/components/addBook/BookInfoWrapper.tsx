@@ -40,7 +40,17 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         <StInfoWrapper>
           <InfoTitle>{title}</InfoTitle>
           <InfoLabelWrapper>
-            <InfoLabel>{authors}</InfoLabel>
+            <InfoLabel>
+              {authors.length > 2 ? (
+                <>
+                  {authors[0]} 외 {authors.length - 1}명
+                </>
+              ) : (
+                <>
+                  {authors[0]} {authors[1]}
+                </>
+              )}
+            </InfoLabel>
             <DivideLine></DivideLine>
             <InfoLabel>
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
@@ -73,6 +83,7 @@ const StArticle = styled.article`
 `;
 
 const StThumbnail = styled.img`
+  object-fit: cover;
   width: 12.1rem;
   height: 16.9rem;
 

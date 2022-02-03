@@ -12,14 +12,14 @@ import { LabelHidden } from "../common/styled/LabelHidden";
 export default function ThirdStep() {
   const [userData, setUserData, handleIsAniTime] =
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [pwd, setPwd] = useState<string>("");
+  const [pwdRe, setPwdRe] = useState<string>("");
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
   const [isPwdReEmpty, setIsPwdReEmpty] = useState<boolean>(true);
   const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdReError, setIsPwdReError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
-  const [pwd, setPwd] = useState<string>("");
-  const [pwdRe, setPwdRe] = useState<string>("");
 
   const nav = useNavigate();
 
@@ -27,19 +27,11 @@ export default function ThirdStep() {
     handleIsAniTime(false);
   }, []);
 
-  useEffect(() => {
-    setIsPwdError(false);
-  }, [pwd]);
-
-  useEffect(() => {
-    setIsPwdReError(false);
-  }, [pwdRe]);
-
   const postSignup = async () => {
     try {
       await postData("/auth/signup", userData);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
@@ -56,15 +48,15 @@ export default function ThirdStep() {
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
   const goNextStep = () => {
+    if (isPwdEmpty || isPwdReEmpty) return;
     if (pwd !== pwdRe) {
       return setIsPwdReError(true);
     }
-    if (isPwdEmpty || isPwdReEmpty) return;
     if (!checkPwdType(userData["password"])) {
       return setIsPwdError(true);
     }
@@ -77,6 +69,7 @@ export default function ThirdStep() {
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsPwdError(false);
     setIsPwdEmpty(targetValue === "");
     setPwd(targetValue);
     setUserData((current) => ({ ...current, password: targetValue }));
@@ -85,8 +78,14 @@ export default function ThirdStep() {
   const handleOnChangePwdRe = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
+    setIsPwdReError(false);
     setIsPwdReEmpty(targetValue === "");
     setPwdRe(targetValue);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    goNextStep();
   };
 
   const toggleSightPwd = () => {
@@ -94,11 +93,6 @@ export default function ThirdStep() {
   };
   const toggleSightRePwd = () => {
     setIsPwdReSight((isPwdSight) => !isPwdSight);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    goNextStep();
   };
 
   return (
@@ -138,10 +132,7 @@ export default function ThirdStep() {
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
-        <StNextStepBtn
-          type="button"
-          active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError}
-          onClick={goNextStep}>
+        <StNextStepBtn active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>

@@ -10,11 +10,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
 const StWrapper = styled.main`
   position: relative;
-  flex: 1;
+  width: calc(100% - 17.5rem);
+  min-height: 100vh;
+
+  margin-left: 17.5rem;
+
   border-radius: 2rem 0 0 2rem;
   border: 0.1rem solid ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.white};
-
-  font-family: pretendard;
-  overflow-y: auto;
 `;

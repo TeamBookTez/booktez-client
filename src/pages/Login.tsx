@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
-import Loading from "../components/common/Loading";
+import { Loading } from "../components/common";
 import { LoginForm, LoginNavSection } from "../components/login";
 import { getData } from "../utils/lib/api";
 
@@ -24,7 +24,7 @@ export default function Login() {
         }
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
     setIsLoading(false);
   };

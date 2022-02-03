@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { MainHeader } from "../components/common";
-import Loading from "../components/common/Loading";
+import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
 import { getData, patchData } from "../utils/lib/api";
 
@@ -45,7 +44,8 @@ export default function MyPage() {
       }
     } catch (err) {
       setIsLogin(false);
-      console.log("err", err);
+
+      return setIsLoading(false);
     }
     setIsLoading(false);
   };
@@ -68,7 +68,7 @@ export default function MyPage() {
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
-        console.log("err", err);
+        return;
       }
     }
   };
