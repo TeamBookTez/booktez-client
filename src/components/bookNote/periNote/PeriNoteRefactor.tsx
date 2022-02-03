@@ -69,7 +69,7 @@ export default function PeriNote() {
     setIsAdded(false);
   };
 
-  // 똥페리 switch문
+  // 똥페리 switch문 - 접어두는 것을 추천
   const handleAddPeri = (idxList: number[]) => {
     const newRoot = [...note];
 
@@ -240,6 +240,7 @@ export default function PeriNote() {
     }
   };
 
+  // onSubmit과 충돌 - 해결 중
   const submitComplete = () => {
     submitReview(true);
     setIsComplete(true);
