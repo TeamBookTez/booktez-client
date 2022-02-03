@@ -53,8 +53,6 @@ export default function ShowModal(props: ShowModalProps) {
     }
   };
 
-  console.log("showmodal", translators);
-
   return (
     <>
       <StIcCancel onClick={onToggleModal} />
