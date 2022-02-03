@@ -62,9 +62,10 @@ const StWrapper = styled(motion.section)`
   position: sticky;
   top: 0;
 
-  background-color: ${({ theme }) => theme.colors.white};
   padding-top: 3.1rem;
   padding-bottom: 3.5rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const SearchBarWrapper = styled.div<{ isqueryempty: string }>`
