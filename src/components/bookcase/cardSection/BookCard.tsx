@@ -40,7 +40,17 @@ export default function BookCard(props: BookCardProps) {
         <StTextWrapper>
           <StTitleWrapper>
             <StCardTitle>{title}</StCardTitle>
-            <StCardAuthor>{author}</StCardAuthor>
+            <StCardAuthor>
+              {author.length > 2 ? (
+                <>
+                  {author[0]} 외 {author.length - 1}명
+                </>
+              ) : (
+                <>
+                  {author[0]} {author[1]}
+                </>
+              )}
+            </StCardAuthor>
           </StTitleWrapper>
         </StTextWrapper>
       </StBookCard>
