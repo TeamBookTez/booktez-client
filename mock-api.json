@@ -8,10 +8,12 @@
   "pre": [
     {
       "id": 20,
-      "answerOne": "테스트 답변 1",
-      "answerTwo": "테스트 답변 2",
+      "answerOne": "a",
+      "answerTwo": "b",
       "questionList": [
-        "테스트 질문 리스트 2"
+        "aa",
+        "bb",
+        "cc"
       ],
       "progress": 3
     }
@@ -23,94 +25,37 @@
         "root": [
           {
             "depth": 1,
-            "question": "테스트 질문 리스트 1",
+            "question": "aa",
             "answer": [
               {
                 "text": "",
-                "children": [
-                  {
-                    "depth": 2,
-                    "question": "테스트 질문 리스트 1-1",
-                    "answer": [
-                      {
-                        "text": "",
-                        "children": [
-                          {
-                            "depth": 2,
-                            "question": "",
-                            "answer": [
-                              {
-                                "text": "",
-                                "children": []
-                              },
-                              {
-                                "text": "",
-                                "children": [
-                                  {
-                                    "depth": 3,
-                                    "question": "",
-                                    "answer": [
-                                      {
-                                        "text": "",
-                                        "children": [
-                                          {
-                                            "depth": 4,
-                                            "question": "",
-                                            "answer": [
-                                              {
-                                                "text": "",
-                                                "children": []
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "depth": 2,
-                            "question": "",
-                            "answer": [
-                              {
-                                "text": "",
-                                "children": [
-                                  {
-                                    "depth": 3,
-                                    "question": "",
-                                    "answer": [
-                                      {
-                                        "text": "",
-                                        "children": []
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                "text": "",
-                                "children": []
-                              },
-                              {
-                                "text": "",
-                                "children": []
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "children": []
+              }
+            ]
+          },
+          {
+            "depth": 1,
+            "question": "bb",
+            "answer": [
+              {
+                "text": "",
+                "children": []
+              }
+            ]
+          },
+          {
+            "depth": 1,
+            "question": "cc",
+            "answer": [
+              {
+                "text": "",
+                "children": []
               }
             ]
           }
         ]
       },
-      "progress": 4
+      "progress": 3
     }
   ]
 }

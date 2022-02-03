@@ -28,12 +28,22 @@ export const client = (token?: string | null) => {
   });
 };
 
-export const mockClient = (token: string) => {
-  return axios.create({
-    baseURL: "http://localhost:3001",
-    headers: {
+export const mockClient = (token?: string) => {
+  let headers;
+
+  if (token) {
+    headers = {
       "Content-Type": "application/json",
       Authorization: token,
-    },
+    };
+  } else {
+    headers = {
+      "Content-Type": "application/json",
+    };
+  }
+
+  return axios.create({
+    baseURL: `${process.env.REACT_APP_MOCK_URL}`,
+    headers,
   });
 };
