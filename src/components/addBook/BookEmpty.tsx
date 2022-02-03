@@ -17,7 +17,7 @@ const StWrapper = styled.section`
   justify-content: center;
   align-items: center;
 
-  height: calc(100% - 23.8rem);
+  height: calc(100vh - 23.8rem);
 
   margin: 0 4rem 0 4rem;
 `;

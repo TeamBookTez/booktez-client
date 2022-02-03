@@ -15,7 +15,5 @@ export default function CommonLayout() {
 }
 
 const StWrapper = styled.section`
-  display: flex;
   background-color: ${({ theme }) => theme.colors.gray100};
-  min-height: 100vh;
 `;

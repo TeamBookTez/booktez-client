@@ -34,7 +34,7 @@ const StDefaultSection = styled.section`
   align-items: center;
   justify-content: center;
 
-  height: calc(100% - 19.7rem);
+  height: calc(100vh - 19.7rem);
 `;
 
 const StSection = styled.section`
