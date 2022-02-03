@@ -305,7 +305,7 @@ export default function PeriNote() {
                   />
                   <StAnswerWrapper className="answer">
                     {question0.answer.map((answer0, b) => (
-                      <React.Fragment key={b}>
+                      <React.Fragment key={`A${[a, b].join("")}`}>
                         <PriorAnswer
                           periKey={`A${[a, b].join("")}`}
                           isSingle={answer0.children.length !== 0 || question0.answer.length > 1}
@@ -319,7 +319,7 @@ export default function PeriNote() {
                         />
                         <StAnswerContainer>
                           {answer0.children.map((question1, c) => (
-                            <StArticle key={c} isFirst={true}>
+                            <StArticle key={`Q${[a, b, c].join("")}`} isFirst={true}>
                               <AddedQuestion
                                 periKey={`Q${[a, b, c].join("")}`}
                                 bgColor={theme.colors.orange100}
@@ -330,7 +330,7 @@ export default function PeriNote() {
                                 onDeleteQuestion={handleDeletePeri}
                               />
                               {question1.answer.map((answer1, d) => (
-                                <React.Fragment key={d}>
+                                <React.Fragment key={`A${[a, b, c, d].join("")}`}>
                                   <AddedAnswer
                                     periKey={`A${[a, b, c, d].join("")}`}
                                     labelColor={theme.colors.orange100}
@@ -343,7 +343,7 @@ export default function PeriNote() {
                                     onDeleteAnswer={handleDeletePeri}
                                   />
                                   {answer1.children.map((question2, e) => (
-                                    <StArticle key={e} isFirst={false}>
+                                    <StArticle key={`Q${[a, b, c, d, e].join("")}`} isFirst={false}>
                                       <AddedQuestion
                                         periKey={`Q${[a, b, c, d, e].join("")}`}
                                         bgColor={theme.colors.orange300}
@@ -354,7 +354,7 @@ export default function PeriNote() {
                                         onDeleteQuestion={handleDeletePeri}
                                       />
                                       {question2.answer.map((answer2, f) => (
-                                        <React.Fragment key={f}>
+                                        <React.Fragment key={`A${[a, b, c, d, e, f].join("")}`}>
                                           <AddedAnswer
                                             periKey={`A${[a, b, c, d, e, f].join("")}`}
                                             labelColor={theme.colors.orange300}
@@ -367,7 +367,7 @@ export default function PeriNote() {
                                             onDeleteAnswer={handleDeletePeri}
                                           />
                                           {answer2.children.map((question3, g) => (
-                                            <StArticle key={g} isFirst={false}>
+                                            <StArticle key={`Q${[a, b, c, d, e, f, g].join("")}`} isFirst={false}>
                                               <AddedQuestion
                                                 periKey={`Q${[a, b, c, d, e, f, g].join("")}`}
                                                 bgColor={theme.colors.orange400}
@@ -378,7 +378,7 @@ export default function PeriNote() {
                                                 onDeleteQuestion={handleDeletePeri}
                                               />
                                               {question3.answer.map((answer3, h) => (
-                                                <React.Fragment key={h}>
+                                                <React.Fragment key={`A${[a, b, c, d, e, f, g, h].join("")}`}>
                                                   <AddedAnswer
                                                     periKey={`A${[a, b, c, d, e, f, g, h].join("")}`}
                                                     labelColor={theme.colors.orange400}
@@ -391,7 +391,9 @@ export default function PeriNote() {
                                                     onDeleteAnswer={handleDeletePeri}
                                                   />
                                                   {answer3.children.map((question4, i) => (
-                                                    <StArticle key={i} isFirst={false}>
+                                                    <StArticle
+                                                      key={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
+                                                      isFirst={false}>
                                                       <AddedQuestion
                                                         periKey={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
                                                         bgColor={theme.colors.orange500}
@@ -402,7 +404,8 @@ export default function PeriNote() {
                                                         onDeleteQuestion={handleDeletePeri}
                                                       />
                                                       {question4.answer.map((answer4, j) => (
-                                                        <React.Fragment key={j}>
+                                                        <React.Fragment
+                                                          key={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}>
                                                           <AddedAnswer
                                                             periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
                                                             labelColor={theme.colors.orange500}
