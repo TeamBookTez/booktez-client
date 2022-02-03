@@ -5,6 +5,7 @@ import { IcPeriAnswer } from "../../../assets/icons";
 import { StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
 
 interface PriorAnswerProps {
+  periKey: string;
   isSingle: boolean;
   idxList: number[];
   isAdded: boolean;
@@ -16,9 +17,18 @@ interface PriorAnswerProps {
 }
 
 export default function PriorAnswer(props: PriorAnswerProps) {
-  const { isSingle, idxList, isAdded, onAddAnswerByEnter, onAddAnswer, onToggle, onDeleteQuestion, onSelected } = props;
+  const {
+    periKey,
+    isSingle,
+    idxList,
+    isAdded,
+    onAddAnswerByEnter,
+    onAddAnswer,
+    onToggle,
+    onDeleteQuestion,
+    onSelected,
+  } = props;
   const methods = useFormContext();
-  const periKey = `A${idxList.join("")}`;
 
   return (
     <StPriAnswerWrapper issingle={isSingle}>
@@ -26,7 +36,6 @@ export default function PriorAnswer(props: PriorAnswerProps) {
       <StPriAnswerInput
         {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
-        key={periKey}
         onKeyPress={(event) => onAddAnswerByEnter(event, [idxList[0]])}
         autoFocus={!isAdded}
       />

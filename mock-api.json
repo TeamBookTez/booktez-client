@@ -34,7 +34,73 @@
                     "answer": [
                       {
                         "text": "",
-                        "children": []
+                        "children": [
+                          {
+                            "depth": 2,
+                            "question": "",
+                            "answer": [
+                              {
+                                "text": "",
+                                "children": []
+                              },
+                              {
+                                "text": "",
+                                "children": [
+                                  {
+                                    "depth": 3,
+                                    "question": "",
+                                    "answer": [
+                                      {
+                                        "text": "",
+                                        "children": [
+                                          {
+                                            "depth": 4,
+                                            "question": "",
+                                            "answer": [
+                                              {
+                                                "text": "",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "depth": 2,
+                            "question": "",
+                            "answer": [
+                              {
+                                "text": "",
+                                "children": [
+                                  {
+                                    "depth": 3,
+                                    "question": "",
+                                    "answer": [
+                                      {
+                                        "text": "",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "text": "",
+                                "children": []
+                              },
+                              {
+                                "text": "",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }

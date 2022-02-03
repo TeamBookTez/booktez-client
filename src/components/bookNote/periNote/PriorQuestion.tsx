@@ -5,6 +5,7 @@ import { IcPeriQuestion } from "../../../assets/icons";
 import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
 
 interface PriorQuestionProps {
+  periKey: string;
   idx: number;
   question: string;
   onPrevent: (shouldPrevent: boolean) => void;
@@ -15,9 +16,8 @@ interface PriorQuestionProps {
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { idx, question, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
+  const { periKey, idx, question, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
-  const periKey = `Q${idx}`;
 
   return (
     <StPriQuestionWrapper className="question">
@@ -25,7 +25,6 @@ export default function PriorQuestion(props: PriorQuestionProps) {
       <StPriQuestionInput
         {...methods.register(periKey)}
         placeholder="질문을 입력해주세요"
-        key={periKey}
         defaultValue={question}
         autoFocus={isAdded}
       />

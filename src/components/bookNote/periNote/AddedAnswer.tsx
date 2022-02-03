@@ -5,6 +5,7 @@ import { IcAnswerLabel } from "../../../assets/icons";
 import { StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
 
 interface AddedAnswerProps {
+  periKey: string;
   labelColor: string;
   idxList: number[];
   isAdded: boolean;
@@ -16,10 +17,18 @@ interface AddedAnswerProps {
 }
 
 export default function AddedAnswer(props: AddedAnswerProps) {
-  const { labelColor, idxList, isAdded, onAddAnswerByEnter, onToggle, onAddQuestion, onSelected, onDeleteAnswer } =
-    props;
+  const {
+    periKey,
+    labelColor,
+    idxList,
+    isAdded,
+    onAddAnswerByEnter,
+    onToggle,
+    onAddQuestion,
+    onSelected,
+    onDeleteAnswer,
+  } = props;
   const methods = useFormContext();
-  const periKey = `A${idxList.join("")}`;
 
   return (
     <StAnswerInputWrapper>
@@ -27,7 +36,6 @@ export default function AddedAnswer(props: AddedAnswerProps) {
       <StAnswerInput
         {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
-        key={periKey}
         onKeyPress={(event) => onAddAnswerByEnter(event, idxList.slice(0, -1))}
         autoFocus={!isAdded}
       />

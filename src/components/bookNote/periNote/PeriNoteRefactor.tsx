@@ -42,8 +42,9 @@ export default function PeriNote() {
     >();
 
   const methods = useForm();
-  const { register, handleSubmit } = methods;
+  const { handleSubmit } = methods;
   const onSubmit = handleSubmit((data: FormData) => {
+    // submit 확인용 콘솔
     console.log(data);
   });
 
@@ -293,6 +294,7 @@ export default function PeriNote() {
               note.map((question0, a) => (
                 <StQAContainer key={a}>
                   <PriorQuestion
+                    periKey={`Q${a}`}
                     idx={a}
                     question={question0.question}
                     onPrevent={handlePrevent}
@@ -305,6 +307,7 @@ export default function PeriNote() {
                     {question0.answer.map((answer0, b) => (
                       <React.Fragment key={b}>
                         <PriorAnswer
+                          periKey={`A${[a, b].join("")}`}
                           isSingle={answer0.children.length !== 0 || question0.answer.length > 1}
                           idxList={[a, b]}
                           isAdded={isAdded}
@@ -318,6 +321,7 @@ export default function PeriNote() {
                           {answer0.children.map((question1, c) => (
                             <StArticle key={c} isFirst={true}>
                               <AddedQuestion
+                                periKey={`Q${[a, b, c].join("")}`}
                                 bgColor={theme.colors.orange100}
                                 idxList={[a, b, c]}
                                 isAdded={isAdded}
@@ -328,6 +332,7 @@ export default function PeriNote() {
                               {question1.answer.map((answer1, d) => (
                                 <React.Fragment key={d}>
                                   <AddedAnswer
+                                    periKey={`A${[a, b, c, d].join("")}`}
                                     labelColor={theme.colors.orange100}
                                     idxList={[a, b, c, d]}
                                     isAdded={isAdded}
@@ -340,6 +345,7 @@ export default function PeriNote() {
                                   {answer1.children.map((question2, e) => (
                                     <StArticle key={e} isFirst={false}>
                                       <AddedQuestion
+                                        periKey={`Q${[a, b, c, d, e].join("")}`}
                                         bgColor={theme.colors.orange300}
                                         idxList={[a, b, c, d, e]}
                                         isAdded={isAdded}
@@ -350,6 +356,7 @@ export default function PeriNote() {
                                       {question2.answer.map((answer2, f) => (
                                         <React.Fragment key={f}>
                                           <AddedAnswer
+                                            periKey={`A${[a, b, c, d, e, f].join("")}`}
                                             labelColor={theme.colors.orange300}
                                             idxList={[a, b, c, d, e, f]}
                                             isAdded={isAdded}
@@ -362,6 +369,7 @@ export default function PeriNote() {
                                           {answer2.children.map((question3, g) => (
                                             <StArticle key={g} isFirst={false}>
                                               <AddedQuestion
+                                                periKey={`Q${[a, b, c, d, e, f, g].join("")}`}
                                                 bgColor={theme.colors.orange400}
                                                 idxList={[a, b, c, d, e, f, g]}
                                                 isAdded={isAdded}
@@ -372,6 +380,7 @@ export default function PeriNote() {
                                               {question3.answer.map((answer3, h) => (
                                                 <React.Fragment key={h}>
                                                   <AddedAnswer
+                                                    periKey={`A${[a, b, c, d, e, f, g, h].join("")}`}
                                                     labelColor={theme.colors.orange400}
                                                     idxList={[a, b, c, d, e, f, g, h]}
                                                     isAdded={isAdded}
@@ -384,6 +393,7 @@ export default function PeriNote() {
                                                   {answer3.children.map((question4, i) => (
                                                     <StArticle key={i} isFirst={false}>
                                                       <AddedQuestion
+                                                        periKey={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
                                                         bgColor={theme.colors.orange500}
                                                         idxList={[a, b, c, d, e, f, g, h, i]}
                                                         isAdded={isAdded}
@@ -394,6 +404,7 @@ export default function PeriNote() {
                                                       {question4.answer.map((answer4, j) => (
                                                         <React.Fragment key={j}>
                                                           <AddedAnswer
+                                                            periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
                                                             labelColor={theme.colors.orange500}
                                                             idxList={[a, b, c, d, e, f, g, h, i, j]}
                                                             isAdded={isAdded}

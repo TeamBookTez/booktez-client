@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
 
 interface AddedQuestionProps {
+  periKey: string;
   bgColor: string;
   idxList: number[];
   isAdded: boolean;
@@ -13,20 +14,14 @@ interface AddedQuestionProps {
 }
 
 export default function AddedQuestion(props: AddedQuestionProps) {
-  const { bgColor, idxList, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
+  const { periKey, bgColor, idxList, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
-  const periKey = `Q${idxList.join("")}`;
 
   return (
     <StQuestionLabelWrapper>
       <StQuestionLabel bgcolor={bgColor}>질문</StQuestionLabel>
       <StQuestionInputWrapper>
-        <StQuestionInput
-          {...methods.register(periKey)}
-          placeholder="질문을 입력해주세요"
-          key={periKey}
-          autoFocus={isAdded}
-        />
+        <StQuestionInput {...methods.register(periKey)} placeholder="질문을 입력해주세요" autoFocus={isAdded} />
         <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
           답변
         </StAddAnswerButton>
