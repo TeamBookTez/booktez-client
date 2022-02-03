@@ -10,6 +10,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
 const StWrapper = styled.main`
   position: relative;
+  width: calc(100vw - 17.5rem);
   min-height: 100vh;
 
   margin-left: 17.5rem;
