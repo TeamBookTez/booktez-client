@@ -27,3 +27,23 @@ export const client = (token?: string | null) => {
     headers,
   });
 };
+
+export const mockClient = (token?: string | null) => {
+  let headers;
+
+  if (token) {
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: token,
+    };
+  } else {
+    headers = {
+      "Content-Type": "application/json",
+    };
+  }
+
+  return axios.create({
+    baseURL: `${process.env.REACT_APP_MOCK_URL}`,
+    headers,
+  });
+};
