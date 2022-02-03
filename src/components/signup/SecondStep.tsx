@@ -36,7 +36,7 @@ export default function SecondStep() {
       setIsNicknameValid(resData.data.isValid);
       setErrorMessage(resData.message);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
@@ -79,7 +79,7 @@ export default function SecondStep() {
           handleOnChange={handleOnChange}
         />
         <AlertLabel isError={isNicknameError}>{errorMessage}</AlertLabel>
-        <StNextStepBtn type="button" active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
+        <StNextStepBtn active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>

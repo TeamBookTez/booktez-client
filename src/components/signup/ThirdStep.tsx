@@ -31,7 +31,7 @@ export default function ThirdStep() {
     try {
       await postData("/auth/signup", userData);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
@@ -48,15 +48,15 @@ export default function ThirdStep() {
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
   const goNextStep = () => {
+    if (isPwdEmpty || isPwdReEmpty) return;
     if (pwd !== pwdRe) {
       return setIsPwdReError(true);
     }
-    if (isPwdEmpty || isPwdReEmpty) return;
     if (!checkPwdType(userData["password"])) {
       return setIsPwdError(true);
     }
@@ -132,10 +132,7 @@ export default function ThirdStep() {
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
-        <StNextStepBtn
-          type="button"
-          active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError}
-          onClick={goNextStep}>
+        <StNextStepBtn active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>

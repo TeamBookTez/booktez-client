@@ -73,6 +73,7 @@ const StArticle = styled.article`
 `;
 
 const StThumbnail = styled.img`
+  object-fit: cover;
   width: 12.1rem;
   height: 16.9rem;
 

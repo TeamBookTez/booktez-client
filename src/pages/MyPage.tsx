@@ -44,7 +44,8 @@ export default function MyPage() {
       }
     } catch (err) {
       setIsLogin(false);
-      console.log("err", err);
+
+      return setIsLoading(false);
     }
     setIsLoading(false);
   };
@@ -67,7 +68,7 @@ export default function MyPage() {
           setUserInfo((current) => ({ ...current, img: data.img }));
         }
       } catch (err) {
-        console.log("err", err);
+        return;
       }
     }
   };

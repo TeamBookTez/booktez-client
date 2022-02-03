@@ -15,7 +15,7 @@ interface ExamplePreNoteProps {
 export default function ExamplePreNote(props: ExamplePreNoteProps) {
   const { answerOne, answerTwo, questionList, isLogin } = props;
   const navigate = useNavigate();
-  const nickname = localStorage.getItem("booktez-nickname"); // 닉네임 받아오기(로컬스토리지)
+  const nickname = localStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
@@ -69,7 +69,7 @@ const StExampleWrapper = styled.article`
   }
 `;
 
-const StQuestion = styled.ul`
+const StQuestion = styled.h3`
   margin-top: 2.4rem;
 
   ${({ theme }) => theme.fonts.body2};
@@ -85,7 +85,7 @@ const StFirstQuestion = styled(StQuestion)`
   }
 `;
 
-const StAnswer = styled.li`
+const StAnswer = styled.h4`
   list-style: none;
 
   position: relative;

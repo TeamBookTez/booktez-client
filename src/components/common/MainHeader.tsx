@@ -37,7 +37,7 @@ export default function MainHeader(props: MainHeaderProps) {
         setIsLogin(false);
       }
     } catch (err) {
-      console.log("err", err);
+      return;
     }
   };
 
