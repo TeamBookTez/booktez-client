@@ -43,7 +43,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
             <InfoLabel>
               {authors.length > 2 ? (
                 <>
-                  {authors[0]} 외 {authors.length - 1}명{" "}
+                  {authors[0]} 외 {authors.length - 1}명
                 </>
               ) : (
                 <>
