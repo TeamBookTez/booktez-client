@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 import { IcAnswerLabel } from "../../../assets/icons";
@@ -15,21 +15,17 @@ interface AddedAnswerProps {
   onDeleteAnswer: (idxList: number[]) => void;
 }
 
-interface FormData {
-  [key: string]: string;
-}
-
 export default function AddedAnswer(props: AddedAnswerProps) {
   const { labelColor, idxList, isAdded, onAddAnswerByEnter, onToggle, onAddQuestion, onSelected, onDeleteAnswer } =
     props;
-  const { register } = useForm<FormData>();
+  const methods = useFormContext();
   const periKey = `A${idxList.join("")}`;
 
   return (
     <StAnswerInputWrapper>
       <StAnswerLabel labelcolor={labelColor} />
       <StAnswerInput
-        {...register(periKey)}
+        {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
         key={periKey}
         onKeyPress={(event) => onAddAnswerByEnter(event, idxList.slice(0, -1))}

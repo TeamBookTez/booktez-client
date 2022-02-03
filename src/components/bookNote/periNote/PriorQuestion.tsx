@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 import { IcPeriQuestion } from "../../../assets/icons";
-import { StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
+import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
 
 interface PriorQuestionProps {
   idx: number;
@@ -14,21 +14,18 @@ interface PriorQuestionProps {
   onDeleteQuestion: (idxList: number[]) => void;
 }
 
-interface FormData {
-  [key: string]: string;
-}
-
 export default function PriorQuestion(props: PriorQuestionProps) {
   const { idx, question, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
-  const { register } = useForm<FormData>();
+  const methods = useFormContext();
+  const periKey = `Q${idx}`;
 
   return (
     <StPriQuestionWrapper className="question">
       <StQuestionIcon />
       <StPriQuestionInput
-        {...register("question")}
+        {...methods.register(periKey)}
         placeholder="질문을 입력해주세요"
-        key={`q0-${idx}`}
+        key={periKey}
         defaultValue={question}
         autoFocus={isAdded}
       />
@@ -72,12 +69,4 @@ const StPriQuestionInput = styled.input`
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
-`;
-
-const StAddAnswerButton = styled.button`
-  width: 6.6rem;
-  height: 3.4rem;
-
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.gray400};
 `;

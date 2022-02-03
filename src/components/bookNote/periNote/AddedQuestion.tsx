@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
@@ -12,20 +12,21 @@ interface AddedQuestionProps {
   onDeleteQuestion: (idxList: number[]) => void;
 }
 
-interface FormData {
-  [key: string]: string;
-}
-
 export default function AddedQuestion(props: AddedQuestionProps) {
   const { bgColor, idxList, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
-  const { register } = useForm<FormData>();
+  const methods = useFormContext();
   const periKey = `Q${idxList.join("")}`;
 
   return (
     <StQuestionLabelWrapper>
       <StQuestionLabel bgcolor={bgColor}>질문</StQuestionLabel>
       <StQuestionInputWrapper>
-        <StQuestionInput {...register(periKey)} placeholder="질문을 입력해주세요" key={periKey} autoFocus={isAdded} />
+        <StQuestionInput
+          {...methods.register(periKey)}
+          placeholder="질문을 입력해주세요"
+          key={periKey}
+          autoFocus={isAdded}
+        />
         <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
           답변
         </StAddAnswerButton>

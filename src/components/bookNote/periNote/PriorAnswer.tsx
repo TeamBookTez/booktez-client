@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
@@ -15,20 +15,16 @@ interface PriorAnswerProps {
   onSelected: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-interface FormData {
-  [key: string]: string;
-}
-
 export default function PriorAnswer(props: PriorAnswerProps) {
   const { isSingle, idxList, isAdded, onAddAnswerByEnter, onAddAnswer, onToggle, onDeleteQuestion, onSelected } = props;
-  const { register } = useForm<FormData>();
+  const methods = useFormContext();
   const periKey = `A${idxList.join("")}`;
 
   return (
     <StPriAnswerWrapper issingle={isSingle}>
       <StAnswerIcon />
       <StPriAnswerInput
-        {...register(periKey)}
+        {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
         key={periKey}
         onKeyPress={(event) => onAddAnswerByEnter(event, [idxList[0]])}
