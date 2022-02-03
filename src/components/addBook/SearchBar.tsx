@@ -13,10 +13,11 @@ export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, onDebounceQuery } = props;
   const shadowingAni = useAnimation();
   const { scrollY } = useViewportScroll();
+  const MAIN_HEADER_HEIGHT = 109;
 
   useEffect(() => {
     scrollY.onChange(() => {
-      if (scrollY.get() > 109) {
+      if (scrollY.get() > MAIN_HEADER_HEIGHT) {
         shadowingAni.start({
           boxShadow: "0rem 0.6rem 1rem rgba(0, 0, 0, 0.17)",
         });
