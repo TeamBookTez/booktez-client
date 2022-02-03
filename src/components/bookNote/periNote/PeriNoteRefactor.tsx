@@ -7,7 +7,7 @@ import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchBookNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
 import { Button } from "../../common/styled/Button";
-import { Complete, ExButton, StepUp } from "..";
+import { Complete, ExButton, PriorAnswer, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 import PeriModal from "../stepUp/PeriModal";
 
@@ -18,7 +18,7 @@ export default function PeriNote() {
     initIndex,
     isSave,
     isPrevented,
-    handleIsPrevented,
+    handlePrevent,
     handleSaveBody,
     handleOpenDrawer,
     handleCloseDrawer,
@@ -135,11 +135,11 @@ export default function PeriNote() {
   useEffect(() => {
     note.forEach((element) => {
       if (element.question !== "") {
-        return handleIsPrevented(false);
+        return handlePrevent(false);
       }
       element.answer.forEach((a) => {
         if (a.text === "") {
-          return handleIsPrevented(false);
+          return handlePrevent(false);
         }
       });
     });
@@ -179,59 +179,28 @@ export default function PeriNote() {
           {note.length &&
             note.map((question0, a) => (
               <StQAContainer key={a}>
-                <StPriQuestionWrapper className="question">
-                  <StQuestionIcon />
-                  <StPriQuestionInput
-                    placeholder="질문을 입력해주세요"
-                    key={`q0-${a}`}
-                    value={question0.question}
-                    onChange={(event) => {
-                      handleIsPrevented(event.target.value === "");
-                      handleChangePeri("question", event.target.value, [a]);
-                    }}
-                    autoFocus={isAdded}
-                  />
-                  <StAddAnswerButton type="button" onClick={() => handleAddPeri([a])}>
-                    답변
-                  </StAddAnswerButton>
-                  <StMoreIcon onClick={handleToggle} />
-                  <StMiniMenu menuposition={"isPriQ"}>
-                    <StMenuBtn type="button" onClick={() => handleDeletePeri([a])}>
-                      삭제
-                    </StMenuBtn>
-                  </StMiniMenu>
-                </StPriQuestionWrapper>
+                <PriorQuestion
+                  idx={a}
+                  question={question0.question}
+                  onPrevent={handlePrevent}
+                  isAdded={isAdded}
+                  onAddAnswer={handleAddPeri}
+                  onToggle={handleToggle}
+                  onDeleteQuestion={handleDeletePeri}
+                />
                 <StAnswerWrapper className="answer">
                   {question0.answer.map((answer0, b) => (
                     <React.Fragment key={b}>
-                      <StPriAnswerWrapper issingle={answer0.children.length !== 0 || question0.answer.length > 1}>
-                        <StAnswerIcon />
-                        <StPriAnswerInput
-                          placeholder="답변을 입력해주세요"
-                          key={`a0-${b}`}
-                          value={answer0.text}
-                          onChange={(event) => {
-                            handleIsPrevented(event.target.value === "");
-                            handleChangePeri("answer", event.target.value, [a, b]);
-                          }}
-                          onKeyPress={(event) => handleEnterAdd(event, [a])}
-                          autoFocus={!isAdded}
-                        />
-                        <StMoreIcon onClick={handleToggle} />
-                        <StMiniMenu menuposition={"isPriA"}>
-                          <StMenuBtn
-                            type="button"
-                            onClick={(event) => {
-                              handleAddPeri([a, b]);
-                              handleSelected(event);
-                            }}>
-                            꼬리질문 추가
-                          </StMenuBtn>
-                          <StMenuBtn type="button" onClick={() => handleDeletePeri([a, b])}>
-                            삭제
-                          </StMenuBtn>
-                        </StMiniMenu>
-                      </StPriAnswerWrapper>
+                      <PriorAnswer
+                        isSingle={answer0.children.length !== 0 || question0.answer.length > 1}
+                        idxList={[a, b]}
+                        isAdded={isAdded}
+                        onAddAnswerByEnter={handleEnterAdd}
+                        onAddAnswer={handleAddPeri}
+                        onToggle={handleToggle}
+                        onDeleteQuestion={handleDeletePeri}
+                        onSelected={handleSelected}
+                      />
                       <StAnswerContainer>
                         {answer0.children.map((question1, c) => (
                           <StArticle key={c} isFirst={true}>
@@ -525,7 +494,7 @@ export default function PeriNote() {
             type="button"
             onClick={() => {
               handleAddPeri([]);
-              handleIsPrevented(true);
+              handlePrevent(true);
             }}
             disabled={isPrevented}>
             + 질문 리스트 추가
@@ -592,24 +561,12 @@ const StQAContainer = styled.section`
   }
 `;
 
-const StPriQuestionWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
+const StAddAnswerButton = styled.button`
+  width: 6.6rem;
+  height: 3.4rem;
 
-  padding: 2.6rem 4.4rem 2.6rem 8.4rem;
-
-  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
-  border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
-  border-radius: 0.8rem;
-  background-color: ${({ theme }) => theme.colors.white};
-`;
-
-const StQuestionIcon = styled(IcPeriQuestion)`
-  position: absolute;
-  top: -1.2rem;
-  left: 1.6rem;
+  ${({ theme }) => theme.fonts.caption}
+  color: ${({ theme }) => theme.colors.gray400};
 `;
 
 const StAnswerWrapper = styled.div`
@@ -622,48 +579,6 @@ const StAnswerWrapper = styled.div`
   padding: 2.8rem;
   padding-top: 0;
   background-color: ${({ theme }) => theme.colors.white};
-`;
-
-const StPriQuestionInput = styled.input`
-  flex: 1;
-  ${({ theme }) => theme.fonts.header4}
-
-  &:placeholder {
-    color: ${({ theme }) => theme.colors.white500};
-  }
-`;
-
-const StPriAnswerWrapper = styled.div<{ issingle: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-
-  ${({ issingle, theme }) =>
-    issingle
-      ? css`
-          border-bottom: 0.2rem solid ${theme.colors.white200};
-          padding-bottom: 2.8rem;
-        `
-      : ""}
-  padding-top: 2.8rem;
-  padding-right: 1.6rem;
-  padding-left: 5.6rem;
-`;
-
-const StPriAnswerInput = styled.input`
-  width: 100%;
-
-  ${({ theme }) => theme.fonts.body1}
-  &:placeholder {
-    color: ${({ theme }) => theme.colors.white500};
-  }
-`;
-
-const StAnswerIcon = styled(IcPeriAnswer)`
-  position: absolute;
-  top: 2.8rem;
-  left: 1rem;
 `;
 
 const StAnswerContainer = styled.section`
@@ -723,14 +638,6 @@ const StQuestionInput = styled.input`
   }
 `;
 
-const StAddAnswerButton = styled.button`
-  width: 6.6rem;
-  height: 3.4rem;
-
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.gray400};
-`;
-
 const StAnswerInputWrapper = styled.div`
   position: relative;
   display: flex;
@@ -787,13 +694,13 @@ const StDoneButton = styled(Button)<{ disabled: boolean }>`
   color: ${({ disabled, theme }) => (disabled ? theme.colors.gray300 : theme.colors.white)};
 `;
 
-const StMoreIcon = styled(IcMore)`
+export const StMoreIcon = styled(IcMore)`
   &:hover {
     fill: #efefef;
   }
 `;
 
-const StMiniMenu = styled.div<{ menuposition?: string }>`
+export const StMiniMenu = styled.div<{ menuposition?: string }>`
   display: none;
 
   position: absolute;
@@ -807,7 +714,7 @@ const StMiniMenu = styled.div<{ menuposition?: string }>`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const StMenuBtn = styled(Button)`
+export const StMenuBtn = styled(Button)`
   border-radius: 0.8rem;
   background-color: transparent;
   width: 9.5rem;

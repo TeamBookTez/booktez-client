@@ -28,7 +28,7 @@ export default function PreNoteRefactor() {
     initIndex,
     isSave,
     isPrevented,
-    handleIsPrevented,
+    handlePrevent,
     handleSaveBody,
     handleOpenDrawer,
     handleCloseDrawer,
@@ -82,7 +82,7 @@ export default function PreNoteRefactor() {
       patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
     }
 
-    handleIsPrevented(false);
+    handlePrevent(false);
 
     // 현재 모달 닫기
     setOpenModal(false);
@@ -110,7 +110,7 @@ export default function PreNoteRefactor() {
     setNote(preNote);
 
     if (progress > 2) {
-      handleIsPrevented(false);
+      handlePrevent(false);
     }
   }, [preNote]);
 
