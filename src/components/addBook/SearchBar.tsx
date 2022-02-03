@@ -1,4 +1,5 @@
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
+import { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
@@ -10,6 +11,15 @@ interface SearchBarProps {
 }
 export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, onDebounceQuery } = props;
+  const shadowingAni = useAnimation();
+  const { scrollY } = useViewportScroll();
+
+  // useEffect를 쓰는 것은 자유 (return 문에 조건문으로 끝내도 됨)
+  useEffect(() => {
+    scrollY.onChange(() => {
+      console.log(scrollY.get());
+    });
+  }, [scrollY]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
@@ -40,7 +50,7 @@ export default function SearchBar(props: SearchBarProps) {
   );
 }
 
-const StWrapper = styled.section`
+const StWrapper = styled(motion.section)`
   position: sticky;
   top: 0;
 
