@@ -53,7 +53,7 @@ export default function ShowModal(props: ShowModalProps) {
     }
   };
 
-  console.log(translators);
+  console.log("showmodal", translators);
 
   return (
     <>
@@ -73,7 +73,9 @@ export default function ShowModal(props: ShowModalProps) {
             {authors[0]} 외 {authors.length - 1}명 지음
           </ModalLabel>
         ) : (
-          <ModalLabel>{authors} 지음</ModalLabel>
+          <ModalLabel>
+            {authors[0]} {authors[1]} 지음
+          </ModalLabel>
         )}
         {translators.length > 2 ? (
           <ModalLabel>

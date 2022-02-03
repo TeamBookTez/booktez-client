@@ -45,7 +45,9 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
                 {authors[0]} 외 {authors.length - 1}명
               </InfoLabel>
             ) : (
-              <InfoLabel>{authors}</InfoLabel>
+              <InfoLabel>
+                {authors[0]} {authors[1]}
+              </InfoLabel>
             )}
             <DivideLine></DivideLine>
             <InfoLabel>

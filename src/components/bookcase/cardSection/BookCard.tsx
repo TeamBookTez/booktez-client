@@ -45,7 +45,9 @@ export default function BookCard(props: BookCardProps) {
                 {author[0]} 외 {author.length - 1}명
               </StCardAuthor>
             ) : (
-              <StCardAuthor>{author} 지음</StCardAuthor>
+              <StCardAuthor>
+                {author[0]} {author[1]}
+              </StCardAuthor>
             )}
           </StTitleWrapper>
         </StTextWrapper>
