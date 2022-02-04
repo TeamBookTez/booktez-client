@@ -50,7 +50,7 @@ export default function PreNoteRefactor() {
   const [preNote] = useGetPreNote(userToken, "/pre/20");
   const { answerOne, answerTwo, questionList, progress } = preNote;
 
-  const [note, setNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, progress });
+  const [patchNote, setPatchNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, progress });
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ export default function PreNoteRefactor() {
   const nickname = isLogin && localNick ? localNick : "익명의 독서가";
 
   const handleChangeReview = (key: string, value: string | string[] | number): void => {
-    setNote((currentNote) => {
+    setPatchNote((currentNote) => {
       const newData = { ...currentNote };
 
       newData[key] = value;
@@ -71,7 +71,7 @@ export default function PreNoteRefactor() {
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
     handleChangeReview("progress", 3);
-    patchBookNote(userToken, "/pre/20", { ...note, progress: 3 });
+    patchBookNote(userToken, "/pre/20", { ...patchNote, progress: 3 });
 
     if (preNote.progress === 2) {
       const defaultQuestions: Question[] = [];
@@ -107,7 +107,7 @@ export default function PreNoteRefactor() {
   };
 
   useEffect(() => {
-    setNote(preNote);
+    setPatchNote(preNote);
 
     if (progress > 2) {
       handlePrevent(false);
@@ -116,7 +116,7 @@ export default function PreNoteRefactor() {
 
   useEffect(() => {
     if (!initIndex && isSave) {
-      handleSaveBody(note);
+      handleSaveBody(patchNote);
     }
   }, [isSave]);
 
@@ -131,7 +131,7 @@ export default function PreNoteRefactor() {
             onOpenDrawer={handleOpenDrawer}>
             <StTextarea
               placeholder="답변을 입력해주세요."
-              value={note.answerOne}
+              value={patchNote.answerOne}
               onChange={(e) => handleChangeReview("answerOne", e.target.value)}
             />
           </PreNoteForm>
@@ -141,13 +141,13 @@ export default function PreNoteRefactor() {
             onOpenDrawer={handleOpenDrawer}>
             <StTextarea
               placeholder="답변을 입력해주세요."
-              value={note.answerTwo}
+              value={patchNote.answerTwo}
               onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
             />
           </PreNoteForm>
           {isLogin ? (
             <QuestionThree
-              questionList={note.questionList}
+              questionList={patchNote.questionList}
               onChangeReview={handleChangeReview}
               onOpenDrawer={handleOpenDrawer}
               isPrevented={isPrevented}

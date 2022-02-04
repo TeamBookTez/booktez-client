@@ -50,7 +50,7 @@ export default function PeriNote() {
 
   const [periNote] = useGetPeriNote(userToken, "/peri/20");
 
-  const [note, setNote] = useState<Question[]>([]);
+  const [patchNote, setPatchNote] = useState<Question[]>([]);
 
   const [isAdded, setIsAdded] = useState(true);
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
@@ -71,7 +71,7 @@ export default function PeriNote() {
 
   // 똥페리 switch문 - 접어두는 것을 추천
   const handleAddPeri = (idxList: number[]) => {
-    const newRoot = [...note];
+    const newRoot = [...patchNote];
 
     switch (idxList.length) {
       default:
@@ -137,12 +137,12 @@ export default function PeriNote() {
         break;
     }
 
-    setNote(newRoot);
+    setPatchNote(newRoot);
     setIsAdded(true);
   };
 
   const handleDeletePeri = (idxList: number[]) => {
-    const newRoot = [...note];
+    const newRoot = [...patchNote];
 
     switch (idxList.length) {
       case 1:
@@ -187,7 +187,7 @@ export default function PeriNote() {
         break;
     }
 
-    setNote(newRoot);
+    setPatchNote(newRoot);
   };
 
   const handlePeriCarousel = () => {
@@ -198,7 +198,7 @@ export default function PeriNote() {
     handleCloseDrawer();
     const progress = isComplete ? 4 : 3;
 
-    await patchBookNote(userToken, "/peri/20", { answerThree: { root: note }, progress });
+    await patchBookNote(userToken, "/peri/20", { answerThree: { root: patchNote }, progress });
 
     // 실제 서버 사용시 patch 후 넘어오는 response body의 bookdata를 setBookData에 넣기
     // setBookData({
@@ -247,7 +247,7 @@ export default function PeriNote() {
   };
 
   useEffect(() => {
-    note.forEach((element) => {
+    patchNote.forEach((element) => {
       if (element.question !== "") {
         return handlePrevent(false);
       }
@@ -270,12 +270,12 @@ export default function PeriNote() {
   }, []);
 
   useEffect(() => {
-    setNote(periNote.answerThree.root);
+    setPatchNote(periNote.answerThree.root);
   }, [periNote]);
 
   useEffect(() => {
     if (initIndex && isSave) {
-      handleSaveBody({ answerThree: { root: note }, progress: 3 });
+      handleSaveBody({ answerThree: { root: patchNote }, progress: 3 });
     }
   }, [isSave]);
 
@@ -291,8 +291,8 @@ export default function PeriNote() {
             <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
           </StLabelWrapper>
           <StQAWrapper>
-            {note.length &&
-              note.map((question0, a) => (
+            {patchNote.length &&
+              patchNote.map((question0, a) => (
                 <StQAContainer key={a}>
                   <PriorQuestion
                     periKey={`Q${a}`}
