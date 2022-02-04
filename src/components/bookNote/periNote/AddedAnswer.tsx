@@ -10,8 +10,8 @@ interface AddedAnswerProps {
   idxList: number[];
   onAddAnswerByEnter: (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => void;
   onToggle: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
-  onAddQuestion: (idxList: number[]) => void;
-  onSelected: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onAddQuestion?: (idxList: number[]) => void;
+  onSelected?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onDeleteAnswer: (idxList: number[]) => void;
 }
 
@@ -25,8 +25,12 @@ export default function AddedAnswer(props: AddedAnswerProps) {
   };
 
   const addQuestion = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onAddQuestion(idxList);
-    onSelected(event);
+    if (onAddQuestion && onSelected) {
+      onAddQuestion(idxList);
+      onSelected(event);
+    } else {
+      return;
+    }
   };
 
   const deleteAnswer = () => {
@@ -39,9 +43,11 @@ export default function AddedAnswer(props: AddedAnswerProps) {
       <StAnswerInput {...methods.register(periKey)} placeholder="답변을 입력해주세요" onKeyPress={addAnswerByEnter} />
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu>
-        <StMenuBtn type="button" onClick={addQuestion}>
-          꼬리질문 추가
-        </StMenuBtn>
+        {onAddQuestion && (
+          <StMenuBtn type="button" onClick={addQuestion}>
+            꼬리질문 추가
+          </StMenuBtn>
+        )}
         <StMenuBtn type="button" onClick={deleteAnswer}>
           삭제
         </StMenuBtn>

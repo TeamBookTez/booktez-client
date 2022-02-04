@@ -390,23 +390,17 @@ export default function PeriNote() {
                                                           onToggle={handleToggle}
                                                           onDeleteQuestion={handleDeletePeri}
                                                         />
-                                                        {question4.answer.map((answer4, j) => {
-                                                          return (
-                                                            <React.Fragment
-                                                              key={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}>
-                                                              <AddedAnswer
-                                                                periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
-                                                                labelColor={theme.colors.orange500}
-                                                                idxList={[a, b, c, d, e, f, g, h, i, j]}
-                                                                onAddAnswerByEnter={handleEnterAdd}
-                                                                onToggle={handleToggle}
-                                                                onAddQuestion={handleAddPeri}
-                                                                onSelected={handleSelected}
-                                                                onDeleteAnswer={handleDeletePeri}
-                                                              />
-                                                            </React.Fragment>
-                                                          );
-                                                        })}
+                                                        {question4.answer.map((answer4, j) => (
+                                                          <AddedAnswer
+                                                            key={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
+                                                            periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
+                                                            labelColor={theme.colors.orange500}
+                                                            idxList={[a, b, c, d, e, f, g, h, i, j]}
+                                                            onAddAnswerByEnter={handleEnterAdd}
+                                                            onToggle={handleToggle}
+                                                            onDeleteAnswer={handleDeletePeri}
+                                                          />
+                                                        ))}
                                                       </StArticle>
                                                     ))}
                                                   </React.Fragment>
