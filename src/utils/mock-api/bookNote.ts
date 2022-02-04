@@ -28,9 +28,8 @@ export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean
       } catch (err) {
         return;
       }
+      setIsLoading(false);
     })();
-
-    setIsLoading(false);
   }, []);
 
   return [preNote, isLoading];
@@ -51,9 +50,8 @@ export const useGetPeriNote = (token: string, key: string): [PeriNoteData, boole
       } catch (err) {
         return;
       }
+      setIsLoading(false);
     })();
-
-    setIsLoading(false);
   }, []);
 
   return [periNote, isLoading];
