@@ -275,11 +275,6 @@ export default function PeriNote() {
   }, [periNote]);
 
   useEffect(() => {
-    console.log("isLoading", isLoading);
-    console.log("patchNote", patchNote.length);
-  }, [patchNote, isLoading]);
-
-  useEffect(() => {
     if (initIndex && isSave) {
       handleSaveBody({ answerThree: { root: patchNote }, progress: 3 });
     }
