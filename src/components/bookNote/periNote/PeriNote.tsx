@@ -7,6 +7,7 @@ import { IcMore } from "../../../assets/icons";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchBookNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
+import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { AddedAnswer, AddedQuestion, Complete, ExButton, PeriModal, PriorAnswer, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
@@ -48,7 +49,7 @@ export default function PeriNote() {
     console.log(data);
   });
 
-  const [periNote] = useGetPeriNote(userToken, "/peri/20");
+  const [periNote, isLoading] = useGetPeriNote(userToken, "/peri/20");
 
   const [patchNote, setPatchNote] = useState<Question[]>([]);
 
@@ -274,6 +275,11 @@ export default function PeriNote() {
   }, [periNote]);
 
   useEffect(() => {
+    console.log("isLoading", isLoading);
+    console.log("patchNote", patchNote.length);
+  }, [patchNote, isLoading]);
+
+  useEffect(() => {
     if (initIndex && isSave) {
       handleSaveBody({ answerThree: { root: patchNote }, progress: 3 });
     }
@@ -281,182 +287,186 @@ export default function PeriNote() {
 
   return (
     <>
-      <FormProvider {...methods}>
-        <StNoteForm onSubmit={onSubmit}>
-          <StLabelWrapper>
-            <StLabelContainer>
-              <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
-              <StepUp onToggleModal={handlePeriCarousel} />
-            </StLabelContainer>
-            <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
-          </StLabelWrapper>
-          <StQAWrapper>
-            {patchNote.length &&
-              patchNote.map((question0, a) => {
-                <StQAContainer key={a}>
-                  <PriorQuestion
-                    periKey={`Q${a}`}
-                    idxList={[a]}
-                    question={question0.question}
-                    onPrevent={handlePrevent}
-                    isAdded={isAdded}
-                    onAddAnswer={handleAddPeri}
-                    onToggle={handleToggle}
-                    onDeleteQuestion={handleDeletePeri}
-                  />
-                  <StAnswerWrapper className="answer">
-                    {question0.answer.map((answer0, b) => (
-                      <React.Fragment key={`A${[a, b].join("")}`}>
-                        <PriorAnswer
-                          periKey={`A${[a, b].join("")}`}
-                          isSingle={answer0.children.length !== 0 || question0.answer.length > 1}
-                          idxList={[a, b]}
-                          isAdded={isAdded}
-                          onAddAnswerByEnter={handleEnterAdd}
-                          onAddAnswer={handleAddPeri}
-                          onToggle={handleToggle}
-                          onDeleteQuestion={handleDeletePeri}
-                          onSelected={handleSelected}
-                        />
-                        <StAnswerContainer>
-                          {answer0.children.map((question1, c) => (
-                            <StArticle key={`Q${[a, b, c].join("")}`} isFirst={true}>
-                              <AddedQuestion
-                                periKey={`Q${[a, b, c].join("")}`}
-                                bgColor={theme.colors.orange100}
-                                idxList={[a, b, c]}
-                                isAdded={isAdded}
-                                onAddAnswer={handleAddPeri}
-                                onToggle={handleToggle}
-                                onDeleteQuestion={handleDeletePeri}
-                              />
-                              {question1.answer.map((answer1, d) => (
-                                <React.Fragment key={`A${[a, b, c, d].join("")}`}>
-                                  <AddedAnswer
-                                    periKey={`A${[a, b, c, d].join("")}`}
-                                    labelColor={theme.colors.orange100}
-                                    idxList={[a, b, c, d]}
-                                    isAdded={isAdded}
-                                    onAddAnswerByEnter={handleEnterAdd}
-                                    onToggle={handleToggle}
-                                    onAddQuestion={handleAddPeri}
-                                    onSelected={handleSelected}
-                                    onDeleteAnswer={handleDeletePeri}
-                                  />
-                                  {answer1.children.map((question2, e) => (
-                                    <StArticle key={`Q${[a, b, c, d, e].join("")}`} isFirst={false}>
-                                      <AddedQuestion
-                                        periKey={`Q${[a, b, c, d, e].join("")}`}
-                                        bgColor={theme.colors.orange300}
-                                        idxList={[a, b, c, d, e]}
-                                        isAdded={isAdded}
-                                        onAddAnswer={handleAddPeri}
-                                        onToggle={handleToggle}
-                                        onDeleteQuestion={handleDeletePeri}
-                                      />
-                                      {question2.answer.map((answer2, f) => (
-                                        <React.Fragment key={`A${[a, b, c, d, e, f].join("")}`}>
-                                          <AddedAnswer
-                                            periKey={`A${[a, b, c, d, e, f].join("")}`}
-                                            labelColor={theme.colors.orange300}
-                                            idxList={[a, b, c, d, e, f]}
-                                            isAdded={isAdded}
-                                            onAddAnswerByEnter={handleEnterAdd}
-                                            onToggle={handleToggle}
-                                            onAddQuestion={handleAddPeri}
-                                            onSelected={handleSelected}
-                                            onDeleteAnswer={handleDeletePeri}
-                                          />
-                                          {answer2.children.map((question3, g) => (
-                                            <StArticle key={`Q${[a, b, c, d, e, f, g].join("")}`} isFirst={false}>
-                                              <AddedQuestion
-                                                periKey={`Q${[a, b, c, d, e, f, g].join("")}`}
-                                                bgColor={theme.colors.orange400}
-                                                idxList={[a, b, c, d, e, f, g]}
-                                                isAdded={isAdded}
-                                                onAddAnswer={handleAddPeri}
-                                                onToggle={handleToggle}
-                                                onDeleteQuestion={handleDeletePeri}
-                                              />
-                                              {question3.answer.map((answer3, h) => (
-                                                <React.Fragment key={`A${[a, b, c, d, e, f, g, h].join("")}`}>
-                                                  <AddedAnswer
-                                                    periKey={`A${[a, b, c, d, e, f, g, h].join("")}`}
-                                                    labelColor={theme.colors.orange400}
-                                                    idxList={[a, b, c, d, e, f, g, h]}
-                                                    isAdded={isAdded}
-                                                    onAddAnswerByEnter={handleEnterAdd}
-                                                    onToggle={handleToggle}
-                                                    onAddQuestion={handleAddPeri}
-                                                    onSelected={handleSelected}
-                                                    onDeleteAnswer={handleDeletePeri}
-                                                  />
-                                                  {answer3.children.map((question4, i) => (
-                                                    <StArticle
-                                                      key={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
-                                                      isFirst={false}>
-                                                      <AddedQuestion
-                                                        periKey={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
-                                                        bgColor={theme.colors.orange500}
-                                                        idxList={[a, b, c, d, e, f, g, h, i]}
-                                                        isAdded={isAdded}
-                                                        onAddAnswer={handleAddPeri}
-                                                        onToggle={handleToggle}
-                                                        onDeleteQuestion={handleDeletePeri}
-                                                      />
-                                                      {question4.answer.map((answer4, j) => {
-                                                        return (
-                                                          <React.Fragment
-                                                            key={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}>
-                                                            <AddedAnswer
-                                                              periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
-                                                              labelColor={theme.colors.orange500}
-                                                              idxList={[a, b, c, d, e, f, g, h, i, j]}
-                                                              isAdded={isAdded}
-                                                              onAddAnswerByEnter={handleEnterAdd}
-                                                              onToggle={handleToggle}
-                                                              onAddQuestion={handleAddPeri}
-                                                              onSelected={handleSelected}
-                                                              onDeleteAnswer={handleDeletePeri}
-                                                            />
-                                                          </React.Fragment>
-                                                        );
-                                                      })}
-                                                    </StArticle>
-                                                  ))}
-                                                </React.Fragment>
-                                              ))}
-                                            </StArticle>
-                                          ))}
-                                        </React.Fragment>
-                                      ))}
-                                    </StArticle>
-                                  ))}
-                                </React.Fragment>
-                              ))}
-                            </StArticle>
-                          ))}
-                        </StAnswerContainer>
-                      </React.Fragment>
-                    ))}
-                  </StAnswerWrapper>
-                </StQAContainer>;
-              })}
-            <StAddQuestionButton
-              type="button"
-              onClick={() => {
-                handleAddPeri([]);
-                handlePrevent(true);
-              }}
-              disabled={isPrevented}>
-              + 질문 리스트 추가
-            </StAddQuestionButton>
-          </StQAWrapper>
-          <StDoneButton onClick={submitComplete} disabled={isPrevented}>
-            작성 완료
-          </StDoneButton>
-        </StNoteForm>
-      </FormProvider>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <FormProvider {...methods}>
+          <StNoteForm onSubmit={onSubmit}>
+            <StLabelWrapper>
+              <StLabelContainer>
+                <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
+                <StepUp onToggleModal={handlePeriCarousel} />
+              </StLabelContainer>
+              <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
+            </StLabelWrapper>
+            <StQAWrapper>
+              {patchNote.length &&
+                patchNote.map((question0, a) => (
+                  <StQAContainer key={a}>
+                    <PriorQuestion
+                      periKey={`Q${a}`}
+                      idxList={[a]}
+                      question={question0.question}
+                      onPrevent={handlePrevent}
+                      isAdded={isAdded}
+                      onAddAnswer={handleAddPeri}
+                      onToggle={handleToggle}
+                      onDeleteQuestion={handleDeletePeri}
+                    />
+                    <StAnswerWrapper className="answer">
+                      {question0.answer.map((answer0, b) => (
+                        <React.Fragment key={`A${[a, b].join("")}`}>
+                          <PriorAnswer
+                            periKey={`A${[a, b].join("")}`}
+                            isSingle={answer0.children.length !== 0 || question0.answer.length > 1}
+                            idxList={[a, b]}
+                            isAdded={isAdded}
+                            onAddAnswerByEnter={handleEnterAdd}
+                            onAddAnswer={handleAddPeri}
+                            onToggle={handleToggle}
+                            onDeleteQuestion={handleDeletePeri}
+                            onSelected={handleSelected}
+                          />
+                          <StAnswerContainer>
+                            {answer0.children.map((question1, c) => (
+                              <StArticle key={`Q${[a, b, c].join("")}`} isFirst={true}>
+                                <AddedQuestion
+                                  periKey={`Q${[a, b, c].join("")}`}
+                                  bgColor={theme.colors.orange100}
+                                  idxList={[a, b, c]}
+                                  isAdded={isAdded}
+                                  onAddAnswer={handleAddPeri}
+                                  onToggle={handleToggle}
+                                  onDeleteQuestion={handleDeletePeri}
+                                />
+                                {question1.answer.map((answer1, d) => (
+                                  <React.Fragment key={`A${[a, b, c, d].join("")}`}>
+                                    <AddedAnswer
+                                      periKey={`A${[a, b, c, d].join("")}`}
+                                      labelColor={theme.colors.orange100}
+                                      idxList={[a, b, c, d]}
+                                      isAdded={isAdded}
+                                      onAddAnswerByEnter={handleEnterAdd}
+                                      onToggle={handleToggle}
+                                      onAddQuestion={handleAddPeri}
+                                      onSelected={handleSelected}
+                                      onDeleteAnswer={handleDeletePeri}
+                                    />
+                                    {answer1.children.map((question2, e) => (
+                                      <StArticle key={`Q${[a, b, c, d, e].join("")}`} isFirst={false}>
+                                        <AddedQuestion
+                                          periKey={`Q${[a, b, c, d, e].join("")}`}
+                                          bgColor={theme.colors.orange300}
+                                          idxList={[a, b, c, d, e]}
+                                          isAdded={isAdded}
+                                          onAddAnswer={handleAddPeri}
+                                          onToggle={handleToggle}
+                                          onDeleteQuestion={handleDeletePeri}
+                                        />
+                                        {question2.answer.map((answer2, f) => (
+                                          <React.Fragment key={`A${[a, b, c, d, e, f].join("")}`}>
+                                            <AddedAnswer
+                                              periKey={`A${[a, b, c, d, e, f].join("")}`}
+                                              labelColor={theme.colors.orange300}
+                                              idxList={[a, b, c, d, e, f]}
+                                              isAdded={isAdded}
+                                              onAddAnswerByEnter={handleEnterAdd}
+                                              onToggle={handleToggle}
+                                              onAddQuestion={handleAddPeri}
+                                              onSelected={handleSelected}
+                                              onDeleteAnswer={handleDeletePeri}
+                                            />
+                                            {answer2.children.map((question3, g) => (
+                                              <StArticle key={`Q${[a, b, c, d, e, f, g].join("")}`} isFirst={false}>
+                                                <AddedQuestion
+                                                  periKey={`Q${[a, b, c, d, e, f, g].join("")}`}
+                                                  bgColor={theme.colors.orange400}
+                                                  idxList={[a, b, c, d, e, f, g]}
+                                                  isAdded={isAdded}
+                                                  onAddAnswer={handleAddPeri}
+                                                  onToggle={handleToggle}
+                                                  onDeleteQuestion={handleDeletePeri}
+                                                />
+                                                {question3.answer.map((answer3, h) => (
+                                                  <React.Fragment key={`A${[a, b, c, d, e, f, g, h].join("")}`}>
+                                                    <AddedAnswer
+                                                      periKey={`A${[a, b, c, d, e, f, g, h].join("")}`}
+                                                      labelColor={theme.colors.orange400}
+                                                      idxList={[a, b, c, d, e, f, g, h]}
+                                                      isAdded={isAdded}
+                                                      onAddAnswerByEnter={handleEnterAdd}
+                                                      onToggle={handleToggle}
+                                                      onAddQuestion={handleAddPeri}
+                                                      onSelected={handleSelected}
+                                                      onDeleteAnswer={handleDeletePeri}
+                                                    />
+                                                    {answer3.children.map((question4, i) => (
+                                                      <StArticle
+                                                        key={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
+                                                        isFirst={false}>
+                                                        <AddedQuestion
+                                                          periKey={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
+                                                          bgColor={theme.colors.orange500}
+                                                          idxList={[a, b, c, d, e, f, g, h, i]}
+                                                          isAdded={isAdded}
+                                                          onAddAnswer={handleAddPeri}
+                                                          onToggle={handleToggle}
+                                                          onDeleteQuestion={handleDeletePeri}
+                                                        />
+                                                        {question4.answer.map((answer4, j) => {
+                                                          return (
+                                                            <React.Fragment
+                                                              key={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}>
+                                                              <AddedAnswer
+                                                                periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
+                                                                labelColor={theme.colors.orange500}
+                                                                idxList={[a, b, c, d, e, f, g, h, i, j]}
+                                                                isAdded={isAdded}
+                                                                onAddAnswerByEnter={handleEnterAdd}
+                                                                onToggle={handleToggle}
+                                                                onAddQuestion={handleAddPeri}
+                                                                onSelected={handleSelected}
+                                                                onDeleteAnswer={handleDeletePeri}
+                                                              />
+                                                            </React.Fragment>
+                                                          );
+                                                        })}
+                                                      </StArticle>
+                                                    ))}
+                                                  </React.Fragment>
+                                                ))}
+                                              </StArticle>
+                                            ))}
+                                          </React.Fragment>
+                                        ))}
+                                      </StArticle>
+                                    ))}
+                                  </React.Fragment>
+                                ))}
+                              </StArticle>
+                            ))}
+                          </StAnswerContainer>
+                        </React.Fragment>
+                      ))}
+                    </StAnswerWrapper>
+                  </StQAContainer>
+                ))}
+              <StAddQuestionButton
+                type="button"
+                onClick={() => {
+                  handleAddPeri([]);
+                  handlePrevent(true);
+                }}
+                disabled={isPrevented}>
+                + 질문 리스트 추가
+              </StAddQuestionButton>
+            </StQAWrapper>
+            <StDoneButton onClick={submitComplete} disabled={isPrevented}>
+              작성 완료
+            </StDoneButton>
+          </StNoteForm>
+        </FormProvider>
+      )}
       {isPeriModal && (
         <StStepModalWrapper>
           <PeriModal onToggleModal={handlePeriCarousel} />

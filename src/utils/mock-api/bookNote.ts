@@ -9,28 +9,6 @@ interface PeriNoteData {
   progress: number;
 }
 
-export const useGetBookNoteTitle = (token: string, key: string) => {
-  const [title, setTitle] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    (async function () {
-      try {
-        const { data } = await mockClient(token).get(key);
-
-        setTitle(data.title);
-      } catch (err) {
-        return;
-      }
-    })();
-
-    setIsLoading(false);
-  }, []);
-
-  return [title, isLoading];
-};
-
 export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean] => {
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
@@ -41,8 +19,8 @@ export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     (async function () {
-      setIsLoading(true);
       try {
         const { data } = await mockClient(token).get(key);
 
@@ -59,10 +37,12 @@ export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean
 };
 
 // preNote get과 매우 유사 - 중복 제거 필요
-export const useGetPeriNote = (token: string, key: string) => {
+export const useGetPeriNote = (token: string, key: string): [PeriNoteData, boolean] => {
   const [periNote, setPeriNote] = useState<PeriNoteData>({ answerThree: { root: [] }, progress: 3 });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     (async function () {
       try {
         const { data } = await mockClient(token).get(key);
@@ -72,9 +52,11 @@ export const useGetPeriNote = (token: string, key: string) => {
         return;
       }
     })();
+
+    setIsLoading(false);
   }, []);
 
-  return [periNote];
+  return [periNote, isLoading];
 };
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
