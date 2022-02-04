@@ -4,14 +4,15 @@ import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
-import { Loading, PopUpExit } from "../components/common";
+import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { Question } from "../utils/dataType";
-import { patchBookNote, useGetBookNoteTitle } from "../utils/mock-api/bookNote";
+import { patchBookNote } from "../utils/mock-api/bookNote";
 
 export interface IsLoginState {
   isLogin: boolean;
   reviewId: number;
+  title: string;
   fromUrl: string;
 }
 
@@ -40,12 +41,12 @@ export default function BookNote() {
 
   // recoil로 관리했으면 하는 부분
   const isLoginState = state as IsLoginState;
-  const { isLogin, reviewId, fromUrl } = isLoginState;
+  const { isLogin, reviewId, title, fromUrl } = isLoginState;
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
 
-  const [title, isLoading] = useGetBookNoteTitle(userToken, "/review/20");
+  // const [title, isLoading] = useGetBookNoteTitle(userToken, "/review/20");
   const [saveBody, setSaveBody] = useState<PreNoteData | PeriNoteData>({
     answerOne: "",
     answerTwo: "",
@@ -129,23 +130,19 @@ export default function BookNote() {
         )}
         {isLogin && <StIcSave onClick={saveReview} />}
       </StNavWrapper>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Outlet
-          context={[
-            isLogin,
-            userToken,
-            initIndex,
-            isSave,
-            isPrevented,
-            handlePrevent,
-            handleSaveBody,
-            handleOpenDrawer,
-            handleCloseDrawer,
-          ]}
-        />
-      )}
+      <Outlet
+        context={[
+          isLogin,
+          userToken,
+          initIndex,
+          isSave,
+          isPrevented,
+          handlePrevent,
+          handleSaveBody,
+          handleOpenDrawer,
+          handleCloseDrawer,
+        ]}
+      />
       /
       <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
     </StNoteModalWrapper>
