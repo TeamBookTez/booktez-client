@@ -8,7 +8,6 @@ interface PriorAnswerProps {
   periKey: string;
   isSingle: boolean;
   idxList: number[];
-  isAdded: boolean;
   onAddAnswerByEnter: (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => void;
   onAddAnswer: (idxList: number[]) => void;
   onToggle: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
@@ -17,17 +16,7 @@ interface PriorAnswerProps {
 }
 
 export default function PriorAnswer(props: PriorAnswerProps) {
-  const {
-    periKey,
-    isSingle,
-    idxList,
-    isAdded,
-    onAddAnswerByEnter,
-    onAddAnswer,
-    onToggle,
-    onDeleteQuestion,
-    onSelected,
-  } = props;
+  const { periKey, isSingle, idxList, onAddAnswerByEnter, onAddAnswer, onToggle, onDeleteQuestion, onSelected } = props;
   const methods = useFormContext();
 
   return (
@@ -37,7 +26,6 @@ export default function PriorAnswer(props: PriorAnswerProps) {
         {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
         onKeyPress={(event) => onAddAnswerByEnter(event, [idxList[0]])}
-        autoFocus={!isAdded}
       />
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu menuposition={"isPriA"}>

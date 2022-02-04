@@ -53,7 +53,6 @@ export default function PeriNote() {
 
   const [patchNote, setPatchNote] = useState<Question[]>([]);
 
-  const [isAdded, setIsAdded] = useState(true);
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [bookData, setBookData] = useState({
@@ -63,12 +62,6 @@ export default function PeriNote() {
     title: "테스트 책 제목",
     translators: ["령좜언귬"],
   });
-
-  // 꼬리 질문 추가에서는 질문에만 focus가 되도록 answer에는 autoFocus가 반대로 적용되어 있음
-  // Enter에 대해서, 즉 답변만 추가될 때는 답변에만 focus가 되도록 하기
-  const handleAutoFocus = () => {
-    setIsAdded(false);
-  };
 
   // 똥페리 switch문 - 접어두는 것을 추천
   const handleAddPeri = (idxList: number[]) => {
@@ -139,7 +132,6 @@ export default function PeriNote() {
     }
 
     setPatchNote(newRoot);
-    setIsAdded(true);
   };
 
   const handleDeletePeri = (idxList: number[]) => {
@@ -237,7 +229,6 @@ export default function PeriNote() {
   const handleEnterAdd = (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => {
     if (event.key === "Enter") {
       handleAddPeri(idxList);
-      handleAutoFocus();
     }
   };
 
@@ -245,6 +236,7 @@ export default function PeriNote() {
   const submitComplete = () => {
     submitReview(true);
     setIsComplete(true);
+    // onSubmit();
   };
 
   useEffect(() => {
@@ -286,7 +278,7 @@ export default function PeriNote() {
         <Loading />
       ) : (
         <FormProvider {...methods}>
-          <StNoteForm onSubmit={onSubmit}>
+          <StNoteForm>
             <StLabelWrapper>
               <StLabelContainer>
                 <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
@@ -303,7 +295,6 @@ export default function PeriNote() {
                       idxList={[a]}
                       question={question0.question}
                       onPrevent={handlePrevent}
-                      isAdded={isAdded}
                       onAddAnswer={handleAddPeri}
                       onToggle={handleToggle}
                       onDeleteQuestion={handleDeletePeri}
@@ -315,7 +306,6 @@ export default function PeriNote() {
                             periKey={`A${[a, b].join("")}`}
                             isSingle={answer0.children.length !== 0 || question0.answer.length > 1}
                             idxList={[a, b]}
-                            isAdded={isAdded}
                             onAddAnswerByEnter={handleEnterAdd}
                             onAddAnswer={handleAddPeri}
                             onToggle={handleToggle}
@@ -329,7 +319,6 @@ export default function PeriNote() {
                                   periKey={`Q${[a, b, c].join("")}`}
                                   bgColor={theme.colors.orange100}
                                   idxList={[a, b, c]}
-                                  isAdded={isAdded}
                                   onAddAnswer={handleAddPeri}
                                   onToggle={handleToggle}
                                   onDeleteQuestion={handleDeletePeri}
@@ -340,7 +329,6 @@ export default function PeriNote() {
                                       periKey={`A${[a, b, c, d].join("")}`}
                                       labelColor={theme.colors.orange100}
                                       idxList={[a, b, c, d]}
-                                      isAdded={isAdded}
                                       onAddAnswerByEnter={handleEnterAdd}
                                       onToggle={handleToggle}
                                       onAddQuestion={handleAddPeri}
@@ -353,7 +341,6 @@ export default function PeriNote() {
                                           periKey={`Q${[a, b, c, d, e].join("")}`}
                                           bgColor={theme.colors.orange300}
                                           idxList={[a, b, c, d, e]}
-                                          isAdded={isAdded}
                                           onAddAnswer={handleAddPeri}
                                           onToggle={handleToggle}
                                           onDeleteQuestion={handleDeletePeri}
@@ -364,7 +351,6 @@ export default function PeriNote() {
                                               periKey={`A${[a, b, c, d, e, f].join("")}`}
                                               labelColor={theme.colors.orange300}
                                               idxList={[a, b, c, d, e, f]}
-                                              isAdded={isAdded}
                                               onAddAnswerByEnter={handleEnterAdd}
                                               onToggle={handleToggle}
                                               onAddQuestion={handleAddPeri}
@@ -377,7 +363,6 @@ export default function PeriNote() {
                                                   periKey={`Q${[a, b, c, d, e, f, g].join("")}`}
                                                   bgColor={theme.colors.orange400}
                                                   idxList={[a, b, c, d, e, f, g]}
-                                                  isAdded={isAdded}
                                                   onAddAnswer={handleAddPeri}
                                                   onToggle={handleToggle}
                                                   onDeleteQuestion={handleDeletePeri}
@@ -388,7 +373,6 @@ export default function PeriNote() {
                                                       periKey={`A${[a, b, c, d, e, f, g, h].join("")}`}
                                                       labelColor={theme.colors.orange400}
                                                       idxList={[a, b, c, d, e, f, g, h]}
-                                                      isAdded={isAdded}
                                                       onAddAnswerByEnter={handleEnterAdd}
                                                       onToggle={handleToggle}
                                                       onAddQuestion={handleAddPeri}
@@ -403,7 +387,6 @@ export default function PeriNote() {
                                                           periKey={`Q${[a, b, c, d, e, f, g, h, i].join("")}`}
                                                           bgColor={theme.colors.orange500}
                                                           idxList={[a, b, c, d, e, f, g, h, i]}
-                                                          isAdded={isAdded}
                                                           onAddAnswer={handleAddPeri}
                                                           onToggle={handleToggle}
                                                           onDeleteQuestion={handleDeletePeri}
@@ -416,7 +399,6 @@ export default function PeriNote() {
                                                                 periKey={`A${[a, b, c, d, e, f, g, h, i, j].join("")}`}
                                                                 labelColor={theme.colors.orange500}
                                                                 idxList={[a, b, c, d, e, f, g, h, i, j]}
-                                                                isAdded={isAdded}
                                                                 onAddAnswerByEnter={handleEnterAdd}
                                                                 onToggle={handleToggle}
                                                                 onAddQuestion={handleAddPeri}
@@ -456,7 +438,7 @@ export default function PeriNote() {
                 + 질문 리스트 추가
               </StAddQuestionButton>
             </StQAWrapper>
-            <StDoneButton onClick={submitComplete} disabled={isPrevented}>
+            <StDoneButton type="button" onClick={submitComplete} disabled={isPrevented}>
               작성 완료
             </StDoneButton>
           </StNoteForm>

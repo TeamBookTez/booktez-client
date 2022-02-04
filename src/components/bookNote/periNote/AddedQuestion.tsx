@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
@@ -7,21 +8,24 @@ interface AddedQuestionProps {
   periKey: string;
   bgColor: string;
   idxList: number[];
-  isAdded: boolean;
   onAddAnswer: (idxList: number[]) => void;
   onToggle: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onDeleteQuestion: (idxList: number[]) => void;
 }
 
 export default function AddedQuestion(props: AddedQuestionProps) {
-  const { periKey, bgColor, idxList, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
+  const { periKey, bgColor, idxList, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
+
+  useEffect(() => {
+    methods.setFocus(periKey);
+  }, []);
 
   return (
     <StQuestionLabelWrapper>
       <StQuestionLabel bgcolor={bgColor}>질문</StQuestionLabel>
       <StQuestionInputWrapper>
-        <StQuestionInput {...methods.register(periKey)} placeholder="질문을 입력해주세요" autoFocus={isAdded} />
+        <StQuestionInput {...methods.register(periKey)} placeholder="질문을 입력해주세요" />
         <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
           답변
         </StAddAnswerButton>

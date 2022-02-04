@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
@@ -9,25 +10,23 @@ interface PriorQuestionProps {
   idxList: number[];
   question: string;
   onPrevent: (shouldPrevent: boolean) => void;
-  isAdded: boolean;
   onAddAnswer: (idxList: number[]) => void;
   onToggle: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onDeleteQuestion: (idxList: number[]) => void;
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { periKey, idxList, question, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
+  const { periKey, idxList, question, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
+
+  useEffect(() => {
+    methods.setFocus(periKey);
+  }, []);
 
   return (
     <StPriQuestionWrapper className="question">
       <StQuestionIcon />
-      <StPriQuestionInput
-        {...methods.register(periKey)}
-        placeholder="질문을 입력해주세요"
-        defaultValue={question}
-        autoFocus={isAdded}
-      />
+      <StPriQuestionInput {...methods.register(periKey)} placeholder="질문을 입력해주세요" defaultValue={question} />
       <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
         답변
       </StAddAnswerButton>

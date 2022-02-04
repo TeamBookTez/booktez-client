@@ -8,7 +8,6 @@ interface AddedAnswerProps {
   periKey: string;
   labelColor: string;
   idxList: number[];
-  isAdded: boolean;
   onAddAnswerByEnter: (event: React.KeyboardEvent<HTMLInputElement>, idxList: number[]) => void;
   onToggle: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onAddQuestion: (idxList: number[]) => void;
@@ -17,17 +16,8 @@ interface AddedAnswerProps {
 }
 
 export default function AddedAnswer(props: AddedAnswerProps) {
-  const {
-    periKey,
-    labelColor,
-    idxList,
-    isAdded,
-    onAddAnswerByEnter,
-    onToggle,
-    onAddQuestion,
-    onSelected,
-    onDeleteAnswer,
-  } = props;
+  const { periKey, labelColor, idxList, onAddAnswerByEnter, onToggle, onAddQuestion, onSelected, onDeleteAnswer } =
+    props;
   const methods = useFormContext();
 
   return (
@@ -37,7 +27,6 @@ export default function AddedAnswer(props: AddedAnswerProps) {
         {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
         onKeyPress={(event) => onAddAnswerByEnter(event, idxList.slice(0, -1))}
-        autoFocus={!isAdded}
       />
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu>
