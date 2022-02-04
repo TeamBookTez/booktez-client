@@ -232,11 +232,10 @@ export default function PeriNote() {
     }
   };
 
-  // onSubmit과 충돌 - 해결 중
   const submitComplete = () => {
     submitReview(true);
     setIsComplete(true);
-    // onSubmit();
+    onSubmit();
   };
 
   useEffect(() => {
