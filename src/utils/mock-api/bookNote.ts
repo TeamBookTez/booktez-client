@@ -23,8 +23,9 @@ export const useGetBookNoteTitle = (token: string, key: string) => {
       } catch (err) {
         return;
       }
-      setIsLoading(false);
     })();
+
+    setIsLoading(false);
   }, []);
 
   return [title, isLoading];
