@@ -17,6 +17,14 @@ export default function AddedQuestion(props: AddedQuestionProps) {
   const { periKey, bgColor, idxList, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
 
+  const addAnswer = () => {
+    onAddAnswer(idxList);
+  };
+
+  const deleteQuestion = () => {
+    onDeleteQuestion(idxList);
+  };
+
   useEffect(() => {
     methods.setFocus(periKey);
   }, []);
@@ -26,12 +34,12 @@ export default function AddedQuestion(props: AddedQuestionProps) {
       <StQuestionLabel bgcolor={bgColor}>질문</StQuestionLabel>
       <StQuestionInputWrapper>
         <StQuestionInput {...methods.register(periKey)} placeholder="질문을 입력해주세요" />
-        <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
+        <StAddAnswerButton type="button" onClick={addAnswer}>
           답변
         </StAddAnswerButton>
         <StMoreIcon onClick={onToggle} />
         <StMiniMenu>
-          <StMenuBtn type="button" onClick={() => onDeleteQuestion(idxList)}>
+          <StMenuBtn type="button" onClick={deleteQuestion}>
             삭제
           </StMenuBtn>
         </StMiniMenu>

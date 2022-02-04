@@ -19,25 +19,33 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   const { periKey, isSingle, idxList, onAddAnswerByEnter, onAddAnswer, onToggle, onDeleteQuestion, onSelected } = props;
   const methods = useFormContext();
 
+  const addAnswerByEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onAddAnswerByEnter(event, [idxList[0]]);
+  };
+
+  const addQuestion = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    onAddAnswer(idxList);
+    onSelected(event);
+  };
+
+  const deleteAnswer = () => {
+    onDeleteQuestion(idxList);
+  };
+
   return (
     <StPriAnswerWrapper issingle={isSingle}>
       <StAnswerIcon />
       <StPriAnswerInput
         {...methods.register(periKey)}
         placeholder="답변을 입력해주세요"
-        onKeyPress={(event) => onAddAnswerByEnter(event, [idxList[0]])}
+        onKeyPress={addAnswerByEnter}
       />
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu menuposition={"isPriA"}>
-        <StMenuBtn
-          type="button"
-          onClick={(event) => {
-            onAddAnswer(idxList);
-            onSelected(event);
-          }}>
+        <StMenuBtn type="button" onClick={addQuestion}>
           꼬리질문 추가
         </StMenuBtn>
-        <StMenuBtn type="button" onClick={() => onDeleteQuestion(idxList)}>
+        <StMenuBtn type="button" onClick={deleteAnswer}>
           삭제
         </StMenuBtn>
       </StMiniMenu>

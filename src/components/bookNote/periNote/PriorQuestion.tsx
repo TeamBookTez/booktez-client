@@ -19,6 +19,14 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   const { periKey, idxList, question, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
 
+  const addAnswer = () => {
+    onAddAnswer(idxList);
+  };
+
+  const deleteQuestion = () => {
+    onDeleteQuestion(idxList);
+  };
+
   useEffect(() => {
     methods.setFocus(periKey);
   }, []);
@@ -27,12 +35,12 @@ export default function PriorQuestion(props: PriorQuestionProps) {
     <StPriQuestionWrapper className="question">
       <StQuestionIcon />
       <StPriQuestionInput {...methods.register(periKey)} placeholder="질문을 입력해주세요" defaultValue={question} />
-      <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
+      <StAddAnswerButton type="button" onClick={addAnswer}>
         답변
       </StAddAnswerButton>
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu menuposition={"isPriQ"}>
-        <StMenuBtn type="button" onClick={() => onDeleteQuestion(idxList)}>
+        <StMenuBtn type="button" onClick={deleteQuestion}>
           삭제
         </StMenuBtn>
       </StMiniMenu>

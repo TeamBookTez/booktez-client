@@ -20,25 +20,29 @@ export default function AddedAnswer(props: AddedAnswerProps) {
     props;
   const methods = useFormContext();
 
+  const addAnswerByEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onAddAnswerByEnter(event, idxList.slice(0, -1));
+  };
+
+  const addQuestion = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    onAddQuestion(idxList);
+    onSelected(event);
+  };
+
+  const deleteAnswer = () => {
+    onDeleteAnswer(idxList);
+  };
+
   return (
     <StAnswerInputWrapper>
       <StAnswerLabel labelcolor={labelColor} />
-      <StAnswerInput
-        {...methods.register(periKey)}
-        placeholder="답변을 입력해주세요"
-        onKeyPress={(event) => onAddAnswerByEnter(event, idxList.slice(0, -1))}
-      />
+      <StAnswerInput {...methods.register(periKey)} placeholder="답변을 입력해주세요" onKeyPress={addAnswerByEnter} />
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu>
-        <StMenuBtn
-          type="button"
-          onClick={(event) => {
-            onAddQuestion(idxList);
-            onSelected(event);
-          }}>
+        <StMenuBtn type="button" onClick={addQuestion}>
           꼬리질문 추가
         </StMenuBtn>
-        <StMenuBtn type="button" onClick={() => onDeleteAnswer(idxList)}>
+        <StMenuBtn type="button" onClick={deleteAnswer}>
           삭제
         </StMenuBtn>
       </StMiniMenu>
