@@ -31,16 +31,18 @@ export const useGetBookNoteTitle = (token: string, key: string) => {
   return [title, isLoading];
 };
 
-export const useGetPreNote = (token: string, key: string) => {
+export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean] => {
   const [preNote, setPreNote] = useState<PreNoteData>({
     answerOne: "",
     answerTwo: "",
     questionList: [""],
     progress: 2,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async function () {
+      setIsLoading(true);
       try {
         const { data } = await mockClient(token).get(key);
 
@@ -49,9 +51,11 @@ export const useGetPreNote = (token: string, key: string) => {
         return;
       }
     })();
+
+    setIsLoading(false);
   }, []);
 
-  return [preNote];
+  return [preNote, isLoading];
 };
 
 // preNote get과 매우 유사 - 중복 제거 필요

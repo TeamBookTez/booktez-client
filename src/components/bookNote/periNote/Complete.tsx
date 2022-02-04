@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
-import { IsLoginState } from "../../../pages/BookNote";
 import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { StIcCancel } from "../../addBook/ShowModal";
 import { Button } from "../../common/styled/Button";
@@ -12,6 +11,12 @@ interface BookData {
   thumbnail: string;
   title: string;
   translators: string[];
+}
+
+interface IsLoginState {
+  isLogin: boolean;
+  fromUrl: string;
+  reviewId: number;
 }
 
 interface CompleteProps {
