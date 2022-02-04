@@ -1,28 +1,104 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { PreNoteData } from "../../../pages/BookNote";
+import { Question } from "../../../utils/dataType";
+import { patchBookNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
 import { Button } from "../../common/styled/Button";
-import { PreNoteForm, QuestionThree } from "..";
+import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
+
+interface ObjKey {
+  [key: string]: string | string[] | number;
+}
+
+export interface PreNoteData extends ObjKey {
+  answerOne: string;
+  answerTwo: string;
+  questionList: string[];
+  progress: number;
+}
 
 export default function PreNote() {
-  const navigate = useNavigate();
-  const [isLogin, handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
+  // 삭제 필요
+  const ablePatch = true;
+
+  const [
+    isLogin,
+    userToken,
+    initIndex,
+    isSave,
+    isPrevented,
+    handlePrevent,
+    handleSaveBody,
+    handleOpenDrawer,
+    handleCloseDrawer,
+  ] =
     useOutletContext<
       [
         boolean,
+        string,
+        number,
+        boolean,
+        boolean,
+        (shouldPrevent: boolean) => void,
+        <T>(body: T) => void,
         (i: number) => void,
-        PreNoteData,
-        (key: string, value: string | string[] | number) => void,
-        React.Dispatch<React.SetStateAction<boolean>>,
-        boolean,
-        boolean,
+        () => void,
       ]
     >();
-  const { answerOne, answerTwo, questionList } = preNote;
 
-  const handleSubmit = () => {
+  const [preNote] = useGetPreNote(userToken, "/pre/20");
+  const { answerOne, answerTwo, questionList, progress } = preNote;
+
+  const [patchNote, setPatchNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, progress });
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const localNick = localStorage.getItem("booktez-nickname");
+  const nickname = isLogin && localNick ? localNick : "익명의 독서가";
+
+  const handleChangeReview = (key: string, value: string | string[] | number): void => {
+    setPatchNote((currentNote) => {
+      const newData = { ...currentNote };
+
+      newData[key] = value;
+
+      return newData;
+    });
+  };
+
+  // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
+  const handleSubmit = async () => {
+    handleChangeReview("progress", 3);
+    patchBookNote(userToken, "/pre/20", { ...patchNote, progress: 3 });
+
+    if (preNote.progress === 2) {
+      const defaultQuestions: Question[] = [];
+
+      preNote.questionList.map((question: string) =>
+        defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+      );
+      patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
+    }
+
+    handlePrevent(false);
+
+    // 현재 모달 닫기
+    setOpenModal(false);
+    // 드로워 닫기
+    handleCloseDrawer();
+
+    // peri로 넘어가기
+    navigate("/book-note/peri", { state: { isLogin, reviewId: 20, fromUrl: "" } });
+  };
+
+  const handleOpenModal = () => {
     setOpenModal(true);
+  };
+
+  const handleCancelModal = () => {
+    setOpenModal(false);
   };
 
   const handleGoSignup = () => {
@@ -30,58 +106,72 @@ export default function PreNote() {
     navigate("/signup", { state: "rightpath" });
   };
 
-  const localNick = localStorage.getItem("booktez-nickname");
-  const nickname = isLogin && localNick ? localNick : "익명의 독서가";
+  useEffect(() => {
+    setPatchNote(preNote);
+
+    if (progress > 2) {
+      handlePrevent(false);
+    }
+  }, [preNote]);
+
+  useEffect(() => {
+    if (!initIndex && isSave) {
+      handleSaveBody(patchNote);
+    }
+  }, [isSave]);
 
   return (
-    <StNoteForm onSubmit={(e) => e.preventDefault()}>
-      <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
-      <StFormWrapper>
-        <PreNoteForm
-          question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
-          idx={1}
-          onOpenDrawer={handleOpenDrawer}>
-          <StTextarea
-            placeholder="답변을 입력해주세요."
-            value={answerOne}
-            onChange={(e) => handleChangeReview("answerOne", e.target.value)}
-          />
-        </PreNoteForm>
-        <PreNoteForm
-          question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
-          idx={2}
-          onOpenDrawer={handleOpenDrawer}>
-          <StTextarea
-            placeholder="답변을 입력해주세요."
-            value={answerTwo}
-            onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
-          />
-        </PreNoteForm>
-        {isLogin ? (
-          <QuestionThree
-            questionList={questionList}
-            onChangeReview={handleChangeReview}
-            onOpenDrawer={handleOpenDrawer}
-            isPrevented={isPrevented}
-            ablePatch={ablePatch}
-          />
-        ) : (
-          <StLinkWrapper>
-            <StSignupText>
-              내 기대를 채워줄 책의 내용들은
-              <br />
-              앞으로 어떻게 구체화 될까요?
-            </StSignupText>
-            <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
-          </StLinkWrapper>
-        )}
-      </StFormWrapper>
+    <>
+      <StNoteForm onSubmit={(e) => e.preventDefault()}>
+        <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
+        <StFormWrapper>
+          <PreNoteForm
+            question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
+            idx={1}
+            onOpenDrawer={handleOpenDrawer}>
+            <StTextarea
+              placeholder="답변을 입력해주세요."
+              value={patchNote.answerOne}
+              onChange={(e) => handleChangeReview("answerOne", e.target.value)}
+            />
+          </PreNoteForm>
+          <PreNoteForm
+            question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
+            idx={2}
+            onOpenDrawer={handleOpenDrawer}>
+            <StTextarea
+              placeholder="답변을 입력해주세요."
+              value={patchNote.answerTwo}
+              onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
+            />
+          </PreNoteForm>
+          {isLogin ? (
+            <QuestionThree
+              questionList={patchNote.questionList}
+              onChangeReview={handleChangeReview}
+              onOpenDrawer={handleOpenDrawer}
+              isPrevented={isPrevented}
+              ablePatch={ablePatch}
+            />
+          ) : (
+            <StLinkWrapper>
+              <StSignupText>
+                내 기대를 채워줄 책의 내용들은
+                <br />
+                앞으로 어떻게 구체화 될까요?
+              </StSignupText>
+              <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
+            </StLinkWrapper>
+          )}
+        </StFormWrapper>
 
-      {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn type="button" disabled={!ablePatch} onClick={handleSubmit}>
-        다음 계단
-      </StNextBtn>
-    </StNoteForm>
+        {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
+        <StNextBtn type="button" disabled={!ablePatch} onClick={handleOpenModal}>
+          다음 계단
+        </StNextBtn>
+      </StNoteForm>
+      {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancelModal} />}
+    </>
   );
 }
 

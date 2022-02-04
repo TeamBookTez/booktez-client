@@ -1,13 +1,12 @@
-import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 import { IcPeriQuestion } from "../../../assets/icons";
-import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
+import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNote";
 
 interface PriorQuestionProps {
   periKey: string;
-  idx: number;
+  idxList: number[];
   question: string;
   onPrevent: (shouldPrevent: boolean) => void;
   isAdded: boolean;
@@ -17,7 +16,7 @@ interface PriorQuestionProps {
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { periKey, idx, question, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
+  const { periKey, idxList, question, isAdded, onAddAnswer, onToggle, onDeleteQuestion } = props;
   const methods = useFormContext();
 
   return (
@@ -29,12 +28,12 @@ export default function PriorQuestion(props: PriorQuestionProps) {
         defaultValue={question}
         autoFocus={isAdded}
       />
-      <StAddAnswerButton type="button" onClick={() => onAddAnswer([idx])}>
+      <StAddAnswerButton type="button" onClick={() => onAddAnswer(idxList)}>
         답변
       </StAddAnswerButton>
       <StMoreIcon onClick={onToggle} />
       <StMiniMenu menuposition={"isPriQ"}>
-        <StMenuBtn type="button" onClick={() => onDeleteQuestion([idx])}>
+        <StMenuBtn type="button" onClick={() => onDeleteQuestion(idxList)}>
           삭제
         </StMenuBtn>
       </StMiniMenu>

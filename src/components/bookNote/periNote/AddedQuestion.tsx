@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
-import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
+import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNote";
 
 interface AddedQuestionProps {
   periKey: string;

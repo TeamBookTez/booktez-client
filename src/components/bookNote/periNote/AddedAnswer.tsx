@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 import { IcAnswerLabel } from "../../../assets/icons";
-import { StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNoteRefactor";
+import { StMenuBtn, StMiniMenu, StMoreIcon } from "./PeriNote";
 
 interface AddedAnswerProps {
   periKey: string;

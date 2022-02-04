@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { PreNoteData } from "../../components/bookNote/preNote/PreNoteRefactor";
+import { PreNoteData } from "../../components/bookNote/preNote/PreNote";
 import { Question } from "../dataType";
 import { mockClient } from "../lib";
 
