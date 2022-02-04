@@ -68,7 +68,9 @@ export default function DetailBookNote() {
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
                 onClick={() =>
-                  navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post", isLogin } })
+                  navigate("/book-note/peri", {
+                    state: { reviewId, title: reviewData?.bookTitle, fromUrl: "/main/bookcase/post", isLogin },
+                  })
                 }
               />
             </StBtnWrapper>
