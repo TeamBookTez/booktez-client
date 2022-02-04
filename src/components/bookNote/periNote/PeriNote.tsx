@@ -530,7 +530,7 @@ const StArticle = styled.article<{ isFirst: boolean }>`
   display: flex;
   flex-direction: column;
   ${({ isFirst }) =>
-    isFirst &&
+    !isFirst &&
     css`
       margin-left: 7.6rem;
     `}
