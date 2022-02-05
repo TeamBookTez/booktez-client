@@ -9,7 +9,6 @@ interface PriorQuestionProps {
   periKey: string;
   idxList: number[];
   question: string;
-  onPrevent: (shouldPrevent: boolean) => void;
   onAddAnswer: (idxList: number[]) => void;
   onToggle: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onDeleteQuestion: (idxList: number[]) => void;
