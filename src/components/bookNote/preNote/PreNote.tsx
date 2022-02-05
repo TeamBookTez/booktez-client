@@ -21,9 +21,6 @@ export interface PreNoteData extends ObjKey {
 }
 
 export default function PreNote() {
-  // 삭제 필요
-  const ablePatch = true;
-
   const [
     isLogin,
     userToken,
@@ -51,6 +48,8 @@ export default function PreNote() {
 
   const [preNote, isLoading] = useGetPreNote(userToken, "/pre/20");
   const { answerOne, answerTwo, questionList, progress } = preNote;
+
+  const [isFilled, setIsFilled] = useState<boolean>(false);
 
   const [patchNote, setPatchNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, progress });
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -113,6 +112,7 @@ export default function PreNote() {
 
     if (progress > 2) {
       handlePrevent(false);
+      setIsFilled(true);
     }
   }, [preNote]);
 
@@ -122,13 +122,13 @@ export default function PreNote() {
     }
   }, [isSave]);
 
-  {
-    /* useEffect(() => {
+  useEffect(() => {
     if (patchNote.answerOne && patchNote.answerTwo && !patchNote.questionList.includes("")) {
-      handlePrevent(false);
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
     }
-  }, [patchNote]); */
-  }
+  }, [patchNote]);
 
   return (
     <>
@@ -164,7 +164,7 @@ export default function PreNote() {
                 onChangeReview={handleChangeReview}
                 onOpenDrawer={handleOpenDrawer}
                 isPrevented={isPrevented}
-                ablePatch={ablePatch}
+                isFilled={isFilled}
               />
             ) : (
               <StLinkWrapper>
@@ -179,7 +179,7 @@ export default function PreNote() {
           </StFormWrapper>
 
           {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-          <StNextBtn type="button" disabled={!ablePatch} onClick={handleOpenModal}>
+          <StNextBtn type="button" disabled={!isFilled} onClick={handleOpenModal}>
             다음 계단
           </StNextBtn>
         </StNoteForm>
