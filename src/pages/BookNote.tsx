@@ -94,10 +94,10 @@ export default function BookNote() {
   };
 
   // 저장만 하기 - 수정 완료는 아님
-  const saveReview = async () => {
+  const saveReview = async (body: any) => {
     const apiKey = initIndex ? "peri" : "pre";
 
-    patchBookNote(userToken, `/${apiKey}/20`, saveBody);
+    patchBookNote(userToken, `/${apiKey}/20`, body);
     setIsSave(true);
   };
 
@@ -141,6 +141,7 @@ export default function BookNote() {
           handleSaveBody,
           handleOpenDrawer,
           handleCloseDrawer,
+          saveReview,
         ]}
       />
       /

@@ -27,6 +27,7 @@ export default function PeriNote() {
     handleSaveBody,
     handleOpenDrawer,
     handleCloseDrawer,
+    saveReview,
   ] =
     useOutletContext<
       [
@@ -39,6 +40,7 @@ export default function PeriNote() {
         <T>(body: T) => void,
         (i: number) => void,
         () => void,
+        (body: any) => Promise<void>,
       ]
     >();
 
@@ -267,7 +269,7 @@ export default function PeriNote() {
 
   useEffect(() => {
     if (initIndex && isSave) {
-      handleSaveBody({ answerThree: { root: patchNote }, progress: 3 });
+      saveReview({ answerThree: { root: patchNote }, progress: periNote.progress });
     }
   }, [isSave]);
 

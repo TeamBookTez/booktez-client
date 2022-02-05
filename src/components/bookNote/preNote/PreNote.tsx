@@ -33,6 +33,7 @@ export default function PreNote() {
     handleSaveBody,
     handleOpenDrawer,
     handleCloseDrawer,
+    saveReview,
   ] =
     useOutletContext<
       [
@@ -45,6 +46,7 @@ export default function PreNote() {
         <T>(body: T) => void,
         (i: number) => void,
         () => void,
+        (body: any) => Promise<void>,
       ]
     >();
 
@@ -116,10 +118,19 @@ export default function PreNote() {
   }, [preNote]);
 
   useEffect(() => {
+    console.log("isSave", isSave);
     if (!initIndex && isSave) {
-      handleSaveBody(patchNote);
+      saveReview(patchNote);
     }
   }, [isSave]);
+
+  {
+    /* useEffect(() => {
+    if (patchNote.answerOne && patchNote.answerTwo && !patchNote.questionList.includes("")) {
+      handlePrevent(false);
+    }
+  }, [patchNote]); */
+  }
 
   return (
     <>
