@@ -28,7 +28,7 @@ export interface PreNoteData extends ObjKey {
   progress: number;
 }
 
-interface PeriNoteData {
+export interface PeriNoteData {
   answerThree: { root: Question[] };
   progress: number;
 }
@@ -45,14 +45,6 @@ export default function BookNote() {
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
-
-  // const [title, isLoading] = useGetBookNoteTitle(userToken, "/review/20");
-  const [saveBody, setSaveBody] = useState<PreNoteData | PeriNoteData>({
-    answerOne: "",
-    answerTwo: "",
-    questionList: [""],
-    progress: 2,
-  });
 
   const [isSave, setIsSave] = useState<boolean>(false);
 
@@ -80,12 +72,6 @@ export default function BookNote() {
     setDrawerIdx(i);
   };
 
-  // 임시 저장에 들어갈 body를 설정해주는 함수
-  // extends 부분이 맘에 들지 않음 완벽한 제네릭 구현 필요
-  function handleSaveBody<T extends PreNoteData>(body: T) {
-    setSaveBody(body);
-  }
-
   // isPrevented가 사용되는 곳은 다음과 같습니당
   // progress가 2라면 peri로 이동할 수 없게 하기
   // 모든 답변이 채워지지 않으면 다음 단계로 이동할 수 없게 하기
@@ -94,22 +80,23 @@ export default function BookNote() {
   };
 
   // 저장만 하기 - 수정 완료는 아님
-  const saveReview = async (body: any) => {
+  async function saveReview(body: PreNoteData | PeriNoteData) {
     const apiKey = initIndex ? "peri" : "pre";
 
     patchBookNote(userToken, `/${apiKey}/20`, body);
-    setIsSave(true);
-  };
+  }
 
   useEffect(() => {
-    const saveToast = setTimeout(() => {
-      setIsSave(false);
-    }, 2000);
+    if (isSave) {
+      const saveToast = setTimeout(() => {
+        setIsSave(false);
+      }, 2000);
 
-    return () => {
-      clearTimeout(saveToast);
-    };
-  }, [saveReview]);
+      return () => {
+        clearTimeout(saveToast);
+      };
+    }
+  }, [isSave]);
 
   useEffect(() => {
     setNavIndex(initIndex);
@@ -128,7 +115,7 @@ export default function BookNote() {
             작성한 내용이 저장되었어요.
           </StSave>
         )}
-        {isLogin && <StIcSave onClick={saveReview} />}
+        {isLogin && <StIcSave onClick={() => setIsSave(true)} />}
       </StNavWrapper>
       <Outlet
         context={[
@@ -138,7 +125,6 @@ export default function BookNote() {
           isSave,
           isPrevented,
           handlePrevent,
-          handleSaveBody,
           handleOpenDrawer,
           handleCloseDrawer,
           saveReview,

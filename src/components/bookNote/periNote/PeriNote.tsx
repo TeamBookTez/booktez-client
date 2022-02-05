@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { IcMore } from "../../../assets/icons";
+import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import theme from "../../../styles/theme";
 import { Question } from "../../../utils/dataType";
 import { patchBookNote, useGetPeriNote } from "../../../utils/mock-api/bookNote";
@@ -24,7 +25,6 @@ export default function PeriNote() {
     isSave,
     isPrevented,
     handlePrevent,
-    handleSaveBody,
     handleOpenDrawer,
     handleCloseDrawer,
     saveReview,
@@ -37,10 +37,9 @@ export default function PeriNote() {
         boolean,
         boolean,
         (shouldPrevent: boolean) => void,
-        <T>(body: T) => void,
         (i: number) => void,
         () => void,
-        (body: any) => Promise<void>,
+        (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
     >();
 

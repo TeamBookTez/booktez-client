@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { PeriNoteData } from "../../../pages/BookNote";
 import { Question } from "../../../utils/dataType";
 import { patchBookNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
 import { Loading } from "../../common";
@@ -30,7 +31,6 @@ export default function PreNote() {
     isSave,
     isPrevented,
     handlePrevent,
-    handleSaveBody,
     handleOpenDrawer,
     handleCloseDrawer,
     saveReview,
@@ -43,10 +43,9 @@ export default function PreNote() {
         boolean,
         boolean,
         (shouldPrevent: boolean) => void,
-        <T>(body: T) => void,
         (i: number) => void,
         () => void,
-        (body: any) => Promise<void>,
+        (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
     >();
 
