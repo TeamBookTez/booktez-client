@@ -1,21 +1,13 @@
 {
-  "review": [
-    {
-      "id": 20,
-      "title": "mock 테스트 책 제목"
-    }
-  ],
   "pre": [
     {
       "id": 20,
-      "answerOne": "a",
-      "answerTwo": "b",
+      "answerOne": "",
+      "answerTwo": "",
       "questionList": [
-        "aa",
-        "bb",
-        "cc"
+        ""
       ],
-      "progress": 3
+      "progress": 2
     }
   ],
   "peri": [
@@ -25,27 +17,7 @@
         "root": [
           {
             "depth": 1,
-            "question": "aa",
-            "answer": [
-              {
-                "text": "",
-                "children": []
-              }
-            ]
-          },
-          {
-            "depth": 1,
-            "question": "bb",
-            "answer": [
-              {
-                "text": "",
-                "children": []
-              }
-            ]
-          },
-          {
-            "depth": 1,
-            "question": "cc",
+            "question": "",
             "answer": [
               {
                 "text": "",
