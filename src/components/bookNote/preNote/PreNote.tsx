@@ -117,7 +117,6 @@ export default function PreNote() {
   }, [preNote]);
 
   useEffect(() => {
-    console.log("isSave", isSave);
     if (!initIndex && isSave) {
       saveReview(patchNote);
     }

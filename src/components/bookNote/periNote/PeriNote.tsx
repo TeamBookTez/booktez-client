@@ -250,16 +250,6 @@ export default function PeriNote() {
         }
       });
     });
-
-    const inputList = document.getElementsByTagName("input");
-
-    for (let i = 0; i < inputList.length; i++) {
-      if (i === 1) {
-        inputList[1].focus();
-      } else {
-        inputList[i].blur();
-      }
-    }
   }, []);
 
   useEffect(() => {
