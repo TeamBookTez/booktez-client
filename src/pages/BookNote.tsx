@@ -461,7 +461,7 @@ export default function BookNote() {
   );
 }
 
-export const reducewidth = (width: number) => keyframes`
+const reducewidth = (width: number) => keyframes`
   0% {
     width: 100%;
     padding-right: 9.5rem;
@@ -469,6 +469,17 @@ export const reducewidth = (width: number) => keyframes`
   100% {
     width: calc(100% - ${width}rem);
     padding-right: 3.4rem;
+}
+`;
+
+const boostwidth = (width: number) => keyframes`
+  0% {
+    width: calc(100% - ${width}rem);
+    padding-right: 3.4rem;
+  }
+  100% {
+    width: 100%;
+    padding-right: 9.5rem;
 }
 `;
 
@@ -486,6 +497,12 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
     isopen &&
     css`
       animation: ${reducewidth(width)} 300ms linear 1;
+      animation-fill-mode: forwards;
+    `}
+  ${({ isopen, width }) =>
+    !isopen &&
+    css`
+      animation: ${boostwidth(width)} 300ms linear 1;
       animation-fill-mode: forwards;
     `}
 `;

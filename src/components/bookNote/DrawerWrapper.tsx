@@ -97,7 +97,7 @@ const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
 
   width: ${({ idx }) => (idx === 4 ? "60rem" : "39rem")};
   height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
-  min-height: 100vh;
+  min-height: 100%;
 
   & > svg {
     width: 4.4rem;
