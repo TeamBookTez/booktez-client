@@ -53,7 +53,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
         <StDrawerWrapper
           transition={{ type: "Inertia" }}
           initial={{ transform: "translateX(39rem)" }}
-          animate={{ transform: "translateX(0em)" }}
+          animate={{ transform: "translateX(0rem)" }}
           exit={{ transform: "translateX(39rem)" }}
           idx={idx}>
           <StIcWrapper>
@@ -97,7 +97,7 @@ const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
 
   width: ${({ idx }) => (idx === 4 ? "60rem" : "39rem")};
   height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
-  min-height: 100%;
+  min-height: 100vh;
 
   & > svg {
     width: 4.4rem;
