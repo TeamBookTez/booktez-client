@@ -62,6 +62,7 @@ export default function BookNote() {
 
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerdefault, setIsDrawerdefault] = useState(true);
 
   const [isSave, setIsSave] = useState<boolean>(false);
 
@@ -74,6 +75,7 @@ export default function BookNote() {
   };
 
   const handleOpenDrawer = (i: number) => {
+    setIsDrawerdefault(false);
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -184,6 +186,7 @@ export default function BookNote() {
     setOpenModal(false);
     // 드로워 닫기
     setIsDrawerOpen(false);
+    setIsDrawerdefault(true);
 
     if (preNote.progress === 2) {
       const defaultQuestions: Question[] = [];
@@ -203,6 +206,10 @@ export default function BookNote() {
   // 모달 내 '취소' 버튼 - 모달을 끄는 용도
   const handleCancel = () => {
     setOpenModal(false);
+  };
+
+  const handleDrawerDefault = () => {
+    setIsDrawerdefault(true);
   };
 
   useEffect(() => {
@@ -411,7 +418,7 @@ export default function BookNote() {
   }, []);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen} width={drawerWidthValue}>
+    <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
       {openExitModal && <PopUpExit onExit={handleExit} />}
       <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
@@ -422,6 +429,7 @@ export default function BookNote() {
           isLoginState={isLoginState}
           isPrevented={isPrevented}
           isPeriEmpty={!periNote.length}
+          isDrawerDefault={handleDrawerDefault}
         />
         {isSave && (
           <StSave>
@@ -483,7 +491,7 @@ const boostwidth = (width: number) => keyframes`
 }
 `;
 
-const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
+const StNoteModalWrapper = styled.section<{ isopen: boolean; isdefault: boolean; width: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -499,8 +507,9 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
       animation: ${reducewidth(width)} 300ms linear 1;
       animation-fill-mode: forwards;
     `}
-  ${({ isopen, width }) =>
+  ${({ isopen, isdefault, width }) =>
     !isopen &&
+    !isdefault &&
     css`
       animation: ${boostwidth(width)} 300ms linear 1;
       animation-fill-mode: forwards;
