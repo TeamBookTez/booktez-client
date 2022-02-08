@@ -32,6 +32,7 @@ export default function BookNote() {
   // 현재 페이지를 확인하여 navigator를 움직이고 patch할 때 필요한 아이들
   const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const drawerWidthValue = pathname === "/book-note/peri" ? 60 : 39;
   const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
@@ -410,7 +411,7 @@ export default function BookNote() {
   }, []);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
+    <StNoteModalWrapper isopen={isDrawerOpen} width={drawerWidthValue}>
       {openExitModal && <PopUpExit onExit={handleExit} />}
       <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
@@ -463,12 +464,12 @@ export default function BookNote() {
 export const reducewidth = (width: number) => keyframes`
   0% {
     width: 100%;
-    padding: 10rem 9.5rem;
+    padding-right: 9.5rem;
   }
   100% {
     width: calc(100% - ${width}rem);
-    padding: 10rem 3.4rem 10rem 9.5rem;
-  }
+    padding-right: 3.4rem;
+}
 `;
 
 const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
@@ -477,7 +478,7 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
   flex-direction: column;
   justify-content: flex-start;
 
-  padding: 10rem ${({ isopen }) => (isopen ? "3.4rem" : "9.5rem")} 10rem 9.5rem;
+  padding: 10rem 9.5rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
   min-height: 100vh;
