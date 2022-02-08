@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgDrawer, ImgDrawerSmall } from "../../assets/images";
@@ -64,6 +64,15 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
   );
 }
 
+const opentoright = keyframes`
+  0% {
+    transform: translateX(39rem);
+  },
+  100% {
+    transform: translateX(0);
+  }
+`;
+
 const StIcWrapper = styled.div`
   text-align: left;
   margin-bottom: 3.2rem;
@@ -91,23 +100,10 @@ const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
   height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
 
   ${({ isopen }) =>
-    isopen
-      ? css`
-          animation: opentoright 300ms linear forwards;
-        `
-      : css`
-          animation: opentoright 300ms linear forwards;
-          animation-direction: reverse;
-        `}
-
-  @keyframes opentoright {
-    0% {
-      transform: translateX(39rem);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
+    isopen &&
+    css`
+      animation: ${opentoright} 300ms linear forwards;
+    `}
 
   & > svg {
     width: 4.4rem;
