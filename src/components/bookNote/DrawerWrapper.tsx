@@ -78,11 +78,12 @@ const StIcWrapper = styled.div`
 
 const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
   overflow-y: scroll;
-  max-height: 100vh;
+  overflow-x: hidden;
 
   position: fixed;
   top: 0;
   right: 0;
+  bottom: 0;
 
   display: flex;
   flex-direction: column;
@@ -96,6 +97,7 @@ const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
 
   width: ${({ idx }) => (idx === 4 ? "60rem" : "39rem")};
   height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
+  min-height: 100%;
 
   & > svg {
     width: 4.4rem;
