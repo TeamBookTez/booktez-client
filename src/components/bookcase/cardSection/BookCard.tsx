@@ -94,16 +94,17 @@ const StImgWrapper = styled.div`
 
   margin-bottom: 1.6rem;
 
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
 `;
 
 export const StImg = styled.img`
-  object-fit: cover;
-  width: 20.5rem;
-  height: 30rem;
+  width: 100%;
+  height: 100%;
 
-  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
+
+  object-fit: cover;
 `;
 
 const StTextWrapper = styled.div`
