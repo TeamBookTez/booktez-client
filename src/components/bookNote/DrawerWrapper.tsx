@@ -1,4 +1,5 @@
-import styled, { css, keyframes } from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
+import styled, { css } from "styled-components";
 
 import { IcBooks, IcLeftArrow } from "../../assets/icons";
 import { ImgDrawer, ImgDrawerSmall } from "../../assets/images";
@@ -16,7 +17,6 @@ interface QaPair {
 }
 
 interface StDrawerWrapperProps {
-  isopen: boolean;
   idx: number;
 }
 
@@ -47,38 +47,36 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
       ];
   }
 
-  if (!isOpen) return null;
-
   return (
-    <StDrawerWrapper isopen={isOpen} idx={idx}>
-      <StIcWrapper>
-        <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
-      </StIcWrapper>
-      {idx === 4 ? <StImg src={ImgDrawer} idx={idx} /> : <StImg src={ImgDrawerSmall} idx={idx} />}
-      <StTitleWrapper>
-        <IcBooks />
-        나는 왜 이 일을 하는가?
-      </StTitleWrapper>
-      <StArticle idx={idx}>{idx === 4 ? <PeriNoteExample /> : <DrawerPre qaPair={qaPair} idx={idx} />}</StArticle>
-    </StDrawerWrapper>
+    <AnimatePresence>
+      {isOpen && (
+        <StDrawerWrapper
+          transition={{ type: "Inertia" }}
+          initial={{ transform: "translateX(39rem)" }}
+          animate={{ transform: "translateX(0em)" }}
+          exit={{ transform: "translateX(39rem)" }}
+          idx={idx}>
+          <StIcWrapper>
+            <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+          </StIcWrapper>
+          {idx === 4 ? <StImg src={ImgDrawer} idx={idx} /> : <StImg src={ImgDrawerSmall} idx={idx} />}
+          <StTitleWrapper>
+            <IcBooks />
+            나는 왜 이 일을 하는가?
+          </StTitleWrapper>
+          <StArticle idx={idx}>{idx === 4 ? <PeriNoteExample /> : <DrawerPre qaPair={qaPair} idx={idx} />}</StArticle>
+        </StDrawerWrapper>
+      )}
+    </AnimatePresence>
   );
 }
-
-const opentoright = keyframes`
-  0% {
-    transform: translateX(39rem);
-  },
-  100% {
-    transform: translateX(0);
-  }
-`;
 
 const StIcWrapper = styled.div`
   text-align: left;
   margin-bottom: 3.2rem;
 `;
 
-const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
+const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
   overflow-y: scroll;
   max-height: 100vh;
 
@@ -98,12 +96,6 @@ const StDrawerWrapper = styled.section<StDrawerWrapperProps>`
 
   width: ${({ idx }) => (idx === 4 ? "60rem" : "39rem")};
   height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
-
-  ${({ isopen }) =>
-    isopen &&
-    css`
-      animation: ${opentoright} 300ms linear forwards;
-    `}
 
   & > svg {
     width: 4.4rem;
