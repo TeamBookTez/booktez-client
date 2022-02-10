@@ -1,11 +1,36 @@
-import { PeriNoteTree } from "./PeriNote";
+import { PeriNoteTreeNode } from "./PeriNote";
 
 interface PeriQuestionProps {
   idx: number;
-  node: PeriNoteTree;
+  path: number[];
+  node: PeriNoteTreeNode;
+  onAddChild: (path: number[]) => void;
 }
 export default function PeriQuestion(props: PeriQuestionProps) {
-  const { node } = props;
+  const { idx, path, node, onAddChild } = props;
 
-  return <input value={node.content} />;
+  const onClickAddChild = () => {
+    onAddChild(path);
+  };
+
+  return (
+    <>
+      <fieldset>
+        <legend>질문 {idx}</legend>
+        <input value={node.content} />
+        <button type="button" onClick={onClickAddChild}>
+          꼬리 질문
+        </button>
+      </fieldset>
+      {node.children.map((node, i) => (
+        <PeriQuestion
+          key={`input-${idx}-${i}`}
+          idx={i}
+          path={[...path, i]}
+          node={node}
+          onAddChild={(path) => onAddChild(path)}
+        />
+      ))}
+    </>
+  );
 }
