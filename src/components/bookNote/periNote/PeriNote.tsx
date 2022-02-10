@@ -54,6 +54,7 @@ export default function PeriNote() {
 
   const [patchNote, setPatchNote] = useState<Question[]>([]);
 
+  const [isFilled, setIsFilled] = useState<boolean>(false);
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [bookData, setBookData] = useState({
@@ -241,12 +242,12 @@ export default function PeriNote() {
 
   useEffect(() => {
     patchNote.forEach((element) => {
-      if (element.question !== "") {
-        return handlePrevent(false);
+      if (element.question === "") {
+        return setIsFilled(false);
       }
       element.answer.forEach((a) => {
         if (a.text === "") {
-          return handlePrevent(false);
+          return setIsFilled(false);
         }
       });
     });
@@ -284,7 +285,6 @@ export default function PeriNote() {
                       periKey={`Q${a}`}
                       idxList={[a]}
                       question={question0.question}
-                      onPrevent={handlePrevent}
                       onAddAnswer={handleAddPeri}
                       onToggle={handleToggle}
                       onDeleteQuestion={handleDeletePeri}
@@ -416,13 +416,13 @@ export default function PeriNote() {
                 type="button"
                 onClick={() => {
                   handleAddPeri([]);
-                  handlePrevent(true);
+                  setIsFilled(false);
                 }}
                 disabled={isPrevented}>
                 + 질문 리스트 추가
               </StAddQuestionButton>
             </StQAWrapper>
-            <StDoneButton type="button" onClick={submitComplete} disabled={isPrevented}>
+            <StDoneButton type="button" onClick={submitComplete} disabled={!isFilled}>
               작성 완료
             </StDoneButton>
           </StNoteForm>
