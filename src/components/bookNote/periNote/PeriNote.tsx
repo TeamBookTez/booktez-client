@@ -1,15 +1,17 @@
 import { useState } from "react";
 
-import { PeriQuestion } from "..";
+import { PeriNoteInput } from "..";
 
 // 나중에 type 다른 곳으로 옮기기
 export interface PeriNoteTreeNode {
+  type: string;
   content: string;
   children: PeriNoteTreeNode[];
 }
 
 const deepCopyTree = (root: PeriNoteTreeNode): PeriNoteTreeNode => {
   const newRoot = {
+    type: root.type,
     content: root.content,
     children: root.children.map((node) => deepCopyTree(node)),
   };
@@ -30,14 +32,22 @@ const getNodeByPath = (node: PeriNoteTreeNode, path: number[]): PeriNoteTreeNode
 };
 
 export default function PeriNote() {
-  const [root, setRoot] = useState<PeriNoteTreeNode>({ content: "ROOT", children: [] });
+  const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "root", content: "ROOT", children: [] });
 
-  const handleAddChild = (path: number[]) => {
+  const handleAddChild = (path: number[], type: string) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(root);
     const current = getNodeByPath(newRoot, path);
 
+    if (type === "question") {
+      current.children.push({
+        type: "question",
+        content: "",
+        children: [],
+      });
+    }
     current.children.push({
+      type: "answer",
       content: "",
       children: [],
     });
@@ -65,13 +75,9 @@ export default function PeriNote() {
 
   return (
     <form>
-      <button type="button" onClick={() => handleAddChild([])}>
-        추가
-      </button>
       {root.children.map((node, idx) => (
-        <PeriQuestion
+        <PeriNoteInput
           key={`input-${idx}`}
-          idx={idx}
           path={[idx]}
           node={node}
           onAddChild={handleAddChild}
@@ -79,6 +85,9 @@ export default function PeriNote() {
           onDeleteChild={handleDeleteChild}
         />
       ))}
+      <button type="button" onClick={() => handleAddChild([], "question")}>
+        질문 리스트 추가
+      </button>
     </form>
   );
 }

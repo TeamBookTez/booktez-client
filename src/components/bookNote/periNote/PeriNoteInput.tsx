@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
-import { IcMore } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "./PeriNote";
 
 interface PeriNoteInputProps {
-  idx: number;
   path: number[];
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], type: string) => void;
@@ -12,9 +10,12 @@ interface PeriNoteInputProps {
   onDeleteChild: (path: number[]) => void;
 }
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { idx, path, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const isQuestion = node.type === "question";
 
-  const onClickAddChild = (type: string) => {
+  const onClickAddChild = (isQuestion: boolean) => {
+    const type = isQuestion ? "answer" : "question";
+
     onAddChild(path, type);
   };
 
@@ -29,22 +30,19 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   return (
     <>
       <fieldset>
-        <legend>
-          {node.type === "question" ? "질문" : "답변"} {idx}
-        </legend>
+        <legend>{isQuestion ? "질문" : "답변"}</legend>
         <input value={node.content} onChange={onChangeSetContent} />
-        <button type="button" onClick={() => onClickAddChild("answer")}>
-          답변
+        <button type="button" onClick={() => onClickAddChild(isQuestion)}>
+          {isQuestion ? "답변" : "꼬리 질문"}
         </button>
-        <StMoreButton type="button" onClick={onClickDeleteChild}>
+        <button type="button" onClick={onClickDeleteChild}>
           삭제
-        </StMoreButton>
+        </button>
       </fieldset>
       <StFieldWrapper>
         {node.children.map((node, i) => (
           <PeriNoteInput
-            key={`input-${idx}-${i}`}
-            idx={i}
+            key={`input-${i}`}
             path={[...path, i]}
             node={node}
             onAddChild={(path, type) => onAddChild(path, type)}
@@ -60,5 +58,3 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
 const StFieldWrapper = styled.article`
   padding-left: 2rem;
 `;
-
-const StMoreButton = styled(IcMore)``;
