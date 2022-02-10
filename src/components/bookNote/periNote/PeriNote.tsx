@@ -32,7 +32,7 @@ const getNodeByPath = (node: PeriNoteTreeNode, path: number[]): PeriNoteTreeNode
 export default function PeriNote() {
   const [root, setRoot] = useState<PeriNoteTreeNode>({ content: "ROOT", children: [] });
 
-  const addChild = (path: number[]) => {
+  const handleAddChild = (path: number[]) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(root);
     const current = getNodeByPath(newRoot, path);
@@ -45,13 +45,29 @@ export default function PeriNote() {
     setRoot(newRoot);
   };
 
+  const handleSetContent = (path: number[], value: string) => {
+    const newRoot = deepCopyTree(root);
+    const current = getNodeByPath(newRoot, path);
+
+    current.content = value;
+
+    setRoot(newRoot);
+  };
+
   return (
     <form>
-      <button type="button" onClick={() => addChild([])}>
+      <button type="button" onClick={() => handleAddChild([])}>
         추가
       </button>
       {root.children.map((node, idx) => (
-        <PeriQuestion key={`input-${idx}`} idx={idx} path={[idx]} node={node} onAddChild={addChild} />
+        <PeriQuestion
+          key={`input-${idx}`}
+          idx={idx}
+          path={[idx]}
+          node={node}
+          onAddChild={handleAddChild}
+          onSetContent={handleSetContent}
+        />
       ))}
     </form>
   );
