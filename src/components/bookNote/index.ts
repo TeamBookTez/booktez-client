@@ -5,6 +5,7 @@ export { default as AddedAnswer } from "./periNote/AddedAnswer";
 export { default as AddedQuestion } from "./periNote/AddedQuestion";
 export { default as Complete } from "./periNote/Complete";
 export { default as PeriNote } from "./periNote/PeriNote";
+export { default as PeriQuestion } from "./periNote/PeriQuestion";
 export { default as PriorAnswer } from "./periNote/PriorAnswer";
 export { default as PriorQuestion } from "./periNote/PriorQuestion";
 export { default as PeriNoteExample } from "./PeriNoteExample";

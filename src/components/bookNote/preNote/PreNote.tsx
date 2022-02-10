@@ -74,14 +74,14 @@ export default function PreNote() {
     handleChangeReview("progress", 3);
     patchBookNote(userToken, "/pre/20", { ...patchNote, progress: 3 });
 
-    if (preNote.progress === 2) {
-      const defaultQuestions: Question[] = [];
+    // if (preNote.progress === 2) {
+    //   const defaultQuestions: Question[] = [];
 
-      preNote.questionList.map((question: string) =>
-        defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
-      );
-      patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
-    }
+    //   preNote.questionList.map((question: string) =>
+    //     defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
+    //   );
+    //   patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
+    // }
 
     handlePrevent(false);
 

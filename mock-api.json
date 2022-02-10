@@ -2,10 +2,12 @@
   "pre": [
     {
       "id": 20,
-      "answerOne": "",
-      "answerTwo": "",
+      "answerOne": "답변 1",
+      "answerTwo": "답변 2",
       "questionList": [
-        ""
+        "질문 리스트 1",
+        "질문 리스트 2",
+        "질문 리스트 3"
       ],
       "progress": 2
     }
@@ -14,18 +16,8 @@
     {
       "id": 20,
       "answerThree": {
-        "root": [
-          {
-            "depth": 1,
-            "question": "",
-            "answer": [
-              {
-                "text": "",
-                "children": []
-              }
-            ]
-          }
-        ]
+        "content": "ROOT",
+        "children": []
       },
       "progress": 3
     }
