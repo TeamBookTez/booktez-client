@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { PeriNoteTreeNode } from "./PeriNote";
+import { PeriNoteTreeNode } from "../../../utils/dataType";
 
 interface PeriNoteInputProps {
   path: number[];

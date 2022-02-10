@@ -2,38 +2,11 @@ import { useCallback, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
+import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Button } from "../../common/styled/Button";
 import { ExButton, PeriModal, PeriNoteInput, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
-
-// 나중에 type 다른 곳으로 옮기기
-export interface PeriNoteTreeNode {
-  type: string;
-  content: string;
-  children: PeriNoteTreeNode[];
-}
-
-const deepCopyTree = (root: PeriNoteTreeNode): PeriNoteTreeNode => {
-  const newRoot = {
-    type: root.type,
-    content: root.content,
-    children: root.children.map((node) => deepCopyTree(node)),
-  };
-
-  return newRoot;
-};
-
-const getNodeByPath = (node: PeriNoteTreeNode, path: number[]): PeriNoteTreeNode => {
-  if (node === undefined) {
-    throw new Error("something wrong");
-  }
-
-  if (path.length === 0) {
-    return node;
-  }
-
-  return getNodeByPath(node.children[path[0]], path.slice(1));
-};
 
 export default function PeriNote() {
   const [isLogin, userToken, initIndex, isSave, isPrevented, handlePrevent, handleOpenDrawer, handleCloseDrawer] =

@@ -3,7 +3,6 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { PeriNoteData } from "../../../pages/BookNote";
-import { Question } from "../../../utils/dataType";
 import { patchBookNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";

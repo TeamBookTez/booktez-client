@@ -52,3 +52,9 @@ export interface Question extends ObjKey {
   question: string;
   answer: Answer[];
 }
+
+export interface PeriNoteTreeNode {
+  type: string;
+  content: string;
+  children: PeriNoteTreeNode[];
+}
