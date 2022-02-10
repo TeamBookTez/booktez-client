@@ -1,20 +1,21 @@
 import styled from "styled-components";
 
+import { IcMore } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "./PeriNote";
 
-interface PeriQuestionProps {
+interface PeriNoteInputProps {
   idx: number;
   path: number[];
   node: PeriNoteTreeNode;
-  onAddChild: (path: number[]) => void;
+  onAddChild: (path: number[], type: string) => void;
   onSetContent: (path: number[], value: string) => void;
   onDeleteChild: (path: number[]) => void;
 }
-export default function PeriQuestion(props: PeriQuestionProps) {
+export default function PeriNoteInput(props: PeriNoteInputProps) {
   const { idx, path, node, onAddChild, onSetContent, onDeleteChild } = props;
 
-  const onClickAddChild = () => {
-    onAddChild(path);
+  const onClickAddChild = (type: string) => {
+    onAddChild(path, type);
   };
 
   const onChangeSetContent = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,23 +29,25 @@ export default function PeriQuestion(props: PeriQuestionProps) {
   return (
     <>
       <fieldset>
-        <legend>질문 {idx}</legend>
+        <legend>
+          {node.type === "question" ? "질문" : "답변"} {idx}
+        </legend>
         <input value={node.content} onChange={onChangeSetContent} />
-        <button type="button" onClick={onClickAddChild}>
-          꼬리 질문
+        <button type="button" onClick={() => onClickAddChild("answer")}>
+          답변
         </button>
-        <button type="button" onClick={onClickDeleteChild}>
+        <StMoreButton type="button" onClick={onClickDeleteChild}>
           삭제
-        </button>
+        </StMoreButton>
       </fieldset>
       <StFieldWrapper>
         {node.children.map((node, i) => (
-          <PeriQuestion
+          <PeriNoteInput
             key={`input-${idx}-${i}`}
             idx={i}
             path={[...path, i]}
             node={node}
-            onAddChild={(path) => onAddChild(path)}
+            onAddChild={(path, type) => onAddChild(path, type)}
             onSetContent={(path, value) => onSetContent(path, value)}
             onDeleteChild={(path) => onDeleteChild(path)}
           />
@@ -57,3 +60,5 @@ export default function PeriQuestion(props: PeriQuestionProps) {
 const StFieldWrapper = styled.article`
   padding-left: 2rem;
 `;
+
+const StMoreButton = styled(IcMore)``;
