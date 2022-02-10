@@ -54,6 +54,15 @@ export default function PeriNote() {
     setRoot(newRoot);
   };
 
+  const handleDeleteChild = (path: number[]) => {
+    const newRoot = deepCopyTree(root);
+    // 삭제할 때는 자신의 부모를 찾아서 children을 제거
+    const parent = getNodeByPath(newRoot, path.slice(0, -1));
+
+    parent.children.splice(path[path.length - 1], 1);
+    setRoot(newRoot);
+  };
+
   return (
     <form>
       <button type="button" onClick={() => handleAddChild([])}>
@@ -67,6 +76,7 @@ export default function PeriNote() {
           node={node}
           onAddChild={handleAddChild}
           onSetContent={handleSetContent}
+          onDeleteChild={handleDeleteChild}
         />
       ))}
     </form>

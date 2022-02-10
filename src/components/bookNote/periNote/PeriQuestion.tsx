@@ -8,9 +8,10 @@ interface PeriQuestionProps {
   node: PeriNoteTreeNode;
   onAddChild: (path: number[]) => void;
   onSetContent: (path: number[], value: string) => void;
+  onDeleteChild: (path: number[]) => void;
 }
 export default function PeriQuestion(props: PeriQuestionProps) {
-  const { idx, path, node, onAddChild, onSetContent } = props;
+  const { idx, path, node, onAddChild, onSetContent, onDeleteChild } = props;
 
   const onClickAddChild = () => {
     onAddChild(path);
@@ -20,6 +21,10 @@ export default function PeriQuestion(props: PeriQuestionProps) {
     onSetContent(path, event.target.value);
   };
 
+  const onClickDeleteChild = () => {
+    onDeleteChild(path);
+  };
+
   return (
     <>
       <fieldset>
@@ -27,6 +32,9 @@ export default function PeriQuestion(props: PeriQuestionProps) {
         <input value={node.content} onChange={onChangeSetContent} />
         <button type="button" onClick={onClickAddChild}>
           꼬리 질문
+        </button>
+        <button type="button" onClick={onClickDeleteChild}>
+          삭제
         </button>
       </fieldset>
       <StFieldWrapper>
@@ -38,6 +46,7 @@ export default function PeriQuestion(props: PeriQuestionProps) {
             node={node}
             onAddChild={(path) => onAddChild(path)}
             onSetContent={(path, value) => onSetContent(path, value)}
+            onDeleteChild={(path) => onDeleteChild(path)}
           />
         ))}
       </StFieldWrapper>
