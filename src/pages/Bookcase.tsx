@@ -3,19 +3,52 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { getData } from "../utils/lib/api";
+import { getData, getMockData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
   reviewId: number;
-  state?: number;
+  reviewSt?: number;
   thumbnail: string;
   title: string;
 }
 
+export const useGetBookcase = (key: string, token: string) => {
+  const [bookcase, setBookcase] = useState<BookcaseInfo[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // const handleIsLoading = () => {
+  //   setIsLoading((isLoading) => !isLoading);
+  // };
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const {
+          data: {
+            data: { books },
+          },
+        } = await getMockData(key, token);
+
+        books.forEach((book: BookcaseInfo) => {
+          setBookcase((currentBook) => [...currentBook, book]);
+        });
+      } catch (err) {
+        console.log("err", err);
+      }
+      // handleIsLoading();
+    })();
+
+    // return () => {
+    //   handleIsLoading();
+    // };
+  }, []);
+
+  return [bookcase];
+};
+
 export default function Bookcase() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
@@ -24,10 +57,6 @@ export default function Bookcase() {
   //   getBookcase("/book", localToken);
   // };
   // 코드 리뷰 후 해당 주석 삭제 예정
-
-  const handleIsLoading = () => {
-    setIsLoading((e) => !e);
-  };
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
@@ -53,7 +82,7 @@ export default function Bookcase() {
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[isLoading, handleIsLoading, isLogin]} />
+      <Outlet context={[isLogin]} />
     </>
   );
 }
