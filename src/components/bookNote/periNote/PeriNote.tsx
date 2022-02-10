@@ -47,6 +47,9 @@ export default function PeriNote() {
 
   return (
     <form>
+      <button type="button" onClick={() => addChild([])}>
+        추가
+      </button>
       {root.children.map((node, idx) => (
         <PeriQuestion key={`input-${idx}`} idx={idx} path={[idx]} node={node} onAddChild={addChild} />
       ))}

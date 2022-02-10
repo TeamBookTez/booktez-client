@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 import { PeriNoteTreeNode } from "./PeriNote";
 
 interface PeriQuestionProps {
@@ -22,15 +24,21 @@ export default function PeriQuestion(props: PeriQuestionProps) {
           꼬리 질문
         </button>
       </fieldset>
-      {node.children.map((node, i) => (
-        <PeriQuestion
-          key={`input-${idx}-${i}`}
-          idx={i}
-          path={[...path, i]}
-          node={node}
-          onAddChild={(path) => onAddChild(path)}
-        />
-      ))}
+      <StFieldWrapper>
+        {node.children.map((node, i) => (
+          <PeriQuestion
+            key={`input-${idx}-${i}`}
+            idx={i}
+            path={[...path, i]}
+            node={node}
+            onAddChild={(path) => onAddChild(path)}
+          />
+        ))}
+      </StFieldWrapper>
     </>
   );
 }
+
+const StFieldWrapper = styled.article`
+  padding-left: 2rem;
+`;
