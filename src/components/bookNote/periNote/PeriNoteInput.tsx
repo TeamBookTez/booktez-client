@@ -5,7 +5,7 @@ import { PeriNoteTreeNode } from "./PeriNote";
 interface PeriNoteInputProps {
   path: number[];
   node: PeriNoteTreeNode;
-  onAddChild: (path: number[], type: string) => void;
+  onAddChild: (path: number[], isQuestion: boolean) => void;
   onSetContent: (path: number[], value: string) => void;
   onDeleteChild: (path: number[]) => void;
 }
@@ -14,9 +14,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const isQuestion = node.type === "question";
 
   const onClickAddChild = (isQuestion: boolean) => {
-    const type = isQuestion ? "answer" : "question";
-
-    onAddChild(path, type);
+    onAddChild(path, isQuestion);
   };
 
   const onChangeSetContent = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +43,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             key={`input-${i}`}
             path={[...path, i]}
             node={node}
-            onAddChild={(path, type) => onAddChild(path, type)}
+            onAddChild={(path, isQ) => onAddChild(path, isQ)}
             onSetContent={(path, value) => onSetContent(path, value)}
             onDeleteChild={(path) => onDeleteChild(path)}
           />
