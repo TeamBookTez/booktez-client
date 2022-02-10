@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Button } from "../../common/styled/Button";
-import { ExButton, PeriModal, PeriNoteInput, StepUp } from "..";
+import { ExButton, PeriModal, PeriNoteInput, PriorQuestionLayout, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export default function PeriNote() {
@@ -71,14 +71,15 @@ export default function PeriNote() {
           <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
         </StLabelWrapper>
         {root.children.map((node, idx) => (
-          <PeriNoteInput
-            key={`input-${idx}`}
-            path={[idx]}
-            node={node}
-            onAddChild={handleAddChild}
-            onSetContent={handleSetContent}
-            onDeleteChild={handleDeleteChild}
-          />
+          <PriorQuestionLayout key={`input-${idx}`}>
+            <PeriNoteInput
+              path={[idx]}
+              node={node}
+              onAddChild={handleAddChild}
+              onSetContent={handleSetContent}
+              onDeleteChild={handleDeleteChild}
+            />
+          </PriorQuestionLayout>
         ))}
         <StAddChildButton type="button" disabled={false} onClick={() => handleAddChild([], true)}>
           질문 리스트 추가
