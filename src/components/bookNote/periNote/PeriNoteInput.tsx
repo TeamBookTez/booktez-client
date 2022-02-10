@@ -14,7 +14,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const isQuestion = node.type === "question";
 
   const onClickAddChild = (isQuestion: boolean) => {
-    onAddChild(path, isQuestion);
+    onAddChild(path, !isQuestion);
   };
 
   const onChangeSetContent = (event: React.ChangeEvent<HTMLInputElement>) => {
