@@ -32,6 +32,7 @@ export default function BookNote() {
   // 현재 페이지를 확인하여 navigator를 움직이고 patch할 때 필요한 아이들
   const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
+  const drawerWidthValue = pathname === "/book-note/peri" ? 60 : 39;
   const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
@@ -61,6 +62,7 @@ export default function BookNote() {
 
   const [drawerIdx, setDrawerIdx] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerdefault, setIsDrawerdefault] = useState(true);
 
   const [isSave, setIsSave] = useState<boolean>(false);
 
@@ -73,6 +75,7 @@ export default function BookNote() {
   };
 
   const handleOpenDrawer = (i: number) => {
+    setIsDrawerdefault(false);
     setIsDrawerOpen(true);
     setDrawerIdx(i);
   };
@@ -183,6 +186,7 @@ export default function BookNote() {
     setOpenModal(false);
     // 드로워 닫기
     setIsDrawerOpen(false);
+    setIsDrawerdefault(true);
 
     if (preNote.progress === 2) {
       const defaultQuestions: Question[] = [];
@@ -202,6 +206,10 @@ export default function BookNote() {
   // 모달 내 '취소' 버튼 - 모달을 끄는 용도
   const handleCancel = () => {
     setOpenModal(false);
+  };
+
+  const handleDrawerDefault = () => {
+    setIsDrawerdefault(true);
   };
 
   useEffect(() => {
@@ -410,7 +418,7 @@ export default function BookNote() {
   }, []);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen} width={pathname === "/book-note/peri" ? 60 : 39}>
+    <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
       {openExitModal && <PopUpExit onExit={handleExit} />}
       <StIcCancelWhite onClick={handleExit} />
       <StBookTitle>{title}</StBookTitle>
@@ -421,6 +429,7 @@ export default function BookNote() {
           isLoginState={isLoginState}
           isPrevented={isPrevented}
           isPeriEmpty={!periNote.length}
+          isDrawerDefault={handleDrawerDefault}
         />
         {isSave && (
           <StSave>
@@ -460,24 +469,35 @@ export default function BookNote() {
   );
 }
 
-export const reducewidth = (width: number) => keyframes`
+const reducewidth = (width: number) => keyframes`
   0% {
     width: 100%;
-    padding: 10rem 9.5rem;
+    padding-right: 9.5rem;
   }
   100% {
     width: calc(100% - ${width}rem);
-    padding: 10rem 3.4rem 10rem 9.5rem;
-  }
+    padding-right: 3.4rem;
+}
 `;
 
-const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
+const boostwidth = (width: number) => keyframes`
+  0% {
+    width: calc(100% - ${width}rem);
+    padding-right: 3.4rem;
+  }
+  100% {
+    width: 100%;
+    padding-right: 9.5rem;
+}
+`;
+
+const StNoteModalWrapper = styled.section<{ isopen: boolean; isdefault: boolean; width: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
-  padding: 10rem ${({ isopen }) => (isopen ? "3.4rem" : "9.5rem")} 10rem 9.5rem;
+  padding: 10rem 9.5rem;
   background-color: ${({ theme }) => theme.colors.white200};
 
   min-height: 100vh;
@@ -485,6 +505,13 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; width: number }>`
     isopen &&
     css`
       animation: ${reducewidth(width)} 300ms linear 1;
+      animation-fill-mode: forwards;
+    `}
+  ${({ isopen, isdefault, width }) =>
+    !isopen &&
+    !isdefault &&
+    css`
+      animation: ${boostwidth(width)} 300ms linear 1;
       animation-fill-mode: forwards;
     `}
 `;
