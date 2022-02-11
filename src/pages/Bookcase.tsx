@@ -8,26 +8,44 @@ import { getData } from "../utils/lib/api";
 export interface BookcaseInfo {
   author: string[];
   reviewId: number;
-  state?: number;
+  reviewSt?: number;
   thumbnail: string;
   title: string;
 }
 
-export default function Bookcase() {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+const TOKEN = localStorage.getItem("booktez-token");
+const localToken = TOKEN ? TOKEN : "";
+
+export const useGetBookcase = (key: string) => {
+  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const localToken = TOKEN ? TOKEN : "";
+  useEffect(() => {
+    getBookcase();
+  }, []);
 
-  // const handleBookDelete = () => {
-  //   getBookcase("/book", localToken);
-  // };
-  // 코드 리뷰 후 해당 주석 삭제 예정
+  const getBookcase = async () => {
+    try {
+      const {
+        data: {
+          data: { books },
+        },
+      } = await getData(key, localToken);
 
-  const handleIsLoading = () => {
-    setIsLoading((e) => !e);
+      books.forEach((book: BookcaseInfo) => {
+        setBookcaseInfo((currentBook) => [...currentBook, book]);
+      });
+      setIsLoading(false);
+    } catch (err) {
+      console.log("err", err);
+    }
   };
+
+  return { bookcaseInfo, isLoading, getBookcase };
+};
+
+export default function Bookcase() {
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
@@ -53,7 +71,7 @@ export default function Bookcase() {
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[isLoading, handleIsLoading, isLogin]} />
+      <Outlet context={isLogin} />
     </>
   );
 }

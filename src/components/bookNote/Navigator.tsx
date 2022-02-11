@@ -8,16 +8,18 @@ interface NavigatorProps {
   onNav: (idx: number) => void;
   isLoginState: IsLoginState;
   isPrevented: boolean;
+  isDrawerDefault: () => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isLoginState, isPrevented } = props;
+  const { navIndex, onNav, isLoginState, isPrevented, isDrawerDefault } = props;
 
   const navigate = useNavigate();
 
   const goToPre = () => {
     navigate("", { state: isLoginState });
     onNav(0);
+    isDrawerDefault();
   };
 
   const goToPeri = (isPrevented: boolean) => {
@@ -25,6 +27,7 @@ export default function Navigator(props: NavigatorProps) {
       navigate("peri", { state: isLoginState });
       onNav(1);
     }
+    isDrawerDefault();
   };
 
   return (

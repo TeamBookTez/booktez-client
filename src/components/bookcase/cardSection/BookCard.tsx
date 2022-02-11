@@ -14,12 +14,12 @@ interface BookCardProps {
 
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo, handleBookDelete, isLogin } = props;
-  const { author, reviewId, thumbnail, title, state } = bookcaseInfo;
+  const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const reviewUrl = state === 2 ? "/book-note" : state === 3 ? "/book-note/peri" : "/detail-book-note";
+  const reviewUrl = reviewSt === 2 ? "/book-note" : reviewSt === 3 ? "/book-note/peri" : "/detail-book-note";
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);

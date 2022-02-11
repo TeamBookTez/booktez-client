@@ -1,5 +1,5 @@
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
-import { client, KAKAO, mockClient } from ".";
+import { client, KAKAO } from ".";
 
 export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
@@ -9,10 +9,6 @@ export const searchBook = (params: KAKAOParams) => {
 // "Content-Type": "application/json",
 // "Content-Type": "multipart/form-data"
 // "Authorization": "토큰"
-
-export const getMockData = (key: string, token?: string) => {
-  return mockClient(token).get(key);
-};
 
 export const getData = (key: string, token?: string) => {
   return client(token).get(key);
