@@ -42,7 +42,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     else miniMenu.style.display = "none";
   };
 
-  const handleSelected = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const setSelected = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const menuBtn = e.currentTarget.parentElement;
 
     if (menuBtn === null || menuBtn === undefined) return;
@@ -55,7 +55,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
 
   const onClickAddQuestion = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     onClickAddChild(path, isQuestion);
-    handleSelected(e);
+    setSelected(e);
   };
 
   return (
@@ -92,6 +92,8 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           onAddChild={(p, isQ) => onClickAddChild(p, isQ)}
           onSetContent={(p, value) => onChangeSetContent(p, value)}
           onDeleteChild={(p) => onDeleteChild(p)}
+          onToggleMenuList={(e) => toggleMenuList(e)}
+          onSetSelected={(e) => setSelected(e)}
         />
       ))}
     </StArticle>
@@ -139,13 +141,13 @@ const StAddAnswerButton = styled.button`
   color: ${({ theme }) => theme.colors.gray400};
 `;
 
-const StMoreIcon = styled(IcMore)`
+export const StMoreIcon = styled(IcMore)`
   &:hover {
     fill: #efefef;
   }
 `;
 
-const StMiniMenu = styled.div<{ menuposition?: string }>`
+export const StMiniMenu = styled.div<{ menuposition?: string }>`
   display: none;
 
   position: absolute;
