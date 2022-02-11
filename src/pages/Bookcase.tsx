@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { getData, getMockData } from "../utils/lib/api";
+import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
   author: string[];
@@ -17,33 +17,31 @@ const TOKEN = localStorage.getItem("booktez-token");
 const localToken = TOKEN ? TOKEN : "";
 
 export const useGetBookcase = (key: string) => {
-  const [bookcase, setBookcase] = useState<BookcaseInfo[]>([]);
+  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // const handleIsLoading = () => {
-  //   setIsLoading((isLoading) => !isLoading);
-  // };
-
   useEffect(() => {
-    (async function () {
-      try {
-        const {
-          data: {
-            data: { books },
-          },
-        } = await getMockData(key, localToken);
-
-        books.forEach((book: BookcaseInfo) => {
-          setBookcase((currentBook) => [...currentBook, book]);
-        });
-        setIsLoading(false);
-      } catch (err) {
-        console.log("err", err);
-      }
-    })();
+    getBookcase();
   }, []);
 
-  return { bookcase, isLoading };
+  const getBookcase = async () => {
+    try {
+      const {
+        data: {
+          data: { books },
+        },
+      } = await getData(key, localToken);
+
+      books.forEach((book: BookcaseInfo) => {
+        setBookcaseInfo((currentBook) => [...currentBook, book]);
+      });
+      setIsLoading(false);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  return { bookcaseInfo, isLoading, getBookcase };
 };
 
 export default function Bookcase() {
