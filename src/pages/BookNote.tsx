@@ -37,7 +37,6 @@ export default function BookNote() {
   const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
   const drawerWidthValue = pathname === "/book-note/peri" ? 60 : 39;
-  const pathKey = initIndex ? "now" : "before";
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   // recoil로 관리했으면 하는 부분
