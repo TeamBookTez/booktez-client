@@ -3,15 +3,17 @@ import styled from "styled-components";
 import { IcMore } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
+import { PeriNoteInput } from "..";
 
-interface PeriNoteInputProps {
+interface PriorQuestionLayoutProps {
   path: number[];
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], isQuestion: boolean) => void;
   onSetContent: (path: number[], value: string) => void;
   onDeleteChild: (path: number[]) => void;
 }
-export default function PeriNoteInput(props: PeriNoteInputProps) {
+
+export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = node.type === "question";
 
@@ -56,46 +58,81 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   };
 
   return (
-    <>
-      <fieldset>
+    <StArticle>
+      <StFieldset>
         <legend>{isQuestion ? "질문" : "답변"}</legend>
-        <input
+        <StInput
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
           onChange={onChangeSetContent}
         />
         {isQuestion && (
-          <button type="button" onClick={() => onClickAddChild(isQuestion)}>
+          <StAddAnswerButton type="button" onClick={() => onClickAddChild(isQuestion)}>
             답변
-          </button>
+          </StAddAnswerButton>
         )}
         <StMoreIcon onClick={toggleMenuList} />
         <StMiniMenu menuposition={"isPriQ"}>
           {!isQuestion && (
-            <button type="button" onClick={onClickAddQuestion}>
+            <StMenuBtn type="button" onClick={onClickAddQuestion}>
               꼬리질문 추가
-            </button>
+            </StMenuBtn>
           )}
-          <button type="button" onClick={onClickDeleteChild}>
+          <StMenuBtn type="button" onClick={onClickDeleteChild}>
             삭제
-          </button>
+          </StMenuBtn>
         </StMiniMenu>
-      </fieldset>
-      <StFieldWrapper>
-        {node.children.map((node, i) => (
-          <PeriNoteInput
-            key={`input-${i}`}
-            path={[...path, i]}
-            node={node}
-            onAddChild={(path, isQ) => onAddChild(path, isQ)}
-            onSetContent={(path, value) => onSetContent(path, value)}
-            onDeleteChild={(path) => onDeleteChild(path)}
-          />
-        ))}
-      </StFieldWrapper>
-    </>
+      </StFieldset>
+      <PeriNoteInput
+        path={path}
+        node={node}
+        onAddChild={(path, isQ) => onAddChild(path, isQ)}
+        onSetContent={(path, value) => onSetContent(path, value)}
+        onDeleteChild={(path) => onDeleteChild(path)}
+      />
+    </StArticle>
   );
 }
+
+const StArticle = styled.article`
+  position: relative;
+
+  padding: 2.6rem 4.4rem 2.6rem 8.4rem;
+
+  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
+  border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
+  border-radius: 0.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const StFieldset = styled.fieldset`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  & > legend {
+    display: none;
+  }
+`;
+const StInput = styled.input`
+  flex: 1;
+  ${({ theme }) => theme.fonts.header4}
+
+  &:placeholder {
+    color: ${({ theme }) => theme.colors.white500};
+  }
+`;
+
+const StAddAnswerButton = styled.button`
+  width: 6.6rem;
+  height: 3.4rem;
+
+  ${({ theme }) => theme.fonts.caption}
+  color: ${({ theme }) => theme.colors.gray400};
+`;
 
 const StMoreIcon = styled(IcMore)`
   &:hover {
@@ -117,8 +154,15 @@ const StMiniMenu = styled.div<{ menuposition?: string }>`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const StFieldWrapper = styled.article`
-  display: flex;
-  flex-direction: column;
-  margin-left: 7.6rem;
+const StMenuBtn = styled(Button)`
+  border-radius: 0.8rem;
+  background-color: transparent;
+  width: 9.5rem;
+  height: 3.8rem;
+  ${({ theme }) => theme.fonts.caption}
+  color: ${({ theme }) => theme.colors.gray200};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.white300};
+  }
 `;

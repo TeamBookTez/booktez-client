@@ -1,11 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Button } from "../../common/styled/Button";
-import { ExButton, PeriModal, PeriNoteInput, PriorQuestionLayout, StepUp } from "..";
+import { ExButton, PeriModal, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export default function PeriNote() {
@@ -60,6 +60,11 @@ export default function PeriNote() {
     setOpenModal(!openModal);
   }, [openModal]);
 
+  // 데이터 확인용
+  useEffect(() => {
+    console.log("root", root.children);
+  }, [root]);
+
   return (
     <>
       <StNoteForm>
@@ -71,15 +76,14 @@ export default function PeriNote() {
           <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
         </StLabelWrapper>
         {root.children.map((node, idx) => (
-          <PriorQuestionLayout key={`input-${idx}`}>
-            <PeriNoteInput
-              path={[idx]}
-              node={node}
-              onAddChild={handleAddChild}
-              onSetContent={handleSetContent}
-              onDeleteChild={handleDeleteChild}
-            />
-          </PriorQuestionLayout>
+          <PriorQuestion
+            key={`input-${idx}`}
+            path={[idx]}
+            node={node}
+            onAddChild={handleAddChild}
+            onSetContent={handleSetContent}
+            onDeleteChild={handleDeleteChild}
+          />
         ))}
         <StAddChildButton type="button" disabled={false} onClick={() => handleAddChild([], true)}>
           질문 리스트 추가
