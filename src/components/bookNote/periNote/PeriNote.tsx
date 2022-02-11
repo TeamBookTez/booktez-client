@@ -21,19 +21,29 @@ export default function PeriNote() {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(root);
     const current = getNodeByPath(newRoot, path);
+    // 답변의 경우에는 부모에게 자식을 추가해야 함 - 질문과 같은 피어에 두기 위해서
+    const parent = getNodeByPath(newRoot, path.slice(0, -1));
 
     if (isQuestion) {
-      current.children.push({
-        type: "question",
+      current.children.push(
+        {
+          type: "question",
+          content: "",
+          children: [],
+        },
+        {
+          type: "answer",
+          content: "",
+          children: [],
+        },
+      );
+    } else {
+      parent.children.push({
+        type: "answer",
         content: "",
         children: [],
       });
     }
-    current.children.push({
-      type: "answer",
-      content: "",
-      children: [],
-    });
 
     setRoot(newRoot);
   };
