@@ -17,16 +17,17 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = node.type === "question";
 
-  const onClickAddChild = (isQuestion: boolean) => {
-    onAddChild(path, !isQuestion);
+  const onClickAddChild = (pathArray: number[], isQuestion: boolean) => {
+    onAddChild(pathArray, !isQuestion);
   };
 
-  const onChangeSetContent = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSetContent(path, event.target.value);
+  const onChangeSetContent = (pathArray: number[], value: string) => {
+    console.log("pathArray", pathArray);
+    onSetContent(pathArray, value);
   };
 
-  const onClickDeleteChild = () => {
-    onDeleteChild(path);
+  const onClickDeleteChild = (pathArray: number[]) => {
+    onDeleteChild(pathArray);
   };
 
   const toggleMenuList = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -53,7 +54,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   };
 
   const onClickAddQuestion = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onClickAddChild(isQuestion);
+    onClickAddChild(path, isQuestion);
     handleSelected(e);
   };
 
@@ -64,10 +65,10 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
         <StInput
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-          onChange={onChangeSetContent}
+          onChange={(e) => onChangeSetContent(path, e.target.value)}
         />
         {isQuestion && (
-          <StAddAnswerButton type="button" onClick={() => onClickAddChild(isQuestion)}>
+          <StAddAnswerButton type="button" onClick={() => onClickAddChild(path, isQuestion)}>
             답변
           </StAddAnswerButton>
         )}
@@ -78,18 +79,21 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
               꼬리질문 추가
             </StMenuBtn>
           )}
-          <StMenuBtn type="button" onClick={onClickDeleteChild}>
+          <StMenuBtn type="button" onClick={() => onClickDeleteChild(path)}>
             삭제
           </StMenuBtn>
         </StMiniMenu>
       </StFieldset>
-      <PeriNoteInput
-        path={path}
-        node={node}
-        onAddChild={(path, isQ) => onAddChild(path, isQ)}
-        onSetContent={(path, value) => onSetContent(path, value)}
-        onDeleteChild={(path) => onDeleteChild(path)}
-      />
+      {node.children.map((node, i) => (
+        <PeriNoteInput
+          key={`input-${i}`}
+          path={[...path, i]}
+          node={node}
+          onAddChild={(p, isQ) => onClickAddChild(p, isQ)}
+          onSetContent={(p, value) => onChangeSetContent(p, value)}
+          onDeleteChild={(p) => onDeleteChild(p)}
+        />
+      ))}
     </StArticle>
   );
 }
@@ -117,6 +121,7 @@ const StFieldset = styled.fieldset`
     display: none;
   }
 `;
+
 const StInput = styled.input`
   flex: 1;
   ${({ theme }) => theme.fonts.header4}

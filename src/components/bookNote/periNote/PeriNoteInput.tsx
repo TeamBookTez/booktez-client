@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import { IcMore } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
-import { Button } from "../../common/styled/Button";
 
 interface PeriNoteInputProps {
   path: number[];
@@ -14,18 +13,6 @@ interface PeriNoteInputProps {
 export default function PeriNoteInput(props: PeriNoteInputProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = node.type === "question";
-
-  const onClickAddChild = (isQuestion: boolean) => {
-    onAddChild(path, !isQuestion);
-  };
-
-  const onChangeSetContent = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSetContent(path, event.target.value);
-  };
-
-  const onClickDeleteChild = () => {
-    onDeleteChild(path);
-  };
 
   const toggleMenuList = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     const miniMenu = e.currentTarget.nextElementSibling;
@@ -51,7 +38,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   };
 
   const onClickAddQuestion = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onClickAddChild(isQuestion);
+    onAddChild(path, isQuestion);
     handleSelected(e);
   };
 
@@ -62,10 +49,10 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         <input
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-          onChange={onChangeSetContent}
+          onChange={(e) => onSetContent(path, e.target.value)}
         />
         {isQuestion && (
-          <button type="button" onClick={() => onClickAddChild(isQuestion)}>
+          <button type="button" onClick={() => onAddChild(path, isQuestion)}>
             답변
           </button>
         )}
@@ -76,7 +63,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               꼬리질문 추가
             </button>
           )}
-          <button type="button" onClick={onClickDeleteChild}>
+          <button type="button" onClick={() => onDeleteChild(path)}>
             삭제
           </button>
         </StMiniMenu>
@@ -87,9 +74,9 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             key={`input-${i}`}
             path={[...path, i]}
             node={node}
-            onAddChild={(path, isQ) => onAddChild(path, isQ)}
-            onSetContent={(path, value) => onSetContent(path, value)}
-            onDeleteChild={(path) => onDeleteChild(path)}
+            onAddChild={(p, isQ) => onAddChild(p, isQ)}
+            onSetContent={(p, value) => onSetContent(p, value)}
+            onDeleteChild={(p) => onDeleteChild(p)}
           />
         ))}
       </StFieldWrapper>
