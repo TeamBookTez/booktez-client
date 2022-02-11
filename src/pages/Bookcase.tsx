@@ -13,9 +13,12 @@ export interface BookcaseInfo {
   title: string;
 }
 
-export const useGetBookcase = (key: string, token: string) => {
+const TOKEN = localStorage.getItem("booktez-token");
+const localToken = TOKEN ? TOKEN : "";
+
+export const useGetBookcase = (key: string) => {
   const [bookcase, setBookcase] = useState<BookcaseInfo[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // const handleIsLoading = () => {
   //   setIsLoading((isLoading) => !isLoading);
@@ -28,35 +31,23 @@ export const useGetBookcase = (key: string, token: string) => {
           data: {
             data: { books },
           },
-        } = await getMockData(key, token);
+        } = await getMockData(key, localToken);
 
         books.forEach((book: BookcaseInfo) => {
           setBookcase((currentBook) => [...currentBook, book]);
         });
+        setIsLoading(false);
       } catch (err) {
         console.log("err", err);
       }
-      // handleIsLoading();
     })();
-
-    // return () => {
-    //   handleIsLoading();
-    // };
   }, []);
 
-  return [bookcase];
+  return { bookcase, isLoading };
 };
 
 export default function Bookcase() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
-
-  const TOKEN = localStorage.getItem("booktez-token");
-  const localToken = TOKEN ? TOKEN : "";
-
-  // const handleBookDelete = () => {
-  //   getBookcase("/book", localToken);
-  // };
-  // 코드 리뷰 후 해당 주석 삭제 예정
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
@@ -82,7 +73,7 @@ export default function Bookcase() {
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={[isLogin]} />
+      <Outlet context={isLogin} />
     </>
   );
 }
