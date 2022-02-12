@@ -21,10 +21,9 @@ export default function PeriNote() {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(root);
     const current = getNodeByPath(newRoot, path);
-    // 답변의 경우에는 부모에게 자식을 추가해야 함 - 질문과 같은 피어에 두기 위해서
-    const parent = getNodeByPath(newRoot, path.slice(0, -1));
 
     if (isQuestion) {
+      // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
       current.children.push(
         {
           type: "question",
@@ -38,7 +37,26 @@ export default function PeriNote() {
         },
       );
     } else {
-      parent.children.push({
+      // 답변의 경우에는 부모에게 자식을 추가해야 함 - 질문과 같은 피어에 두기 위해서
+      const parent = getNodeByPath(newRoot, path.slice(0, -1));
+      const currentIndex = path[path.length - 1];
+      const parentLength = parent.children.length;
+      let targetIndex = 0;
+
+      for (let i = currentIndex + 1; i < parentLength; i++) {
+        // 다음 질문의 바로 앞에 추가
+        if (parent.children[i].type === "question") {
+          targetIndex = i;
+          break;
+        }
+
+        // 가장 끝에 추가
+        if (i === parentLength - 1) {
+          targetIndex = parentLength;
+        }
+      }
+
+      parent.children.splice(targetIndex, 0, {
         type: "answer",
         content: "",
         children: [],
