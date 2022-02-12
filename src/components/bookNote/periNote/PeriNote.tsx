@@ -89,11 +89,6 @@ export default function PeriNote() {
     setOpenModal(!openModal);
   }, [openModal]);
 
-  // 데이터 확인용
-  useEffect(() => {
-    console.log("root", root.children);
-  }, [root]);
-
   return (
     <>
       <StNoteForm>
