@@ -12,10 +12,15 @@ interface PeriNoteInputProps {
   onDeleteChild: (path: number[]) => void;
   onToggleMenuList: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onSetSelected: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onAddQuestion: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    pathArray: number[],
+    isQuestionChecked: boolean,
+  ) => void;
 }
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, node, onAddChild, onSetContent, onDeleteChild, onToggleMenuList, onSetSelected } = props;
+  const { path, node, onAddChild, onSetContent, onDeleteChild, onToggleMenuList, onSetSelected, onAddQuestion } = props;
   const isQuestion = node.type === "question";
   const labelColorList = [
     theme.colors.orange100,
@@ -25,11 +30,6 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   ];
   // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 4 지우기
   const labelColor = labelColorList[(path.length - 2) % 4];
-
-  const onClickAddQuestion = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onAddChild(path, isQuestion);
-    onSetSelected(e);
-  };
 
   return (
     <>
@@ -50,7 +50,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
           <StMoreIcon onClick={onToggleMenuList} />
           <StMiniMenu>
             {!isQuestion && (
-              <StMenuBtn type="button" onClick={onClickAddQuestion}>
+              <StMenuBtn type="button" onClick={(e) => onAddQuestion(e, path, isQuestion)}>
                 꼬리질문 추가
               </StMenuBtn>
             )}
@@ -71,6 +71,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             onDeleteChild={(p) => onDeleteChild(p)}
             onToggleMenuList={(e) => onToggleMenuList(e)}
             onSetSelected={(e) => onSetSelected(e)}
+            onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
           />
         ))}
       </StFieldWrapper>

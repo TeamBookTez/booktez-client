@@ -17,8 +17,8 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = node.type === "question";
 
-  const onClickAddChild = (pathArray: number[], isQuestion: boolean) => {
-    onAddChild(pathArray, !isQuestion);
+  const onClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
+    onAddChild(pathArray, !isQuestionChecked);
   };
 
   const onChangeSetContent = (pathArray: number[], value: string) => {
@@ -52,8 +52,12 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     if (whatValue !== "none") menuBtn.style.display = "none";
   };
 
-  const onClickAddQuestion = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onClickAddChild(path, isQuestion);
+  const onClickAddQuestion = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    pathArray: number[],
+    isQuestionChecked: boolean,
+  ) => {
+    onClickAddChild(pathArray, isQuestionChecked);
     setSelected(e);
   };
 
@@ -74,7 +78,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
         <StMoreIcon onClick={toggleMenuList} />
         <StMiniMenu menuposition={"isPriQ"}>
           {!isQuestion && (
-            <StMenuBtn type="button" onClick={onClickAddQuestion}>
+            <StMenuBtn type="button" onClick={(e) => onClickAddQuestion(e, path, isQuestion)}>
               꼬리질문 추가
             </StMenuBtn>
           )}
@@ -93,6 +97,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           onDeleteChild={(p) => onDeleteChild(p)}
           onToggleMenuList={(e) => toggleMenuList(e)}
           onSetSelected={(e) => setSelected(e)}
+          onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
         />
       ))}
     </StArticle>
