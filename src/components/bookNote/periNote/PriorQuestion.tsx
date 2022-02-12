@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IcMore } from "../../../assets/icons";
+import { IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
 import { PeriNoteInput } from "..";
@@ -60,7 +60,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   return (
     <StArticle>
       <StFieldset>
-        <legend>{isQuestion ? "질문" : "답변"}</legend>
+        <legend>{isQuestion ? <StQuestionIcon /> : <StAnswerIcon />}</legend>
         <StInput
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
@@ -102,7 +102,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
 const StArticle = styled.article`
   position: relative;
 
-  padding: 2.6rem 4.4rem 2.6rem 8.4rem;
+  padding: 2.6rem 4.4rem 2.6rem 9.6rem;
 
   border: 0.1rem solid ${({ theme }) => theme.colors.white200};
   border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
@@ -117,10 +117,18 @@ const StFieldset = styled.fieldset`
   justify-content: space-between;
 
   width: 100%;
+`;
 
-  & > legend {
-    display: none;
-  }
+const StQuestionIcon = styled(IcPeriQuestion)`
+  position: absolute;
+  top: -1.2rem;
+  left: 1.2rem;
+`;
+
+const StAnswerIcon = styled(IcPeriAnswer)`
+  position: absolute;
+  top: 2.7rem;
+  left: 3.8rem;
 `;
 
 const StInput = styled.input`
