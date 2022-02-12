@@ -41,7 +41,8 @@ export default function PeriNote() {
       const parent = getNodeByPath(newRoot, path.slice(0, -1));
       const currentIndex = path[path.length - 1];
       const parentLength = parent.children.length;
-      let targetIndex = 0;
+      // 가장 마지막 질문에 답변이 없는데, 답변을 추가하려는 경우 가장 마지막에 달려야 함
+      let targetIndex = parentLength;
 
       for (let i = currentIndex + 1; i < parentLength; i++) {
         // 다음 질문의 바로 앞에 추가
