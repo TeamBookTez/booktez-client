@@ -22,7 +22,6 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   };
 
   const onChangeSetContent = (pathArray: number[], value: string) => {
-    console.log("pathArray", pathArray);
     onSetContent(pathArray, value);
   };
 

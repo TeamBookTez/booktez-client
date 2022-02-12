@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import { IcMore } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { StMiniMenu, StMoreIcon } from "./PriorQuestion";
 
