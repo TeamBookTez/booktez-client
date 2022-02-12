@@ -124,11 +124,12 @@ const StNoteForm = styled.form`
 const StLabelWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 4.6rem 0 4.6rem 2rem;
+  padding: 4.6rem 0 1.6rem 2rem;
 `;
 
 const StLabelContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const StLabel = styled.label`

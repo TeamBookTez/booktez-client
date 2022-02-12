@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
@@ -58,7 +58,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   };
 
   return (
-    <StArticle>
+    <StArticle isquestion={isQuestion}>
       <StFieldset>
         <legend>{isQuestion ? <StQuestionIcon /> : <StAnswerIcon />}</legend>
         <StInput
@@ -99,8 +99,14 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   );
 }
 
-const StArticle = styled.article`
+const StArticle = styled.article<{ isquestion: boolean }>`
   position: relative;
+
+  ${({ isquestion }) =>
+    isquestion &&
+    css`
+      margin-top: 3rem;
+    `}
 
   padding: 2.6rem 4.4rem 2.6rem 9.6rem;
 
