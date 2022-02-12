@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
+import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
-import { StMiniMenu, StMoreIcon } from "./PriorQuestion";
+import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PriorQuestion";
 
 interface PeriNoteInputProps {
   path: number[];
@@ -12,9 +13,18 @@ interface PeriNoteInputProps {
   onToggleMenuList: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   onSetSelected: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
+
 export default function PeriNoteInput(props: PeriNoteInputProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild, onToggleMenuList, onSetSelected } = props;
   const isQuestion = node.type === "question";
+  const labelColorList = [
+    theme.colors.orange100,
+    theme.colors.orange300,
+    theme.colors.orange400,
+    theme.colors.orange500,
+  ];
+  // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 4 지우기
+  const labelColor = labelColorList[(path.length - 2) % 4];
 
   const onClickAddQuestion = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     onAddChild(path, isQuestion);
@@ -23,30 +33,33 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
 
   return (
     <>
-      <fieldset>
+      <StFieldset>
         <legend>{isQuestion ? "질문" : "답변"}</legend>
-        <input
-          value={node.content}
-          placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-          onChange={(e) => onSetContent(path, e.target.value)}
-        />
-        {isQuestion && (
-          <button type="button" onClick={() => onAddChild(path, isQuestion)}>
-            답변
-          </button>
-        )}
-        <StMoreIcon onClick={onToggleMenuList} />
-        <StMiniMenu>
-          {!isQuestion && (
-            <button type="button" onClick={onClickAddQuestion}>
-              꼬리질문 추가
-            </button>
+        {isQuestion && <StQuestionLabel bgcolor={labelColor}>질문</StQuestionLabel>}
+        <StInputWrapper isanswer={!isQuestion}>
+          <StInput
+            value={node.content}
+            placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
+            onChange={(e) => onSetContent(path, e.target.value)}
+          />
+          {isQuestion && (
+            <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
+              답변
+            </StAddAnswerButton>
           )}
-          <button type="button" onClick={() => onDeleteChild(path)}>
-            삭제
-          </button>
-        </StMiniMenu>
-      </fieldset>
+          <StMoreIcon onClick={onToggleMenuList} />
+          <StMiniMenu>
+            {!isQuestion && (
+              <StMenuBtn type="button" onClick={onClickAddQuestion}>
+                꼬리질문 추가
+              </StMenuBtn>
+            )}
+            <StMenuBtn type="button" onClick={() => onDeleteChild(path)}>
+              삭제
+            </StMenuBtn>
+          </StMiniMenu>
+        </StInputWrapper>
+      </StFieldset>
       <StFieldWrapper>
         {node.children.map((node, i) => (
           <PeriNoteInput
@@ -64,6 +77,58 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
     </>
   );
 }
+
+const StFieldset = styled.fieldset`
+  display: flex;
+  align-items: center;
+
+  margin-top: 2.4rem;
+
+  & > legend {
+    display: none;
+  }
+`;
+
+const StQuestionLabel = styled.label<{ bgcolor: string; color?: string }>`
+  margin-right: 1.6rem;
+  border-radius: 0.8rem;
+  padding: 0.4rem 1.8rem;
+  background-color: ${({ bgcolor }) => bgcolor};
+  width: fit-content;
+
+  ${({ theme }) => theme.fonts.caption}
+  color: ${({ color, theme }) => (color ? color : theme.colors.white)};
+`;
+
+const StInputWrapper = styled.div<{ isanswer: boolean }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  ${({ isanswer }) =>
+    isanswer &&
+    css`
+      margin-left: 7.6rem;
+    `}
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
+  border-radius: 0.8rem;
+  padding-left: 2.4rem;
+  padding-right: 1.6rem;
+  height: 5.4rem;
+`;
+
+const StInput = styled.input`
+  flex: 1;
+
+  ${({ theme }) => theme.fonts.body4}
+  color: ${({ theme }) => theme.colors.gray200};
+
+  &:placeholder {
+    color: ${({ theme }) => theme.colors.white500};
+  }
+`;
 
 const StFieldWrapper = styled.article`
   display: flex;

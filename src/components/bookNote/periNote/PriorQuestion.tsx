@@ -146,7 +146,7 @@ const StInput = styled.input`
   }
 `;
 
-const StAddAnswerButton = styled.button`
+export const StAddAnswerButton = styled.button`
   width: 6.6rem;
   height: 3.4rem;
 
@@ -174,7 +174,7 @@ export const StMiniMenu = styled.div<{ menuposition?: string }>`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const StMenuBtn = styled(Button)`
+export const StMenuBtn = styled(Button)`
   border-radius: 0.8rem;
   background-color: transparent;
   width: 9.5rem;
