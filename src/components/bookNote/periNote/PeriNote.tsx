@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
+import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { useGetPeriNote } from "../../../utils/lib/bookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
@@ -21,6 +22,7 @@ export default function PeriNote() {
     handlePrevent,
     handleOpenDrawer,
     handleCloseDrawer,
+    saveReview,
   ] =
     useOutletContext<
       [
@@ -33,6 +35,7 @@ export default function PeriNote() {
         (shouldPrevent: boolean) => void,
         (i: number) => void,
         () => void,
+        (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
     >();
 
@@ -116,6 +119,12 @@ export default function PeriNote() {
   useEffect(() => {
     setRoot(periNote.answerThree);
   }, [periNote]);
+
+  useEffect(() => {
+    if (initIndex && isSave) {
+      saveReview({ answerThree: root, reviewSt: periNote.reviewSt });
+    }
+  }, [isSave]);
 
   return (
     <>
