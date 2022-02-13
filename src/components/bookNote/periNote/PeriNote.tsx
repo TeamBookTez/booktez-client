@@ -104,6 +104,7 @@ export default function PeriNote() {
   }, [openModal]);
 
   function toggleMenu(e: React.MouseEvent<HTMLFormElement, MouseEvent>) {
+    // as를 없애고 싶다
     const targetElement = e.target as HTMLElement;
 
     if (!targetElement.closest(".icn_more")) {

@@ -45,7 +45,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
 
   return (
     <StArticle isquestion={isQuestion}>
-      <StFieldset>
+      <StFieldset hasborder={!isQuestion && node.children.length > 0}>
         <legend>{isQuestion ? <StQuestionIcon /> : <StAnswerIcon />}</legend>
         <StInput
           value={node.content}
@@ -59,7 +59,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           </StAddAnswerButton>
         )}
         <StMoreIcon className="icn_more" />
-        <StMiniMenu menuposition={"isPriQ"}>
+        <StMenu menuposition={"isPriQ"}>
           {!isQuestion && (
             <StMenuBtn type="button" onClick={(e) => onClickAddQuestion(e, path, isQuestion)}>
               꼬리질문 추가
@@ -68,7 +68,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           <StMenuBtn type="button" onClick={() => onClickDeleteChild(path)}>
             삭제
           </StMenuBtn>
-        </StMiniMenu>
+        </StMenu>
       </StFieldset>
       {node.children &&
         node.children.map((node, i) => (
@@ -90,25 +90,38 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
 const StArticle = styled.article<{ isquestion: boolean }>`
   position: relative;
 
+  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
+  border-radius: 0.8rem;
+  padding: 2.6rem 4.4rem 2.6rem 2.8rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+
+  // 방식 조금 더 고민해보기
+  /* &:focus-within {
+    border-color: ${({ theme }) => theme.colors.orange100};
+  } */
+
   ${({ isquestion }) =>
     isquestion &&
     css`
       margin-top: 3rem;
+      border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
     `}
-
-  padding: 2.6rem 4.4rem 2.6rem 9.6rem;
-
-  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
-  border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
-  border-radius: 0.8rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const StFieldset = styled.fieldset`
+const StFieldset = styled.fieldset<{ hasborder: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  padding-left: 6.8rem;
+
+  ${({ hasborder, theme }) =>
+    hasborder &&
+    css`
+      border-bottom: 0.2rem solid ${theme.colors.white200};
+      padding-bottom: 2.8rem;
+    `}
 
   width: 100%;
 `;
@@ -150,7 +163,7 @@ export const StMoreIcon = styled(IcMore)`
   }
 `;
 
-export const StMiniMenu = styled.div<{ menuposition?: string }>`
+export const StMenu = styled.div<{ menuposition?: string }>`
   display: none;
 
   position: absolute;
