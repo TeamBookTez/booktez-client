@@ -133,58 +133,56 @@ export default function PreNote() {
 
   return (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <StNoteForm onSubmit={(e) => e.preventDefault()}>
-          <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
-          <StFormWrapper>
-            <PreNoteForm
-              question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
-              idx={1}
-              onOpenDrawer={handleOpenDrawer}>
-              <StTextarea
-                placeholder="답변을 입력해주세요."
-                value={patchNote.answerOne}
-                onChange={(e) => handleChangeReview("answerOne", e.target.value)}
-              />
-            </PreNoteForm>
-            <PreNoteForm
-              question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
-              idx={2}
-              onOpenDrawer={handleOpenDrawer}>
-              <StTextarea
-                placeholder="답변을 입력해주세요."
-                value={patchNote.answerTwo}
-                onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
-              />
-            </PreNoteForm>
-            {isLogin ? (
-              <QuestionThree
-                questionList={patchNote.questionList}
-                onChangeReview={handleChangeReview}
-                onOpenDrawer={handleOpenDrawer}
-                isPrevented={isPrevented}
-                isFilled={isFilled}
-              />
-            ) : (
-              <StLinkWrapper>
-                <StSignupText>
-                  내 기대를 채워줄 책의 내용들은
-                  <br />
-                  앞으로 어떻게 구체화 될까요?
-                </StSignupText>
-                <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
-              </StLinkWrapper>
-            )}
-          </StFormWrapper>
+      {isLoading && <Loading />}
+      <StNoteForm onSubmit={(e) => e.preventDefault()}>
+        <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
+        <StFormWrapper>
+          <PreNoteForm
+            question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
+            idx={1}
+            onOpenDrawer={handleOpenDrawer}>
+            <StTextarea
+              placeholder="답변을 입력해주세요."
+              value={patchNote.answerOne}
+              onChange={(e) => handleChangeReview("answerOne", e.target.value)}
+            />
+          </PreNoteForm>
+          <PreNoteForm
+            question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
+            idx={2}
+            onOpenDrawer={handleOpenDrawer}>
+            <StTextarea
+              placeholder="답변을 입력해주세요."
+              value={patchNote.answerTwo}
+              onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
+            />
+          </PreNoteForm>
+          {isLogin ? (
+            <QuestionThree
+              questionList={patchNote.questionList}
+              onChangeReview={handleChangeReview}
+              onOpenDrawer={handleOpenDrawer}
+              isPrevented={isPrevented}
+              isFilled={isFilled}
+            />
+          ) : (
+            <StLinkWrapper>
+              <StSignupText>
+                내 기대를 채워줄 책의 내용들은
+                <br />
+                앞으로 어떻게 구체화 될까요?
+              </StSignupText>
+              <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
+            </StLinkWrapper>
+          )}
+        </StFormWrapper>
 
-          {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-          <StNextBtn type="button" disabled={!isFilled} onClick={handleOpenModal}>
-            다음 계단
-          </StNextBtn>
-        </StNoteForm>
-      )}
+        {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
+        <StNextBtn type="button" disabled={!isFilled} onClick={handleOpenModal}>
+          다음 계단
+        </StNextBtn>
+      </StNoteForm>
+
       {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancelModal} />}
     </>
   );

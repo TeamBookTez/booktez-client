@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { useGetPeriNote } from "../../../utils/lib/bookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
+import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { ExButton, PeriModal, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
@@ -118,6 +119,7 @@ export default function PeriNote() {
 
   return (
     <>
+      {isLoading && <Loading />}
       <StNoteForm>
         <StLabelWrapper>
           <StLabelContainer>
