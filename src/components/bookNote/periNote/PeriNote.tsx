@@ -109,8 +109,10 @@ export default function PeriNote() {
     if (!targetElement.closest(".icn_more")) {
       const element = document.querySelector(".open") as HTMLElement;
 
-      element.style.display = "none";
-      element.classList.remove("open");
+      if (element) {
+        element.style.display = "none";
+        element.classList.remove("open");
+      }
 
       return;
     }
