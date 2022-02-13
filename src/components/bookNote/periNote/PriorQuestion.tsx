@@ -29,7 +29,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     onDeleteChild(pathArray);
   };
 
-  const onClickAddQuestion = (
+  const handleClickAddQuestion = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     pathArray: number[],
     isQuestionChecked: boolean,
@@ -37,7 +37,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     handleClickAddChild(pathArray, isQuestionChecked);
   };
 
-  const onAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
+  const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
       handleClickAddChild(pathArray, !isQuestion);
     }
@@ -51,7 +51,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
-          onKeyPress={(e) => onAddChildByEnter(e, path)}
+          onKeyPress={(e) => handleAddChildByEnter(e, path)}
         />
         {isQuestion && (
           <StAddAnswerButton type="button" onClick={() => handleClickAddChild(path, isQuestion)}>
@@ -61,7 +61,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
         <StMoreIcon className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
           {!isQuestion && (
-            <StMenuBtn type="button" onClick={(e) => onClickAddQuestion(e, path, isQuestion)}>
+            <StMenuBtn type="button" onClick={(e) => handleClickAddQuestion(e, path, isQuestion)}>
               꼬리질문 추가
             </StMenuBtn>
           )}
@@ -79,8 +79,8 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
             onAddChild={(p, isQ) => handleClickAddChild(p, isQ)}
             onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
-            onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
-            onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
+            onAddQuestion={(e, p, isQ) => handleClickAddQuestion(e, p, isQ)}
+            onAddChildByEnter={(e, p) => handleAddChildByEnter(e, p)}
           />
         ))}
     </StArticle>
