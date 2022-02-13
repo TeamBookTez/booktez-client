@@ -17,10 +17,21 @@ interface PeriNoteInputProps {
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => void;
+  onAddChildByEnter: (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => void;
 }
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, node, onAddChild, onSetContent, onDeleteChild, onToggleMenuList, onSetSelected, onAddQuestion } = props;
+  const {
+    path,
+    node,
+    onAddChild,
+    onSetContent,
+    onDeleteChild,
+    onToggleMenuList,
+    onSetSelected,
+    onAddQuestion,
+    onAddChildByEnter,
+  } = props;
   const isQuestion = node.type === "question";
   const labelColorList = [
     theme.colors.orange100,
@@ -41,6 +52,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
             onChange={(e) => onSetContent(path, e.target.value)}
+            onKeyPress={(e) => onAddChildByEnter(e, path)}
           />
           {isQuestion && (
             <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
@@ -73,6 +85,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               onToggleMenuList={(e) => onToggleMenuList(e)}
               onSetSelected={(e) => onSetSelected(e)}
               onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
+              onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
             />
           ))}
       </StFieldWrapper>

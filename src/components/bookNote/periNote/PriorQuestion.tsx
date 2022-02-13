@@ -61,6 +61,12 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     setSelected(e);
   };
 
+  const onAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
+    if (e.key === "Enter") {
+      onClickAddChild(pathArray, !isQuestion);
+    }
+  };
+
   return (
     <StArticle isquestion={isQuestion}>
       <StFieldset>
@@ -69,6 +75,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
           onChange={(e) => onChangeSetContent(path, e.target.value)}
+          onKeyPress={(e) => onAddChildByEnter(e, path)}
         />
         {isQuestion && (
           <StAddAnswerButton type="button" onClick={() => onClickAddChild(path, isQuestion)}>
@@ -99,6 +106,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
             onToggleMenuList={(e) => toggleMenuList(e)}
             onSetSelected={(e) => setSelected(e)}
             onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
+            onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
           />
         ))}
     </StArticle>
