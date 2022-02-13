@@ -17,15 +17,15 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = node.type === "question";
 
-  const onClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
+  const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
     onAddChild(pathArray, !isQuestionChecked);
   };
 
-  const onChangeSetContent = (pathArray: number[], value: string) => {
+  const handleChangeSetContent = (pathArray: number[], value: string) => {
     onSetContent(pathArray, value);
   };
 
-  const onClickDeleteChild = (pathArray: number[]) => {
+  const handleClickDeleteChild = (pathArray: number[]) => {
     onDeleteChild(pathArray);
   };
 
@@ -34,12 +34,12 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => {
-    onClickAddChild(pathArray, isQuestionChecked);
+    handleClickAddChild(pathArray, isQuestionChecked);
   };
 
   const onAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
-      onClickAddChild(pathArray, !isQuestion);
+      handleClickAddChild(pathArray, !isQuestion);
     }
   };
 
@@ -50,11 +50,11 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
         <StInput
           value={node.content}
           placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-          onChange={(e) => onChangeSetContent(path, e.target.value)}
+          onChange={(e) => handleChangeSetContent(path, e.target.value)}
           onKeyPress={(e) => onAddChildByEnter(e, path)}
         />
         {isQuestion && (
-          <StAddAnswerButton type="button" onClick={() => onClickAddChild(path, isQuestion)}>
+          <StAddAnswerButton type="button" onClick={() => handleClickAddChild(path, isQuestion)}>
             답변
           </StAddAnswerButton>
         )}
@@ -65,7 +65,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
               꼬리질문 추가
             </StMenuBtn>
           )}
-          <StMenuBtn type="button" onClick={() => onClickDeleteChild(path)}>
+          <StMenuBtn type="button" onClick={() => handleClickDeleteChild(path)}>
             삭제
           </StMenuBtn>
         </StMenu>
@@ -76,8 +76,8 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
             key={`input-${i}`}
             path={[...path, i]}
             node={node}
-            onAddChild={(p, isQ) => onClickAddChild(p, isQ)}
-            onSetContent={(p, value) => onChangeSetContent(p, value)}
+            onAddChild={(p, isQ) => handleClickAddChild(p, isQ)}
+            onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
             onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
