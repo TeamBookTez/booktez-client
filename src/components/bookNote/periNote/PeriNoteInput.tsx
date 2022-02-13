@@ -105,7 +105,7 @@ const StFieldset = styled.fieldset`
   }
 `;
 
-const StQuestionLabel = styled.label<{ bgcolor: string; color?: string }>`
+const StQuestionLabel = styled.label<{ bgcolor: string }>`
   margin-right: 1.6rem;
   border-radius: 0.8rem;
   padding: 0.4rem 1.8rem;

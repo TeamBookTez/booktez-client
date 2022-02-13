@@ -33,6 +33,12 @@ export interface PeriNoteData {
   reviewSt: number;
 }
 
+interface StNoteModalWrapperProps {
+  isopen: boolean;
+  isdefault: boolean;
+  width: number;
+}
+
 export default function BookNote() {
   const { pathname, state } = useLocation();
   const initIndex = pathname === "/book-note/peri" ? 1 : 0;
@@ -171,7 +177,7 @@ const boostwidth = (width: number) => keyframes`
 }
 `;
 
-const StNoteModalWrapper = styled.section<{ isopen: boolean; isdefault: boolean; width: number }>`
+const StNoteModalWrapper = styled.section<StNoteModalWrapperProps>`
   position: relative;
   display: flex;
   flex-direction: column;
