@@ -136,11 +136,11 @@ export default function BookNote() {
           userToken,
           initIndex,
           isSave,
-          isPrevented,
-          handlePrevent,
           handleOpenDrawer,
           handleCloseDrawer,
           saveReview,
+          isPrevented,
+          handlePrevent,
         ]}
       />
       /

@@ -16,11 +16,11 @@ export default function PreNote() {
     userToken,
     initIndex,
     isSave,
-    isPrevented,
-    handlePrevent,
     handleOpenDrawer,
     handleCloseDrawer,
     saveReview,
+    isPrevented,
+    handlePrevent,
   ] =
     useOutletContext<
       [
@@ -29,11 +29,11 @@ export default function PreNote() {
         string,
         number,
         boolean,
-        boolean,
-        (shouldPrevent: boolean) => void,
         (i: number) => void,
         () => void,
         (body: PreNoteData | PeriNoteData) => Promise<void>,
+        boolean,
+        (shouldPrevent: boolean) => void,
       ]
     >();
 
@@ -88,8 +88,6 @@ export default function PreNote() {
 
     // 현재 모달 닫기
     setOpenModal(false);
-    // 드로워 닫기
-    handleCloseDrawer();
 
     // peri로 넘어가기
     navigate("/book-note/peri", { state: { isLogin, reviewId, fromUrl: "" } });
@@ -130,6 +128,11 @@ export default function PreNote() {
       setIsFilled(false);
     }
   }, [patchNote]);
+
+  useEffect(() => {
+    // unmount될 때 drawer 닫기
+    return handleCloseDrawer;
+  }, []);
 
   return (
     <>

@@ -12,18 +12,7 @@ import { ExButton, PeriModal, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export default function PeriNote() {
-  const [
-    isLogin,
-    reviewId,
-    userToken,
-    initIndex,
-    isSave,
-    isPrevented,
-    handlePrevent,
-    handleOpenDrawer,
-    handleCloseDrawer,
-    saveReview,
-  ] =
+  const [isLogin, reviewId, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
     useOutletContext<
       [
         boolean,
@@ -31,8 +20,6 @@ export default function PeriNote() {
         string,
         number,
         boolean,
-        boolean,
-        (shouldPrevent: boolean) => void,
         (i: number) => void,
         () => void,
         (body: PreNoteData | PeriNoteData) => Promise<void>,
@@ -125,6 +112,11 @@ export default function PeriNote() {
       saveReview({ answerThree: root, reviewSt: periNote.reviewSt });
     }
   }, [isSave]);
+
+  useEffect(() => {
+    // unmount될 때 drawer 닫기
+    return handleCloseDrawer;
+  }, []);
 
   return (
     <>
