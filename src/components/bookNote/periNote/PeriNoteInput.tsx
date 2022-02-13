@@ -61,19 +61,20 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         </StInputWrapper>
       </StFieldset>
       <StFieldWrapper>
-        {node.children.map((node, i) => (
-          <PeriNoteInput
-            key={`input-${i}`}
-            path={[...path, i]}
-            node={node}
-            onAddChild={(p, isQ) => onAddChild(p, isQ)}
-            onSetContent={(p, value) => onSetContent(p, value)}
-            onDeleteChild={(p) => onDeleteChild(p)}
-            onToggleMenuList={(e) => onToggleMenuList(e)}
-            onSetSelected={(e) => onSetSelected(e)}
-            onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
-          />
-        ))}
+        {node.children &&
+          node.children.map((node, i) => (
+            <PeriNoteInput
+              key={`input-${i}`}
+              path={[...path, i]}
+              node={node}
+              onAddChild={(p, isQ) => onAddChild(p, isQ)}
+              onSetContent={(p, value) => onSetContent(p, value)}
+              onDeleteChild={(p) => onDeleteChild(p)}
+              onToggleMenuList={(e) => onToggleMenuList(e)}
+              onSetSelected={(e) => onSetSelected(e)}
+              onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
+            />
+          ))}
       </StFieldWrapper>
     </>
   );

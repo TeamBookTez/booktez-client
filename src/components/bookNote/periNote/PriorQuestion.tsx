@@ -87,19 +87,20 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
           </StMenuBtn>
         </StMiniMenu>
       </StFieldset>
-      {node.children.map((node, i) => (
-        <PeriNoteInput
-          key={`input-${i}`}
-          path={[...path, i]}
-          node={node}
-          onAddChild={(p, isQ) => onClickAddChild(p, isQ)}
-          onSetContent={(p, value) => onChangeSetContent(p, value)}
-          onDeleteChild={(p) => onDeleteChild(p)}
-          onToggleMenuList={(e) => toggleMenuList(e)}
-          onSetSelected={(e) => setSelected(e)}
-          onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
-        />
-      ))}
+      {node.children &&
+        node.children.map((node, i) => (
+          <PeriNoteInput
+            key={`input-${i}`}
+            path={[...path, i]}
+            node={node}
+            onAddChild={(p, isQ) => onClickAddChild(p, isQ)}
+            onSetContent={(p, value) => onChangeSetContent(p, value)}
+            onDeleteChild={(p) => onDeleteChild(p)}
+            onToggleMenuList={(e) => toggleMenuList(e)}
+            onSetSelected={(e) => setSelected(e)}
+            onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
+          />
+        ))}
     </StArticle>
   );
 }

@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { useGetPeriNote } from "../../../utils/lib/bookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Button } from "../../common/styled/Button";
 import { ExButton, PeriModal, PriorQuestion, StepUp } from "..";
@@ -34,7 +35,9 @@ export default function PeriNote() {
       ]
     >();
 
-  const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "root", content: "ROOT", children: [] });
+  const [periNote, isLoading] = useGetPeriNote(userToken, `/review/${reviewId}/peri`);
+
+  const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "ROOT", content: "root", children: [] });
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleAddChild = (path: number[], isQuestion: boolean) => {
@@ -109,6 +112,14 @@ export default function PeriNote() {
     setOpenModal(!openModal);
   }, [openModal]);
 
+  useEffect(() => {
+    setRoot(periNote.answerThree);
+  }, [periNote]);
+
+  useEffect(() => {
+    console.log("root", root);
+  }, [root]);
+
   return (
     <>
       <StNoteForm>
@@ -119,16 +130,17 @@ export default function PeriNote() {
           </StLabelContainer>
           <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
         </StLabelWrapper>
-        {root.children.map((node, idx) => (
-          <PriorQuestion
-            key={`input-${idx}`}
-            path={[idx]}
-            node={node}
-            onAddChild={handleAddChild}
-            onSetContent={handleSetContent}
-            onDeleteChild={handleDeleteChild}
-          />
-        ))}
+        {root.children &&
+          root.children.map((node, idx) => (
+            <PriorQuestion
+              key={`input-${idx}`}
+              path={[idx]}
+              node={node}
+              onAddChild={handleAddChild}
+              onSetContent={handleSetContent}
+              onDeleteChild={handleDeleteChild}
+            />
+          ))}
         <StAddChildButton type="button" disabled={false} onClick={() => handleAddChild([], true)}>
           질문 리스트 추가
         </StAddChildButton>

@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { patchBookNote, useGetPreNote } from "../../../utils/lib/bookNote";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
@@ -66,14 +67,22 @@ export default function PreNote() {
     handleChangeReview("reviewSt", 3);
     patchBookNote(userToken, `/review/${reviewId}/pre`, { ...patchNote, reviewSt: 3 });
 
-    // if (preNote.reviewSt === 2) {
-    //   const defaultQuestions: Question[] = [];
+    if (reviewSt === 2) {
+      const questionFromPre: PeriNoteTreeNode[] = [];
 
-    //   preNote.questionList.map((question: string) =>
-    //     defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
-    //   );
-    //   patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, reviewSt: 3 });
-    // }
+      patchNote.questionList.map((content) => {
+        questionFromPre.push({ type: "question", content, children: [] });
+        questionFromPre.push({ type: "answer", content: "", children: [] });
+      });
+      patchBookNote(userToken, `review/${reviewId}/peri`, {
+        answerThree: {
+          type: "Root",
+          content: "root",
+          children: questionFromPre,
+        },
+        reviewSt: 3,
+      });
+    }
 
     handlePrevent(false);
 
@@ -120,11 +129,6 @@ export default function PreNote() {
     } else {
       setIsFilled(false);
     }
-  }, [patchNote]);
-
-  useEffect(() => {
-    // 확인 용
-    console.log("patchNote", patchNote);
   }, [patchNote]);
 
   return (

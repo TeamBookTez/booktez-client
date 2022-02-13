@@ -2,11 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { PeriNoteTreeNode } from "../dataType";
-import { client, mockClient } from ".";
+import { client } from ".";
 
 interface PeriNoteData {
-  answerThree: { root: PeriNoteTreeNode[] };
-  progress: number;
+  answerThree: PeriNoteTreeNode;
+  reviewSt: number;
 }
 
 interface PreNoteData {
@@ -57,18 +57,25 @@ export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean
 
 // preNote get과 매우 유사 - 중복 제거 필요
 export const useGetPeriNote = (token: string, key: string): [PeriNoteData, boolean] => {
-  const [periNote, setPeriNote] = useState<PeriNoteData>({ answerThree: { root: [] }, progress: 3 });
+  const [periNote, setPeriNote] = useState<PeriNoteData>({
+    answerThree: { type: "", content: "", children: [] },
+    reviewSt: 3,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     (async function () {
       try {
-        const { data } = await mockClient(token).get(key);
+        const {
+          data: { data },
+        } = await client(token).get(key);
 
         setPeriNote(data);
       } catch (err) {
-        return;
+        if (axios.isAxiosError(err)) {
+          console.log("err", err.message);
+        }
       }
       setIsLoading(false);
     })();
@@ -78,7 +85,6 @@ export const useGetPeriNote = (token: string, key: string): [PeriNoteData, boole
 };
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
-  console.log("token", token);
   try {
     await client(token).patch(key, body);
   } catch (err) {
