@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
 import { IcAnswerLabel } from "../../../assets/icons";
@@ -11,8 +12,6 @@ interface PeriNoteInputProps {
   onAddChild: (path: number[], isQuestion: boolean) => void;
   onSetContent: (path: number[], value: string) => void;
   onDeleteChild: (path: number[]) => void;
-  onToggleMenuList: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
-  onSetSelected: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onAddQuestion: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     pathArray: number[],
@@ -22,17 +21,7 @@ interface PeriNoteInputProps {
 }
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const {
-    path,
-    node,
-    onAddChild,
-    onSetContent,
-    onDeleteChild,
-    onToggleMenuList,
-    onSetSelected,
-    onAddQuestion,
-    onAddChildByEnter,
-  } = props;
+  const { path, node, onAddChild, onSetContent, onDeleteChild, onAddQuestion, onAddChildByEnter } = props;
   const isQuestion = node.type === "question";
   const labelColorList = [
     theme.colors.orange100,
@@ -42,6 +31,13 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   ];
   // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 4 지우기
   const labelColor = labelColorList[(path.length - 2) % 4];
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current && isQuestion) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <>
@@ -54,6 +50,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         )}
         <StInputWrapper isanswer={!isQuestion}>
           <StInput
+            ref={inputRef}
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
             onChange={(e) => onSetContent(path, e.target.value)}
@@ -64,7 +61,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               답변
             </StAddAnswerButton>
           )}
-          <StMoreIcon onClick={onToggleMenuList} />
+          <StMore className="icn_more" />
           <StMiniMenu>
             {!isQuestion && (
               <StMenuBtn type="button" onClick={(e) => onAddQuestion(e, path, isQuestion)}>
@@ -87,8 +84,6 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               onAddChild={(p, isQ) => onAddChild(p, isQ)}
               onSetContent={(p, value) => onSetContent(p, value)}
               onDeleteChild={(p) => onDeleteChild(p)}
-              onToggleMenuList={(e) => onToggleMenuList(e)}
-              onSetSelected={(e) => onSetSelected(e)}
               onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
               onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
             />
@@ -158,6 +153,10 @@ const StInput = styled.input`
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
+`;
+
+const StMore = styled(StMoreIcon)`
+  margin-right: 0rem;
 `;
 
 const StFieldWrapper = styled.article`

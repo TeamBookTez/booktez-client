@@ -103,6 +103,31 @@ export default function PeriNote() {
     setOpenModal(!openModal);
   }, [openModal]);
 
+  function toggleMenu(e: React.MouseEvent<HTMLFormElement, MouseEvent>) {
+    const targetElement = e.target as HTMLElement;
+
+    if (!targetElement.closest(".icn_more")) {
+      const element = document.querySelector(".open") as HTMLElement;
+
+      element.style.display = "none";
+      element.classList.remove("open");
+
+      return;
+    }
+
+    const miniMenu = targetElement.closest(".icn_more")?.nextElementSibling;
+
+    if (miniMenu === null || miniMenu === undefined || !(miniMenu instanceof HTMLElement)) return;
+
+    if (miniMenu.style.display === "none") {
+      miniMenu.style.display = "block";
+      miniMenu.classList.add("open");
+    } else {
+      miniMenu.style.display = "none";
+      miniMenu.classList.remove("open");
+    }
+  }
+
   useEffect(() => {
     setRoot(periNote.answerThree);
   }, [periNote]);
@@ -121,7 +146,7 @@ export default function PeriNote() {
   return (
     <>
       {isLoading && <Loading />}
-      <StNoteForm>
+      <StNoteForm onClick={toggleMenu}>
         <StLabelWrapper>
           <StLabelContainer>
             <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>

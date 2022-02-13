@@ -29,36 +29,12 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     onDeleteChild(pathArray);
   };
 
-  const toggleMenuList = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const miniMenu = e.currentTarget.nextElementSibling;
-
-    if (miniMenu === null || miniMenu === undefined) return;
-    if (!(miniMenu instanceof HTMLElement)) return;
-
-    const whatValue = miniMenu.style.display;
-
-    if (whatValue === "none") miniMenu.style.display = "block";
-    else miniMenu.style.display = "none";
-  };
-
-  const setSelected = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const menuBtn = e.currentTarget.parentElement;
-
-    if (menuBtn === null || menuBtn === undefined) return;
-    if (!(menuBtn instanceof HTMLElement)) return;
-
-    const whatValue = menuBtn.style.display;
-
-    if (whatValue !== "none") menuBtn.style.display = "none";
-  };
-
   const onClickAddQuestion = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => {
     onClickAddChild(pathArray, isQuestionChecked);
-    setSelected(e);
   };
 
   const onAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
@@ -82,7 +58,7 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
             답변
           </StAddAnswerButton>
         )}
-        <StMoreIcon onClick={toggleMenuList} />
+        <StMoreIcon className="icn_more" />
         <StMiniMenu menuposition={"isPriQ"}>
           {!isQuestion && (
             <StMenuBtn type="button" onClick={(e) => onClickAddQuestion(e, path, isQuestion)}>
@@ -103,8 +79,6 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
             onAddChild={(p, isQ) => onClickAddChild(p, isQ)}
             onSetContent={(p, value) => onChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
-            onToggleMenuList={(e) => toggleMenuList(e)}
-            onSetSelected={(e) => setSelected(e)}
             onAddQuestion={(e, p, isQ) => onClickAddQuestion(e, p, isQ)}
             onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
           />
@@ -169,6 +143,8 @@ export const StAddAnswerButton = styled.button`
 `;
 
 export const StMoreIcon = styled(IcMore)`
+  margin-right: 1.6rem;
+
   &:hover {
     fill: #efefef;
   }
