@@ -27,8 +27,7 @@
     "eject": "react-scripts eject",
     "lint": "yarn run lint-prettier && yarn run lint-eslint",
     "lint-eslint": "eslint --ignore-path .gitignore src/**/*{ts,tsx} --fix",
-    "lint-prettier": "prettier --write \"src/**/*.(ts|tsx)\"",
-    "server": "json-server --watch mock-api.json --port 3001"
+    "lint-prettier": "prettier --write \"src/**/*.(ts|tsx)\""
   },
   "lint-staged": {
     "src/**/*.(ts|tsx)": [
