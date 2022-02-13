@@ -31,6 +31,7 @@ export default function PeriNote() {
   const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "ROOT", content: "root", children: [] });
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const [isPrevented, setIsPrevented] = useState<boolean>(true);
   const handleAddChild = (path: number[], isQuestion: boolean) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(root);
@@ -136,6 +137,14 @@ export default function PeriNote() {
   }, [periNote]);
 
   useEffect(() => {
+    if (root.children.every((node) => node.content !== "")) {
+      setIsPrevented(false);
+    } else {
+      setIsPrevented(true);
+    }
+  }, [root]);
+
+  useEffect(() => {
     if (initIndex && isSave) {
       saveReview({ answerThree: root, reviewSt: periNote.reviewSt });
     }
@@ -168,11 +177,11 @@ export default function PeriNote() {
               onDeleteChild={handleDeleteChild}
             />
           ))}
-        <StAddChildButton type="button" disabled={false} onClick={() => handleAddChild([], true)}>
+        <StAddChildButton type="button" disabled={isPrevented} onClick={() => handleAddChild([], true)}>
           질문 리스트 추가
         </StAddChildButton>
         {/* 북노트 정리되면 type submit으로 바꾸기 */}
-        <StSubmitButton type="button" disabled={false}>
+        <StSubmitButton type="button" disabled={isPrevented}>
           작성 완료
         </StSubmitButton>
       </StNoteForm>
