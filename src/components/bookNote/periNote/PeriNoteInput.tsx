@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+import { IcAnswerLabel } from "../../../assets/icons";
 import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { StAddAnswerButton, StMenuBtn, StMiniMenu, StMoreIcon } from "./PriorQuestion";
@@ -46,7 +47,11 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
     <>
       <StFieldset>
         <legend>{isQuestion ? "질문" : "답변"}</legend>
-        {isQuestion && <StQuestionLabel bgcolor={labelColor}>질문</StQuestionLabel>}
+        {isQuestion ? (
+          <StQuestionLabel bgcolor={labelColor}>질문</StQuestionLabel>
+        ) : (
+          <StAnswerLabel labelcolor={labelColor} />
+        )}
         <StInputWrapper isanswer={!isQuestion}>
           <StInput
             value={node.content}
@@ -94,6 +99,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
 }
 
 const StFieldset = styled.fieldset`
+  position: relative;
   display: flex;
   align-items: center;
 
@@ -115,20 +121,29 @@ const StQuestionLabel = styled.label<{ bgcolor: string; color?: string }>`
   color: ${({ color, theme }) => (color ? color : theme.colors.white)};
 `;
 
+const StAnswerLabel = styled(IcAnswerLabel)<{ labelcolor: string }>`
+  position: absolute;
+  top: 0;
+  left: 7.6rem;
+  fill: ${({ labelcolor }) => labelcolor};
+`;
+
 const StInputWrapper = styled.div<{ isanswer: boolean }>`
-  position: relative;
   display: flex;
   align-items: center;
   flex: 1;
 
   ${({ isanswer }) =>
-    isanswer &&
-    css`
-      margin-left: 7.6rem;
-    `}
+    isanswer
+      ? css`
+          border-radius: 0 0.8rem 0.8rem 0;
+          margin-left: 7.6rem;
+        `
+      : css`
+          border-radius: 0.8rem;
+        `}
 
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
-  border-radius: 0.8rem;
   padding-left: 2.4rem;
   padding-right: 1.6rem;
   height: 5.4rem;
