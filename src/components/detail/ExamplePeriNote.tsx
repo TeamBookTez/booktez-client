@@ -3,9 +3,27 @@ import styled from "styled-components";
 
 import { IcToggle } from "../../assets/icons";
 import theme from "../../styles/theme";
-import { AnswerThree } from "../../utils/dataType";
 import LabelQuestion from "../common/styled/LabelQuestion";
 import LabelQuestion4Depth from "../common/styled/LabelQuestion4Depth";
+
+interface AnswerThree {
+  root: Question[];
+}
+
+interface Answer {
+  text: string;
+  children: Question[];
+}
+
+interface ObjKey {
+  [key: string]: number | string | Answer[];
+}
+
+interface Question extends ObjKey {
+  depth: number;
+  question: string;
+  answer: Answer[];
+}
 
 interface ExamplePreNoteProps {
   answerThree: AnswerThree | undefined;

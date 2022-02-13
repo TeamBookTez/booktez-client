@@ -2,26 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { PeriNoteData } from "../../../pages/BookNote";
-import { patchBookNote, useGetPreNote } from "../../../utils/mock-api/bookNote";
+import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { patchBookNote, useGetPreNote } from "../../../utils/lib/bookNote";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
-interface ObjKey {
-  [key: string]: string | string[] | number;
-}
-
-export interface PreNoteData extends ObjKey {
-  answerOne: string;
-  answerTwo: string;
-  questionList: string[];
-  progress: number;
-}
-
 export default function PreNote() {
   const [
     isLogin,
+    reviewId,
     userToken,
     initIndex,
     isSave,
@@ -34,6 +24,7 @@ export default function PreNote() {
     useOutletContext<
       [
         boolean,
+        number,
         string,
         number,
         boolean,
@@ -45,12 +36,14 @@ export default function PreNote() {
       ]
     >();
 
-  const [preNote, isLoading] = useGetPreNote(userToken, "/pre/20");
-  const { answerOne, answerTwo, questionList, progress } = preNote;
+  const [preNote, isLoading] = useGetPreNote(userToken, `/review/${reviewId}/pre`);
+  const { answerOne, answerTwo, questionList, reviewSt } = preNote;
 
   const [isFilled, setIsFilled] = useState<boolean>(false);
 
-  const [patchNote, setPatchNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, progress });
+  // patch를 위한 state
+  // 서버 상태 관리를 도입한다면 이 부분도 중복 줄이기
+  const [patchNote, setPatchNote] = useState<PreNoteData>({ answerOne, answerTwo, questionList, reviewSt });
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -70,16 +63,16 @@ export default function PreNote() {
 
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
-    handleChangeReview("progress", 3);
-    patchBookNote(userToken, "/pre/20", { ...patchNote, progress: 3 });
+    handleChangeReview("reviewSt", 3);
+    patchBookNote(userToken, `/review/${reviewId}/pre`, { ...patchNote, reviewSt: 3 });
 
-    // if (preNote.progress === 2) {
+    // if (preNote.reviewSt === 2) {
     //   const defaultQuestions: Question[] = [];
 
     //   preNote.questionList.map((question: string) =>
     //     defaultQuestions.push({ depth: 1, question, answer: [{ text: "", children: [] }] }),
     //   );
-    //   patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, progress: 3 });
+    //   patchBookNote(userToken, "/peri/20", { answerThree: { root: defaultQuestions }, reviewSt: 3 });
     // }
 
     handlePrevent(false);
@@ -90,7 +83,7 @@ export default function PreNote() {
     handleCloseDrawer();
 
     // peri로 넘어가기
-    navigate("/book-note/peri", { state: { isLogin, reviewId: 20, fromUrl: "" } });
+    navigate("/book-note/peri", { state: { isLogin, reviewId, fromUrl: "" } });
   };
 
   const handleOpenModal = () => {
@@ -107,9 +100,9 @@ export default function PreNote() {
   };
 
   useEffect(() => {
-    setPatchNote(preNote);
+    setPatchNote({ answerOne, answerTwo, questionList, reviewSt });
 
-    if (progress > 2) {
+    if (reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
     }
@@ -127,6 +120,11 @@ export default function PreNote() {
     } else {
       setIsFilled(false);
     }
+  }, [patchNote]);
+
+  useEffect(() => {
+    // 확인 용
+    console.log("patchNote", patchNote);
   }, [patchNote]);
 
   return (

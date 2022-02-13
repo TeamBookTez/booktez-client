@@ -14,9 +14,8 @@ export interface PostBody {
   author?: string[];
   answerOne?: string;
   answerTwo?: string;
-  answerThree?: AnswerThree;
   questionList?: string[];
-  progress?: string;
+  reviewSt?: string;
 }
 
 export interface GetBody {
@@ -31,30 +30,16 @@ export interface PatchBody {
   answerOne?: string;
   answerTwo?: string;
   answerThree?: AnswerThree;
-  progress?: number;
-}
-
-export interface AnswerThree {
-  root: Question[];
-}
-
-export interface Answer {
-  text: string;
-  children: Question[];
-}
-
-interface ObjKey {
-  [key: string]: number | string | Answer[];
-}
-
-export interface Question extends ObjKey {
-  depth: number;
-  question: string;
-  answer: Answer[];
+  reviewSt?: number;
 }
 
 export interface PeriNoteTreeNode {
   type: string;
   content: string;
   children: PeriNoteTreeNode[];
+}
+
+interface AnswerThree {
+  answerThree: PeriNoteTreeNode;
+  reviewSt: number;
 }

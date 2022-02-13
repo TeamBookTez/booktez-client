@@ -1,12 +1,20 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { PreNoteData } from "../../components/bookNote/preNote/PreNote";
-import { Question } from "../dataType";
-import { mockClient } from "../lib";
+import { PeriNoteTreeNode } from "../dataType";
+import { client, mockClient } from ".";
 
 interface PeriNoteData {
-  answerThree: { root: Question[] };
+  answerThree: { root: PeriNoteTreeNode[] };
   progress: number;
+}
+
+interface PreNoteData {
+  answerOne: string;
+  answerTwo: string;
+  questionList: string[];
+  reviewSt: number;
+  finishSt?: boolean;
 }
 
 export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean] => {
@@ -14,7 +22,8 @@ export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean
     answerOne: "",
     answerTwo: "",
     questionList: [""],
-    progress: 2,
+    reviewSt: 2,
+    finishSt: false,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,11 +31,22 @@ export const useGetPreNote = (token: string, key: string): [PreNoteData, boolean
     setIsLoading(true);
     (async function () {
       try {
-        const { data } = await mockClient(token).get(key);
+        const {
+          data: { data },
+        } = await client(token).get(key);
 
-        setPreNote(data);
+        if (!data.questionList.length) {
+          // 버그? 사용자가 질문 리스트를 모두 지우고 저장해도 다시 빈 input이 생성됨
+          // 처음 추가된 책의 review에 대해서 서버에서 questionList를 []가 아닌 [""]로 주면 해결될 듯
+          setPreNote({ ...data, questionList: [""] });
+        } else {
+          setPreNote(data);
+        }
       } catch (err) {
-        return;
+        // 서버 상태 관리 도입 후 error일 경우 retry할 수 있도록 하면 어떨까?
+        if (axios.isAxiosError(err)) {
+          console.log("err", err.message);
+        }
       }
       setIsLoading(false);
     })();
@@ -58,5 +78,12 @@ export const useGetPeriNote = (token: string, key: string): [PeriNoteData, boole
 };
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
-  await mockClient(token).patch(key, body);
+  console.log("token", token);
+  try {
+    await client(token).patch(key, body);
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.log("err", err.response);
+    }
+  }
 };

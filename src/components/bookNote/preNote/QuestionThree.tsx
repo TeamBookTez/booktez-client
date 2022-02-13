@@ -38,18 +38,19 @@ export default function QuestionThree(props: QuestionThreeProps) {
 
   return (
     <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onOpenDrawer={onOpenDrawer}>
-      {questionList.map((question, idx) => (
-        <InputQuestion
-          key={idx}
-          value={question}
-          idx={idx}
-          onChangeValue={handleChange}
-          onDelete={handleDelete}
-          isPrevented={isPrevented}
-          isAdded={isAdded}
-          onAddInput={handleAddInput}
-        />
-      ))}
+      {questionList &&
+        questionList.map((question, idx) => (
+          <InputQuestion
+            key={idx}
+            value={question}
+            idx={idx}
+            onChangeValue={handleChange}
+            onDelete={handleDelete}
+            isPrevented={isPrevented}
+            isAdded={isAdded}
+            onAddInput={handleAddInput}
+          />
+        ))}
       {isPrevented && (
         <StAddButton type="button" disabled={!isFilled} onClick={handleAddInput}>
           + 질문추가

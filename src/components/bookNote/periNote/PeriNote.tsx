@@ -9,9 +9,29 @@ import { ExButton, PeriModal, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export default function PeriNote() {
-  const [isLogin, userToken, initIndex, isSave, isPrevented, handlePrevent, handleOpenDrawer, handleCloseDrawer] =
+  const [
+    isLogin,
+    reviewId,
+    userToken,
+    initIndex,
+    isSave,
+    isPrevented,
+    handlePrevent,
+    handleOpenDrawer,
+    handleCloseDrawer,
+  ] =
     useOutletContext<
-      [boolean, string, number, boolean, boolean, (shouldPrevent: boolean) => void, (i: number) => void, () => void]
+      [
+        boolean,
+        number,
+        string,
+        number,
+        boolean,
+        boolean,
+        (shouldPrevent: boolean) => void,
+        (i: number) => void,
+        () => void,
+      ]
     >();
 
   const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "root", content: "ROOT", children: [] });

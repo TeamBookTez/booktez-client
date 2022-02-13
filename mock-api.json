@@ -1,25 +1,13 @@
 {
-  "pre": [
-    {
-      "id": 20,
-      "answerOne": "답변 1",
-      "answerTwo": "답변 2",
-      "questionList": [
-        "질문 리스트 1",
-        "질문 리스트 2",
-        "질문 리스트 3"
-      ],
-      "progress": 2
-    }
-  ],
   "peri": [
     {
       "id": 20,
       "answerThree": {
+        "type": "root",
         "content": "ROOT",
         "children": []
       },
-      "progress": 3
+      "reviewSt": 3
     }
   ]
 }

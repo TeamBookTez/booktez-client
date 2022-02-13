@@ -6,8 +6,8 @@ import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
-import { Question } from "../utils/dataType";
-import { patchBookNote } from "../utils/mock-api/bookNote";
+import { PeriNoteTreeNode } from "../utils/dataType";
+import { patchBookNote } from "../utils/lib/bookNote";
 
 export interface IsLoginState {
   isLogin: boolean;
@@ -17,19 +17,19 @@ export interface IsLoginState {
 }
 
 // 시간이 된다면 keyof 꼭 활용해보기
-interface ObjKey {
-  [key: string]: string | string[] | number;
+export interface ObjKey {
+  [key: string]: string | string[] | number | boolean;
 }
 
 export interface PreNoteData extends ObjKey {
   answerOne: string;
   answerTwo: string;
   questionList: string[];
-  progress: number;
+  reviewSt: number;
 }
 
 export interface PeriNoteData {
-  answerThree: { root: Question[] };
+  answerThree: { root: PeriNoteTreeNode[] };
   progress: number;
 }
 
@@ -85,7 +85,7 @@ export default function BookNote() {
   async function saveReview(body: PreNoteData | PeriNoteData) {
     const apiKey = initIndex ? "peri" : "pre";
 
-    patchBookNote(userToken, `/${apiKey}/20`, body);
+    patchBookNote(userToken, `/review/${reviewId}/${apiKey}`, body);
   }
 
   const handleDrawerDefault = () => {
@@ -132,6 +132,7 @@ export default function BookNote() {
       <Outlet
         context={[
           isLogin,
+          reviewId,
           userToken,
           initIndex,
           isSave,

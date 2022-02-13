@@ -7,9 +7,35 @@ import { Loading, PopUpDelete } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
-import { GetBody } from "../utils/dataType";
 import { getData } from "../utils/lib/api";
 import { IsLoginState } from "./BookNote";
+
+interface AnswerThree {
+  root: Question[];
+}
+
+interface Answer {
+  text: string;
+  children: Question[];
+}
+
+interface ObjKey {
+  [key: string]: number | string | Answer[];
+}
+
+interface Question extends ObjKey {
+  depth: number;
+  question: string;
+  answer: Answer[];
+}
+
+interface GetBody {
+  bookTitle?: string;
+  answerOne?: string;
+  answerTwo?: string;
+  answerThree?: AnswerThree;
+  questionList?: string[];
+}
 
 export default function DetailBookNote() {
   const [reviewData, setReviewData] = useState<GetBody>();
