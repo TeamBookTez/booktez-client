@@ -116,10 +116,6 @@ export default function PeriNote() {
     setRoot(periNote.answerThree);
   }, [periNote]);
 
-  useEffect(() => {
-    console.log("root", root);
-  }, [root]);
-
   return (
     <>
       <StNoteForm>
