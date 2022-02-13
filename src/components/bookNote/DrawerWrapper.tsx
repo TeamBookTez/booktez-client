@@ -23,6 +23,8 @@ interface StDrawerWrapperProps {
 export default function DrawerWrapper(props: DrawerWrapperProps) {
   const { idx, isOpen, onCloseDrawer } = props;
 
+  const drawerWidth = idx === 4 ? 60 : 39;
+
   const qaPair: QaPair = { question: "", answer: [""] };
 
   switch (idx) {
@@ -51,10 +53,10 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
     <AnimatePresence>
       {isOpen && (
         <StDrawerWrapper
-          transition={{ type: "Inertia" }}
-          initial={{ transform: "translateX(39rem)" }}
+          transition={{ type: "Inertia", ease: "linear" }}
+          initial={{ transform: `translateX(${drawerWidth}rem)` }}
           animate={{ transform: "translateX(0rem)" }}
-          exit={{ transform: "translateX(39rem)" }}
+          exit={{ transform: `translateX(${drawerWidth}rem)` }}
           idx={idx}>
           <StIcWrapper>
             <IcLeftArrow onClick={() => onCloseDrawer(idx)} />

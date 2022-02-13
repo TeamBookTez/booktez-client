@@ -181,19 +181,17 @@ const StNoteModalWrapper = styled.section<{ isopen: boolean; isdefault: boolean;
   background-color: ${({ theme }) => theme.colors.white200};
 
   min-height: 100vh;
-  ${({ isopen, width }) =>
-    isopen &&
-    css`
-      animation: ${reducewidth(width)} 300ms linear 1;
-      animation-fill-mode: forwards;
-    `}
   ${({ isopen, isdefault, width }) =>
-    !isopen &&
-    !isdefault &&
-    css`
-      animation: ${boostwidth(width)} 300ms linear 1;
-      animation-fill-mode: forwards;
-    `}
+    isopen
+      ? css`
+          animation: ${reducewidth(width)} 300ms linear 1;
+          animation-fill-mode: forwards;
+        `
+      : !isdefault &&
+        css`
+          animation: ${boostwidth(width)} 300ms linear 1;
+          animation-fill-mode: forwards;
+        `}
 `;
 
 const StNavWrapper = styled.div`
