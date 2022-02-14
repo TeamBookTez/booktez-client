@@ -45,7 +45,7 @@ export const useGetBookcase = (key: string) => {
         setBookcaseInfo((currentBook) => [...currentBook, book]);
       });
 
-      return setIsLoading(false);
+      setIsLoading(false);
     } catch (err) {
       return setIsLoading(false);
     }
