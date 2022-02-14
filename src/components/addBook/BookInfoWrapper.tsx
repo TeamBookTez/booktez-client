@@ -11,7 +11,11 @@ export interface PublishDate {
   date: string;
 }
 
-export default function BookInfoWrapper(props: { book: BookInfo }) {
+interface BookInfoWrapperProps {
+  book: BookInfo;
+}
+
+export default function BookInfoWrapper(props: BookInfoWrapperProps) {
   const { book } = props;
   const { thumbnail, title, authors, datetime, contents } = book;
   const [openModal, setOpenModal] = useState<boolean>(false);
