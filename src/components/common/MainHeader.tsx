@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { isLoginState } from "../../utils/atoms";
-import { getData } from "../../utils/lib/api";
+import { isLoginSelector, isLoginState } from "../../utils/atoms";
 import { Button } from "./styled/Button";
+
 interface MainHeaderProps {
   children: string;
   color?: string;
@@ -19,37 +19,27 @@ export default function MainHeader(props: MainHeaderProps) {
   const { children } = props;
 
   const { pathname } = useLocation();
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
+  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const isBookcase = pathname.startsWith("/main/bookcase") ? "0.4rem" : "3.5rem";
   const isMypage = pathname === "/main/my-page" || pathname === "/main/to-be" ? "none" : "block";
+
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        setIsLogin(false);
-      }
-    } catch (err) {
-      return;
-    }
-  };
-
   useEffect(() => {
-    getLogin("/auth/check", localToken);
+    if (isLoginFromSelector) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
   }, []);
 
   return (
     <StHeader isBookcase={isBookcase}>
       <StHeading2>{children}</StHeading2>
-      {isLogin ? (
+      {isLoginFromSelector ? (
         <></>
       ) : (
         <StLoginBtn isMypage={isMypage}>

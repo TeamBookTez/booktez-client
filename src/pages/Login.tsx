@@ -9,13 +9,13 @@ import { isLoginSelector, isLoginState } from "../utils/atoms";
 export default function Login() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
   const navigate = useNavigate();
-  const isLoginSel = useRecoilValue(isLoginSelector);
+  const isLoginFromSelector = useRecoilValue(isLoginSelector);
   const setIsLogin = useSetRecoilState(isLoginState);
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
   useEffect(() => {
-    if (isLoginSel) {
+    if (isLoginFromSelector) {
       setIsLogin(true);
       navigate("/main");
     } else {
