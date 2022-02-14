@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { isLoginSelector, isLoginState } from "../../utils/atoms";
+import { isLoginState } from "../../utils/atoms";
 import { Button } from "./styled/Button";
 
 interface MainHeaderProps {
@@ -19,8 +18,7 @@ export default function MainHeader(props: MainHeaderProps) {
   const { children } = props;
 
   const { pathname } = useLocation();
-  const isLoginFromSelector = useRecoilValue(isLoginSelector);
-  const setIsLogin = useSetRecoilState(isLoginState);
+  const isLogin = useRecoilValue(isLoginState);
 
   const isBookcase = pathname.startsWith("/main/bookcase") ? "0.4rem" : "3.5rem";
   const isMypage = pathname === "/main/my-page" || pathname === "/main/to-be" ? "none" : "block";
@@ -28,18 +26,10 @@ export default function MainHeader(props: MainHeaderProps) {
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
-  useEffect(() => {
-    if (isLoginFromSelector) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
-
   return (
     <StHeader isBookcase={isBookcase}>
       <StHeading2>{children}</StHeading2>
-      {isLoginFromSelector ? (
+      {isLogin ? (
         <></>
       ) : (
         <StLoginBtn isMypage={isMypage}>

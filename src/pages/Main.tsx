@@ -1,43 +1,29 @@
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { MainHeader } from "../components/common";
 import { Banner, RecentBooks } from "../components/main";
-import { isLoginState } from "../utils/atoms";
-import { getData } from "../utils/lib/api";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 
 export default function Main() {
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
-  const TOKEN = localStorage.getItem("booktez-token");
-  const localToken = TOKEN ? TOKEN : "";
-  const authCheckKey = "/auth/check";
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        return setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        return setIsLogin(false);
-      }
-      setIsLogin(true);
-    } catch (err) {
-      return;
-    }
-  };
+  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
+  const tempToken = localStorage.getItem("booktez-token");
+  const localToken = tempToken ? tempToken : "";
 
   useEffect(() => {
-    getLogin(authCheckKey, localToken);
+    if (isLoginFromSelector) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
   }, []);
 
   return (
     <>
       <MainHeader>메인</MainHeader>
       <Banner />
-      <RecentBooks isLogin={isLogin} />
+      <RecentBooks isLogin={isLoginFromSelector} />
     </>
   );
 }
