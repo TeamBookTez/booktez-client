@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import theme from "../../styles/theme";
 import { PeriNoteTreeNode } from "../../utils/dataType";
 import { labelColorList } from "../bookNote/periNote/PeriNoteInput";
 import LabelQuestion from "../common/styled/LabelQuestion";
@@ -15,7 +14,7 @@ interface ExamplePeriQuestionProps {
 export default function ExamplePeriQuestion(props: ExamplePeriQuestionProps) {
   const { node, path, onToggle } = props;
   const isAnswer = node.type === "answer";
-  const labelColor = labelColorList[(path.length - 1) % 8];
+  const labelColor = labelColorList[(path.length + 1) % 10];
 
   return (
     <>
