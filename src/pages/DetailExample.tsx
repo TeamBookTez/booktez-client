@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { StStepModalWrapper } from "../components/bookNote/preNote/PreNoteForm";
@@ -8,38 +8,24 @@ import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
-import { isLoginState } from "../utils/atoms";
-import { getData } from "../utils/lib/api";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
-
+  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
   const navigate = useNavigate();
 
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        return setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        return setIsLogin(false);
-      }
-      setIsLogin(true);
-    } catch (err) {
-      return;
-    }
-  };
-
   useEffect(() => {
-    getLogin("/auth/check", localToken);
+    if (isLoginFromSelector) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
   }, []);
 
   const handlePeriCarousel = () => {
@@ -56,10 +42,10 @@ export default function DetailExample() {
             answerOne={reviewData?.answerOne}
             answerTwo={reviewData?.answerTwo}
             questionList={reviewData?.questionList}
-            isLogin={isLogin}
+            isLogin={isLoginFromSelector}
           />
         </DetailArticleWrapper>
-        {isLogin && (
+        {isLoginFromSelector && (
           <StMarginTop>
             <DetailArticleWrapperLabeling title="독서 중 단계" handlePeriCarousel={handlePeriCarousel}>
               <ExamplePeriNote answerThree={reviewData?.answerThree} />
