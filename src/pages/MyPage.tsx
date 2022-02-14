@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
@@ -22,8 +22,8 @@ export default function MyPage() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
   const isLoginFromSelector = useRecoilValue(isLoginSelector);
-  const setIsLogin = useSetRecoilState(isLoginState);
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
@@ -60,7 +60,7 @@ export default function MyPage() {
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isLoginFromSelector === false) return;
+    if (isLogin === false) return;
     if (e.target.files === null) return;
 
     const imgFile = e.target.files[0];
@@ -87,13 +87,8 @@ export default function MyPage() {
       ) : (
         <>
           <MainHeader>마이페이지</MainHeader>
-          <TopContent
-            userInfo={userInfo}
-            onImageChange={handleImageChange}
-            isLogin={isLoginFromSelector}
-            onLogout={handleLogout}
-          />
-          <BottomContent userInfo={userInfo} isLogin={isLoginFromSelector} />
+          <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
+          <BottomContent userInfo={userInfo} isLogin={isLogin} />
         </>
       )}
     </>
