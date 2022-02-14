@@ -29,7 +29,7 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      navigate(reviewUrl, { state: { reviewId, fromUrl: pathname } });
+      navigate(reviewUrl, { state: { isLogin, reviewId, fromUrl: pathname } });
     }
   };
 
