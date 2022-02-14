@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { StStepModalWrapper } from "../components/bookNote/preNote/PreNoteForm";
@@ -7,12 +8,13 @@ import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
+import { isLoginState } from "../utils/atoms";
 import { getData } from "../utils/lib/api";
 import { reviewData } from "../utils/mockData";
 
 export default function DetailExample() {
   const [isPeriModal, setIsPeriModal] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
 
   const navigate = useNavigate();
 

@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 import { MainHeader } from "../components/common";
 import { Banner, RecentBooks } from "../components/main";
+import { isLoginState } from "../utils/atoms";
 import { getData } from "../utils/lib/api";
 
 export default function Main() {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
   const TOKEN = localStorage.getItem("booktez-token");
   const localToken = TOKEN ? TOKEN : "";
   const authCheckKey = "/auth/check";

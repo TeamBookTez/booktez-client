@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
+import { isLoginState } from "../utils/atoms";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -45,7 +47,7 @@ export const useGetBookcase = (key: string) => {
 };
 
 export default function Bookcase() {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
 
   useEffect(() => {
     getLogin("/auth/check", localToken);

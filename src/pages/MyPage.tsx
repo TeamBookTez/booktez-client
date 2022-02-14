@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
+import { isLoginState } from "../utils/atoms";
 import { getData, patchData } from "../utils/lib/api";
 
 export interface UserInfo {
@@ -18,7 +20,7 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
   // useEffect로 getInfo를 호출해주었다.

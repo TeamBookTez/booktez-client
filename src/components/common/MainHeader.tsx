@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { isLoginState } from "../../utils/atoms";
 import { getData } from "../../utils/lib/api";
 import { Button } from "./styled/Button";
 interface MainHeaderProps {
@@ -15,15 +17,14 @@ interface StHeaderProps {
 
 export default function MainHeader(props: MainHeaderProps) {
   const { children } = props;
+
   const { pathname } = useLocation();
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
 
   const isBookcase = pathname.startsWith("/main/bookcase") ? "0.4rem" : "3.5rem";
   const isMypage = pathname === "/main/my-page" || pathname === "/main/to-be" ? "none" : "block";
-
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
-
-  const [isLogin, setIsLogin] = useState<boolean>(true);
 
   const getLogin = async (key: string, token: string) => {
     try {
