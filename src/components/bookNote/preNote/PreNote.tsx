@@ -40,7 +40,7 @@ export default function PreNote() {
     >();
 
   const [preNote, isLoading] = useGetPreNote(userToken, `/review/${reviewId}/pre`);
-  const { answerOne, answerTwo, questionList, reviewSt } = preNote;
+  const { answerOne, answerTwo, questionList, reviewSt, finishSt } = preNote;
 
   const [isFilled, setIsFilled] = useState<boolean>(false);
 
@@ -66,15 +66,16 @@ export default function PreNote() {
 
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
-    handleChangeReview("reviewSt", 3);
-    patchBookNote(userToken, `/review/${reviewId}/pre`, { ...patchNote, reviewSt: 3 });
+    if (!finishSt) {
+      handleChangeReview("reviewSt", 3);
+    }
+    patchBookNote(userToken, `/review/${reviewId}/pre`, patchNote);
 
     if (reviewSt === 2) {
       const questionFromPre: PeriNoteTreeNode[] = [];
 
       patchNote.questionList.map((content) => {
         questionFromPre.push({ type: "question", content, children: [{ type: "answer", content: "", children: [] }] });
-        // questionFromPre.push();
       });
       patchBookNote(userToken, `review/${reviewId}/peri`, {
         answerThree: {
