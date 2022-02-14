@@ -7,7 +7,7 @@ import { LabelHidden } from "../common/styled/LabelHidden";
 
 interface SearchBarProps {
   debounceQuery: string;
-  onDebounceQuery: (tempQeury: string) => void;
+  onDebounceQuery: (tempQuery: string) => void;
 }
 export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, onDebounceQuery } = props;
