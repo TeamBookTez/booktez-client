@@ -18,14 +18,6 @@ export interface PostBody {
   reviewSt?: string;
 }
 
-export interface GetBody {
-  bookTitle?: string;
-  answerOne?: string;
-  answerTwo?: string;
-  answerThree?: AnswerThree;
-  questionList?: string[];
-}
-
 export interface PatchBody {
   answerOne?: string;
   answerTwo?: string;
