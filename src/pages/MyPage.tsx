@@ -29,13 +29,13 @@ export default function MyPage() {
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
-  const handleLogout = () => {
-    setIsLogin(false);
-  };
-
   useEffect(() => {
     getInfo("/user/myInfo", localToken);
   }, [tempImg]);
+
+  const handleLogout = () => {
+    setIsLogin(false);
+  };
 
   const getInfo = async (key: string, token: string) => {
     try {
@@ -77,7 +77,7 @@ export default function MyPage() {
 
   return (
     <>
-      {isLogin && isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>

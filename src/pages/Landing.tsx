@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import {
@@ -12,16 +12,23 @@ import {
   LandingThree,
   LandingTwo,
 } from "../components/landing";
-import { isLoginSelector } from "../utils/atoms";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const isLogin = useRecoilValue(isLoginSelector);
+  const isLoginSel = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
+
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
   useEffect(() => {
-    if (isLogin) navigate("/main");
+    if (isLoginSel) {
+      setIsLogin(true);
+      navigate("/main");
+    } else {
+      setIsLogin(false);
+    }
   }, []);
 
   return (
