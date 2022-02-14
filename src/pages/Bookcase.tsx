@@ -15,8 +15,8 @@ export interface BookcaseInfo {
   title: string;
 }
 
-const TOKEN = localStorage.getItem("booktez-token");
-const localToken = TOKEN ? TOKEN : "";
+const tempToken = localStorage.getItem("booktez-token");
+const TOKEN = tempToken ? tempToken : "";
 
 export const useGetBookcase = (key: string) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
@@ -32,7 +32,7 @@ export const useGetBookcase = (key: string) => {
         data: {
           data: { books },
         },
-      } = await getData(key, localToken);
+      } = await getData(key, TOKEN);
 
       books.forEach((book: BookcaseInfo) => {
         setBookcaseInfo((currentBook) => [...currentBook, book]);

@@ -13,8 +13,8 @@ export default function RecentBooks() {
   const [isDefault, setIsDefault] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const tempToken = localStorage.getItem("booktez-token");
+  const TOKEN = tempToken ? tempToken : "";
 
   const getBookRecent = async (key: string, token: string) => {
     try {
@@ -33,11 +33,11 @@ export default function RecentBooks() {
 
   useEffect(() => {
     setIsLoading(true);
-    getBookRecent("/book", userToken);
+    getBookRecent("/book", TOKEN);
   }, []);
 
   const handleBookDelete = () => {
-    getBookRecent("/book", userToken);
+    getBookRecent("/book", TOKEN);
   };
 
   useEffect(() => {

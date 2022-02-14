@@ -19,9 +19,6 @@ export default function Landing() {
   const isLoginFromSelector = useRecoilValue(isLoginSelector);
   const setIsLogin = useSetRecoilState(isLoginState);
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
-
   useEffect(() => {
     if (isLoginFromSelector) {
       setIsLogin(true);

@@ -23,9 +23,6 @@ export default function MainHeader(props: MainHeaderProps) {
   const isBookcase = pathname.startsWith("/main/bookcase") ? "0.4rem" : "3.5rem";
   const isMypage = pathname === "/main/my-page" || pathname === "/main/to-be" ? "none" : "block";
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
-
   return (
     <StHeader isBookcase={isBookcase}>
       <StHeading2>{children}</StHeading2>

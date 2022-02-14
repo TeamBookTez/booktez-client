@@ -40,8 +40,8 @@ export default function BookNote() {
   const isLoginState = state as IsLoginState;
   const { isLogin, reviewId, fromUrl } = isLoginState;
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const tempToken = localStorage.getItem("booktez-token");
+  const TOKEN = tempToken ? tempToken : "";
 
   // pre/peri note 데이터가 들어갈 곳
   const [preNote, setPreNote] = useState<PreNoteData>({
@@ -105,7 +105,7 @@ export default function BookNote() {
 
         setTitle(bookTitle);
       } else {
-        const { data } = await getData(`/review/${reviewId}`, userToken);
+        const { data } = await getData(`/review/${reviewId}`, TOKEN);
 
         const { answerOne, answerTwo, answerThree, questionList, reviewState, bookTitle } = data.data;
         const questions: string[] = questionList.length ? questionList : [""];
@@ -160,7 +160,7 @@ export default function BookNote() {
         },
   ) => {
     // answerOne, answerTwo, questionList, progress update
-    await patchData(userToken, `/review/${key}/${reviewId}`, body);
+    await patchData(TOKEN, `/review/${key}/${reviewId}`, body);
   };
 
   // 저장만 하기 - 수정 완료는 아님
@@ -455,7 +455,7 @@ export default function BookNote() {
             handleChangePeri,
             handleAddPeri,
             handleDeletePeri,
-            userToken,
+            TOKEN,
             fromUrl,
             reviewId,
             isAdded,

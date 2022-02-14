@@ -17,9 +17,6 @@ export default function DetailExample() {
   const setIsLogin = useSetRecoilState(isLoginState);
   const navigate = useNavigate();
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
-
   useEffect(() => {
     if (isLoginFromSelector) {
       setIsLogin(true);

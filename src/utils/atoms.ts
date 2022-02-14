@@ -10,11 +10,12 @@ export const isLoginState = atom<boolean>({
 export const isLoginSelector = selector({
   key: "isLoginSelector",
   get: async () => {
+    const tempToken = localStorage.getItem("booktez-token");
+    const TOKEN = tempToken ? tempToken : "";
+    const API_PATH = "/auth/check";
+
     try {
-      const { data } = await getData(
-        "/auth/check",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxM30sImlhdCI6MTY0NDgwNjM4OSwiZXhwIjoxNjQ2MDE1OTg5fQ.FfV1lVZ-tPY_bue10T1LOiGld9hLV3b-J4zXajg5b-0",
-      );
+      const { data } = await getData(API_PATH, TOKEN);
       const status = data.status;
 
       if (status === 200) {

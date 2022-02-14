@@ -15,14 +15,14 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const { onPopUp, reviewId, handleBookDelete } = props;
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const TOKEN = tempToken ? tempToken : "";
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const handleDelete = async () => {
     try {
-      await deleteData(`/review/${reviewId}`, token);
+      await deleteData(`/review/${reviewId}`, TOKEN);
       onPopUp();
       handleBookDelete(); //리렌더링
       if (pathname === "/detail-book-note") {

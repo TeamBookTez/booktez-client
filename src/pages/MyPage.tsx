@@ -25,10 +25,10 @@ export default function MyPage() {
   const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
 
   const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
+  const TOKEN = tempToken ? tempToken : "";
 
   useEffect(() => {
-    getInfo("/user/myInfo", localToken);
+    getInfo("/user/myInfo", TOKEN);
   }, [tempImg]);
 
   const handleLogout = () => {
@@ -60,7 +60,7 @@ export default function MyPage() {
     formData.append("img", imgFile);
 
     try {
-      const { data } = await patchData(localToken, "/user/img", formData);
+      const { data } = await patchData(TOKEN, "/user/img", formData);
 
       if (data.success) {
         setTempImg(data.img);
