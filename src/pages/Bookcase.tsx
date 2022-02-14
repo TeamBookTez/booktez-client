@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { isLoginSelector, isLoginState } from "../utils/atoms";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -15,12 +13,12 @@ export interface BookcaseInfo {
   title: string;
 }
 
-const tempToken = localStorage.getItem("booktez-token");
-const TOKEN = tempToken ? tempToken : "";
-
 export const useGetBookcase = (key: string) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const tempToken = localStorage.getItem("booktez-token");
+  const TOKEN = tempToken ? tempToken : "";
 
   useEffect(() => {
     getBookcase();
@@ -37,9 +35,10 @@ export const useGetBookcase = (key: string) => {
       books.forEach((book: BookcaseInfo) => {
         setBookcaseInfo((currentBook) => [...currentBook, book]);
       });
+
       setIsLoading(false);
     } catch (err) {
-      console.log("err", err);
+      return setIsLoading(false);
     }
   };
 
@@ -47,22 +46,11 @@ export const useGetBookcase = (key: string) => {
 };
 
 export default function Bookcase() {
-  const isLogin = useRecoilValue(isLoginSelector); //isLoginFromSelector
-  const setIsLogin = useSetRecoilState(isLoginState);
-
-  useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
-
   return (
     <>
       <MainHeader>서재</MainHeader>
       <Navigation />
-      <Outlet context={isLogin} />
+      <Outlet />
     </>
   );
 }
