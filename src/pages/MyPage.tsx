@@ -22,9 +22,7 @@ export default function MyPage() {
   });
   const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
-  // useEffect로 getInfo를 호출해주었다.
-  const [tempImg, setTempImg] = useState<string>("");
+  const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
 
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
@@ -54,24 +52,22 @@ export default function MyPage() {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isLogin === false) return;
+    if (e.target.files === null) return;
 
+    const imgFile = e.target.files[0];
     const formData = new FormData();
 
-    if (e.target.files !== null) {
-      const imgFile = e.target.files[0];
+    formData.append("img", imgFile);
 
-      formData.append("img", imgFile);
+    try {
+      const { data } = await patchData(localToken, "/user/img", formData);
 
-      try {
-        const { data } = await patchData(localToken, "/user/img", formData);
-
-        if (data.success) {
-          setTempImg(data.img);
-          setUserInfo((current) => ({ ...current, img: data.img }));
-        }
-      } catch (err) {
-        return;
+      if (data.success) {
+        setTempImg(data.img);
+        setUserInfo((current) => ({ ...current, img: data.img }));
       }
+    } catch (err) {
+      return;
     }
   };
 
