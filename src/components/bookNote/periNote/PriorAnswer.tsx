@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
@@ -16,6 +17,8 @@ interface PriorAnswerProps {
 export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
     onAddChild(pathArray, isQuestionChecked);
@@ -49,6 +52,12 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     }
   };
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
     <StFieldset>
       <StAnswerWrapper hasborder={node.children.length > 0}>
@@ -56,6 +65,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           <StAnswerIcon />
         </legend>
         <StInput
+          ref={inputRef}
           value={node.content}
           placeholder={"답변을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}

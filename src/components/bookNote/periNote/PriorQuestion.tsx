@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { IcMore, IcPeriQuestion } from "../../../assets/icons";
@@ -17,11 +18,19 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
       onAddChild(pathArray, isQuestion);
     }
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <>
@@ -30,6 +39,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           <StQuestionIcon />
         </legend>
         <StInput
+          ref={inputRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
           onChange={(e) => onSetContent(path, e.target.value)}
