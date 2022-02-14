@@ -39,44 +39,49 @@ export default function PeriNote() {
 
     if (isQuestion) {
       // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
-      current.children.push(
-        {
-          type: "question",
-          content: "",
-          children: [],
-        },
-        {
-          type: "answer",
-          content: "",
-          children: [],
-        },
-      );
+      current.children.push({
+        type: "question",
+        content: "",
+        children: [
+          {
+            type: "answer",
+            content: "",
+            children: [],
+          },
+        ],
+      });
     } else {
       // 답변의 경우에는 부모에게 자식을 추가해야 함 - 질문과 같은 피어에 두기 위해서
-      const parent = getNodeByPath(newRoot, path.slice(0, -1));
-      const currentIndex = path[path.length - 1];
-      const parentLength = parent.children.length;
-      // 가장 마지막 질문에 답변이 없는데, 답변을 추가하려는 경우 가장 마지막에 달려야 함
-      let targetIndex = parentLength;
+      // const parents = getNodeByPath(newRoot, path.slice(0, -1));
 
-      for (let i = currentIndex + 1; i < parentLength; i++) {
-        // 다음 질문의 바로 앞에 추가
-        if (parent.children[i].type === "question") {
-          targetIndex = i;
-          break;
-        }
-
-        // 가장 끝에 추가
-        if (i === parentLength - 1) {
-          targetIndex = parentLength;
-        }
-      }
-
-      parent.children.splice(targetIndex, 0, {
+      current.children.push({
         type: "answer",
         content: "",
         children: [],
       });
+      // const currentIndex = path[path.length - 1];
+      // const parentLength = parent.children.length;
+      // // 가장 마지막 질문에 답변이 없는데, 답변을 추가하려는 경우 가장 마지막에 달려야 함
+      // let targetIndex = parentLength;
+
+      // for (let i = currentIndex + 1; i < parentLength; i++) {
+      //   // 다음 질문의 바로 앞에 추가
+      //   if (parent.children[i].type === "question") {
+      //     targetIndex = i;
+      //     break;
+      //   }
+
+      //   // 가장 끝에 추가
+      //   if (i === parentLength - 1) {
+      //     targetIndex = parentLength;
+      //   }
+      // }
+
+      // parent.children.splice(targetIndex, 0, {
+      //   type: "answer",
+      //   content: "",
+      //   children: [],
+      // });
     }
 
     setRoot(newRoot);
@@ -137,6 +142,7 @@ export default function PeriNote() {
   }, [periNote]);
 
   useEffect(() => {
+    console.log("root", root);
     if (root.children.every((node) => node.content !== "")) {
       setIsPrevented(false);
     } else {

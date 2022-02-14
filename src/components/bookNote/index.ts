@@ -4,6 +4,7 @@ export { default as Navigator } from "./Navigator";
 export { default as Complete } from "./periNote/Complete";
 export { default as PeriNote } from "./periNote/PeriNote";
 export { default as PeriNoteInput } from "./periNote/PeriNoteInput";
+export { default as PriorAnswer } from "./periNote/PriorAnswer";
 export { default as PriorQuestion } from "./periNote/PriorQuestion";
 export { default as PeriNoteExample } from "./PeriNoteExample";
 export { default as DrawerPre } from "./preNote/DrawerPre";

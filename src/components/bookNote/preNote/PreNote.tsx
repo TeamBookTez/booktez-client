@@ -71,8 +71,8 @@ export default function PreNote() {
       const questionFromPre: PeriNoteTreeNode[] = [];
 
       patchNote.questionList.map((content) => {
-        questionFromPre.push({ type: "question", content, children: [] });
-        questionFromPre.push({ type: "answer", content: "", children: [] });
+        questionFromPre.push({ type: "question", content, children: [{ type: "answer", content: "", children: [] }] });
+        // questionFromPre.push();
       });
       patchBookNote(userToken, `review/${reviewId}/peri`, {
         answerThree: {

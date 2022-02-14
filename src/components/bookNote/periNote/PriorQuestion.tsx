@@ -1,11 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import { IcMore, IcPeriAnswer, IcPeriQuestion } from "../../../assets/icons";
+import { IcMore, IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
-import { PeriNoteInput } from "..";
+import { PriorAnswer } from "..";
 
-interface PriorQuestionLayoutProps {
+interface PriorQuestionProps {
   path: number[];
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], isQuestion: boolean) => void;
@@ -13,9 +13,8 @@ interface PriorQuestionLayoutProps {
   onDeleteChild: (path: number[]) => void;
 }
 
-export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
+export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
-  const isQuestion = node.type === "question";
 
   const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
     onAddChild(pathArray, !isQuestionChecked);
@@ -29,42 +28,29 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
     onDeleteChild(pathArray);
   };
 
-  const handleClickAddQuestion = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    pathArray: number[],
-    isQuestionChecked: boolean,
-  ) => {
-    handleClickAddChild(pathArray, isQuestionChecked);
-  };
-
   const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
-      handleClickAddChild(pathArray, !isQuestion);
+      handleClickAddChild(pathArray, false);
     }
   };
 
   return (
-    <StArticle isquestion={isQuestion}>
-      <StFieldset hasborder={!isQuestion && node.children.length > 0}>
-        <legend>{isQuestion ? <StQuestionIcon /> : <StAnswerIcon />}</legend>
+    <StArticle>
+      <StFieldset>
+        <legend>
+          <StQuestionIcon />
+        </legend>
         <StInput
           value={node.content}
-          placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
+          placeholder={"질문을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
           onKeyPress={(e) => handleAddChildByEnter(e, path)}
         />
-        {isQuestion && (
-          <StAddAnswerButton type="button" onClick={() => handleClickAddChild(path, isQuestion)}>
-            답변
-          </StAddAnswerButton>
-        )}
+        <StAddAnswerButton type="button" onClick={() => handleClickAddChild(path, true)}>
+          답변
+        </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
-          {!isQuestion && (
-            <StMenuBtn type="button" onClick={(e) => handleClickAddQuestion(e, path, isQuestion)}>
-              꼬리질문 추가
-            </StMenuBtn>
-          )}
           <StMenuBtn type="button" onClick={() => handleClickDeleteChild(path)}>
             삭제
           </StMenuBtn>
@@ -72,56 +58,44 @@ export default function PriorQuestionLayout(props: PriorQuestionLayoutProps) {
       </StFieldset>
       {node.children &&
         node.children.map((node, i) => (
-          <PeriNoteInput
-            key={`input-${i}`}
+          <PriorAnswer
+            key={i}
             path={[...path, i]}
             node={node}
             onAddChild={(p, isQ) => handleClickAddChild(p, isQ)}
             onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
-            onAddQuestion={(e, p, isQ) => handleClickAddQuestion(e, p, isQ)}
-            onAddChildByEnter={(e, p) => handleAddChildByEnter(e, p)}
           />
         ))}
     </StArticle>
   );
 }
 
-const StArticle = styled.article<{ isquestion: boolean }>`
+const StArticle = styled.article`
   position: relative;
+
+  margin-top: 3rem;
 
   border: 0.1rem solid ${({ theme }) => theme.colors.white200};
   border-radius: 0.8rem;
+  border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
+
   padding: 2.6rem 4.4rem 2.6rem 2.8rem;
 
   background-color: ${({ theme }) => theme.colors.white};
 
   // 방식 조금 더 고민해보기
-  /* &:focus-within {
+  &:focus-within {
     border-color: ${({ theme }) => theme.colors.orange100};
-  } */
-
-  ${({ isquestion }) =>
-    isquestion &&
-    css`
-      margin-top: 3rem;
-      border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
-    `}
+  }
 `;
 
-const StFieldset = styled.fieldset<{ hasborder: boolean }>`
+const StFieldset = styled.fieldset`
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding-left: 6.8rem;
-
-  ${({ hasborder, theme }) =>
-    hasborder &&
-    css`
-      border-bottom: 0.2rem solid ${theme.colors.white200};
-      padding-bottom: 2.8rem;
-    `}
 
   width: 100%;
 `;
@@ -130,12 +104,6 @@ const StQuestionIcon = styled(IcPeriQuestion)`
   position: absolute;
   top: -1.2rem;
   left: 1.2rem;
-`;
-
-const StAnswerIcon = styled(IcPeriAnswer)`
-  position: absolute;
-  top: 2.7rem;
-  left: 3.8rem;
 `;
 
 const StInput = styled.input`
