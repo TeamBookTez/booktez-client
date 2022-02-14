@@ -16,9 +16,9 @@ import { isLoginSelector } from "../utils/atoms";
 
 export default function Landing() {
   const navigate = useNavigate();
+  const isLogin = useRecoilValue(isLoginSelector);
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
-  const isLogin = useRecoilValue(isLoginSelector);
 
   useEffect(() => {
     if (isLogin) navigate("/main");

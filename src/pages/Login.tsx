@@ -1,36 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled, { css, keyframes } from "styled-components";
 
-import { Loading } from "../components/common";
 import { LoginForm, LoginNavSection } from "../components/login";
-import { getData } from "../utils/lib/api";
+import { isLoginSelector } from "../utils/atoms";
 
 export default function Login() {
   const [isAniTime, setIsAniTime] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const isLogin = useRecoilValue(isLoginSelector);
   const tempToken = localStorage.getItem("booktez-token");
   const localToken = tempToken ? tempToken : "";
 
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (status === 200) {
-        if (data.data.isLogin === true) {
-          return navigate("/main");
-        }
-      }
-    } catch (err) {
-      return;
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    getLogin("/auth/check", localToken);
+    if (isLogin) navigate("/main");
   }, []);
 
   const handleAni = () => {
@@ -38,27 +22,21 @@ export default function Login() {
   };
 
   return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <StPageWrapper>
-          <LoginNavSection isAniTime={isAniTime} onAniChange={handleAni} />
-          <StMainWrapper isAniTime={isAniTime}>
-            <StArticle>
-              <StH2>이미 서재가 있으신가요?</StH2>
-              <StH3>
-                북스테어즈에 로그인하고
-                <br />
-                서재에서 독서를 이어가세요.
-              </StH3>
-              <LoginForm />
-              <StContact>이메일/비밀번호를 잊어버리셨다면?</StContact>
-            </StArticle>
-          </StMainWrapper>
-        </StPageWrapper>
-      )}
-    </>
+    <StPageWrapper>
+      <LoginNavSection isAniTime={isAniTime} onAniChange={handleAni} />
+      <StMainWrapper isAniTime={isAniTime}>
+        <StArticle>
+          <StH2>이미 서재가 있으신가요?</StH2>
+          <StH3>
+            북스테어즈에 로그인하고
+            <br />
+            서재에서 독서를 이어가세요.
+          </StH3>
+          <LoginForm />
+          <StContact>이메일/비밀번호를 잊어버리셨다면?</StContact>
+        </StArticle>
+      </StMainWrapper>
+    </StPageWrapper>
   );
 }
 
