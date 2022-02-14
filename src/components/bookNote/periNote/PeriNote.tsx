@@ -116,8 +116,7 @@ export default function PeriNote() {
   }, [periNote]);
 
   useEffect(() => {
-    console.log("root", root);
-    if (root.children.every((node) => node.content !== "")) {
+    if (root.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
       setIsPrevented(false);
     } else {
       setIsPrevented(true);
@@ -195,7 +194,6 @@ const StArticle = styled.article`
 
   margin-top: 3rem;
 
-  // 방식 조금 더 고민해보기
   &:focus-within {
     & > fieldset {
       border-bottom: 0.1rem solid ${({ theme }) => theme.colors.white400};
