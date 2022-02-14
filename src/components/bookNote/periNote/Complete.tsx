@@ -4,14 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { StIcCancel } from "../../addBook/ShowModal";
 import { Button } from "../../common/styled/Button";
-
-interface BookData {
-  authors: string[];
-  publicationDt: string;
-  thumbnail: string;
-  title: string;
-  translators: string[];
-}
+import { BookData } from "./PeriNote";
 
 interface IsLoginState {
   isLogin: boolean;
@@ -28,7 +21,7 @@ export default function Complete(props: CompleteProps) {
   const navigate = useNavigate();
   const { bookData, isLoginState } = props;
 
-  const { authors, publicationDt, thumbnail, title, translators } = bookData;
+  const { author, publicationDt, thumbnail, title, translator } = bookData;
   const { fromUrl } = isLoginState;
 
   return (
@@ -39,13 +32,13 @@ export default function Complete(props: CompleteProps) {
         <StImgWrapper thumbnail={thumbnail} />
         <StTitle>{title}</StTitle>
         <StSubWrapper>
-          <StAuthor>{authors.join(" ")} 지음</StAuthor>
-          {translators ? (
-            translators.length === 1 ? (
-              <StTranslator>{translators[0]} 옮김</StTranslator>
-            ) : translators.length >= 2 ? (
+          <StAuthor>{author.join(" ")} 지음</StAuthor>
+          {translator ? (
+            translator.length === 1 ? (
+              <StTranslator>{translator[0]} 옮김</StTranslator>
+            ) : translator.length >= 2 ? (
               <StTranslator>
-                {translators[0]} 외 {translators.length - 1}명 옮김
+                {translator[0]} 외 {translator.length - 1}명 옮김
               </StTranslator>
             ) : null
           ) : null}

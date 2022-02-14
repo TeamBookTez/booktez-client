@@ -86,10 +86,12 @@ export const useGetPeriNote = (token: string, key: string): [PeriNoteData, boole
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
   try {
-    await client(token).patch(key, body);
+    const { data } = await client(token).patch(key, body);
+
+    return data.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      console.log("err", err.response);
+      return err.response;
     }
   }
 };

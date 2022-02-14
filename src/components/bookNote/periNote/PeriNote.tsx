@@ -4,19 +4,28 @@ import styled from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
-import { useGetPeriNote } from "../../../utils/lib/bookNote";
+import { patchBookNote, useGetPeriNote } from "../../../utils/lib/bookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
-import { ExButton, PeriModal, PriorQuestion, StepUp } from "..";
+import { Complete, ExButton, PeriModal, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
+export interface BookData {
+  author: string[];
+  publicationDt: string;
+  thumbnail: string;
+  title: string;
+  translator: string[];
+}
+
 export default function PeriNote() {
-  const [isLogin, reviewId, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
+  const [isLogin, reviewId, fromUrl, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
     useOutletContext<
       [
         boolean,
         number,
+        string,
         string,
         number,
         boolean,
@@ -29,9 +38,18 @@ export default function PeriNote() {
   const [periNote, isLoading] = useGetPeriNote(userToken, `/review/${reviewId}/peri`);
 
   const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "ROOT", content: "root", children: [] });
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
+  const [bookData, setBookData] = useState<BookData>({
+    author: [""],
+    publicationDt: "",
+    thumbnail: "",
+    title: "",
+    translator: [""],
+  });
   const [isPrevented, setIsPrevented] = useState<boolean>(true);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openSubmitModal, setOpenSubmitModal] = useState<boolean>(false);
+
   const handleAddChild = (path: number[], isQuestion: boolean) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(root);
@@ -111,6 +129,13 @@ export default function PeriNote() {
     }
   }
 
+  const submitPeriNote = async () => {
+    patchBookNote(userToken, `/review/${reviewId}/peri`, { answerThree: root, reviewSt: 4 }).then((res) =>
+      setBookData(res.bookData),
+    );
+    setOpenSubmitModal(true);
+  };
+
   useEffect(() => {
     setRoot(periNote.answerThree);
   }, [periNote]);
@@ -161,7 +186,7 @@ export default function PeriNote() {
           질문 리스트 추가
         </StAddChildButton>
         {/* 북노트 정리되면 type submit으로 바꾸기 */}
-        <StSubmitButton type="button" disabled={isPrevented}>
+        <StSubmitButton type="button" disabled={isPrevented} onClick={submitPeriNote}>
           작성 완료
         </StSubmitButton>
       </StNoteForm>
@@ -170,6 +195,7 @@ export default function PeriNote() {
           <PeriModal onToggleModal={handlePeriCarousel} />
         </StStepModalWrapper>
       )}
+      {openSubmitModal && <Complete bookData={bookData} isLoginState={{ isLogin, reviewId, fromUrl }} />}
     </>
   );
 }

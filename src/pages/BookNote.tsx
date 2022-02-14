@@ -139,6 +139,7 @@ export default function BookNote() {
         context={[
           isLogin,
           reviewId,
+          fromUrl,
           userToken,
           initIndex,
           isSave,

@@ -13,6 +13,7 @@ export default function PreNote() {
   const [
     isLogin,
     reviewId,
+    fromUrl,
     userToken,
     initIndex,
     isSave,
@@ -26,6 +27,7 @@ export default function PreNote() {
       [
         boolean,
         number,
+        string,
         string,
         number,
         boolean,
@@ -90,7 +92,7 @@ export default function PreNote() {
     setOpenModal(false);
 
     // peri로 넘어가기
-    navigate("/book-note/peri", { state: { isLogin, reviewId, fromUrl: "" } });
+    navigate("/book-note/peri", { state: { isLogin, reviewId, fromUrl } });
   };
 
   const handleOpenModal = () => {
