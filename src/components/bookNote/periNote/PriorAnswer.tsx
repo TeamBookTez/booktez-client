@@ -50,7 +50,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   };
 
   return (
-    <>
+    <StAnswerWrapper>
       <StFieldset hasborder={node.children.length > 0}>
         <legend>
           <StAnswerIcon />
@@ -61,7 +61,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
           onKeyPress={(e) => handleAddChildByEnter(e, path, isQuestion)}
         />
-        <StMoreIcon className="icn_more" />
+        <StMore className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
           <StMenuBtn type="button" onClick={(e) => handleClickAddQuestion(e, path, !isQuestion)}>
             꼬리질문 추가
@@ -84,16 +84,25 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onAddChildByEnter={(e, p, isQ) => handleAddChildByEnter(e, p, isQ)}
           />
         ))}
-    </>
+    </StAnswerWrapper>
   );
 }
 
-const StFieldset = styled.fieldset<{ hasborder: boolean }>`
+const StAnswerWrapper = styled.fieldset`
+  position: relative;
+
+  padding: 2.6rem 2.8rem 2.6rem 2.8rem;
+  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
+  border-radius: 0.8rem;
+  border-top: none;
+
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const StFieldset = styled.div<{ hasborder: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  padding-left: 6.8rem;
 
   ${({ hasborder, theme }) =>
     hasborder &&
@@ -113,9 +122,14 @@ const StAnswerIcon = styled(IcPeriAnswer)`
 
 const StInput = styled.input`
   flex: 1;
+  padding-left: 6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
   }
+`;
+
+const StMore = styled(StMoreIcon)`
+  margin-right: 3.2rem;
 `;

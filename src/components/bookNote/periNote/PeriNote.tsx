@@ -51,9 +51,6 @@ export default function PeriNote() {
         ],
       });
     } else {
-      // 답변의 경우에는 부모에게 자식을 추가해야 함 - 질문과 같은 피어에 두기 위해서
-      // const parent = getNodeByPath(newRoot, path.slice(0, -1));
-
       current.children.push({
         type: "answer",
         content: "",
@@ -151,14 +148,15 @@ export default function PeriNote() {
         </StLabelWrapper>
         {root.children &&
           root.children.map((node, idx) => (
-            <PriorQuestion
-              key={`input-${idx}`}
-              path={[idx]}
-              node={node}
-              onAddChild={handleAddChild}
-              onSetContent={handleSetContent}
-              onDeleteChild={handleDeleteChild}
-            />
+            <StArticle key={`input-${idx}`}>
+              <PriorQuestion
+                path={[idx]}
+                node={node}
+                onAddChild={handleAddChild}
+                onSetContent={handleSetContent}
+                onDeleteChild={handleDeleteChild}
+              />
+            </StArticle>
           ))}
         <StAddChildButton type="button" disabled={isPrevented} onClick={() => handleAddChild([], true)}>
           질문 리스트 추가
@@ -190,6 +188,20 @@ const StLabelWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 4.6rem 0 1.6rem 2rem;
+`;
+
+const StArticle = styled.article`
+  position: relative;
+
+  margin-top: 3rem;
+
+  // 방식 조금 더 고민해보기
+  &:focus-within {
+    & > fieldset {
+      border-bottom: 0.1rem solid ${({ theme }) => theme.colors.white400};
+      border-color: ${({ theme }) => theme.colors.orange100};
+    }
+  }
 `;
 
 const StLabelContainer = styled.div`

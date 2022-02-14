@@ -79,7 +79,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
           </StMenu>
         </StInputWrapper>
       </StFieldset>
-      <StFieldWrapper>
+      <StFieldWrapper isanswer={!isQuestion}>
         {node.children &&
           node.children.map((node, i) => (
             <PeriNoteInput
@@ -124,7 +124,7 @@ const StQuestionLabel = styled.label<{ bgcolor: string }>`
 const StAnswerLabel = styled(IcAnswerLabel)<{ labelcolor: string }>`
   position: absolute;
   top: 0;
-  left: 0;
+  left: 7.6rem;
   fill: ${({ labelcolor }) => labelcolor};
 `;
 
@@ -132,10 +132,12 @@ const StInputWrapper = styled.div<{ isanswer: boolean }>`
   display: flex;
   align-items: center;
   flex: 1;
+  margin-right: 1.6rem;
 
   ${({ isanswer }) =>
     isanswer
       ? css`
+          margin-left: 7.6rem;
           border-radius: 0 0.8rem 0.8rem 0;
         `
       : css`
@@ -160,11 +162,15 @@ const StInput = styled.input`
 `;
 
 const StMore = styled(StMoreIcon)`
-  margin-right: 0rem;
+  margin-right: 0;
 `;
 
-const StFieldWrapper = styled.article`
+const StFieldWrapper = styled.article<{ isanswer: boolean }>`
   display: flex;
   flex-direction: column;
-  margin-left: 7.6rem;
+  ${({ isanswer }) =>
+    isanswer &&
+    css`
+      margin-left: 7.6rem;
+    `}
 `;

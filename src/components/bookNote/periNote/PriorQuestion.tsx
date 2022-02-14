@@ -24,7 +24,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   };
 
   return (
-    <StArticle>
+    <>
       <StFieldset>
         <legend>
           <StQuestionIcon />
@@ -56,35 +56,21 @@ export default function PriorQuestion(props: PriorQuestionProps) {
             onDeleteChild={(p) => onDeleteChild(p)}
           />
         ))}
-    </StArticle>
+    </>
   );
 }
-
-const StArticle = styled.article`
-  position: relative;
-
-  margin-top: 3rem;
-
-  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 0.8rem;
-  border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
-
-  padding: 2.6rem 4.4rem 2.6rem 2.8rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
-
-  // 방식 조금 더 고민해보기
-  &:focus-within {
-    border-color: ${({ theme }) => theme.colors.orange100};
-  }
-`;
 
 const StFieldset = styled.fieldset`
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding-left: 6.8rem;
+  border-radius: 0.8rem;
+  border: 0.1rem solid ${({ theme }) => theme.colors.white200};
+  border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
+
+  padding: 2.6rem 4.4rem 2.6rem 6.8rem;
+  background-color: ${({ theme }) => theme.colors.white};
 
   width: 100%;
 `;
@@ -97,6 +83,7 @@ const StQuestionIcon = styled(IcPeriQuestion)`
 
 const StInput = styled.input`
   flex: 1;
+  margin-left: 1.6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
