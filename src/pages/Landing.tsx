@@ -13,7 +13,6 @@ import {
   LandingTwo,
 } from "../components/landing";
 import { isLoginSelector } from "../utils/atoms";
-import { getData } from "../utils/lib/api";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -21,26 +20,8 @@ export default function Landing() {
   const localToken = tempToken ? tempToken : "";
   const isLogin = useRecoilValue(isLoginSelector);
 
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-
-      console.log(key, token);
-      const status = data.status;
-
-      if (status === 200) {
-        if (data.data.isLogin === true) {
-          return navigate("/main");
-        }
-      }
-    } catch (err) {
-      return;
-    }
-  };
-
   useEffect(() => {
-    // getLogin("/auth/check", localToken);
-    console.log(isLogin);
+    if (isLogin) navigate("/main");
   }, []);
 
   return (
