@@ -25,23 +25,3 @@ export const patchData = (token: string, key: string, patchBody: PatchBody | For
 export const deleteData = (key: string, token: string | null) => {
   return client(token).delete(key);
 };
-
-// 활용할 때 검수 필요!!!!!!!!!!!!!!!!!!!!
-export const useLoginChecking = async (localToken: string | null) => {
-  // const localToken = localStorage.getItem("booktez-token");
-  const _token = localToken ? localToken : "";
-
-  try {
-    const { data } = await getData("/auth/check", _token);
-
-    if (data.status === 200) {
-      if (data.data.isLogin === true) {
-        return true;
-      }
-    }
-  } catch (err) {
-    return false;
-  }
-
-  return false;
-};
