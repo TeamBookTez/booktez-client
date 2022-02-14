@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import AddBookDefault from "../components/addBook/AddBookDefault";
 import BookList from "../components/addBook/BookList";
 import SearchBar from "../components/addBook/SearchBar";
 import { MainHeader } from "../components/common";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 import { searchBook } from "../utils/lib/api";
 
 export interface BookInfo {
@@ -20,6 +22,8 @@ export default function AddBook() {
   const [books, setBooks] = useState<BookInfo[]>([]);
   const [query, setQuery] = useState<string>("");
   const [debounceQuery, setDebounceQuery] = useState<string>("");
+  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const handleSearchBook = async (query: string, reset: boolean) => {
     const paramsAPI = {
@@ -41,6 +45,14 @@ export default function AddBook() {
   const handleDebounceQuery = (tempQuery: string) => {
     setDebounceQuery(tempQuery);
   };
+
+  useEffect(() => {
+    if (isLoginFromSelector) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (query.length > 0) {

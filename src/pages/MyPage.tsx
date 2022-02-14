@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
-import { isLoginState } from "../utils/atoms";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 import { getData, patchData } from "../utils/lib/api";
 
 export interface UserInfo {
@@ -20,12 +20,21 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
+  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
+
+  useEffect(() => {
+    if (isLoginFromSelector) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   useEffect(() => {
     getInfo("/user/myInfo", TOKEN);
@@ -51,7 +60,7 @@ export default function MyPage() {
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isLogin === false) return;
+    if (isLoginFromSelector === false) return;
     if (e.target.files === null) return;
 
     const imgFile = e.target.files[0];
@@ -78,8 +87,13 @@ export default function MyPage() {
       ) : (
         <>
           <MainHeader>마이페이지</MainHeader>
-          <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
-          <BottomContent userInfo={userInfo} isLogin={isLogin} />
+          <TopContent
+            userInfo={userInfo}
+            onImageChange={handleImageChange}
+            isLogin={isLoginFromSelector}
+            onLogout={handleLogout}
+          />
+          <BottomContent userInfo={userInfo} isLogin={isLoginFromSelector} />
         </>
       )}
     </>

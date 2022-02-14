@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { isLoginSelector } from "../utils/atoms";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -19,11 +19,17 @@ export const useGetBookcase = (key: string) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
 
   useEffect(() => {
+    if (isLoginFromSelector) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
     getBookcase();
   }, []);
 
