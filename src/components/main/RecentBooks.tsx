@@ -51,7 +51,7 @@ export default function RecentBooks(props: RecentProps) {
 
   return (
     <section>
-      {isLogin && isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>
