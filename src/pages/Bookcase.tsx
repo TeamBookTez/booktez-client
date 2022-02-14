@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Navigation } from "../components/bookcase";
 import { MainHeader } from "../components/common";
-import { isLoginState } from "../utils/atoms";
+import { isLoginSelector, isLoginState } from "../utils/atoms";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -47,27 +47,16 @@ export const useGetBookcase = (key: string) => {
 };
 
 export default function Bookcase() {
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
+  const isLogin = useRecoilValue(isLoginSelector); //isLoginFromSelector
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    getLogin("/auth/check", localToken);
-  }, []);
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        setIsLogin(false);
-      }
-    } catch (err) {
-      return;
+    if (isLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
-  };
+  }, []);
 
   return (
     <>

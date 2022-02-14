@@ -8,12 +8,7 @@ import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
 import { Loading } from "../common";
 
-interface RecentProps {
-  isLogin: boolean;
-}
-
-export default function RecentBooks(props: RecentProps) {
-  const { isLogin } = props;
+export default function RecentBooks() {
   const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
   const [isDefault, setIsDefault] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -64,7 +59,7 @@ export default function RecentBooks(props: RecentProps) {
               booksRecent
                 .slice(0, 5)
                 .map((tempInfo, idx) => (
-                  <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+                  <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
                 ))
             ) : (
               <Empty />
