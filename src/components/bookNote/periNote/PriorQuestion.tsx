@@ -15,22 +15,11 @@ interface PriorQuestionProps {
 
 export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
-
-  const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
-    onAddChild(pathArray, !isQuestionChecked);
-  };
-
-  const handleChangeSetContent = (pathArray: number[], value: string) => {
-    onSetContent(pathArray, value);
-  };
-
-  const handleClickDeleteChild = (pathArray: number[]) => {
-    onDeleteChild(pathArray);
-  };
+  const isQuestion = false;
 
   const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
-      handleClickAddChild(pathArray, false);
+      onAddChild(pathArray, isQuestion);
     }
   };
 
@@ -43,15 +32,15 @@ export default function PriorQuestion(props: PriorQuestionProps) {
         <StInput
           value={node.content}
           placeholder={"질문을 입력해주세요."}
-          onChange={(e) => handleChangeSetContent(path, e.target.value)}
+          onChange={(e) => onSetContent(path, e.target.value)}
           onKeyPress={(e) => handleAddChildByEnter(e, path)}
         />
-        <StAddAnswerButton type="button" onClick={() => handleClickAddChild(path, true)}>
+        <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
           답변
         </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
-          <StMenuBtn type="button" onClick={() => handleClickDeleteChild(path)}>
+          <StMenuBtn type="button" onClick={() => onDeleteChild(path)}>
             삭제
           </StMenuBtn>
         </StMenu>
@@ -62,8 +51,8 @@ export default function PriorQuestion(props: PriorQuestionProps) {
             key={i}
             path={[...path, i]}
             node={node}
-            onAddChild={(p, isQ) => handleClickAddChild(p, isQ)}
-            onSetContent={(p, value) => handleChangeSetContent(p, value)}
+            onAddChild={(p, isQ) => onAddChild(p, isQ)}
+            onSetContent={(p, value) => onSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
           />
         ))}

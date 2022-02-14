@@ -17,7 +17,7 @@ interface PeriNoteInputProps {
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => void;
-  onAddChildByEnter: (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => void;
+  onAddChildByEnter: (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[], isQuestion: boolean) => void;
 }
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
@@ -25,12 +25,17 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const isQuestion = node.type === "question";
   const labelColorList = [
     theme.colors.orange100,
+    theme.colors.orange100,
+    theme.colors.orange100,
+    theme.colors.orange300,
     theme.colors.orange300,
     theme.colors.orange400,
+    theme.colors.orange400,
+    theme.colors.orange500,
     theme.colors.orange500,
   ];
-  // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 4 지우기
-  const labelColor = labelColorList[(path.length - 2) % 4];
+  // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 8 지우기
+  const labelColor = labelColorList[(path.length - 2) % 9];
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -54,17 +59,17 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
             onChange={(e) => onSetContent(path, e.target.value)}
-            onKeyPress={(e) => onAddChildByEnter(e, path)}
+            onKeyPress={(e) => onAddChildByEnter(e, path, isQuestion)}
           />
           {isQuestion && (
-            <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
+            <StAddAnswerButton type="button" onClick={() => onAddChild(path, !isQuestion)}>
               답변
             </StAddAnswerButton>
           )}
           <StMore className="icn_more" />
           <StMenu>
             {!isQuestion && (
-              <StMenuBtn type="button" onClick={(e) => onAddQuestion(e, path, isQuestion)}>
+              <StMenuBtn type="button" onClick={(e) => onAddQuestion(e, path, !isQuestion)}>
                 꼬리질문 추가
               </StMenuBtn>
             )}
@@ -85,7 +90,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               onSetContent={(p, value) => onSetContent(p, value)}
               onDeleteChild={(p) => onDeleteChild(p)}
               onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
-              onAddChildByEnter={(e, p) => onAddChildByEnter(e, p)}
+              onAddChildByEnter={(e, p, isQ) => onAddChildByEnter(e, p, isQ)}
             />
           ))}
       </StFieldWrapper>
@@ -119,7 +124,7 @@ const StQuestionLabel = styled.label<{ bgcolor: string }>`
 const StAnswerLabel = styled(IcAnswerLabel)<{ labelcolor: string }>`
   position: absolute;
   top: 0;
-  left: 7.6rem;
+  left: 0;
   fill: ${({ labelcolor }) => labelcolor};
 `;
 
@@ -132,7 +137,6 @@ const StInputWrapper = styled.div<{ isanswer: boolean }>`
     isanswer
       ? css`
           border-radius: 0 0.8rem 0.8rem 0;
-          margin-left: 7.6rem;
         `
       : css`
           border-radius: 0.8rem;

@@ -15,6 +15,7 @@ interface PriorAnswerProps {
 
 export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const isQuestion = false;
 
   const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
     onAddChild(pathArray, isQuestionChecked);
@@ -36,9 +37,15 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     handleClickAddChild(pathArray, isQuestionChecked);
   };
 
-  const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
+  const handleAddChildByEnter = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    pathArray: number[],
+    isQuestionChecked: boolean,
+  ) => {
+    const p = isQuestionChecked ? pathArray : pathArray.slice(0, -1);
+
     if (e.key === "Enter") {
-      handleClickAddChild(pathArray, true);
+      handleClickAddChild(p, isQuestionChecked);
     }
   };
 
@@ -52,11 +59,11 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           value={node.content}
           placeholder={"답변을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
-          onKeyPress={(e) => handleAddChildByEnter(e, path)}
+          onKeyPress={(e) => handleAddChildByEnter(e, path, isQuestion)}
         />
         <StMoreIcon className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
-          <StMenuBtn type="button" onClick={(e) => handleClickAddQuestion(e, path, false)}>
+          <StMenuBtn type="button" onClick={(e) => handleClickAddQuestion(e, path, !isQuestion)}>
             꼬리질문 추가
           </StMenuBtn>
           <StMenuBtn type="button" onClick={() => handleClickDeleteChild(path)}>
@@ -74,7 +81,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddQuestion={(e, p, isQ) => handleClickAddQuestion(e, p, isQ)}
-            onAddChildByEnter={(e, p) => handleAddChildByEnter(e, p)}
+            onAddChildByEnter={(e, p, isQ) => handleAddChildByEnter(e, p, isQ)}
           />
         ))}
     </>
