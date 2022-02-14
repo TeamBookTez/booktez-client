@@ -69,7 +69,7 @@ const StFieldset = styled.fieldset`
   border: 0.1rem solid ${({ theme }) => theme.colors.white200};
   border-bottom: 0.1rem dashed ${({ theme }) => theme.colors.white400};
 
-  padding: 2.6rem 4.4rem 2.6rem 6.8rem;
+  padding: 2.6rem 4.4rem 2.6rem 8.4rem;
   background-color: ${({ theme }) => theme.colors.white};
 
   width: 100%;
@@ -78,12 +78,11 @@ const StFieldset = styled.fieldset`
 const StQuestionIcon = styled(IcPeriQuestion)`
   position: absolute;
   top: -1.2rem;
-  left: 1.2rem;
+  left: 0.8rem;
 `;
 
 const StInput = styled.input`
   flex: 1;
-  margin-left: 1.6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {

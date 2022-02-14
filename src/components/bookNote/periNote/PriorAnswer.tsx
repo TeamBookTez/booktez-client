@@ -50,8 +50,8 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   };
 
   return (
-    <StAnswerWrapper>
-      <StFieldset hasborder={node.children.length > 0}>
+    <StFieldset>
+      <StAnswerWrapper hasborder={node.children.length > 0}>
         <legend>
           <StAnswerIcon />
         </legend>
@@ -70,7 +70,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             삭제
           </StMenuBtn>
         </StMenu>
-      </StFieldset>
+      </StAnswerWrapper>
       {node.children &&
         node.children.map((node, i) => (
           <PeriNoteInput
@@ -84,14 +84,14 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onAddChildByEnter={(e, p, isQ) => handleAddChildByEnter(e, p, isQ)}
           />
         ))}
-    </StAnswerWrapper>
+    </StFieldset>
   );
 }
 
-const StAnswerWrapper = styled.fieldset`
+const StFieldset = styled.fieldset`
   position: relative;
 
-  padding: 2.6rem 2.8rem 2.6rem 2.8rem;
+  padding: 2.6rem 2.8rem;
   border: 0.1rem solid ${({ theme }) => theme.colors.white200};
   border-radius: 0.8rem;
   border-top: none;
@@ -99,7 +99,7 @@ const StAnswerWrapper = styled.fieldset`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const StFieldset = styled.div<{ hasborder: boolean }>`
+const StAnswerWrapper = styled.div<{ hasborder: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,7 +122,7 @@ const StAnswerIcon = styled(IcPeriAnswer)`
 
 const StInput = styled.input`
   flex: 1;
-  padding-left: 6rem;
+  margin-left: 5.6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
