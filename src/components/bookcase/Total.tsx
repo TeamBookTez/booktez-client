@@ -1,4 +1,4 @@
-import { useGetBookcase } from "../../pages/Bookcase";
+import { useGetBookcase } from "../../utils/useHooks";
 import { Loading } from "../common";
 import Cards from "./Cards";
 
