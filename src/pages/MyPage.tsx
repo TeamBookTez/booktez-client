@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
-import { isLoginSelector, isLoginState } from "../utils/atoms";
+import { isLoginState } from "../utils/atoms";
 import { getData, patchData } from "../utils/lib/api";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export interface UserInfo {
   email: string;
@@ -22,14 +23,14 @@ export default function MyPage() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
-  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const setIsLogin = useSetRecoilState(isLoginState);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
 
   useEffect(() => {
-    if (isLoginFromSelector) {
+    if (isLogin) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -82,7 +83,7 @@ export default function MyPage() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && isLoginLoading ? (
         <Loading />
       ) : (
         <>
