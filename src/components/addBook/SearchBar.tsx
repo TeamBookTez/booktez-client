@@ -23,6 +23,10 @@ export default function SearchBar(props: SearchBarProps) {
         setIsScroll(false);
       }
     });
+
+    return () => {
+      scrollY.clearListeners();
+    };
   }, [scrollY]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
