@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { Loading } from "../components/common";
 import {
   LandingFive,
   LandingFooter,
@@ -12,33 +13,40 @@ import {
   LandingThree,
   LandingTwo,
 } from "../components/landing";
-import { isLoginSelector, isLoginState } from "../utils/atoms";
+import { isLoginState } from "../utils/atoms";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const isLoginFromSelector = useRecoilValue(isLoginSelector);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
   const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    if (isLoginFromSelector) {
+    if (isLogin) {
       setIsLogin(true);
       navigate("/main");
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [isLogin]);
 
   return (
     <>
-      <LandingHeader />
-      <StMain>
-        <LandingOne />
-        <LandingTwo />
-        <LandingThree />
-        <LandingFour />
-        <LandingFive />
-      </StMain>
-      <LandingFooter />
+      {isLoginLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <LandingHeader />
+          <StMain>
+            <LandingOne />
+            <LandingTwo />
+            <LandingThree />
+            <LandingFour />
+            <LandingFive />
+          </StMain>
+          <LandingFooter />
+        </>
+      )}
     </>
   );
 }
