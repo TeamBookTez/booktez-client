@@ -7,7 +7,7 @@ import { isLoginState } from "../utils/atoms";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export default function Main() {
-  const { isLogin, isLoading } = useCheckLoginState();
+  const { isLogin, isLoginLoading } = useCheckLoginState();
   const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Main() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoginLoading ? (
         <Loading />
       ) : (
         <>

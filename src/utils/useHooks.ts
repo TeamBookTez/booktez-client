@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { BookcaseInfo } from "../pages/Bookcase";
-import { isLoginSelector, isLoginState } from "./atoms";
+import { isLoginState } from "./atoms";
 import { getData } from "./lib/api";
 
 export const useGetBookcase = (key: string) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const isLoginFromSelector = useRecoilValue(isLoginSelector);
-  const setIsLogin = useSetRecoilState(isLoginState);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
 
   useEffect(() => {
-    if (isLoginFromSelector) {
+    if (isLogin) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -24,7 +23,7 @@ export const useGetBookcase = (key: string) => {
   }, []);
 
   const getBookcase = async () => {
-    if (!isLoginFromSelector) {
+    if (!isLogin) {
       setIsLoading(false);
 
       return { bookcaseInfo, isLoading, getBookcase };
@@ -43,7 +42,7 @@ export const useGetBookcase = (key: string) => {
 
       setIsLoading(false);
     } catch (err) {
-      return setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -52,7 +51,7 @@ export const useGetBookcase = (key: string) => {
 
 export function useCheckLoginState() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoginLoading, setIsLoginLoading] = useState<boolean>(true);
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
@@ -71,18 +70,18 @@ export function useCheckLoginState() {
         if (data.data.isLogin === true) {
           setIsLogin(true);
 
-          return setIsLoading(false);
+          return setIsLoginLoading(false);
         }
       }
 
       setIsLogin(false);
-      setIsLoading(false);
+      setIsLoginLoading(false);
     } catch (err) {
       setIsLogin(false);
-      setIsLoading(false);
+      setIsLoginLoading(false);
       throw err;
     }
   };
 
-  return { isLogin, isLoading };
+  return { isLogin, isLoginLoading };
 }
