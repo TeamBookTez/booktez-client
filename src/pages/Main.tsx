@@ -16,7 +16,7 @@ export default function Main() {
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [isLogin]);
 
   return (
     <>

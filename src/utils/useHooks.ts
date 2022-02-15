@@ -20,7 +20,7 @@ export const useGetBookcase = (key: string) => {
       setIsLogin(false);
     }
     getBookcase();
-  }, []);
+  }, [isLogin]);
 
   const getBookcase = async () => {
     if (!isLogin) {

@@ -35,7 +35,7 @@ export default function MyPage() {
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     getInfo("/user/myInfo", TOKEN);
