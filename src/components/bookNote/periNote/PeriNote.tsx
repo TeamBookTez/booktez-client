@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
-import { patchBookNote, useGetPeriNote } from "../../../utils/lib/bookNote";
+import { patchBookNote, useFetchNote } from "../../../utils/lib/bookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
@@ -35,9 +35,12 @@ export default function PeriNote() {
       ]
     >();
 
-  const [periNote, isLoading] = useGetPeriNote(userToken, `/review/${reviewId}/peri`);
+  const { data, setData, isLoading } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
+    answerThree: { type: "", content: "", children: [] },
+    reviewSt: 3,
+  });
 
-  const [root, setRoot] = useState<PeriNoteTreeNode>({ type: "ROOT", content: "root", children: [] });
+  const [root, setRoot] = useState<PeriNoteTreeNode>(data.answerThree);
   const [bookData, setBookData] = useState<BookData>({
     author: [""],
     publicationDt: "",
@@ -137,8 +140,8 @@ export default function PeriNote() {
   };
 
   useEffect(() => {
-    setRoot(periNote.answerThree);
-  }, [periNote]);
+    setData({ ...data, answerThree: root });
+  }, [root]);
 
   useEffect(() => {
     if (root.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
@@ -150,7 +153,7 @@ export default function PeriNote() {
 
   useEffect(() => {
     if (initIndex && isSave) {
-      saveReview({ answerThree: root, reviewSt: periNote.reviewSt });
+      saveReview(data);
     }
   }, [isSave]);
 
@@ -161,35 +164,39 @@ export default function PeriNote() {
 
   return (
     <>
-      {isLoading && <Loading />}
-      <StNoteForm onClick={toggleMenu}>
-        <StLabelWrapper>
-          <StLabelContainer>
-            <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
-            <StepUp onToggleModal={handlePeriCarousel} />
-          </StLabelContainer>
-          <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
-        </StLabelWrapper>
-        {root.children &&
-          root.children.map((node, idx) => (
-            <StArticle key={`input-${idx}`}>
-              <PriorQuestion
-                path={[idx]}
-                node={node}
-                onAddChild={handleAddChild}
-                onSetContent={handleSetContent}
-                onDeleteChild={handleDeleteChild}
-              />
-            </StArticle>
-          ))}
-        <StAddChildButton type="button" disabled={isPrevented} onClick={() => handleAddChild([], true)}>
-          질문 리스트 추가
-        </StAddChildButton>
-        {/* 북노트 정리되면 type submit으로 바꾸기 */}
-        <StSubmitButton type="button" disabled={isPrevented} onClick={submitPeriNote}>
-          작성 완료
-        </StSubmitButton>
-      </StNoteForm>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <StNoteForm onClick={toggleMenu}>
+          <StLabelWrapper>
+            <StLabelContainer>
+              <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
+              <StepUp onToggleModal={handlePeriCarousel} />
+            </StLabelContainer>
+            <ExButton idx={4} onOpenDrawer={handleOpenDrawer} />
+          </StLabelWrapper>
+          {data.answerThree?.children &&
+            data.answerThree.children.map((node, idx) => (
+              <StArticle key={`input-${idx}`}>
+                <PriorQuestion
+                  path={[idx]}
+                  node={node}
+                  onAddChild={handleAddChild}
+                  onSetContent={handleSetContent}
+                  onDeleteChild={handleDeleteChild}
+                />
+              </StArticle>
+            ))}
+          <StAddChildButton type="button" disabled={isPrevented} onClick={() => handleAddChild([], true)}>
+            질문 리스트 추가
+          </StAddChildButton>
+          {/* 북노트 정리되면 type submit으로 바꾸기 */}
+          <StSubmitButton type="button" disabled={isPrevented} onClick={submitPeriNote}>
+            작성 완료
+          </StSubmitButton>
+        </StNoteForm>
+      )}
+
       {openModal && (
         <StStepModalWrapper>
           <PeriModal onToggleModal={handlePeriCarousel} />
