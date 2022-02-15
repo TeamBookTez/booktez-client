@@ -3,7 +3,6 @@ import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
-import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { patchBookNote, useFetchNote } from "../../../utils/lib/bookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { Loading } from "../../common";
@@ -40,7 +39,6 @@ export default function PeriNote() {
     reviewSt: 3,
   });
 
-  const [root, setRoot] = useState<PeriNoteTreeNode>(data.answerThree);
   const [bookData, setBookData] = useState<BookData>({
     author: [""],
     publicationDt: "",
@@ -55,7 +53,7 @@ export default function PeriNote() {
 
   const handleAddChild = (path: number[], isQuestion: boolean) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
-    const newRoot = deepCopyTree(root);
+    const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 
     if (isQuestion) {
@@ -79,25 +77,25 @@ export default function PeriNote() {
       });
     }
 
-    setRoot(newRoot);
+    setData({ ...data, answerThree: newRoot });
   };
 
   const handleSetContent = (path: number[], value: string) => {
-    const newRoot = deepCopyTree(root);
+    const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 
     current.content = value;
 
-    setRoot(newRoot);
+    setData({ ...data, answerThree: newRoot });
   };
 
   const handleDeleteChild = (path: number[]) => {
-    const newRoot = deepCopyTree(root);
+    const newRoot = deepCopyTree(data.answerThree);
     // 삭제할 때는 자신의 부모를 찾아서 children을 제거
     const parent = getNodeByPath(newRoot, path.slice(0, -1));
 
     parent.children.splice(path[path.length - 1], 1);
-    setRoot(newRoot);
+    setData({ ...data, answerThree: newRoot });
   };
 
   const handlePeriCarousel = useCallback(() => {
@@ -133,23 +131,19 @@ export default function PeriNote() {
   }
 
   const submitPeriNote = async () => {
-    patchBookNote(userToken, `/review/${reviewId}/peri`, { answerThree: root, reviewSt: 4 }).then((res) =>
+    patchBookNote(userToken, `/review/${reviewId}/peri`, { answerThree: data.answerThree, reviewSt: 4 }).then((res) =>
       setBookData(res.bookData),
     );
     setOpenSubmitModal(true);
   };
 
   useEffect(() => {
-    setData({ ...data, answerThree: root });
-  }, [root]);
-
-  useEffect(() => {
-    if (root.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
+    if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
       setIsPrevented(false);
     } else {
       setIsPrevented(true);
     }
-  }, [root]);
+  }, [data.answerThree]);
 
   useEffect(() => {
     if (initIndex && isSave) {
