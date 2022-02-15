@@ -50,8 +50,8 @@ export const useGetBookcase = (key: string) => {
 };
 
 export function useCheckLoginState() {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isLoginLoading, setIsLoginLoading] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
