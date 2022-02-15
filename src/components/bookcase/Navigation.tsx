@@ -1,27 +1,27 @@
-import { motion, useAnimation, useViewportScroll } from "framer-motion";
+import { useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export default function Navigation() {
+  const { scrollY } = useViewportScroll();
+  const [isScroll, setIsScroll] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(0);
   const location = useLocation();
-  const shadowingAni = useAnimation();
-  const { scrollY } = useViewportScroll();
   const MAIN_HEADER_HEIGHT = 109;
 
   useEffect(() => {
     scrollY.onChange(() => {
       if (scrollY.get() > MAIN_HEADER_HEIGHT) {
-        shadowingAni.start({
-          boxShadow: "0rem 0.6rem 1rem rgba(0, 0, 0, 0.17)",
-        });
+        setIsScroll(true);
       } else {
-        shadowingAni.start({
-          boxShadow: "initial",
-        });
+        setIsScroll(false);
       }
     });
+
+    return () => {
+      scrollY.clearListeners();
+    };
   }, [scrollY]);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function Navigation() {
   }, [location.pathname]);
 
   return (
-    <StNav animate={shadowingAni} initial={{ boxShadow: "initial" }}>
+    <StNav isscroll={isScroll}>
       <StUl>
         <StList>
           <StLink to="/main/bookcase">전체</StLink>
@@ -64,7 +64,7 @@ export default function Navigation() {
   );
 }
 
-const StNav = styled(motion.nav)`
+const StNav = styled.nav<{ isscroll: boolean }>`
   position: sticky;
   top: 0;
 
@@ -74,6 +74,15 @@ const StNav = styled(motion.nav)`
   padding-left: 4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+
+  ${({ isscroll }) =>
+    isscroll
+      ? css`
+          box-shadow: 0rem 0.6rem 1rem rgba(0, 0, 0, 0.17);
+        `
+      : css`
+          box-shadow: 0;
+        `}
 `;
 
 const StUl = styled.ul`
