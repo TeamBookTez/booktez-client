@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgdeletePopUp } from "../../assets/images";
+import { ImgDeletePopUp } from "../../assets/images";
 import { deleteData } from "../../utils/lib/api";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
@@ -35,7 +35,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   return (
     <StPopUpWrapper>
       <StPopUp>
-        <StImg src={ImgdeletePopUp} alt="독서 전 단계 완료" />
+        <StImg src={ImgDeletePopUp} alt="독서 전 단계 완료" />
         <StQuestion>삭제하시겠어요?</StQuestion>
         <StDetail>삭제한 기록은 복구가 어려워요!</StDetail>
         <StBtnWrapper>
