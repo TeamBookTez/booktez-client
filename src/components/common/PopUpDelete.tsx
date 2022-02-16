@@ -26,19 +26,16 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
     onSuccess: () => {
       // queryClient에 저장된 bookcase에 해당되는 데이터를 invalidate하고 refetch함
       queryClient.invalidateQueries("bookcase");
-    },
-  });
-
-  const handleDelete = async () => {
-    try {
-      mutation.mutate();
       onPopUp();
+
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }
-    } catch (err) {
-      return;
-    }
+    }, // onError로 에러 처리도 가능
+  });
+
+  const deleteBook = () => {
+    mutation.mutate();
   };
 
   return (
@@ -51,7 +48,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
           <StBtnCancel type="button" onClick={onPopUp}>
             취소
           </StBtnCancel>
-          <StBtnDelete type="button" onClick={handleDelete}>
+          <StBtnDelete type="button" onClick={deleteBook}>
             삭제
           </StBtnDelete>
         </StBtnWrapper>
