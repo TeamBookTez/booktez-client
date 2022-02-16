@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
-import { getData } from "../../utils/lib/api";
-import { Loading } from "../common";
+import { bookcaseFetcher } from "../../utils/lib/api";
 import { AddBookCard, BookCard } from ".";
 import Empty from "./cardSection/Empty";
 
@@ -12,59 +12,31 @@ interface CardsProps {
   navIndex: number;
 }
 
-const TOKEN = localStorage.getItem("booktez-token");
-const localToken = TOKEN ? TOKEN : "";
-
-const useGetBookcase = (key: string, navIndex: number) => {
-  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const getBookcase = async () => {
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, localToken);
-
-      console.log("books", books);
-      setBookcaseInfo(books);
-    } catch (err) {
-      console.log("err", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getBookcase();
-  }, [navIndex]);
-
-  return { bookcaseInfo, isLoading };
-};
-
 export default function Cards(props: CardsProps) {
   const { isLogin, navIndex } = props;
-  let path: string;
+  const [pathKey, setPathKey] = useState<string>("/book");
 
-  switch (navIndex) {
-    case 1:
-      path = "/pre";
-      break;
-    case 2:
-      path = "/peri";
-      break;
-    case 3:
-      path = "/post";
-      break;
-    default:
-      path = "";
-  }
-  const { bookcaseInfo, isLoading } = useGetBookcase(`/book${path}`, navIndex);
+  useEffect(() => {
+    switch (navIndex) {
+      case 1:
+        setPathKey("/book/pre");
+        break;
+      case 2:
+        setPathKey("/book/peri");
+        break;
+      case 3:
+        setPathKey("/book/post");
+        break;
+      default:
+        setPathKey("/book");
+    }
+  }, [navIndex]);
 
-  if (isLoading) {
-    return <Loading />;
-  } else if (bookcaseInfo.length === 0) {
+  // react-query로 데이터 받아오기
+  // 기존과의 차이: 받아온 데이터를 클라이언트가 아닌 서버 상태로 관리
+  const { data } = useQuery(["bookcase", pathKey], () => bookcaseFetcher(pathKey));
+
+  if (!data || (data && data.length === 0)) {
     return (
       <StDefaultSection>
         <Empty />
@@ -74,7 +46,7 @@ export default function Cards(props: CardsProps) {
     return (
       <StSection>
         <AddBookCard />
-        {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
+        {data.map((bookcaseInfo: BookcaseInfo, idx: number) => (
           <BookCard key={idx} bookcaseInfo={bookcaseInfo} isLogin={isLogin} />
         ))}
       </StSection>

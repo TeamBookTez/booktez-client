@@ -1,3 +1,4 @@
+import { BookcaseInfo } from "../../pages/Bookcase";
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
 
@@ -45,4 +46,17 @@ export const useLoginChecking = async (localToken: string | null) => {
   }
 
   return false;
+};
+
+export const bookcaseFetcher = async (key: string): Promise<BookcaseInfo[]> => {
+  const TOKEN = localStorage.getItem("booktez-token");
+  const _token = TOKEN ? TOKEN : "";
+
+  const {
+    data: {
+      data: { books },
+    },
+  } = await getData(key, _token);
+
+  return books;
 };
