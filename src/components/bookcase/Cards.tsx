@@ -6,11 +6,11 @@ import Empty from "./cardSection/Empty";
 
 interface CardsProps {
   bookcaseInfo: BookcaseInfo[];
-  handleBookDelete: () => void;
+  reloadBookcase: (key: string) => void;
   isLogin: boolean;
 }
 export default function Cards(props: CardsProps) {
-  const { bookcaseInfo, handleBookDelete, isLogin } = props;
+  const { bookcaseInfo, reloadBookcase, isLogin } = props;
 
   if (bookcaseInfo.length === 0) {
     return (
@@ -23,7 +23,7 @@ export default function Cards(props: CardsProps) {
       <StSection>
         <AddBookCard />
         {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
-          <BookCard key={idx} bookcaseInfo={bookcaseInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
+          <BookCard key={idx} bookcaseInfo={bookcaseInfo} reloadBookcase={reloadBookcase} isLogin={isLogin} />
         ))}
       </StSection>
     );

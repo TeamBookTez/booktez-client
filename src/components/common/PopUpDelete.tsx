@@ -8,11 +8,11 @@ import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrppe
 interface PopUpDeleteProps {
   onPopUp: () => void;
   reviewId: number;
-  handleBookDelete: () => void;
+  reloadBookcase: (key: string) => void;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, reviewId, handleBookDelete } = props;
+  const { onPopUp, reviewId } = props;
 
   const tempToken = localStorage.getItem("booktez-token");
   const token = tempToken ? tempToken : "";
@@ -24,7 +24,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      handleBookDelete(); //리렌더링
+      // reloadBookcase(); //리렌더링
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }

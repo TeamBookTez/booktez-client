@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import { Cards, Navigation } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
@@ -16,13 +15,9 @@ export interface BookcaseInfo {
 const TOKEN = localStorage.getItem("booktez-token");
 const localToken = TOKEN ? TOKEN : "";
 
-export const useGetBookcase = (key: string, navIndex: number) => {
+export const useGetBookcase = (key: string) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    getBookcase();
-  }, [navIndex]);
 
   const getBookcase = async () => {
     try {
@@ -32,14 +27,20 @@ export const useGetBookcase = (key: string, navIndex: number) => {
         },
       } = await getData(key, localToken);
 
+      console.log("books", books);
       books.forEach((book: BookcaseInfo) => {
         setBookcaseInfo((currentBook) => [...currentBook, book]);
       });
-      setIsLoading(false);
     } catch (err) {
       console.log("err", err);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    getBookcase();
+  }, []);
 
   return { bookcaseInfo, isLoading, getBookcase };
 };
@@ -47,34 +48,53 @@ export const useGetBookcase = (key: string, navIndex: number) => {
 export default function Bookcase() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [navIndex, setNavIndex] = useState<number>(0);
-  const [path, setPath] = useState<string>("");
-  const location = useLocation();
-  const { bookcaseInfo, isLoading, getBookcase } = useGetBookcase(`/book${path}`, navIndex);
+
+  let path: string;
+
+  switch (navIndex) {
+    case 1:
+      path = "/pre";
+      break;
+    case 2:
+      path = "/peri";
+      break;
+    case 3:
+      path = "/post";
+      break;
+    default:
+      path = "";
+  }
+
+  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const getBookcase = async (key: string) => {
+    try {
+      const {
+        data: {
+          data: { books },
+        },
+      } = await getData(key, localToken);
+
+      setBookcaseInfo(books);
+    } catch (err) {
+      console.log("err", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBookcase(`/book${path}`);
+  }, [navIndex]);
+
+  const handleChangeNavIndex = (idx: number) => {
+    setNavIndex(idx);
+  };
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
   }, []);
-
-  useEffect(() => {
-    switch (location.pathname) {
-      case "/main/bookcase":
-        setNavIndex(0);
-        setPath("");
-        break;
-      case "/main/bookcase/pre":
-        setNavIndex(1);
-        setPath("/pre");
-        break;
-      case "/main/bookcase/peri":
-        setNavIndex(2);
-        setPath("/peri");
-        break;
-      case "/main/bookcase/post":
-        setNavIndex(3);
-        setPath("/post");
-        break;
-    }
-  }, [location.pathname]);
 
   const getLogin = async (key: string, token: string) => {
     try {
@@ -95,8 +115,8 @@ export default function Bookcase() {
   return (
     <>
       <MainHeader>서재</MainHeader>
-      <Navigation navIndex={navIndex} />
-      {isLoading ? <Loading /> : <Cards bookcaseInfo={bookcaseInfo} handleBookDelete={getBookcase} isLogin={isLogin} />}
+      <Navigation navIndex={navIndex} onChangeNavIndex={handleChangeNavIndex} />
+      {isLoading ? <Loading /> : <Cards bookcaseInfo={bookcaseInfo} reloadBookcase={getBookcase} isLogin={isLogin} />}
     </>
   );
 }

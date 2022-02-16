@@ -13,7 +13,6 @@ import {
   ToBe,
 } from "../pages";
 import Landing from "../pages/Landing";
-import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
 import { CommonLayout, Error404 } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";

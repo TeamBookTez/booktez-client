@@ -1,14 +1,15 @@
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface NavigationProps {
   navIndex: number;
+  onChangeNavIndex: (idx: number) => void;
 }
 
 export default function Navigation(props: NavigationProps) {
-  const { navIndex } = props;
+  const { navIndex, onChangeNavIndex } = props;
+
   const shadowingAni = useAnimation();
   const { scrollY } = useViewportScroll();
   const MAIN_HEADER_HEIGHT = 109;
@@ -30,18 +31,10 @@ export default function Navigation(props: NavigationProps) {
   return (
     <StNav animate={shadowingAni} initial={{ boxShadow: "initial" }}>
       <StUl>
-        <StList>
-          <StLink to="/main/bookcase">전체</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/pre">독서 전</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/peri">독서 중</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/post">독서 완료</StLink>
-        </StList>
+        <StList onClick={() => onChangeNavIndex(0)}>전체</StList>
+        <StList onClick={() => onChangeNavIndex(1)}>독서 전</StList>
+        <StList onClick={() => onChangeNavIndex(2)}>독서 중</StList>
+        <StList onClick={() => onChangeNavIndex(3)}>독서 완료</StList>
       </StUl>
       <StBottomLine>
         <StOrangLine index={navIndex} />
@@ -66,9 +59,7 @@ const StUl = styled.ul`
   display: flex;
 `;
 
-const StList = styled.li``;
-
-const StLink = styled(Link)`
+const StList = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
