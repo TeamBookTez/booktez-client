@@ -34,7 +34,9 @@ export default function Cards(props: CardsProps) {
 
   // react-query로 데이터 받아오기
   // 기존과의 차이: 받아온 데이터를 클라이언트가 아닌 서버 상태로 관리
-  const { data } = useQuery(["bookcase", pathKey], () => bookcaseFetcher(pathKey));
+  // SWR과의 차이: SWR은 전달된 key를 자동으로 뒤 fetch에 넘겨줌.
+  // react-query에서의 key는 queryClient에서 저장할 때 구분하는 key값
+  const { data } = useQuery("bookcase", () => bookcaseFetcher(pathKey));
 
   if (!data || (data && data.length === 0)) {
     return (
