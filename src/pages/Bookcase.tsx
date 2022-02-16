@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-import { Navigation } from "../components/bookcase";
-import { MainHeader } from "../components/common";
+import { Cards, Navigation } from "../components/bookcase";
+import { Loading, MainHeader } from "../components/common";
 import { getData } from "../utils/lib/api";
 
 export interface BookcaseInfo {
@@ -16,13 +16,13 @@ export interface BookcaseInfo {
 const TOKEN = localStorage.getItem("booktez-token");
 const localToken = TOKEN ? TOKEN : "";
 
-export const useGetBookcase = (key: string) => {
+export const useGetBookcase = (key: string, navIndex: number) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getBookcase();
-  }, []);
+  }, [navIndex]);
 
   const getBookcase = async () => {
     try {
@@ -46,10 +46,35 @@ export const useGetBookcase = (key: string) => {
 
 export default function Bookcase() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [navIndex, setNavIndex] = useState<number>(0);
+  const [path, setPath] = useState<string>("");
+  const location = useLocation();
+  const { bookcaseInfo, isLoading, getBookcase } = useGetBookcase(`/book${path}`, navIndex);
 
   useEffect(() => {
     getLogin("/auth/check", localToken);
   }, []);
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/main/bookcase":
+        setNavIndex(0);
+        setPath("");
+        break;
+      case "/main/bookcase/pre":
+        setNavIndex(1);
+        setPath("/pre");
+        break;
+      case "/main/bookcase/peri":
+        setNavIndex(2);
+        setPath("/peri");
+        break;
+      case "/main/bookcase/post":
+        setNavIndex(3);
+        setPath("/post");
+        break;
+    }
+  }, [location.pathname]);
 
   const getLogin = async (key: string, token: string) => {
     try {
@@ -70,8 +95,8 @@ export default function Bookcase() {
   return (
     <>
       <MainHeader>서재</MainHeader>
-      <Navigation />
-      <Outlet context={isLogin} />
+      <Navigation navIndex={navIndex} />
+      {isLoading ? <Loading /> : <Cards bookcaseInfo={bookcaseInfo} handleBookDelete={getBookcase} isLogin={isLogin} />}
     </>
   );
 }

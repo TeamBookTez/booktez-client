@@ -27,13 +27,7 @@ export default function Router() {
           {/* /main */}
           <Route path="" element={<Main />} />
           {/* bookcase */}
-          <Route path="bookcase/*" element={<Bookcase />}>
-            <Route path="" element={<Total />} />
-            <Route path="pre" element={<PreRead />} />
-            <Route path="peri" element={<PeriRead />} />
-            <Route path="post" element={<PostRead />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Route>
+          <Route path="bookcase/*" element={<Bookcase />} />
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}
           <Route path="my-page" element={<MyPage />} />

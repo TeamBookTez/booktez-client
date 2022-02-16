@@ -1,11 +1,14 @@
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Navigation() {
-  const [navIndex, setNavIndex] = useState<number>(0);
-  const location = useLocation();
+interface NavigationProps {
+  navIndex: number;
+}
+
+export default function Navigation(props: NavigationProps) {
+  const { navIndex } = props;
   const shadowingAni = useAnimation();
   const { scrollY } = useViewportScroll();
   const MAIN_HEADER_HEIGHT = 109;
@@ -23,23 +26,6 @@ export default function Navigation() {
       }
     });
   }, [scrollY]);
-
-  useEffect(() => {
-    switch (location.pathname) {
-      case "/main/bookcase":
-        setNavIndex(0);
-        break;
-      case "/main/bookcase/pre":
-        setNavIndex(1);
-        break;
-      case "/main/bookcase/peri":
-        setNavIndex(2);
-        break;
-      case "/main/bookcase/post":
-        setNavIndex(3);
-        break;
-    }
-  }, [location.pathname]);
 
   return (
     <StNav animate={shadowingAni} initial={{ boxShadow: "initial" }}>
