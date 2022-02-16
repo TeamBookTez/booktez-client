@@ -13,7 +13,6 @@ import {
   ToBe,
 } from "../pages";
 import Landing from "../pages/Landing";
-import { PeriRead, PostRead, PreRead, Total } from "./bookcase";
 import { PeriNote, PreNote } from "./bookNote";
 import { CommonLayout, Error404 } from "./common";
 import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
@@ -27,13 +26,7 @@ export default function Router() {
           {/* /main */}
           <Route path="" element={<Main />} />
           {/* bookcase */}
-          <Route path="bookcase/*" element={<Bookcase />}>
-            <Route path="" element={<Total />} />
-            <Route path="pre" element={<PreRead />} />
-            <Route path="peri" element={<PeriRead />} />
-            <Route path="post" element={<PostRead />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Route>
+          <Route path="bookcase/*" element={<Bookcase />} />
           <Route path="add-book" element={<AddBook />} />
           {/* my-page */}
           <Route path="my-page" element={<MyPage />} />

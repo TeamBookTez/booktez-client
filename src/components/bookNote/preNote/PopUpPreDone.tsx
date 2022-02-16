@@ -7,7 +7,7 @@ import {
   StBtnWrapper,
   StDetail,
   StPopUp,
-  StPopUpWrpper,
+  StPopUpWrapper,
   StQuestion,
 } from "../../common/styled/PopUp";
 
@@ -20,7 +20,7 @@ export default function PopUpPreDone(props: PopUpPreDoneProps) {
   const { onSubmit, onCancel } = props;
 
   return (
-    <StPopUpWrpper>
+    <StPopUpWrapper>
       <StPopUp>
         <StImg src={ImgPreBook} alt="독서 전 단계 완료" />
         <StQuestion>독서 전 단계를 완료하셨나요?</StQuestion>
@@ -34,7 +34,7 @@ export default function PopUpPreDone(props: PopUpPreDoneProps) {
           </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
-    </StPopUpWrpper>
+    </StPopUpWrapper>
   );
 }
 

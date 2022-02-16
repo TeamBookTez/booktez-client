@@ -34,7 +34,7 @@ export default function LastStep() {
     await patchData(userToken, `/review/before/${reviewId}`, {
       ...reviewData,
       questionList: [""],
-      progress: 2,
+      reviewSt: 2,
     });
   };
 

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgExit } from "../../assets/images";
-import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
+import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
 export const StTemp = styled.div`
   width: 100%;
@@ -17,7 +17,7 @@ export default function PopUpExit(props: PopUpExitProps) {
   const { onExit } = props;
 
   return (
-    <StPopUpWrpper>
+    <StPopUpWrapper>
       <StPopUp>
         <StImg src={ImgExit} alt="페이지 나가기" />
         <StQuestion>현재 페이지에서 나가시겠어요?</StQuestion>
@@ -31,7 +31,7 @@ export default function PopUpExit(props: PopUpExitProps) {
           </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
-    </StPopUpWrpper>
+    </StPopUpWrapper>
   );
 }
 
