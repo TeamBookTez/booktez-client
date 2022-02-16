@@ -59,7 +59,9 @@ export default function RecentBooks(props: RecentProps) {
             {!isDefault ? (
               booksRecent
                 .slice(0, 5)
-                .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} />)
+                .map((tempInfo, idx) => (
+                  <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
+                ))
             ) : (
               <Empty />
             )}

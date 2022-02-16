@@ -102,7 +102,7 @@ export default function DetailBookNote() {
               </DetailArticleWrapper>
             </StMarginTop>
           </StNoteModalWrapper>
-          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
+          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} pathKey="/book" /> : <></>}
         </>
       )}
     </>
