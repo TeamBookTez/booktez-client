@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -19,11 +20,19 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  // query client에 접근
+  const queryClient = useQueryClient();
+  const mutation = useMutation(() => deleteData(`/review/${reviewId}`, token), {
+    onSuccess: () => {
+      // queryClient에 저장된 bookcase에 해당되는 데이터를 invalidate하고 refetch함
+      queryClient.invalidateQueries("bookcase");
+    },
+  });
+
   const handleDelete = async () => {
     try {
-      await deleteData(`/review/${reviewId}`, token);
+      mutation.mutate();
       onPopUp();
-      // reloadBookcase(); //리렌더링
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }
