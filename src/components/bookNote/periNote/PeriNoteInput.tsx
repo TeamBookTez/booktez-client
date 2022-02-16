@@ -20,22 +20,26 @@ interface PeriNoteInputProps {
   onAddChildByEnter: (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[], isQuestion: boolean) => void;
 }
 
+export const labelColorList = [
+  theme.colors.orange000,
+  theme.colors.orange000,
+  theme.colors.orange100,
+  theme.colors.orange100,
+  theme.colors.orange300,
+  theme.colors.orange300,
+  theme.colors.orange400,
+  theme.colors.orange400,
+  theme.colors.orange500,
+  theme.colors.orange500,
+];
+
 export default function PeriNoteInput(props: PeriNoteInputProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild, onAddQuestion, onAddChildByEnter } = props;
   const isQuestion = node.type === "question";
-  const labelColorList = [
-    theme.colors.orange100,
-    theme.colors.orange100,
-    theme.colors.orange100,
-    theme.colors.orange300,
-    theme.colors.orange300,
-    theme.colors.orange400,
-    theme.colors.orange400,
-    theme.colors.orange500,
-    theme.colors.orange500,
-  ];
+
   // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 8 지우기
-  const labelColor = labelColorList[(path.length - 2) % 9];
+  // 첫 시작 root 때문에 1을 빼야 함
+  const labelColor = labelColorList[(path.length - 1) % 10];
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
