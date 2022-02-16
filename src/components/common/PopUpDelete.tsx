@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { ImgdeletePopUp } from "../../assets/images";
 import { deleteData } from "../../utils/lib/api";
-import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
+import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
 interface PopUpDeleteProps {
   onPopUp: () => void;
@@ -33,7 +33,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   };
 
   return (
-    <StPopUpWrpper>
+    <StPopUpWrapper>
       <StPopUp>
         <StImg src={ImgdeletePopUp} alt="독서 전 단계 완료" />
         <StQuestion>삭제하시겠어요?</StQuestion>
@@ -47,7 +47,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
           </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
-    </StPopUpWrpper>
+    </StPopUpWrapper>
   );
 }
 
