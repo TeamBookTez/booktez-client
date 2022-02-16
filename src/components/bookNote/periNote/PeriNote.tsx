@@ -35,7 +35,7 @@ export default function PeriNote() {
     >();
 
   const { data, setData, isLoading, isError } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
-    answerThree: { type: "", content: "", children: [] },
+    answerThree: { type: "", content: "", children: [{ type: "", content: "", children: [] }] },
     reviewSt: 3,
   });
 
