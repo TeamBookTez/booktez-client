@@ -59,10 +59,6 @@ export default function DetailBookNote() {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
-  const handleBookDelete = () => {
-    getReview(`review/${reviewId}`, token); //리렌더링
-  };
-
   useEffect(() => {
     console.log("reviewData", reviewData);
   }, [reviewData]);
@@ -106,11 +102,7 @@ export default function DetailBookNote() {
               </DetailArticleWrapper>
             </StMarginTop>
           </StNoteModalWrapper>
-          {isPopUp ? (
-            <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} reloadBookcase={handleBookDelete} />
-          ) : (
-            <></>
-          )}
+          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
         </>
       )}
     </>

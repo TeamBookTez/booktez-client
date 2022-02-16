@@ -8,7 +8,6 @@ import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrppe
 interface PopUpDeleteProps {
   onPopUp: () => void;
   reviewId: number;
-  reloadBookcase: (key: string) => void;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {

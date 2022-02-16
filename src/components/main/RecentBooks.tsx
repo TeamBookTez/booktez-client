@@ -41,10 +41,6 @@ export default function RecentBooks(props: RecentProps) {
     getBookRecent("/book", userToken);
   }, []);
 
-  const handleBookDelete = (key: string) => {
-    getBookRecent(key, userToken);
-  };
-
   useEffect(() => {
     setIsDefault(!(booksRecent.length > 0));
   }, [booksRecent]);
@@ -63,9 +59,7 @@ export default function RecentBooks(props: RecentProps) {
             {!isDefault ? (
               booksRecent
                 .slice(0, 5)
-                .map((tempInfo, idx) => (
-                  <BookCard key={idx} bookcaseInfo={tempInfo} reloadBookcase={handleBookDelete} isLogin={isLogin} />
-                ))
+                .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} />)
             ) : (
               <Empty />
             )}

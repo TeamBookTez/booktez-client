@@ -8,12 +8,11 @@ import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
-  reloadBookcase: (key: string) => void;
   isLogin: boolean;
 }
 
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, reloadBookcase, isLogin } = props;
+  const { bookcaseInfo, isLogin } = props;
   const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
@@ -55,7 +54,7 @@ export default function BookCard(props: BookCardProps) {
         </StTextWrapper>
       </StBookCard>
       <StIcBin onClick={handlePopUp} />
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} reloadBookcase={reloadBookcase} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
     </StCardWrapper>
   );
 }
