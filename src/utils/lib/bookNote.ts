@@ -20,6 +20,7 @@ interface PreNoteData {
 export function useFetchNote<T>(token: string, key: string, initialState: T) {
   const [data, setData] = useState<T>(initialState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     (async function () {
@@ -37,8 +38,8 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
         }
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          // error 처리에 대하여 고민해보기
-          console.log(err.response);
+          // isError 처리에 대하여 고민해보기
+          setIsError(true);
         }
       } finally {
         setIsLoading(false);
@@ -46,7 +47,7 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
     })();
   }, []);
 
-  return { data, setData, isLoading };
+  return { data, setData, isLoading, isError };
 }
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {

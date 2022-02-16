@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { patchBookNote, useFetchNote } from "../../../utils/lib/bookNote";
-import { Loading } from "../../common";
+import { Error404, Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
@@ -39,7 +39,7 @@ export default function PreNote() {
       ]
     >();
 
-  const { data, setData, isLoading } = useFetchNote<PreNoteData>(userToken, `/review/${reviewId}/pre`, {
+  const { data, setData, isLoading, isError } = useFetchNote<PreNoteData>(userToken, `/review/${reviewId}/pre`, {
     answerOne: "",
     answerTwo: "",
     questionList: [""],
@@ -137,11 +137,13 @@ export default function PreNote() {
     return handleCloseDrawer;
   }, []);
 
-  return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
+  if (isLoading) {
+    return <Loading />;
+  } else if (isError) {
+    return <Error404 />;
+  } else {
+    return (
+      <>
         <StNoteForm onSubmit={(e) => e.preventDefault()}>
           <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
           <StFormWrapper>
@@ -190,10 +192,11 @@ export default function PreNote() {
             다음 계단
           </StNextBtn>
         </StNoteForm>
-      )}
-      {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancelModal} />}
-    </>
-  );
+
+        {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancelModal} />}
+      </>
+    );
+  }
 }
 
 const StNoteForm = styled.form`
