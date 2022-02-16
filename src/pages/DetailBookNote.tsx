@@ -29,6 +29,7 @@ export default function DetailBookNote() {
   });
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const { state } = useLocation();
   const isLoginState = state as IsLoginState;
   const { reviewId, isLogin, fromUrl } = isLoginState;
@@ -59,10 +60,6 @@ export default function DetailBookNote() {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
-  useEffect(() => {
-    console.log("reviewData", reviewData);
-  }, [reviewData]);
-
   return (
     <>
       {isLogin && isLoading ? (
@@ -83,7 +80,7 @@ export default function DetailBookNote() {
               <IcModifyNote
                 onClick={() =>
                   navigate("/book-note/peri", {
-                    state: { reviewId, title: reviewData?.bookTitle, fromUrl: "/main/bookcase/post", isLogin },
+                    state: { reviewId, title: reviewData?.bookTitle, fromUrl, isLogin },
                   })
                 }
               />
