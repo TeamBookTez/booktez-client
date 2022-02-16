@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { BookcaseInfo } from "../../pages/Bookcase";
-import { getData } from "../../utils/lib/api";
-import { BookCard } from "../bookcase";
-import Empty from "../bookcase/cardSection/Empty";
+import { bookcaseFetcher } from "../../utils/lib/api";
+import { BookCard, Empty } from "../bookcase";
 import { Loading } from "../common";
 
 interface RecentProps {
@@ -14,60 +13,33 @@ interface RecentProps {
 
 export default function RecentBooks(props: RecentProps) {
   const { isLogin } = props;
-  const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
   const [isDefault, setIsDefault] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
-
-  const getBookRecent = async (key: string, token: string) => {
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, token);
-
-      setBooksRecent(books);
-    } catch (err) {
-      return setIsLoading(false);
-    }
-    setIsLoading(false);
-  };
+  const { data, isLoading } = useQuery("bookcase", () => bookcaseFetcher("/book"));
 
   useEffect(() => {
-    setIsLoading(true);
-    getBookRecent("/book", userToken);
-  }, []);
+    setIsDefault(!data || data.length === 0);
+  }, [data]);
 
-  useEffect(() => {
-    setIsDefault(!(booksRecent.length > 0));
-  }, [booksRecent]);
-
-  return (
-    <section>
-      {isLogin && isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <StHeader>
-            <StHeading3>최근 작성한 북노트</StHeading3>
-            {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
-          </StHeader>
-          <StBookWrapper isdefault={isDefault}>
-            {!isDefault ? (
-              booksRecent
-                .slice(0, 5)
-                .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} />)
-            ) : (
-              <Empty />
-            )}
-          </StBookWrapper>
-        </>
-      )}
-    </section>
-  );
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <section>
+        <StHeader>
+          <StHeading3>최근 작성한 북노트</StHeading3>
+          {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
+        </StHeader>
+        <StBookWrapper isdefault={isDefault}>
+          {data && !isDefault ? (
+            data.slice(0, 5).map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} />)
+          ) : (
+            <Empty />
+          )}
+        </StBookWrapper>
+      </section>
+    );
+  }
 }
 
 const StHeader = styled.header`
