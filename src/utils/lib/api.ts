@@ -64,7 +64,13 @@ const bookcaseFetcher = async (key: string): Promise<BookcaseInfo[]> => {
 };
 
 export function useGetBookInfo(key: string) {
-  const { data, error } = useSWR(key, bookcaseFetcher);
+  // onErrorRetry는 전역 옵션으로 분류해서 특정 key에 대해서 retry하지 않도록 막는 것도 좋을 듯
+  // onError로 특정 key 에러 발생시 toast UI를 보여줘도 예쁠 것 같음
+  const { data, error } = useSWR(key, bookcaseFetcher, {
+    onErrorRetry: (error) => {
+      if (error.status >= 400) return;
+    },
+  });
 
   return {
     bookcaseInfo: data,
