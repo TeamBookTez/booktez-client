@@ -23,10 +23,10 @@ export default function LastStep() {
     const localToken = localStorage.getItem("booktez-token");
     const userToken = localToken ? localToken : "";
 
-    const localBookData = localStorage.getItem("booktez-bookData");
+    const localBookData = sessionStorage.getItem("booktez-bookData");
     const bookData = localBookData ? JSON.parse(localBookData) : null;
 
-    const localReviewData = localStorage.getItem("booktez-reviewData");
+    const localReviewData = sessionStorage.getItem("booktez-reviewData");
     const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
 
     const { data } = await postData("/book", bookData, userToken);
@@ -43,8 +43,8 @@ export default function LastStep() {
   const goNextStep = () => {
     setIsLoading(true);
     addBookReview();
-    localStorage.removeItem("booktez-bookData");
-    localStorage.removeItem("booktez-reviewData");
+    sessionStorage.removeItem("booktez-bookData");
+    sessionStorage.removeItem("booktez-reviewData");
     setIsLoading(false);
 
     handleIsAniTime(true);

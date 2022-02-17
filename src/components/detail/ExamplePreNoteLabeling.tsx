@@ -22,7 +22,7 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
 
   const navigate = useNavigate();
 
-  const nickname = localStorage.getItem("booktez-nickname");
+  const nickname = sessionStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });

@@ -15,7 +15,7 @@ interface ExamplePreNoteProps {
 export default function ExamplePreNote(props: ExamplePreNoteProps) {
   const { answerOne, answerTwo, questionList, isLogin } = props;
   const navigate = useNavigate();
-  const nickname = localStorage.getItem("booktez-nickname");
+  const nickname = sessionStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });

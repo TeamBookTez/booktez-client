@@ -23,7 +23,7 @@ export default function TopContent(props: TopContentProps) {
 
   const handleLogout = () => {
     localStorage.removeItem("booktez-token");
-    localStorage.removeItem("booktez-nickname");
+    sessionStorage.removeItem("booktez-nickname");
     navigate("/main");
     onLogout();
   };

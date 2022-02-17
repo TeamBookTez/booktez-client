@@ -34,7 +34,7 @@ export default function ShowModal(props: ShowModalProps) {
       if (!userToken) {
         const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           "booktez-bookData",
           JSON.stringify({
             isbn,
