@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { useGetBookInfo } from "../../utils/lib/api";
-import { Error404, Loading } from "../common";
+import { Loading } from "../common";
 import { AddBookCard, BookCard } from ".";
 import Empty from "./cardSection/Empty";
 

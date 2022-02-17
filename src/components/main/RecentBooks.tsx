@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useGetBookInfo } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
-import { Error404, Loading } from "../common";
+import { Loading } from "../common";
 
 interface RecentProps {
   isLogin: boolean;

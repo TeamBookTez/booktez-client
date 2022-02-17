@@ -139,8 +139,6 @@ export default function PreNote() {
 
   if (isLoading) {
     return <Loading />;
-  } else if (isError) {
-    return <Error404 />;
   } else {
     return (
       <>
