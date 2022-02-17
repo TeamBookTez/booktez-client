@@ -8,7 +8,7 @@ export { default as ImgBefore3 } from "./before3Image.png";
 export { default as ImgBefore21 } from "./before21Image.png";
 export { default as ImgBefore22 } from "./before22Image.png";
 export { default as ImgBefore23 } from "./before23Image.png";
-export { default as ImgdeletePopUp } from "./deleteImage.png";
+export { default as ImgDeletePopUp } from "./deleteImage.png";
 export { default as ImgDevice } from "./deviceImage.png";
 export { default as ImgDrawer } from "./drawerImage.png";
 export { default as ImgDrawerSmall } from "./drawerImageSmall.png";

@@ -14,6 +14,7 @@ export const getData = (key: string, token?: string) => {
   return client(token).get(key);
 };
 
+// 제네릭으로 바꾸기
 export const postData = (key: string, postBody: PostBody, token?: string) => {
   return client(token).post(key, postBody);
 };
@@ -40,7 +41,7 @@ export const useLoginChecking = async (localToken: string | null) => {
       }
     }
   } catch (err) {
-    return false;
+    return;
   }
 
   return false;

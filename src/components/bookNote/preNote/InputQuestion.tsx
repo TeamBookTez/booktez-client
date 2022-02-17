@@ -16,7 +16,7 @@ export default function InputQuestion(props: InputQuestionProps) {
   const { idx, value, onChangeValue, onDelete, isPrevented, isAdded, onAddInput } = props;
 
   const addInputByEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isPrevented) return;
+    if (!isPrevented) return;
 
     if (e.key === "Enter") {
       onAddInput();
@@ -32,7 +32,7 @@ export default function InputQuestion(props: InputQuestionProps) {
         autoFocus={isAdded}
         onKeyPress={addInputByEnter}
       />
-      {!isPrevented ? <StIcon onClick={() => onDelete(idx)} /> : ""}
+      {isPrevented ? <StIcon onClick={() => onDelete(idx)} /> : ""}
     </StWrapper>
   );
 }

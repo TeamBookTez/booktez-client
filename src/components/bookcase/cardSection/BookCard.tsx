@@ -8,12 +8,11 @@ import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
-  handleBookDelete: () => void;
   isLogin: boolean;
 }
 
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, handleBookDelete, isLogin } = props;
+  const { bookcaseInfo, isLogin } = props;
   const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
   const [isPopUp, setIsPopUp] = useState(false);
 
@@ -27,7 +26,7 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      navigate(reviewUrl, { state: { isLogin, reviewId, fromUrl: pathname } });
+      navigate(reviewUrl, { state: { isLogin, reviewId, title, fromUrl: pathname } });
     }
   };
 
@@ -55,7 +54,7 @@ export default function BookCard(props: BookCardProps) {
         </StTextWrapper>
       </StBookCard>
       <StIcBin onClick={handlePopUp} />
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} /> : <></>}
     </StCardWrapper>
   );
 }
