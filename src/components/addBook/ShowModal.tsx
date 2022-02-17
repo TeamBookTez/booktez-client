@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -19,7 +20,7 @@ export default function ShowModal(props: ShowModalProps) {
 
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
-  const bookData = { ...bookInfo, publicationDate: publicationDt, author: authors, translator: translators };
+  const bookData = { ...bookInfo, publicationDt, author: authors, translator: translators };
 
   const TOKEN = localStorage.getItem("booktez-token");
   const userToken = TOKEN ? TOKEN : "";
@@ -31,7 +32,7 @@ export default function ShowModal(props: ShowModalProps) {
       const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
-        const { isbn, thumbnail, title, authors, translators, publicationDate } = bookData;
+        const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
 
         localStorage.setItem(
           "booktez-bookData",
@@ -41,15 +42,18 @@ export default function ShowModal(props: ShowModalProps) {
             title,
             author: authors,
             translator: translators,
-            publicationDate,
+            publicationDt,
           }),
         );
       }
-      const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      nav("/book-note", { state: { ...stateData, title, fromUrl: "/main/add-book" } });
+      nav("/book-note", {
+        state: { isLogin: !!userToken, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" },
+      });
     } catch (err) {
-      return;
+      if (axios.isAxiosError(err)) {
+        console.log(err.response);
+      }
     }
   };
 
@@ -92,9 +96,7 @@ export default function ShowModal(props: ShowModalProps) {
           </ModalLabel>
         ) : null}
       </ModalLabelWrapper>
-      <ModalDate>
-        {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
-      </ModalDate>
+      <ModalDate>{publicationDt} 출간</ModalDate>
       <StWriteBtn onClick={postAddBooks}>독서 시작</StWriteBtn>
     </>
   );
