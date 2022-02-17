@@ -1,3 +1,6 @@
+import useSWR from "swr";
+
+import { BookcaseInfo } from "../../pages/Bookcase";
 import { KAKAOParams, PatchBody, PostBody } from "../dataType";
 import { client, KAKAO } from ".";
 
@@ -46,3 +49,26 @@ export const useLoginChecking = async (localToken: string | null) => {
 
   return false;
 };
+
+const bookcaseFetcher = async (key: string): Promise<BookcaseInfo[]> => {
+  const TOKEN = localStorage.getItem("booktez-token");
+  const _token = TOKEN ? TOKEN : "";
+
+  const {
+    data: {
+      data: { books },
+    },
+  } = await getData(key, _token);
+
+  return books;
+};
+
+export function useGetBookInfo(key: string) {
+  const { data, error } = useSWR(key, bookcaseFetcher);
+
+  return {
+    bookcaseInfo: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+}

@@ -17,6 +17,7 @@
     "react-scripts": "^5.0.0",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
+    "swr": "^1.2.1",
     "typescript": "^4.5.4"
   },
   "scripts": {

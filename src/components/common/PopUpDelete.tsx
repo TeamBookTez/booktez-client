@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useSWRConfig } from "swr";
 
 import { ImgDeletePopUp } from "../../assets/images";
 import { deleteData } from "../../utils/lib/api";
@@ -8,10 +9,11 @@ import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapp
 interface PopUpDeleteProps {
   onPopUp: () => void;
   reviewId: number;
+  pathKey: string;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, reviewId } = props;
+  const { onPopUp, reviewId, pathKey } = props;
 
   const tempToken = localStorage.getItem("booktez-token");
   const token = tempToken ? tempToken : "";
@@ -19,11 +21,13 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const { mutate } = useSWRConfig();
+
   const handleDelete = async () => {
     try {
       await deleteData(`/review/${reviewId}`, token);
       onPopUp();
-      // reloadBookcase(); //리렌더링
+      mutate(pathKey);
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }
