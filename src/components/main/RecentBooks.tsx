@@ -25,26 +25,31 @@ export default function RecentBooks(props: RecentProps) {
 
   if (isLoading) {
     return <Loading />;
-  } else if (!bookcaseInfo || isError) {
-    return <Error404 />;
+  } else if (!bookcaseInfo || isDefault || isError) {
+    return (
+      <section>
+        <>
+          <StHeader>
+            <StHeading3>최근 작성한 북노트</StHeading3>
+          </StHeader>
+          <StBookWrapper isdefault={true}>
+            <Empty />
+          </StBookWrapper>
+        </>
+      </section>
+    );
   } else {
     return (
       <section>
         <>
           <StHeader>
             <StHeading3>최근 작성한 북노트</StHeading3>
-            {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
+            <StLink to="/main/bookcase">전체보기</StLink>
           </StHeader>
-          <StBookWrapper isdefault={isDefault}>
-            {!isDefault ? (
-              bookcaseInfo
-                .slice(0, 5)
-                .map((tempInfo, idx) => (
-                  <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
-                ))
-            ) : (
-              <Empty />
-            )}
+          <StBookWrapper isdefault={false}>
+            {bookcaseInfo.slice(0, 5).map((tempInfo, idx) => (
+              <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
+            ))}
           </StBookWrapper>
         </>
       </section>
