@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { isLoginState } from "../../utils/atoms";
 import { useGetBookInfo } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
 import { Loading } from "../common";
 
 export default function RecentBooks() {
-  const isLogin = useRecoilValue(isLoginState);
   const [isFulFilled, setIsFulFilled] = useState<boolean>(false);
 
   const { bookcaseInfo, isLoading, isError } = useGetBookInfo("/book");
@@ -38,9 +35,7 @@ export default function RecentBooks() {
               bookcaseInfo &&
               bookcaseInfo
                 .slice(0, 5)
-                .map((tempInfo, idx) => (
-                  <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
-                ))
+                .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} pathKey="/book" />)
             ) : (
               <Empty />
             )}
