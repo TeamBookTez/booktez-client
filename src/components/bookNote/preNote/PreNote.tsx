@@ -53,7 +53,7 @@ export default function PreNote() {
 
   const navigate = useNavigate();
 
-  const localNick = sessionStorage.getItem("booktez-nickname");
+  const localNick = localStorage.getItem("booktez-nickname");
   const nickname = isLogin && localNick ? localNick : "익명의 독서가";
 
   const handleChangeReview = (key: string, value: string | string[] | number): void => {
