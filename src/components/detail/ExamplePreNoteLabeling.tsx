@@ -22,7 +22,7 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
 
   const navigate = useNavigate();
 
-  const nickname = localStorage.getItem("booktez-nickname");
+  const NICKNAME = localStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
@@ -43,7 +43,7 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
     <StExampleWrapper>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        {isLogin ? `${NICKNAME} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
         <StepUp onToggleModal={() => handleToggleModal(1)} />
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>

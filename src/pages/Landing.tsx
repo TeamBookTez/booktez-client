@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { Loading } from "../components/common";
 import {
   LandingFive,
   LandingFooter,
@@ -11,43 +13,40 @@ import {
   LandingThree,
   LandingTwo,
 } from "../components/landing";
-import { getData } from "../utils/lib/api";
+import { isLoginState } from "../utils/atoms";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (status === 200) {
-        if (data.data.isLogin === true) {
-          return navigate("/main");
-        }
-      }
-    } catch (err) {
-      return;
-    }
-  };
+  const { isLogin, isLoginLoading } = useCheckLoginState();
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    getLogin("/auth/check", localToken);
-  }, []);
+    if (isLogin) {
+      setIsLogin(true);
+      navigate("/main");
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
 
   return (
     <>
-      <LandingHeader />
-      <StMain>
-        <LandingOne />
-        <LandingTwo />
-        <LandingThree />
-        <LandingFour />
-        <LandingFive />
-      </StMain>
-      <LandingFooter />
+      {isLoginLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <LandingHeader />
+          <StMain>
+            <LandingOne />
+            <LandingTwo />
+            <LandingThree />
+            <LandingFour />
+            <LandingFive />
+          </StMain>
+          <LandingFooter />
+        </>
+      )}
     </>
   );
 }

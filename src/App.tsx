@@ -1,3 +1,4 @@
+import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 
 import Router from "./components/Router";
@@ -6,10 +7,12 @@ import theme from "./styles/theme";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Router />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Router />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 

@@ -21,5 +21,6 @@ const StLoadingWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  border-radius: 2rem;
   background-color: white;
 `;
