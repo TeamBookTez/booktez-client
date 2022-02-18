@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import { BookcaseInfo } from "../pages/Bookcase";
 import { isLoginState } from "./atoms";
 import { PeriNoteData, PreNoteData } from "./dataType";
 import { client } from "./lib";
@@ -10,47 +9,6 @@ import { getData } from "./lib/api";
 
 const _token = localStorage.getItem("booktez-token");
 const userToken = _token ? _token : "";
-
-export const useGetBookcase = (key: string) => {
-  const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
-
-  useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-    getBookcase();
-  }, [isLogin]);
-
-  const getBookcase = async () => {
-    if (!isLogin) {
-      setIsLoading(false);
-
-      return { bookcaseInfo, isLoading, getBookcase };
-    }
-
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, userToken);
-
-      books.forEach((book: BookcaseInfo) => {
-        setBookcaseInfo((currentBook) => [...currentBook, book]);
-      });
-
-      setIsLoading(false);
-    } catch (err) {
-      setIsLoading(false);
-    }
-  };
-
-  return { bookcaseInfo, isLoading, getBookcase };
-};
 
 export function useCheckLoginState() {
   const [isLoginLoading, setIsLoginLoading] = useState<boolean>(true);
