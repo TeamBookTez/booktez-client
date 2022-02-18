@@ -22,16 +22,16 @@ export default function LastStep() {
   const addBookReview = async () => {
     const tempToken = localStorage.getItem("booktez-token");
     const TOKEN = tempToken ? tempToken : "";
-    const tempBookData = localStorage.getItem("booktez-bookData");
+    const tempBookData = sessionStorage.getItem("booktez-bookData");
     const bookData = tempBookData ? JSON.parse(tempBookData) : null;
 
-    const localReviewData = localStorage.getItem("booktez-reviewData");
+    const localReviewData = sessionStorage.getItem("booktez-reviewData");
     const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
 
     const { data } = await postData("/book", bookData, TOKEN);
-    const reviewId = data.data.isLogin.reviewId;
+    const reviewId = data.data.reviewId;
 
-    await patchData(TOKEN, `/review/before/${reviewId}`, {
+    await patchData(TOKEN, `/review/${reviewId}/pre`, {
       ...reviewData,
       questionList: [""],
       reviewSt: 2,
@@ -41,8 +41,8 @@ export default function LastStep() {
   const goNextStep = () => {
     setIsLoading(true);
     addBookReview();
-    localStorage.removeItem("booktez-bookData");
-    localStorage.removeItem("booktez-reviewData");
+    sessionStorage.removeItem("booktez-bookData");
+    sessionStorage.removeItem("booktez-reviewData");
     setIsLoading(false);
 
     handleIsAniTime(true);

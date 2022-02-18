@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { useGetBookInfo } from "../../utils/lib/api";
-import { Error404, Loading } from "../common";
+import { Loading } from "../common";
 import { AddBookCard, BookCard } from ".";
 import Empty from "./cardSection/Empty";
 
@@ -36,9 +36,7 @@ export default function Cards(props: CardsProps) {
 
   if (isLoading) {
     return <Loading />;
-  } else if (!bookcaseInfo || isError) {
-    return <Error404 />;
-  } else if (bookcaseInfo.length === 0) {
+  } else if (!bookcaseInfo || isError || bookcaseInfo.length === 0) {
     return (
       <StDefaultSection>
         <Empty />

@@ -53,7 +53,7 @@ export default function PreNote() {
 
   const navigate = useNavigate();
 
-  const localNick = localStorage.getItem("booktez-nickname");
+  const localNick = sessionStorage.getItem("booktez-nickname");
   const nickname = isLogin && localNick ? localNick : "익명의 독서가";
 
   const handleChangeReview = (key: string, value: string | string[] | number): void => {
@@ -107,7 +107,7 @@ export default function PreNote() {
   };
 
   const handleGoSignup = () => {
-    localStorage.setItem("booktez-reviewData", JSON.stringify({ answerOne, answerTwo }));
+    sessionStorage.setItem("booktez-reviewData", JSON.stringify({ answerOne, answerTwo }));
     navigate("/signup", { state: "rightpath" });
   };
 
@@ -139,8 +139,6 @@ export default function PreNote() {
 
   if (isLoading) {
     return <Loading />;
-  } else if (isError) {
-    return <Error404 />;
   } else {
     return (
       <>

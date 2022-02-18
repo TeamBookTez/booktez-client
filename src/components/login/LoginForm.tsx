@@ -30,7 +30,7 @@ export default function LoginForm() {
       const resData = res.data.data;
 
       localStorage.setItem("booktez-token", resData.token);
-      localStorage.setItem("booktez-nickname", resData.nickname);
+      sessionStorage.setItem("booktez-nickname", resData.nickname);
 
       nav("/main");
       // 메인에서 로그인 온 경우에는 메인으로,
