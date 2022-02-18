@@ -52,7 +52,7 @@ export default function ShowModal(props: ShowModalProps) {
       });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        console.log(err.response);
+        return;
       }
     }
   };

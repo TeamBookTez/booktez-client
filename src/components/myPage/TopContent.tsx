@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useSWRConfig } from "swr";
 
 import { UserInfo } from "../../pages/MyPage";
 import { StLoginLink } from "../common/MainHeader";
@@ -17,9 +18,12 @@ export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
   const { userInfo, isLogin, onImageChange, onLogout } = props;
 
+  const { mutate } = useSWRConfig();
+
   const handleLogout = () => {
     localStorage.removeItem("booktez-token");
     sessionStorage.removeItem("booktez-nickname");
+    mutate("/book");
     onLogout();
     navigate("/main");
   };

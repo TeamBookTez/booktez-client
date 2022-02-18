@@ -34,6 +34,9 @@ const bookcaseFetcher = async (key: string): Promise<BookcaseInfo[]> => {
   const TOKEN = localStorage.getItem("booktez-token");
   const _token = TOKEN ? TOKEN : "";
 
+  // token이 없으면 요청하지 않음
+  if (!_token) return [];
+
   const {
     data: {
       data: { books },
