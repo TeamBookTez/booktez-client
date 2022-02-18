@@ -1,19 +1,21 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { IcEditProfile } from "../../assets/icons";
 import { ImgMypageBanner, ImgUser } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
+import { isLoginState } from "../../utils/atoms";
 
 interface TopBannerProps {
-  isLogin: boolean;
   userInfo: UserInfo;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function TopBanner(props: TopBannerProps) {
-  const { isLogin, userInfo, onImageChange } = props;
-
+  const { userInfo, onImageChange } = props;
   const { img, nickname, email } = userInfo;
+
+  const isLogin = useRecoilValue(isLoginState);
 
   return (
     <StBanner>

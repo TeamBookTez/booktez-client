@@ -1,16 +1,20 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { ImgReadNum } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
+import { isLoginState } from "../../utils/atoms";
 import { BookComment } from ".";
 
 interface BottomContentProps {
   userInfo: UserInfo;
-  isLogin: boolean;
 }
+
 export default function BottomContent(props: BottomContentProps) {
-  const { userInfo, isLogin } = props;
+  const { userInfo } = props;
   const { reviewCount } = userInfo;
+
+  const isLogin = useRecoilValue(isLoginState);
 
   return (
     <StWrapper>

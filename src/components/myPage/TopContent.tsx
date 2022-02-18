@@ -1,23 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useSWRConfig } from "swr";
 
 import { UserInfo } from "../../pages/MyPage";
+import { isLoginState } from "../../utils/atoms";
 import { StLoginLink } from "../common/MainHeader";
 import { Button } from "../common/styled/Button";
 import { TopBanner } from ".";
 
 interface TopContentProps {
   userInfo: UserInfo;
-  isLogin: boolean;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onLogout: () => void;
 }
 
 export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
-  const { userInfo, isLogin, onImageChange, onLogout } = props;
+  const { userInfo, onImageChange, onLogout } = props;
 
+  const isLogin = useRecoilValue(isLoginState);
   const { mutate } = useSWRConfig();
 
   const handleLogout = () => {
@@ -30,7 +32,7 @@ export default function TopContent(props: TopContentProps) {
 
   return (
     <StWrapper>
-      <TopBanner isLogin={isLogin} userInfo={userInfo} onImageChange={onImageChange} />
+      <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
       {isLogin ? (
         <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
       ) : (

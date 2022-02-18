@@ -88,8 +88,8 @@ export default function MyPage() {
       ) : (
         <>
           <MainHeader>마이페이지</MainHeader>
-          <TopContent userInfo={userInfo} onImageChange={handleImageChange} isLogin={isLogin} onLogout={handleLogout} />
-          <BottomContent userInfo={userInfo} isLogin={isLogin} />
+          <TopContent userInfo={userInfo} onImageChange={handleImageChange} onLogout={handleLogout} />
+          <BottomContent userInfo={userInfo} />
         </>
       )}
     </>
