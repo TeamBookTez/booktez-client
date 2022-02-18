@@ -48,7 +48,7 @@ export default function ShowModal(props: ShowModalProps) {
       }
 
       nav("/book-note", {
-        state: { isLogin: !!userToken, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" },
+        state: { isLogin: !!TOKEN, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" },
       });
     } catch (err) {
       if (axios.isAxiosError(err)) {
