@@ -20,18 +20,18 @@ export default function LastStep() {
   }, []);
 
   const addBookReview = async () => {
-    const tempToken = localStorage.getItem("booktez-token");
-    const TOKEN = tempToken ? tempToken : "";
+    const _token = localStorage.getItem("booktez-token");
+    const userToken = _token ? _token : "";
     const tempBookData = sessionStorage.getItem("booktez-bookData");
     const bookData = tempBookData ? JSON.parse(tempBookData) : null;
 
     const localReviewData = sessionStorage.getItem("booktez-reviewData");
     const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
 
-    const { data } = await postData("/book", bookData, TOKEN);
+    const { data } = await postData("/book", bookData, userToken);
     const reviewId = data.data.reviewId;
 
-    await patchData(TOKEN, `/review/${reviewId}/pre`, {
+    await patchData(userToken, `/review/${reviewId}/pre`, {
       ...reviewData,
       questionList: [""],
       reviewSt: 2,

@@ -8,13 +8,13 @@ import { PeriNoteData, PreNoteData } from "./dataType";
 import { client } from "./lib";
 import { getData } from "./lib/api";
 
+const _token = localStorage.getItem("booktez-token");
+const userToken = _token ? _token : "";
+
 export const useGetBookcase = (key: string) => {
   const [bookcaseInfo, setBookcaseInfo] = useState<BookcaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
-
-  const tempToken = localStorage.getItem("booktez-token");
-  const TOKEN = tempToken ? tempToken : "";
 
   useEffect(() => {
     if (isLogin) {
@@ -37,7 +37,7 @@ export const useGetBookcase = (key: string) => {
         data: {
           data: { books },
         },
-      } = await getData(key, TOKEN);
+      } = await getData(key, userToken);
 
       books.forEach((book: BookcaseInfo) => {
         setBookcaseInfo((currentBook) => [...currentBook, book]);
@@ -56,8 +56,6 @@ export function useCheckLoginState() {
   const [isLoginLoading, setIsLoginLoading] = useState<boolean>(true);
   const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const TOKEN = tempToken ? tempToken : "";
   const API_PATH = "/auth/check";
 
   useEffect(() => {
@@ -66,7 +64,7 @@ export function useCheckLoginState() {
 
   const checkLoginState = async () => {
     try {
-      const { data } = await getData(API_PATH, TOKEN);
+      const { data } = await getData(API_PATH, userToken);
       const status = data.status;
 
       if (status === 200) {

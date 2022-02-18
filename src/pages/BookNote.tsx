@@ -49,8 +49,8 @@ export default function BookNote() {
   const isLoginState = state as IsLoginState;
   const { isLogin, reviewId, title, fromUrl } = isLoginState;
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
   const [isSave, setIsSave] = useState<boolean>(false);
 

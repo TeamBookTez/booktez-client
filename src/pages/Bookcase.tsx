@@ -16,15 +16,15 @@ export default function Bookcase() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [navIndex, setNavIndex] = useState<number>(0);
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const localToken = TOKEN ? TOKEN : "";
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
   const handleChangeNavIndex = (idx: number) => {
     setNavIndex(idx);
   };
 
   useEffect(() => {
-    getLogin("/auth/check", localToken);
+    getLogin("/auth/check", userToken);
   }, []);
 
   const getLogin = async (key: string, token: string) => {
@@ -32,7 +32,7 @@ export default function Bookcase() {
       const { data } = await getData(key, token);
       const status = data.status;
 
-      if (!localToken) {
+      if (!userToken) {
         setIsLogin(false);
       }
       if (!(status === 200)) {

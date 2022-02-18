@@ -31,17 +31,17 @@ export const deleteData = (key: string, token: string | null) => {
 };
 
 const bookcaseFetcher = async (key: string): Promise<BookcaseInfo[]> => {
-  const TOKEN = localStorage.getItem("booktez-token");
-  const _token = TOKEN ? TOKEN : "";
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
   // token이 없으면 요청하지 않음
-  if (!_token) return [];
+  if (!userToken) return [];
 
   const {
     data: {
       data: { books },
     },
-  } = await getData(key, _token);
+  } = await getData(key, userToken);
 
   return books;
 };

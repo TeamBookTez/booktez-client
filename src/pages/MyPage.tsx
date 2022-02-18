@@ -26,8 +26,8 @@ export default function MyPage() {
   const setIsLogin = useSetRecoilState(isLoginState);
   const { isLogin, isLoginLoading } = useCheckLoginState();
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const TOKEN = tempToken ? tempToken : "";
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
   useEffect(() => {
     if (isLogin) {
@@ -38,7 +38,7 @@ export default function MyPage() {
   }, [isLogin]);
 
   useEffect(() => {
-    getInfo("/user/myInfo", TOKEN);
+    getInfo("/user/myInfo", userToken);
   }, [tempImg]);
 
   const handleLogout = () => {
@@ -70,7 +70,7 @@ export default function MyPage() {
     formData.append("img", imgFile);
 
     try {
-      const { data } = await patchData(TOKEN, "/user/img", formData);
+      const { data } = await patchData(userToken, "/user/img", formData);
 
       if (data.success) {
         setTempImg(data.img);
