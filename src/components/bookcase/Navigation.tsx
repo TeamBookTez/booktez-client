@@ -1,13 +1,17 @@
 import { useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-export default function Navigation() {
+interface NavigationProps {
+  navIndex: number;
+  onChangeNavIndex: (idx: number) => void;
+}
+
+export default function Navigation(props: NavigationProps) {
+  const { navIndex, onChangeNavIndex } = props;
+
   const { scrollY } = useViewportScroll();
   const [isScroll, setIsScroll] = useState<boolean>(false);
-  const [navIndex, setNavIndex] = useState<number>(0);
-  const location = useLocation();
   const MAIN_HEADER_HEIGHT = 109;
 
   useEffect(() => {
@@ -24,38 +28,13 @@ export default function Navigation() {
     };
   }, [scrollY]);
 
-  useEffect(() => {
-    switch (location.pathname) {
-      case "/main/bookcase":
-        setNavIndex(0);
-        break;
-      case "/main/bookcase/pre":
-        setNavIndex(1);
-        break;
-      case "/main/bookcase/peri":
-        setNavIndex(2);
-        break;
-      case "/main/bookcase/post":
-        setNavIndex(3);
-        break;
-    }
-  }, [location.pathname]);
-
   return (
     <StNav isscroll={isScroll}>
       <StUl>
-        <StList>
-          <StLink to="/main/bookcase">전체</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/pre">독서 전</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/peri">독서 중</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/post">독서 완료</StLink>
-        </StList>
+        <StList onClick={() => onChangeNavIndex(0)}>전체</StList>
+        <StList onClick={() => onChangeNavIndex(1)}>독서 전</StList>
+        <StList onClick={() => onChangeNavIndex(2)}>독서 중</StList>
+        <StList onClick={() => onChangeNavIndex(3)}>독서 완료</StList>
       </StUl>
       <StBottomLine>
         <StOrangLine index={navIndex} />
@@ -89,9 +68,7 @@ const StUl = styled.ul`
   display: flex;
 `;
 
-const StList = styled.li``;
-
-const StLink = styled(Link)`
+const StList = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -47,7 +47,7 @@ export default function ShowModal(props: ShowModalProps) {
       }
       const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
+      nav("/book-note", { state: { ...stateData, title, fromUrl: "/main/add-book" } });
     } catch (err) {
       return;
     }

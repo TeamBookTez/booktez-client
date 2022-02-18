@@ -1,17 +1,44 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
+import { useGetBookInfo } from "../../utils/lib/api";
+import { Error404, Loading } from "../common";
 import { AddBookCard, BookCard } from ".";
 import Empty from "./cardSection/Empty";
 
 interface CardsProps {
-  bookcaseInfo: BookcaseInfo[];
-  handleBookDelete: () => void;
+  isLogin: boolean;
+  navIndex: number;
 }
-export default function Cards(props: CardsProps) {
-  const { bookcaseInfo, handleBookDelete } = props;
 
-  if (bookcaseInfo.length === 0) {
+export default function Cards(props: CardsProps) {
+  const { isLogin, navIndex } = props;
+  const [pathKey, setPathKey] = useState<string>("");
+
+  useEffect(() => {
+    switch (navIndex) {
+      case 1:
+        setPathKey("/book/pre");
+        break;
+      case 2:
+        setPathKey("/book/peri");
+        break;
+      case 3:
+        setPathKey("/book/post");
+        break;
+      default:
+        setPathKey("/book");
+    }
+  }, [navIndex]);
+
+  const { bookcaseInfo, isLoading, isError } = useGetBookInfo(pathKey);
+
+  if (isLoading) {
+    return <Loading />;
+  } else if (!bookcaseInfo || isError) {
+    return <Error404 />;
+  } else if (bookcaseInfo.length === 0) {
     return (
       <StDefaultSection>
         <Empty />
@@ -22,7 +49,7 @@ export default function Cards(props: CardsProps) {
       <StSection>
         <AddBookCard />
         {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
-          <BookCard key={idx} bookcaseInfo={bookcaseInfo} handleBookDelete={handleBookDelete} />
+          <BookCard key={idx} bookcaseInfo={bookcaseInfo} isLogin={isLogin} pathKey={pathKey} />
         ))}
       </StSection>
     );

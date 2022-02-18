@@ -2,53 +2,34 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { BookcaseInfo } from "../../pages/Bookcase";
-import { getData } from "../../utils/lib/api";
+import { useGetBookInfo } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
-import { Loading } from "../common";
+import { Error404, Loading } from "../common";
 
-export default function RecentBooks() {
-  const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
+interface RecentProps {
+  isLogin: boolean;
+}
+
+export default function RecentBooks(props: RecentProps) {
+  const { isLogin } = props;
   const [isDefault, setIsDefault] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const TOKEN = tempToken ? tempToken : "";
+  const { bookcaseInfo, isLoading, isError } = useGetBookInfo("/book");
 
-  const getBookRecent = async (key: string, token: string) => {
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, token);
-
-      setBooksRecent(books);
-    } catch (err) {
-      return setIsLoading(false);
+  useEffect(() => {
+    if (bookcaseInfo) {
+      setIsDefault(!(bookcaseInfo.length > 0));
     }
-    setIsLoading(false);
-  };
+  }, [bookcaseInfo]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getBookRecent("/book", TOKEN);
-  }, []);
-
-  const handleBookDelete = () => {
-    getBookRecent("/book", TOKEN);
-  };
-
-  useEffect(() => {
-    setIsDefault(!(booksRecent.length > 0));
-  }, [booksRecent]);
-
-  return (
-    <section>
-      {isLoading ? (
-        <Loading />
-      ) : (
+  if (isLoading) {
+    return <Loading />;
+  } else if (!bookcaseInfo || isError) {
+    return <Error404 />;
+  } else {
+    return (
+      <section>
         <>
           <StHeader>
             <StHeading3>최근 작성한 북노트</StHeading3>
@@ -56,19 +37,19 @@ export default function RecentBooks() {
           </StHeader>
           <StBookWrapper isdefault={isDefault}>
             {!isDefault ? (
-              booksRecent
+              bookcaseInfo
                 .slice(0, 5)
                 .map((tempInfo, idx) => (
-                  <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} />
+                  <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
                 ))
             ) : (
               <Empty />
             )}
           </StBookWrapper>
         </>
-      )}
-    </section>
-  );
+      </section>
+    );
+  }
 }
 
 const StHeader = styled.header`

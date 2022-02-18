@@ -1,18 +1,19 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useSWRConfig } from "swr";
 
-import { ImgdeletePopUp } from "../../assets/images";
+import { ImgDeletePopUp } from "../../assets/images";
 import { deleteData } from "../../utils/lib/api";
-import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrpper, StQuestion } from "./styled/PopUp";
+import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
 interface PopUpDeleteProps {
   onPopUp: () => void;
   reviewId: number;
-  handleBookDelete: () => void;
+  pathKey: string;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, reviewId, handleBookDelete } = props;
+  const { onPopUp, reviewId, pathKey } = props;
 
   const tempToken = localStorage.getItem("booktez-token");
   const TOKEN = tempToken ? tempToken : "";
@@ -20,11 +21,13 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const { mutate } = useSWRConfig();
+
   const handleDelete = async () => {
     try {
       await deleteData(`/review/${reviewId}`, TOKEN);
       onPopUp();
-      handleBookDelete(); //리렌더링
+      mutate(pathKey);
       if (pathname === "/detail-book-note") {
         navigate("/main/bookcase");
       }
@@ -34,9 +37,9 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   };
 
   return (
-    <StPopUpWrpper>
+    <StPopUpWrapper>
       <StPopUp>
-        <StImg src={ImgdeletePopUp} alt="독서 전 단계 완료" />
+        <StImg src={ImgDeletePopUp} alt="독서 전 단계 완료" />
         <StQuestion>삭제하시겠어요?</StQuestion>
         <StDetail>삭제한 기록은 복구가 어려워요!</StDetail>
         <StBtnWrapper>
@@ -48,7 +51,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
           </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>
-    </StPopUpWrpper>
+    </StPopUpWrapper>
   );
 }
 

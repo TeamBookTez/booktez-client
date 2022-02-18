@@ -7,14 +7,29 @@ import { Loading, PopUpDelete } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
-import { GetBody } from "../utils/dataType";
+import { PeriNoteTreeNode } from "../utils/dataType";
 import { getData } from "../utils/lib/api";
 import { IsLoginState } from "./BookNote";
 
+interface ReviewData {
+  bookTitle: string;
+  answerOne: string;
+  answerTwo: string;
+  answerThree: PeriNoteTreeNode;
+  questionList: string[];
+}
+
 export default function DetailBookNote() {
-  const [reviewData, setReviewData] = useState<GetBody>();
+  const [reviewData, setReviewData] = useState<ReviewData>({
+    bookTitle: "",
+    answerOne: "",
+    answerTwo: "",
+    answerThree: { type: "Root", content: "root", children: [] },
+    questionList: [""],
+  });
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const { state } = useLocation();
 
   const isLoginState = state as IsLoginState;
@@ -46,10 +61,6 @@ export default function DetailBookNote() {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
-  const handleBookDelete = () => {
-    getReview(`review/${reviewId}`, TOKEN); //리렌더링
-  };
-
   return (
     <>
       {isLoading ? (
@@ -69,7 +80,9 @@ export default function DetailBookNote() {
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
                 onClick={() =>
-                  navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post", isLogin } })
+                  navigate("/book-note/peri", {
+                    state: { reviewId, title: reviewData?.bookTitle, fromUrl, isLogin },
+                  })
                 }
               />
             </StBtnWrapper>
@@ -83,15 +96,11 @@ export default function DetailBookNote() {
             </DetailArticleWrapper>
             <StMarginTop>
               <DetailArticleWrapper title="독서 중 단계">
-                <ExamplePeriNote answerThree={reviewData?.answerThree} />
+                {reviewData?.answerThree && <ExamplePeriNote answerThree={reviewData.answerThree} />}
               </DetailArticleWrapper>
             </StMarginTop>
           </StNoteModalWrapper>
-          {isPopUp ? (
-            <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} />
-          ) : (
-            <></>
-          )}
+          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} pathKey="/book" /> : <></>}
         </>
       )}
     </>
