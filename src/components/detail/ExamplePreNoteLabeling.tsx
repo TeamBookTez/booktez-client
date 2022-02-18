@@ -1,8 +1,10 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
+import { isLoginState } from "../../utils/atoms";
 import { StepUp } from "../bookNote";
 import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
 import OneCaseModal from "../bookNote/stepUp/OneCaseModal";
@@ -14,13 +16,13 @@ interface ExamplePreNoteLabelingProps {
   answerOne: string | undefined;
   answerTwo: string | undefined;
   questionList: string[] | undefined;
-  isLogin: boolean;
 }
 
 export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProps) {
-  const { answerOne, answerTwo, questionList, isLogin } = props;
+  const { answerOne, answerTwo, questionList } = props;
 
   const navigate = useNavigate();
+  const isLogin = useRecoilValue(isLoginState);
 
   const userNickname = localStorage.getItem("booktez-nickname");
 
