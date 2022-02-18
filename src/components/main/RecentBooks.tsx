@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -12,8 +13,17 @@ interface RecentProps {
 
 export default function RecentBooks(props: RecentProps) {
   const { isLogin } = props;
+  const [isFulFilled, setIsFulFilled] = useState<boolean>(false);
 
   const { bookcaseInfo, isLoading, isError } = useGetBookInfo("/book");
+
+  useEffect(() => {
+    if (bookcaseInfo && bookcaseInfo.length && !isError) {
+      setIsFulFilled(true);
+    } else {
+      setIsFulFilled(false);
+    }
+  }, [bookcaseInfo]);
 
   if (isLoading) {
     return <Loading />;
@@ -23,10 +33,10 @@ export default function RecentBooks(props: RecentProps) {
         <>
           <StHeader>
             <StHeading3>최근 작성한 북노트</StHeading3>
-            {(!bookcaseInfo || isError) && <StLink to="/main/bookcase">전체보기</StLink>}
+            {isFulFilled && <StLink to="/main/bookcase">전체보기</StLink>}
           </StHeader>
-          <StBookWrapper isdefault={!bookcaseInfo}>
-            {!bookcaseInfo || isError ? (
+          <StBookWrapper isdefault={!isFulFilled}>
+            {isFulFilled ? (
               bookcaseInfo &&
               bookcaseInfo
                 .slice(0, 5)
