@@ -53,8 +53,7 @@ export default function PreNote() {
 
   const navigate = useNavigate();
 
-  const localNick = localStorage.getItem("booktez-nickname");
-  const nickname = isLogin && localNick ? localNick : "익명의 독서가";
+  const userNickname = localStorage.getItem("booktez-nickname");
 
   const handleChangeReview = (key: string, value: string | string[] | number): void => {
     setData((currentNote) => {
@@ -146,7 +145,7 @@ export default function PreNote() {
           <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
           <StFormWrapper>
             <PreNoteForm
-              question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
+              question={`${isLogin ? `${userNickname} ` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?`}
               idx={1}
               onOpenDrawer={handleOpenDrawer}>
               <StTextarea
