@@ -12,12 +12,12 @@ export interface BookcaseInfo {
   title: string;
 }
 
-const TOKEN = localStorage.getItem("booktez-token");
-const localToken = TOKEN ? TOKEN : "";
-
 export default function Bookcase() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [navIndex, setNavIndex] = useState<number>(0);
+
+  const TOKEN = localStorage.getItem("booktez-token");
+  const localToken = TOKEN ? TOKEN : "";
 
   const handleChangeNavIndex = (idx: number) => {
     setNavIndex(idx);

@@ -7,7 +7,7 @@ import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { PeriNoteTreeNode } from "../utils/dataType";
-import { patchBookNote } from "../utils/lib/bookNote";
+import { patchBookNote } from "../utils/useHooks";
 
 export interface IsLoginState {
   isLogin: boolean;

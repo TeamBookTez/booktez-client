@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
 import { BottomContent, TopContent } from "../components/myPage";
+import { isLoginState } from "../utils/atoms";
 import { getData, patchData } from "../utils/lib/api";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export interface UserInfo {
   email: string;
@@ -18,22 +21,29 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-  const [isLogin, setIsLogin] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // 이미지 patch 시에 렌더링이 잘 되지 않는 문제를 이미지를 위한 state를 만들고
-  // useEffect로 getInfo를 호출해주었다.
-  const [tempImg, setTempImg] = useState<string>("");
+  const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
+  const setIsLogin = useSetRecoilState(isLoginState);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
 
   const tempToken = localStorage.getItem("booktez-token");
-  const localToken = tempToken ? tempToken : "";
+  const TOKEN = tempToken ? tempToken : "";
+
+  useEffect(() => {
+    if (isLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
+
+  useEffect(() => {
+    getInfo("/user/myInfo", TOKEN);
+  }, [tempImg]);
 
   const handleLogout = () => {
     setIsLogin(false);
   };
-
-  useEffect(() => {
-    getInfo("/user/myInfo", localToken);
-  }, [tempImg]);
 
   const getInfo = async (key: string, token: string) => {
     try {
@@ -52,30 +62,28 @@ export default function MyPage() {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isLogin === false) return;
+    if (e.target.files === null) return;
 
+    const imgFile = e.target.files[0];
     const formData = new FormData();
 
-    if (e.target.files !== null) {
-      const imgFile = e.target.files[0];
+    formData.append("img", imgFile);
 
-      formData.append("img", imgFile);
+    try {
+      const { data } = await patchData(TOKEN, "/user/img", formData);
 
-      try {
-        const { data } = await patchData(localToken, "/user/img", formData);
-
-        if (data.success) {
-          setTempImg(data.img);
-          setUserInfo((current) => ({ ...current, img: data.img }));
-        }
-      } catch (err) {
-        return;
+      if (data.success) {
+        setTempImg(data.img);
+        setUserInfo((current) => ({ ...current, img: data.img }));
       }
+    } catch (err) {
+      return;
     }
   };
 
   return (
     <>
-      {isLogin && isLoading ? (
+      {isLoading && isLoginLoading ? (
         <Loading />
       ) : (
         <>
