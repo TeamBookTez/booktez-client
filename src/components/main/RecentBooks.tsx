@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -13,43 +12,30 @@ interface RecentProps {
 
 export default function RecentBooks(props: RecentProps) {
   const { isLogin } = props;
-  const [isDefault, setIsDefault] = useState<boolean>(true);
 
   const { bookcaseInfo, isLoading, isError } = useGetBookInfo("/book");
 
-  useEffect(() => {
-    if (bookcaseInfo) {
-      setIsDefault(!(bookcaseInfo.length > 0));
-    }
-  }, [bookcaseInfo]);
-
   if (isLoading) {
     return <Loading />;
-  } else if (!bookcaseInfo || isDefault || isError) {
-    return (
-      <section>
-        <>
-          <StHeader>
-            <StHeading3>최근 작성한 북노트</StHeading3>
-          </StHeader>
-          <StBookWrapper isdefault={true}>
-            <Empty />
-          </StBookWrapper>
-        </>
-      </section>
-    );
   } else {
     return (
       <section>
         <>
           <StHeader>
             <StHeading3>최근 작성한 북노트</StHeading3>
-            <StLink to="/main/bookcase">전체보기</StLink>
+            {(!bookcaseInfo || isError) && <StLink to="/main/bookcase">전체보기</StLink>}
           </StHeader>
-          <StBookWrapper isdefault={false}>
-            {bookcaseInfo.slice(0, 5).map((tempInfo, idx) => (
-              <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
-            ))}
+          <StBookWrapper isdefault={!bookcaseInfo}>
+            {!bookcaseInfo || isError ? (
+              bookcaseInfo &&
+              bookcaseInfo
+                .slice(0, 5)
+                .map((tempInfo, idx) => (
+                  <BookCard key={idx} bookcaseInfo={tempInfo} isLogin={isLogin} pathKey="/book" />
+                ))
+            ) : (
+              <Empty />
+            )}
           </StBookWrapper>
         </>
       </section>
