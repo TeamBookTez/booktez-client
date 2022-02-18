@@ -22,16 +22,16 @@ export default function ShowModal(props: ShowModalProps) {
 
   const bookData = { ...bookInfo, publicationDt, author: authors, translator: translators };
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const tempToken = localStorage.getItem("booktez-token");
+  const TOKEN = tempToken ? tempToken : "";
 
   const nav = useNavigate();
 
   const postAddBooks = async () => {
     try {
-      const { data } = await postData("/book", bookData, userToken);
+      const { data } = await postData("/book", bookData, TOKEN);
 
-      if (!userToken) {
+      if (!TOKEN) {
         const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
 
         sessionStorage.setItem(
@@ -48,7 +48,7 @@ export default function ShowModal(props: ShowModalProps) {
       }
 
       nav("/book-note", {
-        state: { isLogin: !!userToken, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" },
+        state: { isLogin: !!TOKEN, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" },
       });
     } catch (err) {
       if (axios.isAxiosError(err)) {

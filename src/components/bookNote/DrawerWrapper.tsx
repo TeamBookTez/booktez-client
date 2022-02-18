@@ -59,7 +59,7 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
           exit={{ transform: `translateX(${drawerWidth}rem)` }}
           idx={idx}>
           <StIcWrapper>
-            <IcLeftArrow onClick={() => onCloseDrawer(idx)} />
+            <StIcLeftArrow onClick={() => onCloseDrawer(idx)} />
           </StIcWrapper>
           {idx === 4 ? <StImg src={ImgDrawer} idx={idx} /> : <StImg src={ImgDrawerSmall} idx={idx} />}
           <StTitleWrapper>
@@ -72,11 +72,6 @@ export default function DrawerWrapper(props: DrawerWrapperProps) {
     </AnimatePresence>
   );
 }
-
-const StIcWrapper = styled.div`
-  text-align: left;
-  margin-bottom: 3.2rem;
-`;
 
 const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
   overflow-y: scroll;
@@ -106,6 +101,17 @@ const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
     height: 4.4rem;
 
     margin-bottom: 3.2rem;
+  }
+`;
+
+const StIcWrapper = styled.div`
+  text-align: left;
+  margin-bottom: 3.2rem;
+`;
+
+const StIcLeftArrow = styled(IcLeftArrow)`
+  &:hover {
+    cursor: pointer;
   }
 `;
 
