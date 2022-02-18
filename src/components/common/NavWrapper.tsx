@@ -63,7 +63,7 @@ const StSection = styled.section`
   left: 0;
 
   background-color: ${({ theme }) => theme.colors.gray100};
-  width: 17.5rem;
+  width: 17.5rem; //NAV_WRAPPER_WIDTH
   color: ${({ theme }) => theme.colors.white500};
 
   z-index: 10;

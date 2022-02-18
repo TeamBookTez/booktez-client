@@ -16,7 +16,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const { onPopUp, reviewId, pathKey } = props;
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const TOKEN = tempToken ? tempToken : "";
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -25,7 +25,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
 
   const handleDelete = async () => {
     try {
-      await deleteData(`/review/${reviewId}`, token);
+      await deleteData(`/review/${reviewId}`, TOKEN);
       onPopUp();
       mutate(pathKey);
       if (pathname === "/detail-book-note") {

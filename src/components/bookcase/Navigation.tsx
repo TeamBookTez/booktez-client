@@ -1,6 +1,6 @@
-import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { useEffect } from "react";
-import styled from "styled-components";
+import { useViewportScroll } from "framer-motion";
+import { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
 
 interface NavigationProps {
   navIndex: number;
@@ -10,26 +10,26 @@ interface NavigationProps {
 export default function Navigation(props: NavigationProps) {
   const { navIndex, onChangeNavIndex } = props;
 
-  const shadowingAni = useAnimation();
   const { scrollY } = useViewportScroll();
+  const [isScroll, setIsScroll] = useState<boolean>(false);
   const MAIN_HEADER_HEIGHT = 109;
 
   useEffect(() => {
     scrollY.onChange(() => {
       if (scrollY.get() > MAIN_HEADER_HEIGHT) {
-        shadowingAni.start({
-          boxShadow: "0rem 0.6rem 1rem rgba(0, 0, 0, 0.17)",
-        });
+        setIsScroll(true);
       } else {
-        shadowingAni.start({
-          boxShadow: "initial",
-        });
+        setIsScroll(false);
       }
     });
+
+    return () => {
+      scrollY.clearListeners();
+    };
   }, [scrollY]);
 
   return (
-    <StNav animate={shadowingAni} initial={{ boxShadow: "initial" }}>
+    <StNav isscroll={isScroll}>
       <StUl>
         <StList onClick={() => onChangeNavIndex(0)}>전체</StList>
         <StList onClick={() => onChangeNavIndex(1)}>독서 전</StList>
@@ -43,7 +43,7 @@ export default function Navigation(props: NavigationProps) {
   );
 }
 
-const StNav = styled(motion.nav)`
+const StNav = styled.nav<{ isscroll: boolean }>`
   position: sticky;
   top: 0;
 
@@ -53,6 +53,15 @@ const StNav = styled(motion.nav)`
   padding-left: 4rem;
 
   background-color: ${({ theme }) => theme.colors.white};
+
+  ${({ isscroll }) =>
+    isscroll
+      ? css`
+          box-shadow: 0rem 0.6rem 1rem rgba(0, 0, 0, 0.17);
+        `
+      : css`
+          box-shadow: 0;
+        `}
 `;
 
 const StUl = styled.ul`

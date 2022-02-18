@@ -31,11 +31,12 @@ export default function DetailBookNote() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { state } = useLocation();
+
   const isLoginState = state as IsLoginState;
   const { reviewId, isLogin, fromUrl } = isLoginState;
 
   const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const TOKEN = tempToken ? tempToken : "";
 
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ export default function DetailBookNote() {
   };
 
   useEffect(() => {
-    getReview(`review/${reviewId}`, token);
+    getReview(`review/${reviewId}`, TOKEN);
   }, []);
 
   const handlePopUp = () => {
@@ -62,7 +63,7 @@ export default function DetailBookNote() {
 
   return (
     <>
-      {isLogin && isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>

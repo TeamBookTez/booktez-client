@@ -17,15 +17,11 @@ export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
   const { userInfo, isLogin, onImageChange, onLogout } = props;
 
-  const handleMoveLogin = () => {
-    navigate("/login");
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("booktez-token");
     sessionStorage.removeItem("booktez-nickname");
-    navigate("/main");
     onLogout();
+    navigate("/main");
   };
 
   return (
@@ -34,7 +30,7 @@ export default function TopContent(props: TopContentProps) {
       {isLogin ? (
         <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
       ) : (
-        <StLoginButton type="button" onClick={handleMoveLogin}>
+        <StLoginButton type="button">
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginButton>
       )}
