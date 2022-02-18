@@ -24,7 +24,6 @@ export default function TopContent(props: TopContentProps) {
     localStorage.removeItem("booktez-token");
     sessionStorage.removeItem("booktez-nickname");
     mutate("/book");
-    navigate("/main");
     onLogout();
     navigate("/main");
   };
