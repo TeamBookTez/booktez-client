@@ -7,13 +7,12 @@ import { PeriNoteData, PreNoteData } from "./dataType";
 import { client } from "./lib";
 import { getData } from "./lib/api";
 
-const _token = localStorage.getItem("booktez-token");
-const userToken = _token ? _token : "";
-
 export function useCheckLoginState() {
   const [isLoginLoading, setIsLoginLoading] = useState<boolean>(true);
   const [isLogin, setIsLogin] = useRecoilState<boolean>(isLoginState);
 
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
   const API_PATH = "/auth/check";
 
   useEffect(() => {
