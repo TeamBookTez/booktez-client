@@ -14,15 +14,15 @@ interface BookState {
 
 interface CompleteProps {
   bookData: BookData;
-  isLoginState: BookState;
+  bookState: BookState;
 }
 
 export default function Complete(props: CompleteProps) {
   const navigate = useNavigate();
-  const { bookData, isLoginState } = props;
+  const { bookData, bookState } = props;
 
   const { author, publicationDt, thumbnail, title, translator } = bookData;
-  const { fromUrl } = isLoginState;
+  const { fromUrl } = bookState;
 
   return (
     <StModalWrapper>
@@ -48,7 +48,7 @@ export default function Complete(props: CompleteProps) {
           <StMainButton type="button" onClick={() => navigate("/main")}>
             메인으로
           </StMainButton>
-          <StCompleteButton type="button" onClick={() => navigate("/detail-book-note", { state: isLoginState })}>
+          <StCompleteButton type="button" onClick={() => navigate("/detail-book-note", { state: bookState })}>
             북노트 확인
           </StCompleteButton>
         </StButtonWrapper>

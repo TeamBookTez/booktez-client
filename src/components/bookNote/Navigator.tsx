@@ -6,25 +6,25 @@ import { BookState } from "../../pages/BookNote";
 interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
-  isLoginState: BookState;
+  bookState: BookState;
   isPrevented: boolean;
   isDrawerDefault: () => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isLoginState, isPrevented, isDrawerDefault } = props;
+  const { navIndex, onNav, bookState, isPrevented, isDrawerDefault } = props;
 
   const navigate = useNavigate();
 
   const goToPre = () => {
-    navigate("", { state: isLoginState });
+    navigate("", { state: bookState });
     onNav(0);
     isDrawerDefault();
   };
 
   const goToPeri = (isPrevented: boolean) => {
     if (!isPrevented) {
-      navigate("peri", { state: isLoginState });
+      navigate("peri", { state: bookState });
       onNav(1);
     }
     isDrawerDefault();

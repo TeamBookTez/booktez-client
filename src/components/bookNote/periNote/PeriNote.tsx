@@ -195,7 +195,7 @@ export default function PeriNote() {
             <PeriModal onToggleModal={handlePeriCarousel} />
           </StStepModalWrapper>
         )}
-        {openSubmitModal && <Complete bookData={bookData} isLoginState={{ isLogin, reviewId, fromUrl }} />}
+        {openSubmitModal && <Complete bookData={bookData} bookState={{ isLogin, reviewId, fromUrl }} />}
       </>
     );
   }

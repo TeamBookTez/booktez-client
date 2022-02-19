@@ -32,8 +32,8 @@ export default function DetailBookNote() {
 
   const { state } = useLocation();
 
-  const isLoginState = state as BookState;
-  const { reviewId, isLogin, fromUrl } = isLoginState;
+  const bookState = state as BookState;
+  const { reviewId, isLogin, fromUrl } = bookState;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";

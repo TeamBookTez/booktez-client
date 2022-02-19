@@ -46,8 +46,8 @@ export default function BookNote() {
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   // recoil로 관리했으면 하는 부분
-  const isLoginState = state as BookState;
-  const { isLogin, reviewId, title, fromUrl } = isLoginState;
+  const bookState = state as BookState;
+  const { isLogin, reviewId, title, fromUrl } = bookState;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -123,7 +123,7 @@ export default function BookNote() {
         <Navigator
           navIndex={navIndex}
           onNav={handleNav}
-          isLoginState={isLoginState}
+          bookState={bookState}
           isPrevented={isPrevented}
           isDrawerDefault={handleDrawerDefault}
         />
