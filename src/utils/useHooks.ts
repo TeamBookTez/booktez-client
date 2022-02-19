@@ -25,16 +25,11 @@ export function useCheckLoginState() {
       const status = data.status;
 
       if (status === 200) {
-        if (data.data.isLogin === true) {
-          setIsLogin(true);
-
-          return setIsLoginLoading(false);
-        }
+        data.data.isLogin === true ? setIsLogin(true) : setIsLogin(false);
       }
     } catch (err) {
-      console.log(err);
-    } finally {
       setIsLogin(false);
+    } finally {
       setIsLoginLoading(false);
     }
   };
