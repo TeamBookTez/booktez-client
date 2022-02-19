@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { ImgReadNum } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
-import { isLoginState } from "../../utils/atoms";
+import { isLoginState } from "../../utils/atom";
 import { BookComment } from ".";
 
 interface BottomContentProps {

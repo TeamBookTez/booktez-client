@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
-import { isLoginState } from "../../../utils/atoms";
+import { isLoginState } from "../../../utils/atom";
 import { PopUpDelete } from "../../common";
 
 interface BookCardProps {

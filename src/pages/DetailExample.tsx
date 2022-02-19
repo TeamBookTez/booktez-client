@@ -9,8 +9,8 @@ import { Loading } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
-import { isLoginState } from "../utils/atoms";
-import { reviewData } from "../utils/mockData";
+import { isLoginState } from "../utils/atom";
+import { reviewData } from "../utils/exampleData";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export default function DetailExample() {

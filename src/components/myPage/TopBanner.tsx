@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IcEditProfile } from "../../assets/icons";
 import { ImgMypageBanner, ImgUser } from "../../assets/images";
 import { UserInfo } from "../../pages/MyPage";
-import { isLoginState } from "../../utils/atoms";
+import { isLoginState } from "../../utils/atom";
 
 interface TopBannerProps {
   userInfo: UserInfo;

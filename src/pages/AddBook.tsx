@@ -5,7 +5,7 @@ import AddBookDefault from "../components/addBook/AddBookDefault";
 import BookList from "../components/addBook/BookList";
 import SearchBar from "../components/addBook/SearchBar";
 import { Loading, MainHeader } from "../components/common";
-import { isLoginState } from "../utils/atoms";
+import { isLoginState } from "../utils/atom";
 import { searchBook } from "../utils/lib/api";
 import { useCheckLoginState } from "../utils/useHooks";
 

@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 
 import { Cards, Navigation } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
-import { isLoginState } from "../utils/atoms";
+import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export interface BookcaseInfo {

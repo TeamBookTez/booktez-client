@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { isLoginState } from "../../utils/atoms";
+import { isLoginState } from "../../utils/atom";
 import { Button } from "./styled/Button";
 
 interface MainHeaderProps {

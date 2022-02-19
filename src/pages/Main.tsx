@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
 import { Banner, RecentBooks } from "../components/main";
-import { isLoginState } from "../utils/atoms";
+import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export default function Main() {

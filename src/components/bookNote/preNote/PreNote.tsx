@@ -39,7 +39,7 @@ export default function PreNote() {
       ]
     >();
 
-  const { data, setData, isLoading, isError } = useFetchNote<PreNoteData>(userToken, `/review/${reviewId}/pre`, {
+  const { data, setData, isLoading } = useFetchNote<PreNoteData>(userToken, `/review/${reviewId}/pre`, {
     answerOne: "",
     answerTwo: "",
     questionList: [""],

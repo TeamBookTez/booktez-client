@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
-import { isLoginState } from "../../utils/atoms";
+import { isLoginState } from "../../utils/atom";
 import { StepUp } from "../bookNote";
 import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
 import OneCaseModal from "../bookNote/stepUp/OneCaseModal";
