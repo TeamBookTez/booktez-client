@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
@@ -250,6 +250,14 @@ const StAddChildButton = styled(Button)<{ disabled: boolean }>`
   width: 100%;
   color: ${({ theme, disabled }) => (disabled ? theme.colors.white500 : theme.colors.gray100)};
   ${({ theme }) => theme.fonts.button}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;
 
 const StSubmitButton = styled(Button)<{ disabled: boolean }>`
@@ -263,4 +271,12 @@ const StSubmitButton = styled(Button)<{ disabled: boolean }>`
 
   background-color: ${({ disabled, theme }) => (disabled ? theme.colors.white400 : theme.colors.orange100)};
   color: ${({ disabled, theme }) => (disabled ? theme.colors.gray300 : theme.colors.white)};
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;
