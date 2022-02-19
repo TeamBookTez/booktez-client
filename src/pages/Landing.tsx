@@ -13,7 +13,7 @@ import {
   LandingThree,
   LandingTwo,
 } from "../components/landing";
-import { isLoginState } from "../utils/atoms";
+import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export default function Landing() {

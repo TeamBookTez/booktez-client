@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import { isLoginState } from "./atoms";
+import { isLoginState } from "./atom";
 import { PeriNoteData, PreNoteData } from "./dataType";
 import { client } from "./lib";
 import { getData } from "./lib/api";

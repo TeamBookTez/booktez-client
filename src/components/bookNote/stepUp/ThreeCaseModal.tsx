@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
 import { ImgBefore21, ImgBefore22, ImgBefore23 } from "../../../assets/images";
-import { before2 } from "../../../utils/mockData";
+import { before2 } from "../../../utils/exampleData";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
   onToggleModal: () => void;
