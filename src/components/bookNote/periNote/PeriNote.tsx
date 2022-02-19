@@ -3,8 +3,9 @@ import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { patchBookNote } from "../../../utils/lib/api";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
-import { patchBookNote, useFetchNote } from "../../../utils/useHooks";
+import { useFetchNote } from "../../../utils/useHooks";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { Complete, ExButton, PeriModal, PriorQuestion, StepUp } from "..";

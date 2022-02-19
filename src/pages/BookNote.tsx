@@ -9,7 +9,7 @@ import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { isLoginState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
-import { patchBookNote } from "../utils/useHooks";
+import { patchBookNote } from "../utils/lib/api";
 
 export interface BookState {
   reviewId: number;
