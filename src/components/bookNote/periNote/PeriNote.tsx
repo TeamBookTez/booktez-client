@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { patchBookNote, useFetchNote } from "../../../utils/useHooks";
-import { Error404, Loading } from "../../common";
+import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { Complete, ExButton, PeriModal, PriorQuestion, StepUp } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
@@ -34,7 +34,7 @@ export default function PeriNote() {
       ]
     >();
 
-  const { data, setData, isLoading, isError } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
+  const { data, setData, isLoading } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
     answerThree: { type: "", content: "", children: [{ type: "", content: "", children: [] }] },
     reviewSt: 3,
   });
@@ -158,8 +158,6 @@ export default function PeriNote() {
 
   if (isLoading) {
     return <Loading />;
-  } else if (isError) {
-    return <Error404 />;
   } else {
     return (
       <>
