@@ -9,7 +9,7 @@ import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { patchBookNote } from "../utils/useHooks";
 
-export interface IsLoginState {
+export interface BookState {
   isLogin: boolean;
   reviewId: number;
   title: string;
@@ -46,7 +46,7 @@ export default function BookNote() {
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   // recoil로 관리했으면 하는 부분
-  const isLoginState = state as IsLoginState;
+  const isLoginState = state as BookState;
   const { isLogin, reviewId, title, fromUrl } = isLoginState;
 
   const _token = localStorage.getItem("booktez-token");

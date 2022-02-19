@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { IsLoginState } from "../../pages/BookNote";
+import { BookState } from "../../pages/BookNote";
 
 interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
-  isLoginState: IsLoginState;
+  isLoginState: BookState;
   isPrevented: boolean;
   isDrawerDefault: () => void;
 }

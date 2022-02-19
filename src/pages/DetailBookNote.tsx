@@ -9,7 +9,7 @@ import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { getData } from "../utils/lib/api";
-import { IsLoginState } from "./BookNote";
+import { BookState } from "./BookNote";
 
 interface ReviewData {
   bookTitle: string;
@@ -32,7 +32,7 @@ export default function DetailBookNote() {
 
   const { state } = useLocation();
 
-  const isLoginState = state as IsLoginState;
+  const isLoginState = state as BookState;
   const { reviewId, isLogin, fromUrl } = isLoginState;
 
   const _token = localStorage.getItem("booktez-token");

@@ -6,7 +6,7 @@ import { StIcCancel } from "../../addBook/ShowModal";
 import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 
-interface IsLoginState {
+interface BookState {
   isLogin: boolean;
   fromUrl: string;
   reviewId: number;
@@ -14,7 +14,7 @@ interface IsLoginState {
 
 interface CompleteProps {
   bookData: BookData;
-  isLoginState: IsLoginState;
+  isLoginState: BookState;
 }
 
 export default function Complete(props: CompleteProps) {
