@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { isLoginState } from "../../../utils/atom";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { patchBookNote, useFetchNote } from "../../../utils/useHooks";
 import { Loading } from "../../common";
@@ -11,7 +13,6 @@ import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
   const [
-    isLogin,
     reviewId,
     fromUrl,
     userToken,
@@ -25,7 +26,6 @@ export default function PreNote() {
   ] =
     useOutletContext<
       [
-        boolean,
         number,
         string,
         string,
@@ -51,6 +51,7 @@ export default function PreNote() {
   const [isFilled, setIsFilled] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const isLogin = useRecoilValue(isLoginState);
   const navigate = useNavigate();
 
   const userNickname = localStorage.getItem("booktez-nickname");
@@ -94,7 +95,7 @@ export default function PreNote() {
     setOpenModal(false);
 
     // peri로 넘어가기
-    navigate("/book-note/peri", { state: { isLogin, reviewId, fromUrl } });
+    navigate("/book-note/peri", { state: { reviewId, fromUrl } });
   };
 
   const handleOpenModal = () => {

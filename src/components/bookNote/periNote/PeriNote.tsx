@@ -19,10 +19,9 @@ export interface BookData {
 }
 
 export default function PeriNote() {
-  const [isLogin, reviewId, fromUrl, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
+  const [reviewId, fromUrl, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
     useOutletContext<
       [
-        boolean,
         number,
         string,
         string,
@@ -195,7 +194,7 @@ export default function PeriNote() {
             <PeriModal onToggleModal={handlePeriCarousel} />
           </StStepModalWrapper>
         )}
-        {openSubmitModal && <Complete bookData={bookData} bookState={{ isLogin, reviewId, fromUrl }} />}
+        {openSubmitModal && <Complete bookData={bookData} bookState={{ reviewId, fromUrl }} />}
       </>
     );
   }

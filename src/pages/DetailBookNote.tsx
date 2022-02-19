@@ -33,7 +33,7 @@ export default function DetailBookNote() {
   const { state } = useLocation();
 
   const bookState = state as BookState;
-  const { reviewId, isLogin, fromUrl } = bookState;
+  const { reviewId, fromUrl } = bookState;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -81,7 +81,7 @@ export default function DetailBookNote() {
               <IcModifyNote
                 onClick={() =>
                   navigate("/book-note/peri", {
-                    state: { reviewId, title: reviewData?.bookTitle, fromUrl, isLogin },
+                    state: { reviewId, title: reviewData?.bookTitle, fromUrl },
                   })
                 }
               />
@@ -91,7 +91,6 @@ export default function DetailBookNote() {
                 answerOne={reviewData?.answerOne}
                 answerTwo={reviewData?.answerTwo}
                 questionList={reviewData?.questionList}
-                isLogin={isLogin}
               />
             </DetailArticleWrapper>
             <StMarginTop>

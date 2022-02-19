@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
+import { isLoginState } from "../../utils/atom";
 import { Button } from "../common/styled/Button";
 import LabelQuestion from "../common/styled/LabelQuestion";
 
@@ -9,11 +11,11 @@ interface ExamplePreNoteProps {
   answerOne: string | undefined;
   answerTwo: string | undefined;
   questionList: string[] | undefined;
-  isLogin: boolean;
 }
 
 export default function ExamplePreNote(props: ExamplePreNoteProps) {
-  const { answerOne, answerTwo, questionList, isLogin } = props;
+  const { answerOne, answerTwo, questionList } = props;
+  const isLogin = useRecoilValue(isLoginState);
   const navigate = useNavigate();
   const userNickname = localStorage.getItem("booktez-nickname");
 

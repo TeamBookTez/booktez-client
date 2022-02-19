@@ -7,7 +7,6 @@ import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 
 interface BookState {
-  isLogin: boolean;
   fromUrl: string;
   reviewId: number;
 }

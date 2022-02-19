@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
+import { isLoginState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { patchBookNote } from "../utils/useHooks";
 
 export interface BookState {
-  isLogin: boolean;
   reviewId: number;
   title: string;
   fromUrl: string;
@@ -47,7 +48,8 @@ export default function BookNote() {
 
   // recoil로 관리했으면 하는 부분
   const bookState = state as BookState;
-  const { isLogin, reviewId, title, fromUrl } = bookState;
+  const { reviewId, title, fromUrl } = bookState;
+  const isLogin = useRecoilValue(isLoginState);
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -137,7 +139,6 @@ export default function BookNote() {
       </StNavWrapper>
       <Outlet
         context={[
-          isLogin,
           reviewId,
           fromUrl,
           userToken,
