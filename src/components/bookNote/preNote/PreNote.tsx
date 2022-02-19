@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { patchBookNote, useFetchNote } from "../../../utils/useHooks";
-import { Error404, Loading } from "../../common";
+import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
