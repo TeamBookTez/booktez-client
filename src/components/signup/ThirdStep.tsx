@@ -47,6 +47,7 @@ export default function ThirdStep() {
 
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
+      localStorage.setItem("booktez-email", resData.email);
     } catch (err) {
       return;
     }
