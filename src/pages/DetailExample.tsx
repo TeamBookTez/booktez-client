@@ -45,7 +45,6 @@ export default function DetailExample() {
                 answerOne={reviewData?.answerOne}
                 answerTwo={reviewData?.answerTwo}
                 questionList={reviewData?.questionList}
-                isLogin={isLogin}
               />
             </DetailArticleWrapper>
             {isLogin && (

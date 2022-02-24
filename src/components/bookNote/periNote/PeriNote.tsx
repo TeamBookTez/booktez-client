@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { patchBookNote } from "../../../utils/lib/api";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
-import { patchBookNote, useFetchNote } from "../../../utils/useHooks";
+import { useFetchNote } from "../../../utils/useHooks";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
 import { Complete, ExButton, PeriModal, PriorQuestion, StepUp } from "..";
@@ -19,10 +20,9 @@ export interface BookData {
 }
 
 export default function PeriNote() {
-  const [isLogin, reviewId, fromUrl, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
+  const [reviewId, fromUrl, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
     useOutletContext<
       [
-        boolean,
         number,
         string,
         string,
@@ -195,7 +195,7 @@ export default function PeriNote() {
             <PeriModal onToggleModal={handlePeriCarousel} />
           </StStepModalWrapper>
         )}
-        {openSubmitModal && <Complete bookData={bookData} isLoginState={{ isLogin, reviewId, fromUrl }} />}
+        {openSubmitModal && <Complete bookData={bookData} bookState={{ reviewId, fromUrl }} />}
       </>
     );
   }
@@ -250,6 +250,14 @@ const StAddChildButton = styled(Button)<{ disabled: boolean }>`
   width: 100%;
   color: ${({ theme, disabled }) => (disabled ? theme.colors.white500 : theme.colors.gray100)};
   ${({ theme }) => theme.fonts.button}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;
 
 const StSubmitButton = styled(Button)<{ disabled: boolean }>`
@@ -263,4 +271,12 @@ const StSubmitButton = styled(Button)<{ disabled: boolean }>`
 
   background-color: ${({ disabled, theme }) => (disabled ? theme.colors.white400 : theme.colors.orange100)};
   color: ${({ disabled, theme }) => (disabled ? theme.colors.gray300 : theme.colors.white)};
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;

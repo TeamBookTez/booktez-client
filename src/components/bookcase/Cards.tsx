@@ -8,12 +8,11 @@ import { AddBookCard, BookCard } from ".";
 import Empty from "./cardSection/Empty";
 
 interface CardsProps {
-  isLogin: boolean;
   navIndex: number;
 }
 
 export default function Cards(props: CardsProps) {
-  const { isLogin, navIndex } = props;
+  const { navIndex } = props;
   const [pathKey, setPathKey] = useState<string>("");
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function Cards(props: CardsProps) {
       <StSection>
         <AddBookCard />
         {bookcaseInfo.map((bookcaseInfo: BookcaseInfo, idx: number) => (
-          <BookCard key={idx} bookcaseInfo={bookcaseInfo} isLogin={isLogin} pathKey={pathKey} />
+          <BookCard key={idx} bookcaseInfo={bookcaseInfo} pathKey={pathKey} />
         ))}
       </StSection>
     );

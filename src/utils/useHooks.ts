@@ -1,9 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import { isLoginState } from "./atom";
-import { PeriNoteData, PreNoteData } from "./dataType";
 import { client } from "./lib";
 import { getData } from "./lib/api";
 
@@ -25,19 +23,12 @@ export function useCheckLoginState() {
       const status = data.status;
 
       if (status === 200) {
-        if (data.data.isLogin === true) {
-          setIsLogin(true);
-
-          return setIsLoginLoading(false);
-        }
+        data.data.isLogin === true ? setIsLogin(true) : setIsLogin(false);
       }
-
-      setIsLogin(false);
-      setIsLoginLoading(false);
     } catch (err) {
       setIsLogin(false);
+    } finally {
       setIsLoginLoading(false);
-      throw err;
     }
   };
 
@@ -75,15 +66,3 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
 
   return { data, setData, isLoading };
 }
-
-export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
-  try {
-    const { data } = await client(token).patch(key, body);
-
-    return data.data;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      return err.response;
-    }
-  }
-};
