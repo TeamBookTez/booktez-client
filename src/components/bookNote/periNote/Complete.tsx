@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 import { StModalWrapper } from "../../addBook/ModalWrapper";
-import { StIcCancel } from "../../addBook/ShowModal";
 import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 
@@ -22,12 +21,10 @@ export default function Complete(props: CompleteProps) {
   const { bookData, isLoginState } = props;
 
   const { author, publicationDt, thumbnail, title, translator } = bookData;
-  const { fromUrl } = isLoginState;
 
   return (
-    <StModalWrapper>
+    <StCompleteWrapper>
       <StAniWrapper>
-        <StIcCancel onClick={() => navigate(fromUrl)} />
         <StHeader>북노트 작성을 완료했어요!</StHeader>
         <StImgWrapper thumbnail={thumbnail} />
         <StTitle>{title}</StTitle>
@@ -53,7 +50,7 @@ export default function Complete(props: CompleteProps) {
           </StCompleteButton>
         </StButtonWrapper>
       </StAniWrapper>
-    </StModalWrapper>
+    </StCompleteWrapper>
   );
 }
 
@@ -66,6 +63,10 @@ const fadein = keyframes`
     }
 `;
 
+export const StCompleteWrapper = styled(StModalWrapper)`
+  z-index: 20;
+`;
+
 const StAniWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -76,6 +77,9 @@ const StAniWrapper = styled.div`
   height: 100%;
 
   animation: ${fadein} 1s ease-in-out;
+  background-color: #555
+
+  z-index: 100;
 `;
 
 const StHeader = styled.h1`
