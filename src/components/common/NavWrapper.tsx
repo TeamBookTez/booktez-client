@@ -104,5 +104,7 @@ const StLink = styled(Link)`
   display: flex;
   align-items: center;
 
+  width: 15.3rem;
+
   ${({ theme }) => theme.fonts.body5};
 `;
