@@ -23,7 +23,7 @@ export default function Complete(props: CompleteProps) {
   const { author, publicationDt, thumbnail, title, translator } = bookData;
 
   return (
-    <StCompleteWrapper>
+    <StModalWrapper>
       <StAniWrapper>
         <StHeader>북노트 작성을 완료했어요!</StHeader>
         <StImgWrapper thumbnail={thumbnail} />
@@ -50,7 +50,7 @@ export default function Complete(props: CompleteProps) {
           </StCompleteButton>
         </StButtonWrapper>
       </StAniWrapper>
-    </StCompleteWrapper>
+    </StModalWrapper>
   );
 }
 
@@ -61,10 +61,6 @@ const fadein = keyframes`
     100% {
       opacity: 1;
     }
-`;
-
-export const StCompleteWrapper = styled(StModalWrapper)`
-  z-index: 20;
 `;
 
 const StAniWrapper = styled.div`
@@ -79,7 +75,7 @@ const StAniWrapper = styled.div`
   animation: ${fadein} 1s ease-in-out;
   background-color: #555
 
-  z-index: 100;
+  z-index: 20;
 `;
 
 const StHeader = styled.h1`
