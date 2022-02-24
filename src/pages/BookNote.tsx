@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
+import { isLoginState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
-import { patchBookNote } from "../utils/useHooks";
+import { patchBookNote } from "../utils/lib/api";
 
-export interface IsLoginState {
-  isLogin: boolean;
+export interface BookState {
   reviewId: number;
   title: string;
   fromUrl: string;
@@ -46,8 +47,9 @@ export default function BookNote() {
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
   // recoil로 관리했으면 하는 부분
-  const isLoginState = state as IsLoginState;
-  const { isLogin, reviewId, title, fromUrl } = isLoginState;
+  const bookState = state as BookState;
+  const { reviewId, title, fromUrl } = bookState;
+  const isLogin = useRecoilValue(isLoginState);
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -123,7 +125,7 @@ export default function BookNote() {
         <Navigator
           navIndex={navIndex}
           onNav={handleNav}
-          isLoginState={isLoginState}
+          bookState={bookState}
           isPrevented={isPrevented}
           isDrawerDefault={handleDrawerDefault}
         />
@@ -137,7 +139,6 @@ export default function BookNote() {
       </StNavWrapper>
       <Outlet
         context={[
-          isLogin,
           reviewId,
           fromUrl,
           userToken,

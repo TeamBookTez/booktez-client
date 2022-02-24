@@ -9,7 +9,7 @@ import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { getData } from "../utils/lib/api";
-import { IsLoginState } from "./BookNote";
+import { BookState } from "./BookNote";
 
 interface ReviewData {
   bookTitle: string;
@@ -32,8 +32,8 @@ export default function DetailBookNote() {
 
   const { state } = useLocation();
 
-  const isLoginState = state as IsLoginState;
-  const { reviewId, isLogin, fromUrl } = isLoginState;
+  const bookState = state as BookState;
+  const { reviewId, fromUrl } = bookState;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -81,7 +81,7 @@ export default function DetailBookNote() {
               <IcModifyNote
                 onClick={() =>
                   navigate("/book-note/peri", {
-                    state: { reviewId, title: reviewData?.bookTitle, fromUrl, isLogin },
+                    state: { reviewId, title: reviewData?.bookTitle, fromUrl },
                   })
                 }
               />
@@ -91,7 +91,6 @@ export default function DetailBookNote() {
                 answerOne={reviewData?.answerOne}
                 answerTwo={reviewData?.answerTwo}
                 questionList={reviewData?.questionList}
-                isLogin={isLogin}
               />
             </DetailArticleWrapper>
             <StMarginTop>

@@ -1,7 +1,8 @@
+import axios from "axios";
 import useSWR from "swr";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
-import { KAKAOParams, PatchBody, PostBody } from "../dataType";
+import { KAKAOParams, PatchBody, PeriNoteData, PostBody, PreNoteData } from "../dataType";
 import { client, KAKAO } from ".";
 
 export const searchBook = (params: KAKAOParams) => {
@@ -24,6 +25,18 @@ export const postData = (key: string, postBody: PostBody, token?: string) => {
 
 export const patchData = (token: string, key: string, patchBody: PatchBody | FormData) => {
   return client(token).patch(key, patchBody);
+};
+
+export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
+  try {
+    const { data } = await client(token).patch(key, body);
+
+    return data.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response;
+    }
+  }
 };
 
 export const deleteData = (key: string, token: string | null) => {
