@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 import { StModalWrapper } from "../../addBook/ModalWrapper";
-import { StIcCancel } from "../../addBook/ShowModal";
 import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 
@@ -21,12 +20,10 @@ export default function Complete(props: CompleteProps) {
   const { bookData, bookState } = props;
 
   const { author, publicationDt, thumbnail, title, translator } = bookData;
-  const { fromUrl } = bookState;
 
   return (
     <StModalWrapper>
       <StAniWrapper>
-        <StIcCancel onClick={() => navigate(fromUrl)} />
         <StHeader>북노트 작성을 완료했어요!</StHeader>
         <StImgWrapper thumbnail={thumbnail} />
         <StTitle>{title}</StTitle>
@@ -75,6 +72,9 @@ const StAniWrapper = styled.div`
   height: 100%;
 
   animation: ${fadein} 1s ease-in-out;
+  background-color: #555
+
+  z-index: 20;
 `;
 
 const StHeader = styled.h1`

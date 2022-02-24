@@ -77,8 +77,11 @@ const StList = styled.li`
   height: 4.8rem;
 
   text-align: center;
+
   ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray100};
+
+  cursor: pointer;
 `;
 
 const StBottomLine = styled.div`
