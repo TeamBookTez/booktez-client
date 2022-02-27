@@ -19,6 +19,7 @@ export { ReactComponent as IcLandingFooter } from "./landingFooterIcon.svg";
 export { ReactComponent as IcLandingIcon01 } from "./landingIcon01.svg";
 export { ReactComponent as IcLandingIcon02 } from "./landingIcon02.svg";
 export { ReactComponent as IcLandingIcon03 } from "./landingIcon03.svg";
+export { ReactComponent as IcLandingMobileHeader } from "./landingMobileHeader.svg";
 export { ReactComponent as IcLeftArrow } from "./leftArrowIcon.svg";
 export { ReactComponent as IcLogo } from "./logoIcon.svg";
 export { ReactComponent as IcMainLogo } from "./mainLogoIcon.svg";
