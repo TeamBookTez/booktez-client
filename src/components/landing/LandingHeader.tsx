@@ -5,12 +5,13 @@ import styled from "styled-components";
 import { IcLandingMobileHeader, IcMainLogo } from "../../assets/icons";
 import { Button } from "../common/styled/Button";
 
-export default function LandingHeader() {
-  const navigate = useNavigate();
+export interface LandingOneProps {
+  isMobileScreen: boolean;
+}
 
-  const isMobileScreen = useMediaQuery({
-    query: "(max-width: 320px)",
-  });
+export default function LandingHeader(props: LandingOneProps) {
+  const { isMobileScreen } = props;
+  const navigate = useNavigate();
 
   return (
     <>
@@ -37,6 +38,8 @@ const MobileHeader = styled.header`
   align-items: center;
 
   height: 6rem;
+
+  max-width: 32rem;
 `;
 
 const StHeader = styled.header`

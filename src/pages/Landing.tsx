@@ -1,7 +1,8 @@
 import { useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Loading } from "../components/common";
 import {
@@ -21,6 +22,10 @@ export default function Landing() {
   const { isLogin, isLoginLoading } = useCheckLoginState();
   const setIsLogin = useSetRecoilState(isLoginState);
 
+  const isMobileScreen = useMediaQuery({
+    query: "(max-width: 414px)",
+  });
+
   useEffect(() => {
     if (isLogin) {
       setIsLogin(true);
@@ -36,9 +41,9 @@ export default function Landing() {
         <Loading />
       ) : (
         <>
-          <LandingHeader />
-          <StMain>
-            <LandingOne />
+          <LandingHeader isMobileScreen={isMobileScreen} />
+          <StMain isMobileScreen={isMobileScreen}>
+            <LandingOne isMobileScreen={isMobileScreen} />
             <LandingTwo />
             <LandingThree />
             <LandingFour />
@@ -51,9 +56,18 @@ export default function Landing() {
   );
 }
 
-const StMain = styled.main`
+const StMain = styled.main<{ isMobileScreen: boolean }>`
+  ${({ isMobileScreen }) =>
+    isMobileScreen
+      ? css`
+          padding: 0;
+        `
+      : css`
+          padding: 0 11.5rem;
+        `}
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 11.5rem;
+
+  max-width: 32rem;
 `;
