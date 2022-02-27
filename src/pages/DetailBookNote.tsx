@@ -47,9 +47,10 @@ export default function DetailBookNote() {
 
       setReviewData(data);
     } catch (err) {
-      return;
+      // return;
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
