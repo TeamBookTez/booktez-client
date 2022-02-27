@@ -29,9 +29,9 @@ export default function LastStep() {
     const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
 
     const { data } = await postData("/book", bookData, userToken);
-    const reviewId = data.data.reviewId;
+    const postBookReviewId = data.data.reviewId;
 
-    await patchData(userToken, `/review/${reviewId}/pre`, {
+    await patchData(userToken, `/review/${postBookReviewId}/pre`, {
       ...reviewData,
       questionList: [""],
       reviewSt: 2,

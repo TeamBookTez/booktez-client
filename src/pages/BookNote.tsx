@@ -48,7 +48,7 @@ export default function BookNote() {
 
   const isLogin = useRecoilValue(isLoginState);
   const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
-  const { reviewId, title, fromUrl } = navigatingBookInfo;
+  const { reviewId, title } = navigatingBookInfo;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";

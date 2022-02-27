@@ -15,7 +15,7 @@ interface BookCardProps {
 
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo, pathKey } = props;
-  const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
+  const { author, thumbnail, title, reviewSt } = bookcaseInfo;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
