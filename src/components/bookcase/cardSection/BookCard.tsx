@@ -22,7 +22,7 @@ export default function BookCard(props: BookCardProps) {
 
   const [isPopUp, setIsPopUp] = useState(false);
   const isLogin = useRecoilValue(isLoginState);
-  const navigatingBookInfoHandler = useSetRecoilState(navigatingBookInfoState);
+  const setNavigatingBookInfo = useSetRecoilState(navigatingBookInfoState);
 
   const reviewUrl = reviewSt === 2 ? "/book-note" : reviewSt === 3 ? "/book-note/peri" : "/detail-book-note";
 
@@ -32,7 +32,7 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      navigatingBookInfoHandler({ reviewId, title, fromUrl: pathname });
+      setNavigatingBookInfo({ reviewId, title, fromUrl: pathname });
       navigate(reviewUrl);
     }
   };

@@ -20,7 +20,7 @@ export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
 
-  const navigatingBookInfoHandler = useSetRecoilState(navigatingBookInfoState);
+  const setNavigatingBookInfo = useSetRecoilState(navigatingBookInfoState);
 
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
@@ -51,7 +51,7 @@ export default function ShowModal(props: ShowModalProps) {
         );
       }
 
-      navigatingBookInfoHandler({ reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
+      setNavigatingBookInfo({ reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
       navigate("/book-note");
     } catch (err) {
       if (axios.isAxiosError(err)) {

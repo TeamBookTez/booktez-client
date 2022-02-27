@@ -31,7 +31,7 @@ export default function DetailBookNote() {
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [navigatingBookInfo, navigatingBookInfoHandler] = useRecoilState(navigatingBookInfoState);
+  const [navigatingBookInfo, setNavigatingBookInfo] = useRecoilState(navigatingBookInfoState);
   const { reviewId, fromUrl } = navigatingBookInfo;
 
   const _token = localStorage.getItem("booktez-token");
@@ -80,7 +80,7 @@ export default function DetailBookNote() {
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
                 onClick={() => {
-                  navigatingBookInfoHandler({ reviewId, title: reviewData?.bookTitle, fromUrl });
+                  setNavigatingBookInfo({ reviewId, title: reviewData?.bookTitle, fromUrl });
                   navigate("/book-note/peri");
                 }}
               />
