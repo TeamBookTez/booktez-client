@@ -1,27 +1,29 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useSWRConfig } from "swr";
 
 import { ImgDeletePopUp } from "../../assets/images";
+import { navigatingBookInfoState } from "../../utils/atom";
 import { deleteData } from "../../utils/lib/api";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
 interface PopUpDeleteProps {
   onPopUp: () => void;
-  reviewId: number;
   pathKey: string;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, reviewId, pathKey } = props;
-
-  const _token = localStorage.getItem("booktez-token");
-  const userToken = _token ? _token : "";
+  const { onPopUp, pathKey } = props;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { reviewId } = useRecoilValue(navigatingBookInfoState);
 
   const { mutate } = useSWRConfig();
+
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
   const handleDelete = async () => {
     try {

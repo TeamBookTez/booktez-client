@@ -18,7 +18,7 @@ export default function FirstStep() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -47,7 +47,7 @@ export default function FirstStep() {
     }
 
     handleIsAniTime(true);
-    setTimeout(() => nav("/signup/2", { state: "rightpath" }), 1000);
+    setTimeout(() => navigate("/signup/2", { state: "rightpath" }), 1000);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
 import { BookInfo } from "../../pages/AddBook";
+import { navigatingBookInfoState } from "../../utils/atom";
 import { postData } from "../../utils/lib/api";
 import { Button } from "../common/styled/Button";
 import { PublishDate } from "./BookInfoWrapper";
@@ -18,6 +20,8 @@ export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
 
+  const navigatingBookInfoHandler = useSetRecoilState(navigatingBookInfoState);
+
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
   const bookData = { ...bookInfo, publicationDt, author: authors, translator: translators };
@@ -25,7 +29,7 @@ export default function ShowModal(props: ShowModalProps) {
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   const postAddBooks = async () => {
     try {
@@ -47,9 +51,8 @@ export default function ShowModal(props: ShowModalProps) {
         );
       }
 
-      nav("/book-note", {
-        state: { reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" },
-      });
+      navigatingBookInfoHandler((prev) => ({ ...prev, reviewId: data.data.reviewId, fromUrl: "/main/add-book" }));
+      navigate("/book-note");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         return;

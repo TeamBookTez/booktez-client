@@ -13,7 +13,7 @@ export default function LastStep() {
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -46,7 +46,7 @@ export default function LastStep() {
     setIsLoading(false);
 
     handleIsAniTime(true);
-    setTimeout(() => nav("/main", { state: "rightpath" }), 1000);
+    setTimeout(() => navigate("/main", { state: "rightpath" }), 1000);
   };
 
   return (
