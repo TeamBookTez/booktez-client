@@ -15,7 +15,7 @@ interface BookCardProps {
 
 export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo, pathKey } = props;
-  const { author, thumbnail, title, reviewSt } = bookcaseInfo;
+  const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -23,8 +23,6 @@ export default function BookCard(props: BookCardProps) {
   const [isPopUp, setIsPopUp] = useState(false);
   const isLogin = useRecoilValue(isLoginState);
   const navigatingBookInfoHandler = useSetRecoilState(navigatingBookInfoState);
-
-  navigatingBookInfoHandler((pre) => ({ ...pre, fromUrl: pathname }));
 
   const reviewUrl = reviewSt === 2 ? "/book-note" : reviewSt === 3 ? "/book-note/peri" : "/detail-book-note";
 
@@ -34,6 +32,7 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
+      navigatingBookInfoHandler({ reviewId, title, fromUrl: pathname });
       navigate(reviewUrl);
     }
   };

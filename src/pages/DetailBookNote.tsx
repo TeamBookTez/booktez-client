@@ -80,7 +80,7 @@ export default function DetailBookNote() {
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
                 onClick={() => {
-                  navigatingBookInfoHandler((prev) => ({ ...prev, title: reviewData?.bookTitle }));
+                  navigatingBookInfoHandler({ reviewId, title: reviewData?.bookTitle, fromUrl });
                   navigate("/book-note/peri");
                 }}
               />

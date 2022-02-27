@@ -51,7 +51,7 @@ export default function ShowModal(props: ShowModalProps) {
         );
       }
 
-      navigatingBookInfoHandler((prev) => ({ ...prev, reviewId: data.data.reviewId, fromUrl: "/main/add-book" }));
+      navigatingBookInfoHandler({ reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
       navigate("/book-note");
     } catch (err) {
       if (axios.isAxiosError(err)) {
