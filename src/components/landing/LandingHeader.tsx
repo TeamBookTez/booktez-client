@@ -40,6 +40,7 @@ const MobileHeader = styled.header`
   height: 6rem;
 
   max-width: 32rem;
+  margin: 0 auto;
 `;
 
 const StHeader = styled.header`

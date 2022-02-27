@@ -23,7 +23,7 @@ export default function Landing() {
   const setIsLogin = useSetRecoilState(isLoginState);
 
   const isMobileScreen = useMediaQuery({
-    query: "(max-width: 414px)",
+    query: "(max-width: 415px)",
   });
 
   useEffect(() => {
@@ -61,6 +61,8 @@ const StMain = styled.main<{ isMobileScreen: boolean }>`
     isMobileScreen
       ? css`
           padding: 0;
+          max-width: 32rem;
+          margin: 0 auto;
         `
       : css`
           padding: 0 11.5rem;
@@ -68,6 +70,4 @@ const StMain = styled.main<{ isMobileScreen: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  max-width: 32rem;
 `;
