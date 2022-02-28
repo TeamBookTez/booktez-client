@@ -46,7 +46,7 @@ export default function Landing() {
             <LandingOne isMobileScreen={isMobileScreen} />
             <LandingTwo isMobileScreen={isMobileScreen} />
             <LandingThree isMobileScreen={isMobileScreen} />
-            <LandingFour />
+            <LandingFour isMobileScreen={isMobileScreen} />
             <LandingFive />
           </StMain>
           <LandingFooter />
