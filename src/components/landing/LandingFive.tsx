@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { IcLandingMobileFour02 } from "../../assets/icons";
 import { ImgLandingBookcase } from "../../assets/images";
+import { StMobileH2, StMobileParagraph, StMobileWrapper } from "./LandingFour";
 import { LandingMobileProps } from "./LandingHeader";
 import { StH2, StWrapper } from "./LandingThree";
 
@@ -42,36 +43,6 @@ export default function LandingFive(props: LandingMobileProps) {
     </>
   );
 }
-
-const StMobileWrapper = styled.section`
-  width: 32rem;
-  height: 43rem;
-
-  padding: 4.2rem 2rem 3.3rem 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-`;
-
-const StMobileH2 = styled.h2`
-  margin-left: 0.4rem;
-  margin-bottom: 1.6rem;
-
-  ${({ theme }) => theme.fonts.h5};
-
-  & > strong {
-    display: inline-block;
-    margin-top: 0.4rem;
-
-    ${({ theme }) => theme.fonts.h3};
-  }
-`;
-
-const StMobileParagraph = styled.p`
-  margin-left: 0.4rem;
-  margin-bottom: 2.4rem;
-
-  ${({ theme }) => theme.fonts.Body2};
-`;
 
 const StSection = styled(StWrapper)`
   padding: 11.7rem 0;

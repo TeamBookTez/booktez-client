@@ -43,7 +43,7 @@ export default function LandingFour(props: LandingMobileProps) {
   );
 }
 
-const StMobileWrapper = styled.section`
+export const StMobileWrapper = styled.section`
   width: 32rem;
   height: 43rem;
 
@@ -52,7 +52,7 @@ const StMobileWrapper = styled.section`
   background-color: ${({ theme }) => theme.colors.white200};
 `;
 
-const StMobileH2 = styled.h2`
+export const StMobileH2 = styled.h2`
   margin-left: 0.4rem;
   margin-bottom: 1.6rem;
 
@@ -66,7 +66,7 @@ const StMobileH2 = styled.h2`
   }
 `;
 
-const StMobileParagraph = styled.p`
+export const StMobileParagraph = styled.p`
   margin-left: 0.4rem;
   margin-bottom: 2.4rem;
 
