@@ -20,6 +20,7 @@ export { ReactComponent as IcLandingIcon01 } from "./landingIcon01.svg";
 export { ReactComponent as IcLandingIcon02 } from "./landingIcon02.svg";
 export { ReactComponent as IcLandingIcon03 } from "./landingIcon03.svg";
 export { ReactComponent as IcLandingMobileFour01 } from "./landingMobileFour01.svg";
+export { ReactComponent as IcLandingMobileFour02 } from "./landingMobileFour02.svg";
 export { ReactComponent as IcLandingMobileHeader } from "./landingMobileHeader.svg";
 export { ReactComponent as IcLandingMobileIcon01 } from "./landingMobileIcon01.svg";
 export { ReactComponent as IcLandingMobileIcon02 } from "./landingMobileIcon02.svg";
