@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { ImgLanding01, ImgLandingMobileBanner } from "../../assets/images";
 import { Button } from "../common/styled/Button";
-import { LandingOneProps } from "./LandingHeader";
+import { LandingMobileProps } from "./LandingHeader";
 
-export default function LandingOne(props: LandingOneProps) {
+export default function LandingOne(props: LandingMobileProps) {
   const { isMobileScreen } = props;
 
   return (

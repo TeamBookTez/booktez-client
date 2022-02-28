@@ -9,9 +9,9 @@ import {
   IcLandingMobileIcon03,
 } from "../../assets/icons";
 import { LandingCard } from ".";
-import { LandingOneProps } from "./LandingHeader";
+import { LandingMobileProps } from "./LandingHeader";
 
-export default function LandingTwo(props: LandingOneProps) {
+export default function LandingTwo(props: LandingMobileProps) {
   const { isMobileScreen } = props;
 
   return (

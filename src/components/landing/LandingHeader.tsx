@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { IcLandingMobileHeader, IcMainLogo } from "../../assets/icons";
 import { Button } from "../common/styled/Button";
 
-export interface LandingOneProps {
+export interface LandingMobileProps {
   isMobileScreen: boolean;
 }
 
-export default function LandingHeader(props: LandingOneProps) {
+export default function LandingHeader(props: LandingMobileProps) {
   const { isMobileScreen } = props;
   const navigate = useNavigate();
 
