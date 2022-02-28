@@ -25,6 +25,7 @@ export { ReactComponent as IcLandingMobileHeader } from "./landingMobileHeader.s
 export { ReactComponent as IcLandingMobileIcon01 } from "./landingMobileIcon01.svg";
 export { ReactComponent as IcLandingMobileIcon02 } from "./landingMobileIcon02.svg";
 export { ReactComponent as IcLandingMobileIcon03 } from "./landingMobileIcon03.svg";
+export { ReactComponent as IcLandingMobileMark } from "./landingMobileMark.svg";
 export { ReactComponent as IcLandingMobileThree } from "./landingMobileThree.svg";
 export { ReactComponent as IcLeftArrow } from "./leftArrowIcon.svg";
 export { ReactComponent as IcLogo } from "./logoIcon.svg";

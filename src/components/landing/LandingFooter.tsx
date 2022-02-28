@@ -1,33 +1,89 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { IcLandingFooter, IcMainLogo } from "../../assets/icons";
+import { IcLandingFooter, IcLandingMobileMark, IcMainLogo } from "../../assets/icons";
 import { Button } from "../common/styled/Button";
+import { LandingMobileProps } from "./LandingHeader";
 
-export default function LandingFooter() {
+export default function LandingFooter(props: LandingMobileProps) {
+  const { isMobileScreen } = props;
+
   return (
     <>
-      <StFooterWrapper>
-        <StH1>
-          책을 통한 성장의 계단, <br />
-          함께 오르실 분들을 기다립니다.{" "}
-        </StH1>
-        <Link to="/main">
-          <StButton>북스테어즈 시작</StButton>
-        </Link>
-        <StIcFooter />
-      </StFooterWrapper>
-      <StFooter>
-        <IcMainLogo />
-        <StContactWrapper>
-          <StContact>Contact</StContact>
-          <StEmail>bookstairs.official@gmail.com</StEmail>
-        </StContactWrapper>
-        <StCopyright>Copyright 2022. Bookstairs All right reserved</StCopyright>
-      </StFooter>
+      {isMobileScreen ? (
+        <>
+          <StFooterMobileWrapper>
+            <StMobileH1>
+              책을 통한 성장의 계단, <br />
+              함께 오르실 분들을 기다립니다.
+            </StMobileH1>
+            <StMobileParagraph>PC에서 이용해 주세요.</StMobileParagraph>
+          </StFooterMobileWrapper>
+          <StCopyrightMobileWrapper>
+            <IcLandingMobileMark />
+            <StMobileContact>Contact &nbsp; bookstairs.official@gmail.com</StMobileContact>
+            <StMobileCopyright>Copyright &nbsp; 2022. Bookstairs All right reserved</StMobileCopyright>
+          </StCopyrightMobileWrapper>
+        </>
+      ) : (
+        <>
+          <StFooterWrapper>
+            <StH1>
+              책을 통한 성장의 계단, <br />
+              함께 오르실 분들을 기다립니다.{" "}
+            </StH1>
+            <Link to="/main">
+              <StButton>북스테어즈 시작</StButton>
+            </Link>
+            <StIcFooter />
+          </StFooterWrapper>
+          <StFooter>
+            <IcMainLogo />
+            <StContactWrapper>
+              <StContact>Contact</StContact>
+              <StEmail>bookstairs.official@gmail.com</StEmail>
+            </StContactWrapper>
+            <StCopyright>Copyright 2022. Bookstairs All right reserved</StCopyright>
+          </StFooter>
+        </>
+      )}
     </>
   );
 }
+
+const StFooterMobileWrapper = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 32rem;
+  height: 28rem;
+
+  margin: 0 auto;
+
+  background-color: ${({ theme }) => theme.colors.gray100};
+`;
+
+const StMobileH1 = styled.h1`
+  margin-bottom: 1.6rem;
+
+  text-align: center;
+
+  ${({ theme }) => theme.fonts.h2};
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const StMobileParagraph = styled.h5`
+  text-align: center;
+
+  ${({ theme }) => theme.fonts.Body2};
+  color: ${({ theme }) => theme.colors.white500};
+`;
+
+const StCopyrightMobileWrapper = styled(StFooterMobileWrapper)`
+  background-color: ${({ theme }) => theme.colors.gray200};
+`;
 
 const StFooterWrapper = styled.footer`
   position: relative;
@@ -38,6 +94,20 @@ const StFooterWrapper = styled.footer`
   background-color: #ffae88;
 
   height: 39.6rem;
+`;
+
+const StMobileContact = styled(StMobileParagraph)`
+  margin-top: 8rem;
+  margin-bottom: 0.7rem;
+
+  text-align: center;
+
+  ${({ theme }) => theme.fonts.Caption2};
+`;
+
+const StMobileCopyright = styled(StMobileContact)`
+  margin-top: 0;
+  margin-bottom: 0;
 `;
 
 const StH1 = styled.h1`
