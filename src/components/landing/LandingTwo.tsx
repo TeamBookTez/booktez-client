@@ -1,6 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { IcLandingIcon01, IcLandingIcon02, IcLandingIcon03 } from "../../assets/icons";
+import {
+  IcLandingIcon01,
+  IcLandingIcon02,
+  IcLandingIcon03,
+  IcLandingMobileIcon01,
+  IcLandingMobileIcon02,
+  IcLandingMobileIcon03,
+} from "../../assets/icons";
 import { LandingCard } from ".";
 import { LandingOneProps } from "./LandingHeader";
 
@@ -8,46 +15,93 @@ export default function LandingTwo(props: LandingOneProps) {
   const { isMobileScreen } = props;
 
   return (
-    <>
+    <StWrapper isMobileScreen={isMobileScreen}>
       {isMobileScreen ? (
-        <MobileWrapper>
-          <MobileH2>
-            책이 장벽으로 <br /> 느껴졌던 적 없으신가요?
-          </MobileH2>
-          <MobileComment>
-            책의 중요성은 알지만 여전히 독서는 어렵다고 <br /> 생각되지 않나요?
-          </MobileComment>
-        </MobileWrapper>
+        <>
+          <MobileTopWrapper>
+            <MobileH2>
+              책이 장벽으로 <br /> 느껴졌던 적 없으신가요?
+            </MobileH2>
+            <MobileComment>
+              책의 중요성은 알지만 여전히 독서는 어렵다고 <br /> 생각되지 않나요?
+            </MobileComment>
+          </MobileTopWrapper>
+          <MobileBottomWrapper>
+            <LandingCard
+              title='"남는게 없어요"'
+              subTitle="핵심 파악이 어려워, 책을 읽고 또 읽어도       
+              머릿속에 남는 게 없는 것 같아요."
+              isMobileScreen={isMobileScreen}>
+              <IcLandingMobileIcon01 />
+            </LandingCard>
+            <LandingCard
+              title='"정리가 어려워요"'
+              subTitle="책 속 수많은 지식들을 잘 정리하는 게 어렵고      
+          중요한 내용들을 빼먹었을까봐 두려워요."
+              isMobileScreen={isMobileScreen}>
+              <IcLandingMobileIcon02 />
+            </LandingCard>
+            <LandingCard
+              title='"효과가 적어요"'
+              subTitle="책을 읽는데 소요되는 시간에 비해 효과가        
+              적은 것 같아 내게 맞는 방식으로 읽고 있는지           
+              모르겠어요."
+              isMobileScreen={isMobileScreen}>
+              <IcLandingMobileIcon03 />
+            </LandingCard>
+          </MobileBottomWrapper>
+        </>
       ) : (
-        <StWrapper>
+        <>
           <StH2>책이 장벽으로 느껴졌던 적 없으신가요?</StH2>
           <p>책의 중요성은 알지만 여전히 독서는 어렵다고 생각되지 않나요?</p>
           <StCardsWrapper>
             <LandingCard
               title='"남는게 없어요"'
               subTitle="핵심 파악이 어려워, 책을 읽고 또 읽어도
-          머릿속에 남는 게 없는 것 같아요.">
+          머릿속에 남는 게 없는 것 같아요."
+              isMobileScreen={isMobileScreen}>
               <IcLandingIcon01 />
             </LandingCard>
             <LandingCard
               title='"정리가 어려워요"'
               subTitle="책 속 수많은 지식들을 잘 정리하는 게 어렵고      
-          중요한 내용들을 빼먹었을까봐 두려워요.">
+          중요한 내용들을 빼먹었을까봐 두려워요."
+              isMobileScreen={isMobileScreen}>
               <IcLandingIcon02 />
             </LandingCard>
             <LandingCard
               title='"효과가 적어요"'
-              subTitle="책을 읽는데 소요되는 시간에 비해 효과가 적은 것 같아 내게 맞는 방식으로 읽고 있는지 모르겠어요">
+              subTitle="책을 읽는데 소요되는 시간에 비해 효과가 적은 것 같아 내게 맞는 방식으로 읽고 있는지 모르겠어요."
+              isMobileScreen={isMobileScreen}>
               <IcLandingIcon03 />
             </LandingCard>
           </StCardsWrapper>
-        </StWrapper>
+        </>
       )}
-    </>
+    </StWrapper>
   );
 }
 
-const MobileWrapper = styled.section`
+const StWrapper = styled.section<{ isMobileScreen: boolean }>`
+  ${({ isMobileScreen }) =>
+    isMobileScreen
+      ? css`
+          padding: 0;
+          max-width: 32rem;
+        `
+      : css`
+          padding: 21rem 0 16rem 0;
+          width: 100%;
+        `}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  ${({ theme }) => theme.fonts.body0}
+`;
+
+const MobileTopWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,16 +124,13 @@ const MobileComment = styled.p`
   text-align: center;
 `;
 
-const StWrapper = styled.section`
+const MobileBottomWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: center;
 
-  padding: 21rem 0 16rem 0;
+  height: 68.8rem;
 
-  width: 100%;
-
-  ${({ theme }) => theme.fonts.body0}
+  background-color: ${({ theme }) => theme.colors.white200};
 `;
 
 const StH2 = styled.h2`

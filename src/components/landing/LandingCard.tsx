@@ -1,56 +1,87 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 interface LandingCardProps {
   title: string;
   subTitle: string;
+  isMobileScreen: boolean;
   children: React.SVGProps<SVGSVGElement>;
 }
 
 export default function LandingCard(props: LandingCardProps) {
-  const { title, subTitle, children } = props;
+  const { title, subTitle, isMobileScreen, children } = props;
 
   return (
-    <StCard>
+    <StCard isMobileScreen={isMobileScreen}>
       {children}
       <div>
-        <StH3>{title}</StH3>
-        <StSubtitle>{subTitle}</StSubtitle>
+        <StH3 isMobileScreen={isMobileScreen}>{title}</StH3>
+        <StSubtitle isMobileScreen={isMobileScreen}>{subTitle}</StSubtitle>
       </div>
     </StCard>
   );
 }
 
-const StCard = styled.article`
+const StCard = styled.article<{ isMobileScreen: boolean }>`
+  ${({ isMobileScreen }) =>
+    isMobileScreen
+      ? css`
+          justify-content: normal;
+
+          width: 32rem;
+
+          border-radius: 0;
+          box-shadow: 0;
+          padding: 6.4rem 4.4rem 0 4.4rem;
+          background-color: ${({ theme }) => theme.colors.white200};
+        `
+      : css`
+          justify-content: space-between;
+
+          width: 38.8rem;
+          height: 34.8rem;
+
+          border-radius: 0.8rem;
+          box-shadow: 0px 6px 10px 8px rgba(45, 45, 45, 0.04);
+          padding: 4rem 3.5rem 6.4rem 2.8rem;
+        `}
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  border-radius: 0.8rem;
-  box-shadow: 0px 6px 10px 8px rgba(45, 45, 45, 0.04);
-
-  padding: 4rem 3.5rem 6.4rem 2.8rem;
-
-  width: 38.8rem;
-  height: 34.8rem;
 
   ${({ theme }) => theme.fonts.body4}
   white-space: pre-wrap;
 
   & > svg {
-    width: 4.5rem;
-    height: 4.5rem;
-    margin-left: 0.7rem;
-
-    margin-bottom: 9.4rem;
+    margin-bottom: 2.4rem;
+    /* margin-bottom: 9.4rem;
+    margin-left: 0.7rem; */
   }
 `;
 
-const StH3 = styled.h3`
-  margin-bottom: 2.2rem;
-  ${({ theme }) => theme.fonts.header3}
+const StH3 = styled.h3<{ isMobileScreen: boolean }>`
+  ${({ isMobileScreen }) =>
+    isMobileScreen
+      ? css`
+          ${({ theme }) => theme.fonts.h4};
+          margin-bottom: 0.8rem;
+        `
+      : css`
+          ${({ theme }) => theme.fonts.header3};
+          margin-bottom: 2.2rem;
+        `}
+
   color: ${({ theme }) => theme.colors.gray100};
 `;
 
-const StSubtitle = styled.p`
-  width: 32.5rem;
+const StSubtitle = styled.p<{ isMobileScreen: boolean }>`
+  ${({ isMobileScreen }) =>
+    isMobileScreen
+      ? css`
+          width: 23rem;
+
+          ${({ theme }) => theme.fonts.Body2}
+          color: ${({ theme }) => theme.colors.gray300};
+        `
+      : css`
+          width: 32.5rem;
+        `}
 `;
