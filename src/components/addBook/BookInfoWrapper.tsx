@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
+import { escapeHtml } from "../../utils/escape";
 import ModalWrapper from "./ModalWrapper";
 import ShowModal from "./ShowModal";
 
@@ -29,19 +30,6 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
   const onToggleModal = useCallback(() => {
     setOpenModal(!openModal);
   }, [openModal]);
-
-  function escapeHtml(str: string) {
-    return (
-      str
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        // .replace(/&quot;/g, '"')
-        // ESLint 설정 때문에 작은 따옴표 표시 불가
-        .replace(/&#039;/g, "'")
-        .replace(/&#39;/g, "'")
-    );
-  }
 
   return (
     <>
