@@ -20,6 +20,7 @@ export default function PreNote() {
     isSave,
     handleOpenDrawer,
     handleCloseDrawer,
+    preventGoBack,
     saveReview,
     isPrevented,
     handlePrevent,
@@ -31,6 +32,7 @@ export default function PreNote() {
         number,
         boolean,
         (i: number) => void,
+        () => void,
         () => void,
         (body: PreNoteData | PeriNoteData) => Promise<void>,
         boolean,
@@ -111,6 +113,16 @@ export default function PreNote() {
   };
 
   useEffect(() => {
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      handleCloseDrawer();
+    };
+  }, []);
+
+  useEffect(() => {
     if (reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
@@ -130,11 +142,6 @@ export default function PreNote() {
       setIsFilled(false);
     }
   }, [data]);
-
-  useEffect(() => {
-    // unmount될 때 drawer 닫기
-    return handleCloseDrawer;
-  }, []);
 
   if (isLoading) {
     return <Loading />;

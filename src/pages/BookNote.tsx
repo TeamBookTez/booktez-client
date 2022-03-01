@@ -99,6 +99,11 @@ export default function BookNote() {
     setIsDrawerdefault(true);
   };
 
+  const preventGoBack = () => {
+    history.pushState(null, "", location.href);
+    handleExit();
+  };
+
   useEffect(() => {
     if (isSave) {
       const saveToast = setTimeout(() => {
@@ -143,6 +148,7 @@ export default function BookNote() {
           isSave,
           handleOpenDrawer,
           handleCloseDrawer,
+          preventGoBack,
           saveReview,
           isPrevented,
           handlePrevent,

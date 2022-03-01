@@ -20,7 +20,7 @@ export interface BookData {
 }
 
 export default function PeriNote() {
-  const [reviewId, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
+  const [reviewId, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, preventGoBack, saveReview] =
     useOutletContext<
       [
         number,
@@ -28,6 +28,7 @@ export default function PeriNote() {
         number,
         boolean,
         (i: number) => void,
+        () => void,
         () => void,
         (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
@@ -137,6 +138,16 @@ export default function PeriNote() {
   };
 
   useEffect(() => {
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      handleCloseDrawer();
+    };
+  }, []);
+
+  useEffect(() => {
     if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
       setIsPrevented(false);
     } else {
@@ -149,11 +160,6 @@ export default function PeriNote() {
       saveReview(data);
     }
   }, [isSave]);
-
-  useEffect(() => {
-    // unmount될 때 drawer 닫기
-    return handleCloseDrawer;
-  }, []);
 
   if (isLoading) {
     return <Loading />;
