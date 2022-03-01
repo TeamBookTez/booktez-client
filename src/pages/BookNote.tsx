@@ -91,7 +91,7 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   async function saveReview(body: PreNoteData | PeriNoteData) {
-    const apiKey = initIndex ? "peri" : "pre";
+    const apiKey = navIndex ? "peri" : "pre";
 
     patchBookNote(userToken, `/review/${reviewId}/${apiKey}`, body);
   }
@@ -142,7 +142,7 @@ export default function BookNote() {
           reviewId,
           fromUrl,
           userToken,
-          initIndex,
+          navIndex,
           isSave,
           handleOpenDrawer,
           handleCloseDrawer,

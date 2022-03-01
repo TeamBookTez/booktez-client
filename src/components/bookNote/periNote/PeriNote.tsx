@@ -20,7 +20,7 @@ export interface BookData {
 }
 
 export default function PeriNote() {
-  const [reviewId, fromUrl, userToken, initIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
+  const [reviewId, fromUrl, userToken, navIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
     useOutletContext<
       [
         number,
@@ -35,7 +35,11 @@ export default function PeriNote() {
     >();
 
   const { data, setData, isLoading } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
-    answerThree: { type: "", content: "", children: [{ type: "", content: "", children: [] }] },
+    answerThree: {
+      type: "ROOT",
+      content: "root",
+      children: [{ type: "question", content: "", children: [{ type: "answer", content: "", children: [] }] }],
+    },
     reviewSt: 3,
   });
 
@@ -146,7 +150,7 @@ export default function PeriNote() {
   }, [data.answerThree]);
 
   useEffect(() => {
-    if (initIndex && isSave) {
+    if (navIndex && isSave) {
       saveReview(data);
     }
   }, [isSave]);
