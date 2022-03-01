@@ -9,20 +9,23 @@ interface NavigatorProps {
   bookState: BookState;
   isPrevented: boolean;
   isDrawerDefault: () => void;
+  onSetIsSaveFalse: () => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, bookState, isPrevented, isDrawerDefault } = props;
+  const { navIndex, onNav, bookState, isPrevented, isDrawerDefault, onSetIsSaveFalse } = props;
 
   const navigate = useNavigate();
 
   const goToPre = () => {
+    onSetIsSaveFalse();
     navigate("", { state: bookState });
     onNav(0);
     isDrawerDefault();
   };
 
   const goToPeri = (isPrevented: boolean) => {
+    onSetIsSaveFalse();
     if (!isPrevented) {
       navigate("peri", { state: bookState });
       onNav(1);

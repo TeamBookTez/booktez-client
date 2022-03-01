@@ -100,6 +100,10 @@ export default function BookNote() {
     setIsDrawerdefault(true);
   };
 
+  const handleSetIsSaveFalse = () => {
+    setIsSave(false);
+  };
+
   useEffect(() => {
     if (isSave) {
       const saveToast = setTimeout(() => {
@@ -128,6 +132,7 @@ export default function BookNote() {
           bookState={bookState}
           isPrevented={isPrevented}
           isDrawerDefault={handleDrawerDefault}
+          onSetIsSaveFalse={handleSetIsSaveFalse}
         />
         {isSave && (
           <StSave>
