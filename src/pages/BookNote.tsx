@@ -110,10 +110,12 @@ export default function BookNote() {
   };
 
   useEffect(() => {
-    window.addEventListener("beforeunload", (e) => preventClose(e));
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
 
     return () => {
-      window.removeEventListener("beforeunload", (e) => preventClose(e));
+      window.removeEventListener("beforeunload", preventClose);
     };
   }, []);
 
