@@ -32,6 +32,8 @@ export default function QuestionThree(props: QuestionThreeProps) {
   };
 
   const handleAddInput = () => {
+    if (!isFilled) return;
+
     onChangeReview("questionList", [...questionList, ""]);
     setIsAdded(true);
   };
