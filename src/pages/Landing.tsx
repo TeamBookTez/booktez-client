@@ -15,6 +15,7 @@ import {
 } from "../components/landing";
 import MobileLandingHeader from "../components/landing/MobileLandingHeader";
 import MobileLandingOne from "../components/landing/MobileLandingOne";
+import MobileLandingTwo from "../components/landing/MobileLandingTwo";
 import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 import { Desktop, Mobile } from "../utils/useMediaQuery";
@@ -43,6 +44,7 @@ export default function Landing() {
             <MobileLandingHeader />
             <StMobileMain>
               <MobileLandingOne />
+              <MobileLandingTwo />
             </StMobileMain>
           </Mobile>
           <Desktop>
@@ -68,6 +70,7 @@ const StMobileMain = styled.main`
   align-items: center;
 
   min-width: 32rem;
+  max-width: 41.4rem;
 
   margin: 0 auto;
 `;

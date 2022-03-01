@@ -22,7 +22,7 @@ const StWrapper = styled.section`
   justify-content: center;
   align-items: center;
 
-  width: 41.4rem;
+  width: 100%;
   height: 57.5rem;
 
   background-image: url(${ImgLandingMobileBanner});
