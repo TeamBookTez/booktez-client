@@ -15,7 +15,6 @@ import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 export default function PreNote() {
   const [
     reviewId,
-    fromUrl,
     userToken,
     initIndex,
     isSave,
@@ -28,7 +27,6 @@ export default function PreNote() {
     useOutletContext<
       [
         number,
-        string,
         string,
         number,
         boolean,
@@ -96,7 +94,7 @@ export default function PreNote() {
     setOpenModal(false);
 
     // peri로 넘어가기
-    navigate("/book-note/peri", { state: { reviewId, fromUrl } });
+    navigate("/book-note/peri");
   };
 
   const handleOpenModal = () => {

@@ -1,30 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { BookState } from "../../pages/BookNote";
-
 interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
-  bookState: BookState;
   isPrevented: boolean;
   isDrawerDefault: () => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, bookState, isPrevented, isDrawerDefault } = props;
+  const { navIndex, onNav, isPrevented, isDrawerDefault } = props;
 
   const navigate = useNavigate();
 
   const goToPre = () => {
-    navigate("", { state: bookState });
+    navigate("");
     onNav(0);
     isDrawerDefault();
   };
 
   const goToPeri = (isPrevented: boolean) => {
     if (!isPrevented) {
-      navigate("peri", { state: bookState });
+      navigate("peri");
       onNav(1);
     }
     isDrawerDefault();

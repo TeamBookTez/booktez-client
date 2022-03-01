@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
-import { isLoginState } from "../../../utils/atom";
+import { isLoginState, navigatingBookInfoState } from "../../../utils/atom";
 import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
@@ -17,10 +17,12 @@ export default function BookCard(props: BookCardProps) {
   const { bookcaseInfo, pathKey } = props;
   const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
 
-  const [isPopUp, setIsPopUp] = useState(false);
-  const isLogin = useRecoilValue(isLoginState);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const [isPopUp, setIsPopUp] = useState(false);
+  const isLogin = useRecoilValue(isLoginState);
+  const setNavigatingBookInfo = useSetRecoilState(navigatingBookInfoState);
 
   const reviewUrl = reviewSt === 2 ? "/book-note" : reviewSt === 3 ? "/book-note/peri" : "/detail-book-note";
 
@@ -30,7 +32,8 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      navigate(reviewUrl, { state: { reviewId, title, fromUrl: pathname } });
+      setNavigatingBookInfo({ reviewId, title, fromUrl: pathname });
+      navigate(reviewUrl);
     }
   };
 
@@ -58,7 +61,7 @@ export default function BookCard(props: BookCardProps) {
         </StTextWrapper>
       </StBookCard>
       <StIcBin onClick={handlePopUp} />
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} pathKey={pathKey} /> : <></>}
+      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} pathKey={pathKey} /> : <></>}
     </StCardWrapper>
   );
 }

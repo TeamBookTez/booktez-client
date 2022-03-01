@@ -21,7 +21,7 @@ export default function ThirdStep() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -64,7 +64,7 @@ export default function ThirdStep() {
 
     postSignup().then(() => postLogin());
     handleIsAniTime(true);
-    setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
+    setTimeout(() => navigate("/signup/4", { state: "rightpath" }), 1000);
   };
 
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {

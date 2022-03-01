@@ -46,16 +46,18 @@ export default function MyPage() {
   };
 
   const getInfo = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
+    if (token) {
+      try {
+        const { data } = await getData(key, token);
 
-      if (data.success) {
-        setUserInfo(data.data);
+        if (data.success) {
+          setUserInfo(data.data);
+        } else {
+          setIsLogin(false);
+        }
+      } catch (err) {
+        setIsLogin(false);
       }
-    } catch (err) {
-      setIsLogin(false);
-
-      return setIsLoading(false);
     }
     setIsLoading(false);
   };
