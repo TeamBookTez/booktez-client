@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 import { IcLandingMobileFour02 } from "../../assets/icons";
 import { ImgLandingBookcase } from "../../assets/images";
-import { StMobileH2, StMobileParagraph, StMobileWrapper } from "./LandingFour";
 import { LandingMobileProps } from "./LandingHeader";
 import { StH2, StWrapper } from "./LandingThree";
+import { StH2Four, StParagraphFour, StWrapperFour } from "./MobileLandingFour";
 
 export default function LandingFive(props: LandingMobileProps) {
   const { isMobileScreen } = props;
@@ -12,18 +12,18 @@ export default function LandingFive(props: LandingMobileProps) {
   return (
     <>
       {isMobileScreen ? (
-        <StMobileWrapper>
-          <StMobileH2>
+        <StWrapperFour>
+          <StH2Four>
             읽을수록 쌓여가는 <br />
             <strong>성장의 만족감을 느껴보세요.</strong>
-          </StMobileH2>
-          <StMobileParagraph>
+          </StH2Four>
+          <StParagraphFour>
             나만의 북노트를 모아보고 내용을 재확인하며,
             <br />
             내가 읽은 책들을 모두 흡수해보세요.
-          </StMobileParagraph>
+          </StParagraphFour>
           <IcLandingMobileFour02 />
-        </StMobileWrapper>
+        </StWrapperFour>
       ) : (
         <StSection>
           <div>
