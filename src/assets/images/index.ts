@@ -21,6 +21,7 @@ export { default as ImgLandingBookcase } from "./landingBookcaseImage.png";
 export { default as ImgLandingBookNote } from "./landingBookNoteImage.png";
 export { default as ImgLanding01 } from "./landingImage01.png";
 export { default as ImgLanding02 } from "./landingImage02.png";
+export { default as ImgLandingMobileBanner } from "./landingMobileBanner.png";
 export { default as ImgLogin } from "./loginImage.png";
 export { default as GifLogo } from "./logoGif.gif";
 export { default as ImgMainBanner } from "./mainBannerImage.png";
