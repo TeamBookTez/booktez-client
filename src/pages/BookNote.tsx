@@ -105,6 +105,14 @@ export default function BookNote() {
   };
 
   useEffect(() => {
+    window.addEventListener("beforeunload", (e) => e.preventDefault());
+
+    return () => {
+      window.removeEventListener("beforeunload", (e) => e.preventDefault());
+    };
+  }, []);
+
+  useEffect(() => {
     if (isSave) {
       const saveToast = setTimeout(() => {
         setIsSave(false);
