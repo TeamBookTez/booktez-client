@@ -1,46 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { IcLandingMobileHeader, IcMainLogo } from "../../assets/icons";
+import { IcMainLogo } from "../../assets/icons";
 import { Button } from "../common/styled/Button";
 
-export interface LandingMobileProps {
-  isMobileScreen: boolean;
-}
-
-export default function LandingHeader(props: LandingMobileProps) {
-  const { isMobileScreen } = props;
+export default function LandingHeader() {
   const navigate = useNavigate();
 
   return (
     <>
-      {isMobileScreen ? (
-        <MobileHeader>
-          <IcLandingMobileHeader />
-        </MobileHeader>
-      ) : (
-        <StHeader>
-          <StLogo />
-          <StBtnWrapper>
-            <StBtnLogin onClick={() => navigate("/login")}>로그인</StBtnLogin>
-            <StBtnSignup onClick={() => navigate("/signup", { state: "rightpath" })}>회원가입</StBtnSignup>
-          </StBtnWrapper>
-        </StHeader>
-      )}
+      <StHeader>
+        <StLogo />
+        <StBtnWrapper>
+          <StBtnLogin onClick={() => navigate("/login")}>로그인</StBtnLogin>
+          <StBtnSignup onClick={() => navigate("/signup", { state: "rightpath" })}>회원가입</StBtnSignup>
+        </StBtnWrapper>
+      </StHeader>
     </>
   );
 }
-
-const MobileHeader = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 6rem;
-
-  max-width: 32rem;
-  margin: 0 auto;
-`;
 
 const StHeader = styled.header`
   display: flex;
