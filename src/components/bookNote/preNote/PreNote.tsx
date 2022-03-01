@@ -127,6 +127,12 @@ export default function PreNote() {
       handlePrevent(false);
       setIsFilled(true);
     }
+
+    if (answerOne && answerTwo && !questionList.includes("")) {
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
+    }
   }, [data]);
 
   useEffect(() => {
@@ -134,14 +140,6 @@ export default function PreNote() {
       saveReview(data);
     }
   }, [isSave]);
-
-  useEffect(() => {
-    if (answerOne && answerTwo && !questionList.includes("")) {
-      setIsFilled(true);
-    } else {
-      setIsFilled(false);
-    }
-  }, [data]);
 
   if (isLoading) {
     return <Loading />;
