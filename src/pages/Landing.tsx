@@ -15,6 +15,7 @@ import {
 } from "../components/landing";
 import MobileLandingHeader from "../components/landing/MobileLandingHeader";
 import MobileLandingOne from "../components/landing/MobileLandingOne";
+import MobileLandingThree from "../components/landing/MobileLandingThree";
 import MobileLandingTwo from "../components/landing/MobileLandingTwo";
 import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
@@ -45,6 +46,7 @@ export default function Landing() {
             <StMobileMain>
               <MobileLandingOne />
               <MobileLandingTwo />
+              <MobileLandingThree />
             </StMobileMain>
           </Mobile>
           <Desktop>
