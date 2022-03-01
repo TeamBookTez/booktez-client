@@ -18,7 +18,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
     onAddChild(pathArray, isQuestionChecked);
@@ -41,7 +41,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   };
 
   const handleAddChildByEnter = (
-    e: React.KeyboardEvent<HTMLInputElement>,
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => {
@@ -53,10 +53,17 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
+
+      const scrollHeight = textAreaRef.current.scrollHeight;
+
+      // 높이가 달라질 때만 높이 변경
+      if (textAreaRef.current.style.height !== `${scrollHeight / 10}rem`) {
+        textAreaRef.current.style.height = `${scrollHeight / 10}rem`;
+      }
     }
-  }, []);
+  }, [node.content]);
 
   return (
     <StFieldset>
@@ -65,7 +72,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           <StAnswerIcon />
         </legend>
         <StInput
-          ref={inputRef}
+          ref={textAreaRef}
           value={node.content}
           placeholder={"답변을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
@@ -130,13 +137,17 @@ const StAnswerIcon = styled(IcPeriAnswer)`
   left: 3.8rem;
 `;
 
-const StInput = styled.input`
+const StInput = styled.textarea`
   flex: 1;
   margin-left: 5.6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

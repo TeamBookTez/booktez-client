@@ -18,7 +18,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
@@ -27,15 +27,14 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   };
 
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.focus();
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
 
-      textareaRef.current.style.height = "3rem";
-      const scrollHeight = textareaRef.current.scrollHeight;
+      const scrollHeight = textAreaRef.current.scrollHeight;
 
       // 높이가 달라질 때만 높이 변경
-      if (textareaRef.current.style.height !== `${scrollHeight / 10}rem`) {
-        textareaRef.current.style.height = `${scrollHeight / 10}rem`;
+      if (textAreaRef.current.style.height !== `${scrollHeight / 10}rem`) {
+        textAreaRef.current.style.height = `${scrollHeight / 10}rem`;
       }
     }
   }, [node.content]);
@@ -47,7 +46,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           <StQuestionIcon />
         </legend>
         <StInput
-          ref={textareaRef}
+          ref={textAreaRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
           onChange={(e) => onSetContent(path, e.target.value)}
@@ -103,7 +102,6 @@ const StInput = styled.textarea`
   flex: 1;
   margin: 0;
   ${({ theme }) => theme.fonts.header4}
-  height: 2.6rem;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
