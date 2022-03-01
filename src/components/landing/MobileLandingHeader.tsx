@@ -16,8 +16,8 @@ const StHeader = styled.header`
   justify-content: center;
   align-items: center;
 
+  min-width: 32rem;
   height: 6rem;
 
-  max-width: 32rem;
-  margin: 0 auto;
+  margin: 2.4rem auto 0 auto;
 `;

@@ -14,6 +14,7 @@ import {
   LandingTwo,
 } from "../components/landing";
 import MobileLandingHeader from "../components/landing/MobileLandingHeader";
+import MobileLandingOne from "../components/landing/MobileLandingOne";
 import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 import { Desktop, Mobile } from "../utils/useMediaQuery";
@@ -40,7 +41,9 @@ export default function Landing() {
         <>
           <Mobile>
             <MobileLandingHeader />
-            <StMobileMain></StMobileMain>
+            <StMobileMain>
+              <MobileLandingOne />
+            </StMobileMain>
           </Mobile>
           <Desktop>
             <LandingHeader />
