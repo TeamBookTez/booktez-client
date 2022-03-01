@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Loading } from "../components/common";
 import {
@@ -14,17 +13,15 @@ import {
   LandingThree,
   LandingTwo,
 } from "../components/landing";
+import MobileLandingHeader from "../components/landing/MobileLandingHeader";
 import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
+import { Desktop, Mobile } from "../utils/useMediaQuery";
 
 export default function Landing() {
   const navigate = useNavigate();
   const { isLogin, isLoginLoading } = useCheckLoginState();
   const setIsLogin = useSetRecoilState(isLoginState);
-
-  const isMobileScreen = useMediaQuery({
-    query: "(max-width: 415px)",
-  });
 
   useEffect(() => {
     if (isLogin) {
@@ -41,33 +38,41 @@ export default function Landing() {
         <Loading />
       ) : (
         <>
-          <LandingHeader isMobileScreen={isMobileScreen} />
-          <StMain isMobileScreen={isMobileScreen}>
-            <LandingOne isMobileScreen={isMobileScreen} />
-            <LandingTwo isMobileScreen={isMobileScreen} />
-            <LandingThree isMobileScreen={isMobileScreen} />
-            <LandingFour isMobileScreen={isMobileScreen} />
-            <LandingFive isMobileScreen={isMobileScreen} />
-          </StMain>
-          <LandingFooter isMobileScreen={isMobileScreen} />
+          <Mobile>
+            <MobileLandingHeader />
+            <StMobileMain></StMobileMain>
+          </Mobile>
+          <Desktop>
+            <LandingHeader />
+            <StMain>
+              <LandingOne />
+              <LandingTwo />
+              <LandingThree />
+              <LandingFour />
+              <LandingFive />
+            </StMain>
+            <LandingFooter />
+          </Desktop>
         </>
       )}
     </>
   );
 }
 
-const StMain = styled.main<{ isMobileScreen: boolean }>`
-  ${({ isMobileScreen }) =>
-    isMobileScreen
-      ? css`
-          padding: 0;
-          max-width: 32rem;
-          margin: 0 auto;
-        `
-      : css`
-          padding: 0 11.5rem;
-        `}
+const StMobileMain = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  min-width: 32rem;
+
+  margin: 0 auto;
+`;
+
+const StMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0 11.5rem;
 `;
