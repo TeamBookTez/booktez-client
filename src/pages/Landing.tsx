@@ -13,6 +13,7 @@ import {
   LandingThree,
   LandingTwo,
 } from "../components/landing";
+import MobileLandingFive from "../components/landing/MobileLandingFive";
 import MobileLandingFour from "../components/landing/MobileLandingFour";
 import MobileLandingHeader from "../components/landing/MobileLandingHeader";
 import MobileLandingOne from "../components/landing/MobileLandingOne";
@@ -49,6 +50,7 @@ export default function Landing() {
               <MobileLandingTwo />
               <MobileLandingThree />
               <MobileLandingFour />
+              <MobileLandingFive />
             </StMobileMain>
           </Mobile>
           <Desktop>
