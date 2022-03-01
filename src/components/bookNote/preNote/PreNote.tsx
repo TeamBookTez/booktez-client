@@ -16,7 +16,7 @@ export default function PreNote() {
   const [
     reviewId,
     userToken,
-    initIndex,
+    navIndex,
     isSave,
     handleOpenDrawer,
     handleCloseDrawer,
@@ -47,7 +47,7 @@ export default function PreNote() {
     reviewSt: 2,
     finishSt: false,
   });
-  const { answerOne, answerTwo, questionList, reviewSt, finishSt } = data;
+  const { answerOne, answerTwo, questionList, reviewSt } = data;
 
   const [isFilled, setIsFilled] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -69,10 +69,11 @@ export default function PreNote() {
 
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
-    if (!finishSt) {
-      handleChangeReview("reviewSt", 3);
+    if (!data.finishSt) {
+      patchBookNote(userToken, `/review/${reviewId}/pre`, { ...data, reviewSt: 3 });
+    } else {
+      patchBookNote(userToken, `/review/${reviewId}/pre`, data);
     }
-    patchBookNote(userToken, `/review/${reviewId}/pre`, data);
 
     if (reviewSt === 2) {
       const questionFromPre: PeriNoteTreeNode[] = [];
@@ -80,6 +81,7 @@ export default function PreNote() {
       data.questionList.map((content) => {
         questionFromPre.push({ type: "question", content, children: [{ type: "answer", content: "", children: [] }] });
       });
+
       patchBookNote(userToken, `review/${reviewId}/peri`, {
         answerThree: {
           type: "Root",
@@ -87,6 +89,7 @@ export default function PreNote() {
           children: questionFromPre,
         },
         reviewSt: 3,
+        finishSt: false,
       });
     }
 
@@ -126,6 +129,8 @@ export default function PreNote() {
     if (reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
+    } else {
+      handlePrevent(true);
     }
 
     if (answerOne && answerTwo && !questionList.includes("")) {
@@ -136,7 +141,7 @@ export default function PreNote() {
   }, [data]);
 
   useEffect(() => {
-    if (!initIndex && isSave) {
+    if (!navIndex && isSave) {
       saveReview(data);
     }
   }, [isSave]);

@@ -1,6 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { IcLandingIcon01, IcLandingIcon02, IcLandingIcon03 } from "../../assets/icons";
+import {
+  IcLandingIcon01,
+  IcLandingIcon02,
+  IcLandingIcon03,
+  IcLandingMobileIcon01,
+  IcLandingMobileIcon02,
+  IcLandingMobileIcon03,
+} from "../../assets/icons";
 import { LandingCard } from ".";
 
 export default function LandingTwo() {
@@ -23,7 +30,7 @@ export default function LandingTwo() {
         </LandingCard>
         <LandingCard
           title='"효과가 적어요"'
-          subTitle="책을 읽는데 소요되는 시간에 비해 효과가 적은 것 같아 내게 맞는 방식으로 읽고 있는지 모르겠어요">
+          subTitle="책을 읽는데 소요되는 시간에 비해 효과가 적은 것 같아 내게 맞는 방식으로 읽고 있는지 모르겠어요.">
           <IcLandingIcon03 />
         </LandingCard>
       </StCardsWrapper>
@@ -32,13 +39,12 @@ export default function LandingTwo() {
 }
 
 const StWrapper = styled.section`
+  padding: 21rem 0 16rem 0;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 21rem 0 16rem 0;
-
-  width: 100%;
 
   ${({ theme }) => theme.fonts.body0}
 `;

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
 import { IcMore, IcPeriQuestion } from "../../../assets/icons";
@@ -18,17 +19,25 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
+  const handleContent = (pathArray: number[], value: string) => {
+    if (value !== "\n") {
+      onSetContent(pathArray, value);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
-      onAddChild(pathArray, isQuestion);
+      if (!e.shiftKey) {
+        onAddChild(pathArray, isQuestion);
+      }
     }
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
     }
   }, []);
 
@@ -39,11 +48,11 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           <StQuestionIcon />
         </legend>
         <StInput
-          ref={inputRef}
+          ref={textAreaRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
-          onChange={(e) => onSetContent(path, e.target.value)}
-          onKeyPress={(e) => handleAddChildByEnter(e, path)}
+          onChange={(e) => handleContent(path, e.target.value)}
+          onKeyPress={(e) => handleKeyPress(e, path)}
         />
         <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
           답변
@@ -91,12 +100,18 @@ const StQuestionIcon = styled(IcPeriQuestion)`
   left: 0.8rem;
 `;
 
-const StInput = styled.input`
+const StInput = styled(TextareaAutosize)`
   flex: 1;
+  margin: 0;
+  min-height: 2.6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

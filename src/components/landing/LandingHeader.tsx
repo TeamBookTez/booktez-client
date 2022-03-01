@@ -8,13 +8,15 @@ export default function LandingHeader() {
   const navigate = useNavigate();
 
   return (
-    <StHeader>
-      <StLogo />
-      <StBtnWrapper>
-        <StBtnLogin onClick={() => navigate("/login")}>로그인</StBtnLogin>
-        <StBtnSignup onClick={() => navigate("/signup", { state: "rightpath" })}>회원가입</StBtnSignup>
-      </StBtnWrapper>
-    </StHeader>
+    <>
+      <StHeader>
+        <StLogo />
+        <StBtnWrapper>
+          <StBtnLogin onClick={() => navigate("/login")}>로그인</StBtnLogin>
+          <StBtnSignup onClick={() => navigate("/signup", { state: "rightpath" })}>회원가입</StBtnSignup>
+        </StBtnWrapper>
+      </StHeader>
+    </>
   );
 }
 

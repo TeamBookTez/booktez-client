@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
@@ -18,14 +19,16 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
     onAddChild(pathArray, isQuestionChecked);
   };
 
   const handleChangeSetContent = (pathArray: number[], value: string) => {
-    onSetContent(pathArray, value);
+    if (value !== "\n") {
+      onSetContent(pathArray, value);
+    }
   };
 
   const handleClickDeleteChild = (pathArray: number[]) => {
@@ -40,21 +43,23 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     handleClickAddChild(pathArray, isQuestionChecked);
   };
 
-  const handleAddChildByEnter = (
-    e: React.KeyboardEvent<HTMLInputElement>,
+  const handleKeyPress = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => {
-    const p = isQuestionChecked ? pathArray : pathArray.slice(0, -1);
-
     if (e.key === "Enter") {
-      handleClickAddChild(p, isQuestionChecked);
+      if (!e.shiftKey) {
+        const p = isQuestionChecked ? pathArray : pathArray.slice(0, -1);
+
+        handleClickAddChild(p, isQuestionChecked);
+      }
     }
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
     }
   }, []);
 
@@ -65,11 +70,11 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           <StAnswerIcon />
         </legend>
         <StInput
-          ref={inputRef}
+          ref={textAreaRef}
           value={node.content}
           placeholder={"답변을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
-          onKeyPress={(e) => handleAddChildByEnter(e, path, isQuestion)}
+          onKeyPress={(e) => handleKeyPress(e, path, isQuestion)}
         />
         <StMore className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
@@ -91,7 +96,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddQuestion={(e, p, isQ) => handleClickAddQuestion(e, p, isQ)}
-            onAddChildByEnter={(e, p, isQ) => handleAddChildByEnter(e, p, isQ)}
+            onAddChildByEnter={(e, p, isQ) => handleKeyPress(e, p, isQ)}
           />
         ))}
     </StFieldset>
@@ -130,13 +135,18 @@ const StAnswerIcon = styled(IcPeriAnswer)`
   left: 3.8rem;
 `;
 
-const StInput = styled.input`
+const StInput = styled(TextareaAutosize)`
   flex: 1;
   margin-left: 5.6rem;
   ${({ theme }) => theme.fonts.header4}
+  min-height: 2.6rem;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

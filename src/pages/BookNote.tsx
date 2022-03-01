@@ -90,7 +90,7 @@ export default function BookNote() {
 
   // 저장만 하기 - 수정 완료는 아님
   async function saveReview(body: PreNoteData | PeriNoteData) {
-    const apiKey = initIndex ? "peri" : "pre";
+    const apiKey = navIndex ? "peri" : "pre";
 
     patchBookNote(userToken, `/review/${reviewId}/${apiKey}`, body);
   }
@@ -119,6 +119,10 @@ export default function BookNote() {
     };
   }, []);
 
+  const handleSetIsSaveFalse = () => {
+    setIsSave(false);
+  };
+
   useEffect(() => {
     if (isSave) {
       const saveToast = setTimeout(() => {
@@ -145,7 +149,8 @@ export default function BookNote() {
           navIndex={navIndex}
           onNav={handleNav}
           isPrevented={isPrevented}
-          isDrawerDefault={handleDrawerDefault}
+          onSetDrawerAsDefault={handleDrawerDefault}
+          onSetIsSaveFalse={handleSetIsSaveFalse}
         />
         {isSave && (
           <StSave>
@@ -159,7 +164,7 @@ export default function BookNote() {
         context={[
           reviewId,
           userToken,
-          initIndex,
+          navIndex,
           isSave,
           handleOpenDrawer,
           handleCloseDrawer,
