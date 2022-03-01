@@ -46,13 +46,13 @@ export default function Landing() {
         <>
           <Mobile>
             <MobileLandingHeader />
-            <StMobileMain>
-              <MobileLandingOne />
-              <MobileLandingTwo />
-              <MobileLandingThree />
-              <MobileLandingFour />
-              <MobileLandingFive />
-            </StMobileMain>
+            {/* <StMobileMain> */}
+            <MobileLandingOne />
+            <MobileLandingTwo />
+            <MobileLandingThree />
+            <MobileLandingFour />
+            <MobileLandingFive />
+            {/* </StMobileMain> */}
             <MobileLandingFooter />
           </Mobile>
           <Desktop>
@@ -72,7 +72,7 @@ export default function Landing() {
   );
 }
 
-const StMobileMain = styled.main`
+export const StMobileMain = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
