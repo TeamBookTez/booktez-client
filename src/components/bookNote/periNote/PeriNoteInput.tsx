@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { IcAnswerLabel } from "../../../assets/icons";
 import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { StAddAnswerButton, StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
@@ -43,9 +42,16 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (textAreaRef.current && isQuestion) {
-      textAreaRef.current.focus();
+    if (textAreaRef.current) {
+      if (isQuestion) {
+        textAreaRef.current.focus();
+      }
+      textAreaRef.current.style.height = " 2.9rem";
+    }
+  }, []);
 
+  useEffect(() => {
+    if (textAreaRef.current) {
       const scrollHeight = textAreaRef.current.scrollHeight;
 
       // 높이가 달라질 때만 높이 변경
@@ -132,11 +138,13 @@ const StQuestionLabel = styled.label<{ bgcolor: string }>`
   color: ${({ color, theme }) => (color ? color : theme.colors.white)};
 `;
 
-const StAnswerLabel = styled(IcAnswerLabel)<{ labelcolor: string }>`
+const StAnswerLabel = styled.div<{ labelcolor: string }>`
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 7.6rem;
-  fill: ${({ labelcolor }) => labelcolor};
+  width: 0.3rem;
+  background-color: ${({ labelcolor }) => labelcolor};
 `;
 
 const StInputWrapper = styled.div<{ isanswer: boolean }>`

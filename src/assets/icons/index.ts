@@ -1,6 +1,5 @@
 export { ReactComponent as Ic404 } from "./404Icon.svg";
 export { ReactComponent as IcAlert } from "./alertIcon.svg";
-export { ReactComponent as IcAnswerLabel } from "./answerLabelIcon.svg";
 export { ReactComponent as IcBin } from "./binIcon.svg";
 export { ReactComponent as IcBookcase } from "./bookcaseIcon.svg";
 export { ReactComponent as IcBooks } from "./booksIcon.svg";

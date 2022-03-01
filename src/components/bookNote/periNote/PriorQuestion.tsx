@@ -29,7 +29,12 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.focus();
+      textAreaRef.current.style.height = " 2.6rem";
+    }
+  }, []);
 
+  useEffect(() => {
+    if (textAreaRef.current) {
       const scrollHeight = textAreaRef.current.scrollHeight;
 
       // 높이가 달라질 때만 높이 변경

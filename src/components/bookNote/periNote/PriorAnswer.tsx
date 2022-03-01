@@ -55,7 +55,12 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.focus();
+      textAreaRef.current.style.height = " 2.6rem";
+    }
+  }, []);
 
+  useEffect(() => {
+    if (textAreaRef.current) {
       const scrollHeight = textAreaRef.current.scrollHeight;
 
       // 높이가 달라질 때만 높이 변경
@@ -141,6 +146,7 @@ const StInput = styled.textarea`
   flex: 1;
   margin-left: 5.6rem;
   ${({ theme }) => theme.fonts.header4}
+  height: 2.6rem;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
