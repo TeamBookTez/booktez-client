@@ -30,6 +30,19 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
     setOpenModal(!openModal);
   }, [openModal]);
 
+  function escapeHtml(str: string) {
+    return (
+      str
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        // .replace(/&quot;/g, '"')
+        // ESLint 설정 때문에 작은 따옴표 표시 불가
+        .replace(/&#039;/g, "'")
+        .replace(/&#39;/g, "'")
+    );
+  }
+
   return (
     <>
       <StArticle onClick={onToggleModal}>
@@ -60,7 +73,7 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
             </InfoLabel>
           </InfoLabelWrapper>
-          <InfoSummary>{contents}</InfoSummary>
+          <InfoSummary>{escapeHtml(contents)}</InfoSummary>
         </StInfoWrapper>
       </StArticle>
       {openModal && (

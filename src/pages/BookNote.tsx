@@ -99,6 +99,26 @@ export default function BookNote() {
     setIsDrawerdefault(true);
   };
 
+  const preventGoBack = () => {
+    history.pushState(null, "", location.href);
+    handleExit();
+  };
+
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = ""; //deprecated
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
+
   const handleSetIsSaveFalse = () => {
     setIsSave(false);
   };
@@ -148,6 +168,7 @@ export default function BookNote() {
           isSave,
           handleOpenDrawer,
           handleCloseDrawer,
+          preventGoBack,
           saveReview,
           isPrevented,
           handlePrevent,

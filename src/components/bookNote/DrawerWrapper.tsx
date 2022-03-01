@@ -93,8 +93,8 @@ const StDrawerWrapper = styled(motion.section)<StDrawerWrapperProps>`
   background-color: ${({ theme }) => theme.colors.white};
 
   width: ${({ idx }) => (idx === 4 ? "60rem" : "39rem")};
-  height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")};
-  min-height: 100%;
+  /* height: ${({ idx }) => (idx === 4 ? "141.5rem" : "90rem")}; */
+  min-height: 100vh;
 
   & > svg {
     width: 4.4rem;
@@ -146,9 +146,6 @@ const StArticle = styled.article<{ idx: number }>`
     idx === 4
       ? css`
           align-items: flex-start;
-          /* & article {
-            padding-left: 2rem;
-          } */
         `
       : ""}
 
@@ -157,5 +154,5 @@ const StArticle = styled.article<{ idx: number }>`
   background-color: ${({ theme }) => theme.colors.white200};
 
   width: ${({ idx }) => (idx === 4 ? "53.4rem" : "32.4rem")};
-  height: ${({ idx }) => (idx === 4 ? "104.3rem" : "53.4rem")};
+  min-height: ${({ idx }) => (idx === 4 ? "104.3rem" : "53.4rem")};
 `;

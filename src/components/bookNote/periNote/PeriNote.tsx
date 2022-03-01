@@ -20,7 +20,7 @@ export interface BookData {
 }
 
 export default function PeriNote() {
-  const [reviewId, userToken, navIndex, isSave, handleOpenDrawer, handleCloseDrawer, saveReview] =
+  const [reviewId, userToken, navIndex, isSave, handleOpenDrawer, handleCloseDrawer, preventGoBack, saveReview] =
     useOutletContext<
       [
         number,
@@ -28,6 +28,8 @@ export default function PeriNote() {
         number,
         boolean,
         (i: number) => void,
+        () => void,
+        () => void,
         () => void,
         (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
@@ -139,6 +141,16 @@ export default function PeriNote() {
     );
     setOpenSubmitModal(true);
   };
+
+  useEffect(() => {
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      handleCloseDrawer();
+    };
+  }, []);
 
   useEffect(() => {
     if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
