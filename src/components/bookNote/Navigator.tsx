@@ -10,7 +10,7 @@ interface NavigatorProps {
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, bookState, isPrevented, onSetDrawerAsDefault, onSetIsSaveFalse } = props;
+  const { navIndex, onNav, isPrevented, onSetDrawerAsDefault, onSetIsSaveFalse } = props;
 
   const navigate = useNavigate();
 

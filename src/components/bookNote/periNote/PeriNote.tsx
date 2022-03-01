@@ -30,7 +30,6 @@ export default function PeriNote() {
         (i: number) => void,
         () => void,
         () => void,
-        () => void,
         (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
     >();
