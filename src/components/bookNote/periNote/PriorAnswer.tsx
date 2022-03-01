@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
@@ -25,7 +26,9 @@ export default function PriorAnswer(props: PriorAnswerProps) {
   };
 
   const handleChangeSetContent = (pathArray: number[], value: string) => {
-    onSetContent(pathArray, value);
+    if (value !== "\n") {
+      onSetContent(pathArray, value);
+    }
   };
 
   const handleClickDeleteChild = (pathArray: number[]) => {
@@ -40,35 +43,25 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     handleClickAddChild(pathArray, isQuestionChecked);
   };
 
-  const handleAddChildByEnter = (
+  const handleKeyPress = (
     e: React.KeyboardEvent<HTMLTextAreaElement>,
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => {
-    const p = isQuestionChecked ? pathArray : pathArray.slice(0, -1);
-
     if (e.key === "Enter") {
-      handleClickAddChild(p, isQuestionChecked);
+      if (!e.shiftKey) {
+        const p = isQuestionChecked ? pathArray : pathArray.slice(0, -1);
+
+        handleClickAddChild(p, isQuestionChecked);
+      }
     }
   };
 
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.focus();
-      textAreaRef.current.style.height = " 2.6rem";
     }
   }, []);
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      const scrollHeight = textAreaRef.current.scrollHeight;
-
-      // 높이가 달라질 때만 높이 변경
-      if (textAreaRef.current.style.height !== `${scrollHeight / 10}rem`) {
-        textAreaRef.current.style.height = `${scrollHeight / 10}rem`;
-      }
-    }
-  }, [node.content]);
 
   return (
     <StFieldset>
@@ -81,7 +74,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           value={node.content}
           placeholder={"답변을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
-          onKeyPress={(e) => handleAddChildByEnter(e, path, isQuestion)}
+          onKeyPress={(e) => handleKeyPress(e, path, isQuestion)}
         />
         <StMore className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
@@ -103,7 +96,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddQuestion={(e, p, isQ) => handleClickAddQuestion(e, p, isQ)}
-            onAddChildByEnter={(e, p, isQ) => handleAddChildByEnter(e, p, isQ)}
+            onAddChildByEnter={(e, p, isQ) => handleKeyPress(e, p, isQ)}
           />
         ))}
     </StFieldset>
@@ -142,11 +135,11 @@ const StAnswerIcon = styled(IcPeriAnswer)`
   left: 3.8rem;
 `;
 
-const StInput = styled.textarea`
+const StInput = styled(TextareaAutosize)`
   flex: 1;
   margin-left: 5.6rem;
   ${({ theme }) => theme.fonts.header4}
-  height: 2.6rem;
+  min-height: 2.6rem;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};

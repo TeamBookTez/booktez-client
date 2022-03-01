@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import theme from "../../../styles/theme";
@@ -42,24 +43,10 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (textAreaRef.current) {
-      if (isQuestion) {
-        textAreaRef.current.focus();
-      }
-      textAreaRef.current.style.height = " 2.9rem";
+    if (textAreaRef.current && isQuestion) {
+      textAreaRef.current.focus();
     }
   }, []);
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      const scrollHeight = textAreaRef.current.scrollHeight;
-
-      // 높이가 달라질 때만 높이 변경
-      if (textAreaRef.current.style.height !== `${scrollHeight / 10}rem`) {
-        textAreaRef.current.style.height = `${scrollHeight / 10}rem`;
-      }
-    }
-  }, [node.content]);
 
   return (
     <>
@@ -169,9 +156,9 @@ const StInputWrapper = styled.div<{ isanswer: boolean }>`
   min-height: 5.4rem;
 `;
 
-const StInput = styled.textarea`
+const StInput = styled(TextareaAutosize)`
   flex: 1;
-  height: 2.9rem;
+  min-height: 2.9rem;
 
   ${({ theme }) => theme.fonts.body4}
   color: ${({ theme }) => theme.colors.gray200};

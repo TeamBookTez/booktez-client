@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
 import { IcMore, IcPeriQuestion } from "../../../assets/icons";
@@ -20,29 +21,25 @@ export default function PriorQuestion(props: PriorQuestionProps) {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+  const handleContent = (pathArray: number[], value: string) => {
+    if (value !== "\n") {
+      onSetContent(pathArray, value);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
-      onAddChild(pathArray, isQuestion);
+      if (!e.shiftKey) {
+        onAddChild(pathArray, isQuestion);
+      }
     }
   };
 
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.focus();
-      textAreaRef.current.style.height = " 2.6rem";
     }
   }, []);
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      const scrollHeight = textAreaRef.current.scrollHeight;
-
-      // 높이가 달라질 때만 높이 변경
-      if (textAreaRef.current.style.height !== `${scrollHeight / 10}rem`) {
-        textAreaRef.current.style.height = `${scrollHeight / 10}rem`;
-      }
-    }
-  }, [node.content]);
 
   return (
     <>
@@ -54,8 +51,8 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           ref={textAreaRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
-          onChange={(e) => onSetContent(path, e.target.value)}
-          onKeyPress={(e) => handleAddChildByEnter(e, path)}
+          onChange={(e) => handleContent(path, e.target.value)}
+          onKeyPress={(e) => handleKeyPress(e, path)}
         />
         <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
           답변
@@ -103,9 +100,10 @@ const StQuestionIcon = styled(IcPeriQuestion)`
   left: 0.8rem;
 `;
 
-const StInput = styled.textarea`
+const StInput = styled(TextareaAutosize)`
   flex: 1;
   margin: 0;
+  min-height: 2.6rem;
   ${({ theme }) => theme.fonts.header4}
 
   &:placeholder {
