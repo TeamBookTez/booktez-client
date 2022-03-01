@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
-import { IcAnswerLabel } from "../../../assets/icons";
 import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { StAddAnswerButton, StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
@@ -17,7 +17,7 @@ interface PeriNoteInputProps {
     pathArray: number[],
     isQuestionChecked: boolean,
   ) => void;
-  onAddChildByEnter: (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[], isQuestion: boolean) => void;
+  onAddChildByEnter: (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[], isQuestion: boolean) => void;
 }
 
 export const labelColorList = [
@@ -40,11 +40,11 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 8 지우기
   // 첫 시작 root 때문에 1을 빼야 함
   const labelColor = labelColorList[(path.length - 1) % 10];
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (inputRef.current && isQuestion) {
-      inputRef.current.focus();
+    if (textAreaRef.current && isQuestion) {
+      textAreaRef.current.focus();
     }
   }, []);
 
@@ -59,7 +59,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         )}
         <StInputWrapper isanswer={!isQuestion}>
           <StInput
-            ref={inputRef}
+            ref={textAreaRef}
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
             onChange={(e) => onSetContent(path, e.target.value)}
@@ -125,11 +125,13 @@ const StQuestionLabel = styled.label<{ bgcolor: string }>`
   color: ${({ color, theme }) => (color ? color : theme.colors.white)};
 `;
 
-const StAnswerLabel = styled(IcAnswerLabel)<{ labelcolor: string }>`
+const StAnswerLabel = styled.div<{ labelcolor: string }>`
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 7.6rem;
-  fill: ${({ labelcolor }) => labelcolor};
+  width: 0.3rem;
+  background-color: ${({ labelcolor }) => labelcolor};
 `;
 
 const StInputWrapper = styled.div<{ isanswer: boolean }>`
@@ -151,17 +153,22 @@ const StInputWrapper = styled.div<{ isanswer: boolean }>`
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   padding-left: 2.4rem;
   padding-right: 1.6rem;
-  height: 5.4rem;
+  min-height: 5.4rem;
 `;
 
-const StInput = styled.input`
+const StInput = styled(TextareaAutosize)`
   flex: 1;
+  min-height: 2.9rem;
 
   ${({ theme }) => theme.fonts.body4}
   color: ${({ theme }) => theme.colors.gray200};
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

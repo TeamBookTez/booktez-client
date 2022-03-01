@@ -5,26 +5,29 @@ interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
   isPrevented: boolean;
-  isDrawerDefault: () => void;
+  onSetDrawerAsDefault: () => void;
+  onSetIsSaveFalse: () => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isPrevented, isDrawerDefault } = props;
+  const { navIndex, onNav, bookState, isPrevented, onSetDrawerAsDefault, onSetIsSaveFalse } = props;
 
   const navigate = useNavigate();
 
   const goToPre = () => {
+    onSetIsSaveFalse();
     navigate("");
     onNav(0);
-    isDrawerDefault();
+    onSetDrawerAsDefault();
   };
 
   const goToPeri = (isPrevented: boolean) => {
+    onSetIsSaveFalse();
     if (!isPrevented) {
       navigate("peri");
       onNav(1);
     }
-    isDrawerDefault();
+    onSetDrawerAsDefault();
   };
 
   return (

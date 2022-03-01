@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -46,17 +47,10 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
           data: { data },
         } = await client(token).get(key);
 
-        if (data.questionList && !data.questionList.length) {
-          // 버그? 사용자가 질문 리스트를 모두 지우고 저장해도 다시 빈 input이 생성됨
-          // 처음 추가된 책의 review에 대해서 서버에서 questionList를 []가 아닌 [""]로 주면 해결될 듯
-          setData({ ...data, questionList: [""] });
-        } else if (data.answerThree && !data.answerThree.children.length) {
-          setData({
-            ...data,
-            answerThree: { type: "", content: "", children: [{ type: "", content: "", children: [] }] },
-          });
-        } else {
-          setData(data);
+        setData(data);
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          console.log(err.response);
         }
       } finally {
         setIsLoading(false);
