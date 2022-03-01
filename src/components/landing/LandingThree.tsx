@@ -34,6 +34,7 @@ const StImgLanding02 = styled.img`
 
 export const StH2 = styled.h2`
   margin-bottom: 4.2rem;
+
   ${({ theme }) => theme.fonts.header00}
   color: ${({ theme }) => theme.colors.gray100};
 `;

@@ -5,19 +5,13 @@ import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 
-interface BookState {
-  fromUrl: string;
-  reviewId: number;
-}
-
 interface CompleteProps {
   bookData: BookData;
-  bookState: BookState;
 }
 
 export default function Complete(props: CompleteProps) {
   const navigate = useNavigate();
-  const { bookData, bookState } = props;
+  const { bookData } = props;
 
   const { author, publicationDt, thumbnail, title, translator } = bookData;
 
@@ -44,7 +38,7 @@ export default function Complete(props: CompleteProps) {
           <StMainButton type="button" onClick={() => navigate("/main")}>
             메인으로
           </StMainButton>
-          <StCompleteButton type="button" onClick={() => navigate("/detail-book-note", { state: bookState })}>
+          <StCompleteButton type="button" onClick={() => navigate("/detail-book-note")}>
             북노트 확인
           </StCompleteButton>
         </StButtonWrapper>

@@ -28,7 +28,7 @@ const StSection = styled(StWrapper)`
 `;
 
 const StParagraph = styled.p`
-  ${({ theme }) => theme.fonts.body00}
+  ${({ theme }) => theme.fonts.body00};
 `;
 
 const StImgLandingBookNote = styled.img`

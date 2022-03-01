@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
@@ -7,9 +8,9 @@ import { Loading, PopUpDelete } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
+import { navigatingBookInfoState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { getData } from "../utils/lib/api";
-import { BookState } from "./BookNote";
 
 interface ReviewData {
   bookTitle: string;
@@ -30,10 +31,8 @@ export default function DetailBookNote() {
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { state } = useLocation();
-
-  const bookState = state as BookState;
-  const { reviewId, fromUrl } = bookState;
+  const [navigatingBookInfo, setNavigatingBookInfo] = useRecoilState(navigatingBookInfoState);
+  const { reviewId, fromUrl } = navigatingBookInfo;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -48,9 +47,10 @@ export default function DetailBookNote() {
 
       setReviewData(data);
     } catch (err) {
-      return;
+      // return;
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -79,11 +79,10 @@ export default function DetailBookNote() {
             <StBtnWrapper>
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
-                onClick={() =>
-                  navigate("/book-note/peri", {
-                    state: { reviewId, title: reviewData?.bookTitle, fromUrl },
-                  })
-                }
+                onClick={() => {
+                  setNavigatingBookInfo({ reviewId, title: reviewData?.bookTitle, fromUrl });
+                  navigate("/book-note/peri");
+                }}
               />
             </StBtnWrapper>
             <DetailArticleWrapper title="독서 전 단계">
@@ -99,7 +98,7 @@ export default function DetailBookNote() {
               </DetailArticleWrapper>
             </StMarginTop>
           </StNoteModalWrapper>
-          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} pathKey="/book" /> : <></>}
+          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} pathKey="/book" /> : <></>}
         </>
       )}
     </>

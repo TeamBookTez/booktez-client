@@ -13,7 +13,7 @@ export default function LastStep() {
     useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -29,9 +29,9 @@ export default function LastStep() {
     const reviewData = localReviewData ? JSON.parse(localReviewData) : { answerOne: "", answerTwo: "" };
 
     const { data } = await postData("/book", bookData, userToken);
-    const reviewId = data.data.reviewId;
+    const postBookReviewId = data.data.reviewId;
 
-    await patchData(userToken, `/review/${reviewId}/pre`, {
+    await patchData(userToken, `/review/${postBookReviewId}/pre`, {
       ...reviewData,
       questionList: [""],
       reviewSt: 2,
@@ -46,7 +46,7 @@ export default function LastStep() {
     setIsLoading(false);
 
     handleIsAniTime(true);
-    setTimeout(() => nav("/main", { state: "rightpath" }), 1000);
+    setTimeout(() => navigate("/main", { state: "rightpath" }), 1000);
   };
 
   return (

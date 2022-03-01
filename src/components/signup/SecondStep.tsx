@@ -18,7 +18,7 @@ export default function SecondStep() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleIsAniTime(false);
@@ -47,7 +47,7 @@ export default function SecondStep() {
     }
 
     handleIsAniTime(true);
-    setTimeout(() => nav("/signup/3", { state: "rightpath" }), 1000);
+    setTimeout(() => navigate("/signup/3", { state: "rightpath" }), 1000);
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
