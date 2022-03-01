@@ -8,12 +8,12 @@ interface NavigatorProps {
   onNav: (idx: number) => void;
   bookState: BookState;
   isPrevented: boolean;
-  isDrawerDefault: () => void;
+  onSetDrawerAsDefault: () => void;
   onSetIsSaveFalse: () => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, bookState, isPrevented, isDrawerDefault, onSetIsSaveFalse } = props;
+  const { navIndex, onNav, bookState, isPrevented, onSetDrawerAsDefault, onSetIsSaveFalse } = props;
 
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function Navigator(props: NavigatorProps) {
     onSetIsSaveFalse();
     navigate("", { state: bookState });
     onNav(0);
-    isDrawerDefault();
+    onSetDrawerAsDefault();
   };
 
   const goToPeri = (isPrevented: boolean) => {
@@ -30,7 +30,7 @@ export default function Navigator(props: NavigatorProps) {
       navigate("peri", { state: bookState });
       onNav(1);
     }
-    isDrawerDefault();
+    onSetDrawerAsDefault();
   };
 
   return (

@@ -131,7 +131,7 @@ export default function BookNote() {
           onNav={handleNav}
           bookState={bookState}
           isPrevented={isPrevented}
-          isDrawerDefault={handleDrawerDefault}
+          onSetDrawerAsDefault={handleDrawerDefault}
           onSetIsSaveFalse={handleSetIsSaveFalse}
         />
         {isSave && (
