@@ -18,19 +18,27 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLInputElement>, pathArray: number[]) => {
+  const handleAddChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
       onAddChild(pathArray, isQuestion);
     }
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+
+      textareaRef.current.style.height = "3rem";
+      const scrollHeight = textareaRef.current.scrollHeight;
+
+      // 높이가 달라질 때만 높이 변경
+      if (textareaRef.current.style.height !== `${scrollHeight / 10}rem`) {
+        textareaRef.current.style.height = `${scrollHeight / 10}rem`;
+      }
     }
-  }, []);
+  }, [node.content]);
 
   return (
     <>
@@ -39,7 +47,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           <StQuestionIcon />
         </legend>
         <StInput
-          ref={inputRef}
+          ref={textareaRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
           onChange={(e) => onSetContent(path, e.target.value)}
@@ -91,12 +99,18 @@ const StQuestionIcon = styled(IcPeriQuestion)`
   left: 0.8rem;
 `;
 
-const StInput = styled.input`
+const StInput = styled.textarea`
   flex: 1;
+  margin: 0;
   ${({ theme }) => theme.fonts.header4}
+  height: 2.6rem;
 
   &:placeholder {
     color: ${({ theme }) => theme.colors.white500};
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
