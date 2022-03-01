@@ -140,7 +140,7 @@ export default function PreNote() {
 
   useEffect(() => {
     // unmount될 때 drawer 닫기
-    return handleCloseDrawer;
+    return () => handleCloseDrawer();
   }, []);
 
   if (isLoading) {
