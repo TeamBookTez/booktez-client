@@ -43,7 +43,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (textAreaRef.current && isQuestion) {
+    if (textAreaRef.current) {
       textAreaRef.current.focus();
     }
   }, []);
