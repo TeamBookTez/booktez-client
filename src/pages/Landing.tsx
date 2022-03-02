@@ -12,14 +12,14 @@ import {
   LandingOne,
   LandingThree,
   LandingTwo,
+  MobileLandingFive,
+  MobileLandingFooter,
+  MobileLandingFour,
+  MobileLandingHeader,
+  MobileLandingOne,
+  MobileLandingThree,
+  MobileLandingTwo,
 } from "../components/landing";
-import MobileLandingFive from "../components/landing/MobileLandingFive";
-import MobileLandingFooter from "../components/landing/MobileLandingFooter";
-import MobileLandingFour from "../components/landing/MobileLandingFour";
-import MobileLandingHeader from "../components/landing/MobileLandingHeader";
-import MobileLandingOne from "../components/landing/MobileLandingOne";
-import MobileLandingThree from "../components/landing/MobileLandingThree";
-import MobileLandingTwo from "../components/landing/MobileLandingTwo";
 import { isLoginState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 import { Desktop, Mobile } from "../utils/useMediaQuery";
@@ -46,13 +46,11 @@ export default function Landing() {
         <>
           <Mobile>
             <MobileLandingHeader />
-            <StMobileMain>
-              <MobileLandingOne />
-              <MobileLandingTwo />
-              <MobileLandingThree />
-              <MobileLandingFour />
-              <MobileLandingFive />
-            </StMobileMain>
+            <MobileLandingOne />
+            <MobileLandingTwo />
+            <MobileLandingThree />
+            <MobileLandingFour />
+            <MobileLandingFive />
             <MobileLandingFooter />
           </Mobile>
           <Desktop>
@@ -72,7 +70,7 @@ export default function Landing() {
   );
 }
 
-const StMobileMain = styled.main`
+export const StMobileMain = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
