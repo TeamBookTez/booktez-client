@@ -9,20 +9,21 @@ import { StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PriorAnswerProps {
   path: number[];
+  index: number;
   node: PeriNoteTreeNode;
-  onAddChild: (path: number[], isQuestion: boolean) => void;
+  onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
   onSetContent: (path: number[], value: string) => void;
   onDeleteChild: (path: number[]) => void;
 }
 
 export default function PriorAnswer(props: PriorAnswerProps) {
-  const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild } = props;
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleClickAddChild = (pathArray: number[], isQuestionChecked: boolean) => {
-    onAddChild(pathArray, isQuestionChecked);
+  const handleClickAddChild = (pathArray: number[], idx: number, isQuestionChecked: boolean) => {
+    onAddChild(pathArray, idx, isQuestionChecked);
   };
 
   const handleChangeSetContent = (pathArray: number[], value: string) => {
@@ -35,24 +36,17 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     onDeleteChild(pathArray);
   };
 
-  const handleClickAddQuestion = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    pathArray: number[],
-    isQuestionChecked: boolean,
-  ) => {
-    handleClickAddChild(pathArray, isQuestionChecked);
-  };
-
   const handleKeyPress = (
     e: React.KeyboardEvent<HTMLTextAreaElement>,
     pathArray: number[],
+    idx: number,
     isQuestionChecked: boolean,
   ) => {
     if (e.key === "Enter") {
       if (!e.shiftKey) {
         const p = isQuestionChecked ? pathArray : pathArray.slice(0, -1);
 
-        handleClickAddChild(p, isQuestionChecked);
+        onAddChild(p, idx, isQuestionChecked);
       }
     }
   };
@@ -74,11 +68,11 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           value={node.content}
           placeholder={"답변을 입력해주세요."}
           onChange={(e) => handleChangeSetContent(path, e.target.value)}
-          onKeyPress={(e) => handleKeyPress(e, path, isQuestion)}
+          onKeyPress={(e) => handleKeyPress(e, path, index, isQuestion)}
         />
         <StMore className="icn_more" />
         <StMenu menuposition={"isPriQ"}>
-          <StMenuBtn type="button" onClick={(e) => handleClickAddQuestion(e, path, !isQuestion)}>
+          <StMenuBtn type="button" onClick={() => handleClickAddChild(path, index, !isQuestion)}>
             꼬리질문 추가
           </StMenuBtn>
           <StMenuBtn type="button" onClick={() => handleClickDeleteChild(path)}>
@@ -91,12 +85,12 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           <PeriNoteInput
             key={`input-${i}`}
             path={[...path, i]}
+            index={i}
             node={node}
-            onAddChild={(p, isQ) => handleClickAddChild(p, isQ)}
+            onAddChild={(p, i, isQ) => handleClickAddChild(p, i, isQ)}
             onSetContent={(p, value) => handleChangeSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
-            onAddQuestion={(e, p, isQ) => handleClickAddQuestion(e, p, isQ)}
-            onAddChildByEnter={(e, p, isQ) => handleKeyPress(e, p, isQ)}
+            onAddChildByEnter={(e, p, i, isQ) => handleKeyPress(e, p, i, isQ)}
           />
         ))}
     </StFieldset>

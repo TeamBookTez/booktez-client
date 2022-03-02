@@ -9,14 +9,16 @@ import { PriorAnswer } from "..";
 
 interface PriorQuestionProps {
   path: number[];
+  index: number;
   node: PeriNoteTreeNode;
-  onAddChild: (path: number[], isQuestion: boolean) => void;
+  onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
   onSetContent: (path: number[], value: string) => void;
   onDeleteChild: (path: number[]) => void;
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild } = props;
+  // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -30,7 +32,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter") {
       if (!e.shiftKey) {
-        onAddChild(pathArray, isQuestion);
+        onAddChild(pathArray, index, isQuestion);
       }
     }
   };
@@ -54,7 +56,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           onChange={(e) => handleContent(path, e.target.value)}
           onKeyPress={(e) => handleKeyPress(e, path)}
         />
-        <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
+        <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, isQuestion)}>
           답변
         </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
@@ -69,8 +71,9 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           <PriorAnswer
             key={i}
             path={[...path, i]}
+            index={i}
             node={node}
-            onAddChild={(p, isQ) => onAddChild(p, isQ)}
+            onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
             onSetContent={(p, value) => onSetContent(p, value)}
             onDeleteChild={(p) => onDeleteChild(p)}
           />

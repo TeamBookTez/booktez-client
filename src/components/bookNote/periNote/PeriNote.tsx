@@ -55,14 +55,15 @@ export default function PeriNote() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openSubmitModal, setOpenSubmitModal] = useState<boolean>(false);
 
-  const handleAddChild = (path: number[], isQuestion: boolean) => {
+  const handleAddChild = (path: number[], currentIndex: number, isQuestion: boolean) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 
+    console.log("current.children", current.children);
     if (isQuestion) {
       // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
-      current.children.push({
+      current.children.splice(currentIndex + 1, 0, {
         type: "question",
         content: "",
         children: [
@@ -74,7 +75,7 @@ export default function PeriNote() {
         ],
       });
     } else {
-      current.children.push({
+      current.children.splice(currentIndex + 1, 0, {
         type: "answer",
         content: "",
         children: [],
@@ -188,6 +189,7 @@ export default function PeriNote() {
               <StArticle key={`input-${idx}`}>
                 <PriorQuestion
                   path={[idx]}
+                  index={idx}
                   node={node}
                   onAddChild={handleAddChild}
                   onSetContent={handleSetContent}
@@ -195,7 +197,10 @@ export default function PeriNote() {
                 />
               </StArticle>
             ))}
-          <StAddChildButton type="button" disabled={isPrevented} onClick={() => handleAddChild([], true)}>
+          <StAddChildButton
+            type="button"
+            disabled={isPrevented}
+            onClick={() => handleAddChild([], data.answerThree.children.length, true)}>
             질문 리스트 추가
           </StAddChildButton>
           {/* 북노트 정리되면 type submit으로 바꾸기 */}
