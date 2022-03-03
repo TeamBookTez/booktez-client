@@ -18,6 +18,4 @@ const StHeader = styled.header`
 
   min-width: 32rem;
   height: 6rem;
-
-  margin: 2.4rem auto 0 auto;
 `;
