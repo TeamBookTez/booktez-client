@@ -11,14 +11,14 @@ import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapp
 interface PopUpDeleteProps {
   onPopUp: () => void;
   pathKey: string;
+  reviewId: number;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, pathKey } = props;
+  const { onPopUp, pathKey, reviewId } = props;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { reviewId } = useRecoilValue(navigatingBookInfoState);
 
   const { mutate } = useSWRConfig();
 
