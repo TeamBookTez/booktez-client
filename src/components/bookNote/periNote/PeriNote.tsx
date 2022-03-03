@@ -152,7 +152,7 @@ export default function PeriNote() {
   }, []);
 
   useEffect(() => {
-    if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
+    if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
       setIsPrevented(false);
     } else {
       setIsPrevented(true);
