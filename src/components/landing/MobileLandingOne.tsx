@@ -25,6 +25,8 @@ const StWrapper = styled.section`
   width: 100%;
   height: 57.5rem;
 
+  margin-top: 6rem;
+
   background-image: url(${ImgLandingMobileBanner});
   background-repeat: no-repeat;
   background-position: center;
