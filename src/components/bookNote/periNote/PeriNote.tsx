@@ -23,7 +23,7 @@ export default function PeriNote() {
   const [reviewId, userToken, navIndex, isSave, handleOpenDrawer, handleCloseDrawer, preventGoBack, saveReview] =
     useOutletContext<
       [
-        number,
+        string,
         string,
         number,
         boolean,

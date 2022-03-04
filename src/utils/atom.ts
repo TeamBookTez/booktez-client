@@ -10,7 +10,7 @@ export const isLoginState = atom<boolean>({
 export const navigatingBookInfoState = atom<NavigatingBookInfoState>({
   key: "navigatingBookInfoState",
   default: {
-    reviewId: -1,
+    reviewId: "-1",
     title: "",
     fromUrl: "",
   },

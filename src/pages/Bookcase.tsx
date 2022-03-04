@@ -8,7 +8,7 @@ import { useCheckLoginState } from "../utils/useHooks";
 
 export interface BookcaseInfo {
   author: string[];
-  reviewId: number;
+  reviewId: string;
   reviewSt?: number;
   thumbnail: string;
   title: string;
