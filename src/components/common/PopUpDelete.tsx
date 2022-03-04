@@ -9,7 +9,7 @@ import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapp
 interface PopUpDeleteProps {
   onPopUp: () => void;
   pathKey: string;
-  reviewId: number;
+  reviewId: string;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
