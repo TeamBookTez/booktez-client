@@ -12,6 +12,11 @@ export default function MobileLandingHeader() {
 }
 
 const StHeader = styled.header`
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,5 +24,5 @@ const StHeader = styled.header`
   min-width: 32rem;
   height: 6rem;
 
-  margin: 2.4rem auto 0 auto;
+  background-color: ${({ theme }) => theme.colors.white};
 `;

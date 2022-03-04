@@ -1,24 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { useSWRConfig } from "swr";
 
 import { ImgDeletePopUp } from "../../assets/images";
-import { navigatingBookInfoState } from "../../utils/atom";
 import { deleteData } from "../../utils/lib/api";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
 interface PopUpDeleteProps {
   onPopUp: () => void;
   pathKey: string;
+  reviewId: number;
 }
 
 export default function PopUpDelete(props: PopUpDeleteProps) {
-  const { onPopUp, pathKey } = props;
+  const { onPopUp, pathKey, reviewId } = props;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { reviewId } = useRecoilValue(navigatingBookInfoState);
 
   const { mutate } = useSWRConfig();
 
