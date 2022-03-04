@@ -61,7 +61,7 @@ export default function BookCard(props: BookCardProps) {
         </StTextWrapper>
       </StBookCard>
       <StIcBin onClick={handlePopUp} />
-      {isPopUp && <PopUpDelete onPopUp={handlePopUp} pathKey={pathKey} />}
+      {isPopUp && <PopUpDelete onPopUp={handlePopUp} pathKey={pathKey} reviewId={reviewId} />}
     </StCardWrapper>
   );
 }
