@@ -165,11 +165,6 @@ export default function PeriNote() {
     }
   }, [isSave]);
 
-  useEffect(() => {
-    // unmount될 때 drawer 닫기
-    return () => handleCloseDrawer();
-  }, []);
-
   if (isLoading) {
     return <Loading />;
   } else {
