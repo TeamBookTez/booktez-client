@@ -62,7 +62,8 @@ export default function PeriNote() {
 
     if (isQuestion) {
       // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
-      current.children.splice(currentIndex + 1, 0, {
+      // 꼬리 질문은 무조건 마지막에 추가되면 됨
+      current.children.push({
         type: "question",
         content: "",
         children: [
