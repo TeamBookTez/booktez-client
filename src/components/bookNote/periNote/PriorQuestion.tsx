@@ -9,28 +9,30 @@ import { PriorAnswer } from "..";
 
 interface PriorQuestionProps {
   path: number[];
+  index: number;
   node: PeriNoteTreeNode;
-  onAddChild: (path: number[], isQuestion: boolean) => void;
-  onSetContent: (path: number[], value: string) => void;
+  onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
+  onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild } = props;
+  // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleContent = (pathArray: number[], value: string) => {
-    if (value !== "\n") {
-      onSetContent(pathArray, value);
+  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+    if (e.target.value !== "\n") {
+      onSetContent(e.target.value, pathArray);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
       if (!e.shiftKey) {
-        onAddChild(pathArray, isQuestion);
+        onAddChild(pathArray, node.children.length - 1, isQuestion);
       }
     }
   };
@@ -51,10 +53,10 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           ref={textAreaRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
-          onChange={(e) => handleContent(path, e.target.value)}
+          onChange={(e) => handleContent(e, path)}
           onKeyPress={(e) => handleKeyPress(e, path)}
         />
-        <StAddAnswerButton type="button" onClick={() => onAddChild(path, isQuestion)}>
+        <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, isQuestion)}>
           답변
         </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
@@ -69,9 +71,10 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           <PriorAnswer
             key={i}
             path={[...path, i]}
+            index={i}
             node={node}
-            onAddChild={(p, isQ) => onAddChild(p, isQ)}
-            onSetContent={(p, value) => onSetContent(p, value)}
+            onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
+            onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
           />
         ))}

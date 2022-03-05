@@ -8,16 +8,17 @@ import { StAddAnswerButton, StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestio
 
 interface PeriNoteInputProps {
   path: number[];
+  index: number;
   node: PeriNoteTreeNode;
-  onAddChild: (path: number[], isQuestion: boolean) => void;
-  onSetContent: (path: number[], value: string) => void;
+  onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
+  onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
-  onAddQuestion: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  onAddChildByEnter: (
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
     pathArray: number[],
-    isQuestionChecked: boolean,
+    index: number,
+    isQuestion: boolean,
   ) => void;
-  onAddChildByEnter: (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[], isQuestion: boolean) => void;
 }
 
 export const labelColorList = [
@@ -34,13 +35,18 @@ export const labelColorList = [
 ];
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, node, onAddChild, onSetContent, onDeleteChild, onAddQuestion, onAddChildByEnter } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild, onAddChildByEnter } = props;
   const isQuestion = node.type === "question";
 
-  // 4depth로 제한하기 전이라서 순환하도록 했음 -> 제한을 두면 % 8 지우기
-  // 첫 시작 root 때문에 1을 빼야 함
   const labelColor = labelColorList[(path.length - 1) % 10];
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const addChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      // 꼬리질문과 답변은 자신의 아래에 추가하는 것이 아닌 자신의 부모의 children에 추가해야함
+      onAddChild(path.slice(0, -1), index, isQuestion);
+    }
+  };
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -62,18 +68,18 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             ref={textAreaRef}
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-            onChange={(e) => onSetContent(path, e.target.value)}
-            onKeyPress={(e) => onAddChildByEnter(e, path, isQuestion)}
+            onChange={(e) => onSetContent(e.target.value, path)}
+            onKeyPress={addChildByEnter}
           />
           {isQuestion && (
-            <StAddAnswerButton type="button" onClick={() => onAddChild(path, !isQuestion)}>
+            <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, !isQuestion)}>
               답변
             </StAddAnswerButton>
           )}
           <StMore className="icn_more" />
           <StMenu>
             {!isQuestion && (
-              <StMenuBtn type="button" onClick={(e) => onAddQuestion(e, path, !isQuestion)}>
+              <StMenuBtn type="button" onClick={() => onAddChild(path, index, !isQuestion)}>
                 꼬리질문 추가
               </StMenuBtn>
             )}
@@ -89,12 +95,12 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             <PeriNoteInput
               key={`input-${i}`}
               path={[...path, i]}
+              index={i}
               node={node}
-              onAddChild={(p, isQ) => onAddChild(p, isQ)}
-              onSetContent={(p, value) => onSetContent(p, value)}
+              onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
+              onSetContent={(v, p) => onSetContent(v, p)}
               onDeleteChild={(p) => onDeleteChild(p)}
-              onAddQuestion={(e, p, isQ) => onAddQuestion(e, p, isQ)}
-              onAddChildByEnter={(e, p, isQ) => onAddChildByEnter(e, p, isQ)}
+              onAddChildByEnter={(e, p, i, isQ) => onAddChildByEnter(e, p, i, isQ)}
             />
           ))}
       </StFieldWrapper>
