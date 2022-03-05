@@ -12,7 +12,7 @@ import { PeriNoteTreeNode } from "../utils/dataType";
 import { patchBookNote } from "../utils/lib/api";
 
 export interface NavigatingBookInfoState {
-  reviewId: number;
+  reviewId: string;
   title: string;
   fromUrl: string;
 }

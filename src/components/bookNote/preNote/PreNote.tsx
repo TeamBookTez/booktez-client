@@ -27,7 +27,7 @@ export default function PreNote() {
   ] =
     useOutletContext<
       [
-        number,
+        string,
         string,
         number,
         boolean,

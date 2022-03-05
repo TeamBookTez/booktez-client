@@ -23,7 +23,7 @@ export default function PeriNote() {
   const [reviewId, userToken, navIndex, isSave, handleOpenDrawer, handleCloseDrawer, preventGoBack, saveReview] =
     useOutletContext<
       [
-        number,
+        string,
         string,
         number,
         boolean,
@@ -153,7 +153,7 @@ export default function PeriNote() {
   }, []);
 
   useEffect(() => {
-    if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
+    if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
       setIsPrevented(false);
     } else {
       setIsPrevented(true);
@@ -165,11 +165,6 @@ export default function PeriNote() {
       saveReview(data);
     }
   }, [isSave]);
-
-  useEffect(() => {
-    // unmount될 때 drawer 닫기
-    return () => handleCloseDrawer();
-  }, []);
 
   if (isLoading) {
     return <Loading />;
