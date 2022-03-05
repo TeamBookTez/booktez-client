@@ -12,7 +12,7 @@ interface PriorQuestionProps {
   index: number;
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
-  onSetContent: (path: number[], value: string) => void;
+  onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
 }
 
@@ -23,16 +23,16 @@ export default function PriorQuestion(props: PriorQuestionProps) {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleContent = (pathArray: number[], value: string) => {
-    if (value !== "\n") {
-      onSetContent(pathArray, value);
+  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+    if (e.target.value !== "\n") {
+      onSetContent(e.target.value, pathArray);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
       if (!e.shiftKey) {
-        onAddChild(pathArray, index, isQuestion);
+        onAddChild(pathArray, node.children.length - 1, isQuestion);
       }
     }
   };
@@ -53,7 +53,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           ref={textAreaRef}
           value={node.content}
           placeholder={"질문을 입력해주세요."}
-          onChange={(e) => handleContent(path, e.target.value)}
+          onChange={(e) => handleContent(e, path)}
           onKeyPress={(e) => handleKeyPress(e, path)}
         />
         <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, isQuestion)}>
@@ -74,7 +74,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
             index={i}
             node={node}
             onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
-            onSetContent={(p, value) => onSetContent(p, value)}
+            onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
           />
         ))}

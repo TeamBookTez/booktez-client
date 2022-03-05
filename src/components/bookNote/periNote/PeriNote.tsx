@@ -60,7 +60,6 @@ export default function PeriNote() {
     const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 
-    console.log("current.children", current.children);
     if (isQuestion) {
       // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
       current.children.splice(currentIndex + 1, 0, {
@@ -85,7 +84,7 @@ export default function PeriNote() {
     setData({ ...data, answerThree: newRoot });
   };
 
-  const handleSetContent = (path: number[], value: string) => {
+  const handleSetContent = (value: string, path: number[]) => {
     const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 

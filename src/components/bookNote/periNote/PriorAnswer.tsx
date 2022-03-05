@@ -12,7 +12,7 @@ interface PriorAnswerProps {
   index: number;
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
-  onSetContent: (path: number[], value: string) => void;
+  onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
 }
 
@@ -26,9 +26,9 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     onAddChild(pathArray, idx, isQuestionChecked);
   };
 
-  const handleChangeSetContent = (pathArray: number[], value: string) => {
-    if (value !== "\n") {
-      onSetContent(pathArray, value);
+  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+    if (e.target.value !== "\n") {
+      onSetContent(e.target.value, pathArray);
     }
   };
 
@@ -53,6 +53,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
 
   useEffect(() => {
     if (textAreaRef.current) {
+      textAreaRef.current.value = "";
       textAreaRef.current.focus();
     }
   }, []);
@@ -67,7 +68,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           ref={textAreaRef}
           value={node.content}
           placeholder={"답변을 입력해주세요."}
-          onChange={(e) => handleChangeSetContent(path, e.target.value)}
+          onChange={(e) => handleChangeSetContent(e, path)}
           onKeyPress={(e) => handleKeyPress(e, path, index, isQuestion)}
         />
         <StMore className="icn_more" />
@@ -88,7 +89,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             index={i}
             node={node}
             onAddChild={(p, i, isQ) => handleClickAddChild(p, i, isQ)}
-            onSetContent={(p, value) => handleChangeSetContent(p, value)}
+            onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddChildByEnter={(e, p, i, isQ) => handleKeyPress(e, p, i, isQ)}
           />

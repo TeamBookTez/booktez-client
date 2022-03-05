@@ -11,7 +11,7 @@ interface PeriNoteInputProps {
   index: number;
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
-  onSetContent: (path: number[], value: string) => void;
+  onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
   onAddChildByEnter: (
     e: React.KeyboardEvent<HTMLTextAreaElement>,
@@ -45,6 +45,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
 
   useEffect(() => {
     if (textAreaRef.current) {
+      textAreaRef.current.value = "";
       textAreaRef.current.focus();
     }
   }, []);
@@ -63,7 +64,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             ref={textAreaRef}
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-            onChange={(e) => onSetContent(path, e.target.value)}
+            onChange={(e) => onSetContent(e.target.value, path)}
             onKeyPress={(e) => onAddChildByEnter(e, path.slice(0, -1), index, isQuestion)}
           />
           {isQuestion && (
@@ -93,7 +94,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               index={i}
               node={node}
               onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
-              onSetContent={(p, value) => onSetContent(p, value)}
+              onSetContent={(v, p) => onSetContent(v, p)}
               onDeleteChild={(p) => onDeleteChild(p)}
               onAddChildByEnter={(e, p, i, isQ) => onAddChildByEnter(e, p, i, isQ)}
             />
