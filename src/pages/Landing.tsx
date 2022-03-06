@@ -54,14 +54,16 @@ export default function Landing() {
             <MobileLandingFooter />
           </Mobile>
           <Desktop>
-            <LandingHeader />
-            <StMain>
-              <LandingOne />
-              <LandingTwo />
-              <LandingThree />
-              <LandingFour />
-              <LandingFive />
-            </StMain>
+            <StLandingWrapper>
+              <LandingHeader />
+              <StMain>
+                <LandingOne />
+                <LandingTwo />
+                <LandingThree />
+                <LandingFour />
+                <LandingFive />
+              </StMain>
+            </StLandingWrapper>
             <LandingFooter />
           </Desktop>
         </>
@@ -87,4 +89,9 @@ const StMain = styled.main`
   align-items: center;
 
   padding: 0 11.5rem;
+`;
+
+const StLandingWrapper = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
 `;
