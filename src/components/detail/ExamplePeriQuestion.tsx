@@ -20,7 +20,7 @@ export default function ExamplePeriQuestion(props: ExamplePeriQuestionProps) {
     <>
       {isAnswer ? (
         <>
-          <StAnswer>{node.content}</StAnswer>
+          <StAnswer>{node.content ? node.content : "답변"}</StAnswer>
           <article>
             {node.children.map((n, i) => (
               <ExamplePeriQuestion key={i} node={n} path={[...path, i]} onToggle={onToggle} />
@@ -31,7 +31,7 @@ export default function ExamplePeriQuestion(props: ExamplePeriQuestionProps) {
         <>
           <StQuestion>
             <LabelQuestion bgColor={labelColor} />
-            {node.content}
+            {node.content ? node.content : "질문"}
             <StIcToggle onClick={onToggle} />
           </StQuestion>
           <div>
