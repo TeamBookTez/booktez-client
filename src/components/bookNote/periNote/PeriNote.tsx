@@ -161,7 +161,7 @@ export default function PeriNote() {
         setIsPrevented({ addQuestion: false, isCompleted: false });
       } else {
         // 답변만 비워있으면 isCompleted만 true
-        setIsPrevented((current) => ({ ...current, isCompleted: true }));
+        setIsPrevented({ addQuestion: false, isCompleted: true });
       }
     } else {
       // 질문이 비워져있으면 둘 다 true;
