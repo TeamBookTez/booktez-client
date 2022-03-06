@@ -1,9 +1,17 @@
-import React from "react";
+import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgLandingMobileBanner } from "../../assets/images";
+import { Button } from "../common/styled/Button";
 
 export default function MobileLandingOne() {
+  const navigate = useNavigate();
+
+  const isMobileWithButtonScreen = useMediaQuery({
+    query: "(min-width: 1200px)",
+  });
+
   return (
     <StWrapper>
       <StTitle>
@@ -11,7 +19,13 @@ export default function MobileLandingOne() {
         <br />
         독서법을 만들어 갑니다
       </StTitle>
-      <StComment>북스테어즈는 PC에서 이용해 주세요.</StComment>
+      {isMobileWithButtonScreen ? (
+        <StButton type="button" onClick={() => navigate("/main")}>
+          북스테어즈 시작
+        </StButton>
+      ) : (
+        <StComment>북스테어즈는 PC에서 이용해 주세요.</StComment>
+      )}
     </StWrapper>
   );
 }
@@ -45,4 +59,15 @@ const StTitle = styled.h1`
 const StComment = styled.p`
   ${({ theme }) => theme.fonts.h6};
   color: ${({ theme }) => theme.colors.white};
+`;
+
+const StButton = styled(Button)`
+  width: 13.2rem;
+  height: 4.7rem;
+
+  margin-top: 2rem;
+
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.button3}
 `;

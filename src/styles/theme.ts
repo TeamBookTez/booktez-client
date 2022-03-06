@@ -244,6 +244,21 @@ const fonts = {
     line-height: 1.3;
     letter-spacing: -0.1rem;
   `,
+  // 반응형 랜딩페이지 버튼 글꼴 임의 지정
+  button3: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 2.08rem;
+    letter-spacing: -0.1rem;
+  `,
+  button4: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 2.82rem;
+    letter-spacing: -0.1rem;
+  `,
 };
 
 const theme: DefaultTheme = {

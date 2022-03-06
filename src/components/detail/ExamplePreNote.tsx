@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
-import { Button } from "../common/styled/Button";
 import LabelQuestion from "../common/styled/LabelQuestion";
 
 interface ExamplePreNoteProps {
@@ -92,37 +91,4 @@ const StAnswer = styled.h4`
     border-radius: 1rem;
     background-color: ${({ theme }) => theme.colors.gray400};
   }
-`;
-
-const StLinkWrapper = styled.section`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  height: 25.9rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) -9.07%, rgba(194, 195, 204, 0.85) 100%);
-`;
-
-const StSignupText = styled.p`
-  text-align: center;
-
-  ${({ theme }) => theme.fonts.body0}
-  color: ${({ theme }) => theme.colors.gray100};
-`;
-
-const StButton = styled(Button)`
-  width: 32.5rem;
-  height: 5.6rem;
-
-  margin-top: 1.2rem;
-
-  border-radius: 1rem;
-
-  ${({ theme }) => theme.fonts.button}
 `;

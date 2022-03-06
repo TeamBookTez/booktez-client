@@ -1,9 +1,18 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcLandingMobileMark } from "../../assets/icons";
+import { Button } from "../common/styled/Button";
 
 export default function MobileLandingFooter() {
+  const navigate = useNavigate();
+
+  const isMobileWithButtonScreen = useMediaQuery({
+    query: "(min-width: 1200px)",
+  });
+
   return (
     <>
       <StFooterWrapper>
@@ -11,7 +20,13 @@ export default function MobileLandingFooter() {
           책을 통한 성장의 계단, <br />
           함께 오르실 분들을 기다립니다.
         </StH1>
-        <StParagraph>PC에서 이용해 주세요.</StParagraph>
+        {isMobileWithButtonScreen ? (
+          <StButton type="button" onClick={() => navigate("/main")}>
+            북스테어즈 시작
+          </StButton>
+        ) : (
+          <StParagraph>PC에서 이용해 주세요.</StParagraph>
+        )}
       </StFooterWrapper>
       <StCopyrightWrapper>
         <IcLandingMobileMark />
@@ -43,6 +58,19 @@ const StH1 = styled.h1`
 
   ${({ theme }) => theme.fonts.h2};
   color: ${({ theme }) => theme.colors.white};
+`;
+
+const StButton = styled(Button)`
+  width: 12rem;
+  height: 4.9rem;
+
+  margin-top: 1.4rem;
+
+  border-radius: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.gray200};
+
+  ${({ theme }) => theme.fonts.button4};
 `;
 
 const StParagraph = styled.h5`
