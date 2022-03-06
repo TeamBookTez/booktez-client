@@ -165,7 +165,7 @@ export default function BookNote() {
                 작성한 내용이 저장되었어요.
               </StSave>
             )}
-            {isLogin && <StIcSave onClick={() => setIsSave(true)} />}
+            {isLogin && <StIcSave onClick={() => setIsSave(true)} id="btn_save" />}
           </StNavWrapper>
           <Outlet
             context={[

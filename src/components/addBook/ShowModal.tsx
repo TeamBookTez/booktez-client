@@ -100,7 +100,9 @@ export default function ShowModal(props: ShowModalProps) {
         ) : null}
       </ModalLabelWrapper>
       <ModalDate>{publicationDt} 출간</ModalDate>
-      <StWriteBtn onClick={postAddBooks}>독서 시작</StWriteBtn>
+      <StWriteBtn onClick={postAddBooks} id="start_reading_book">
+        독서 시작
+      </StWriteBtn>
     </>
   );
 }
