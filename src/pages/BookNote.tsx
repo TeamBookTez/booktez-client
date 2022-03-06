@@ -15,6 +15,7 @@ export interface NavigatingBookInfoState {
   reviewId: string;
   title: string;
   fromUrl: string;
+  fromSt: number;
 }
 
 // 시간이 된다면 keyof 꼭 활용해보기

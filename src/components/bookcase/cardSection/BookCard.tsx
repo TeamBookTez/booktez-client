@@ -26,13 +26,32 @@ export default function BookCard(props: BookCardProps) {
 
   const reviewUrl = reviewSt === 2 ? "/book-note" : reviewSt === 3 ? "/book-note/peri" : "/detail-book-note";
 
+  let fromSt = 0;
+
+  switch (pathKey) {
+    case "/book":
+      fromSt = 0;
+      break;
+    case "/book/pre":
+      fromSt = 1;
+      break;
+    case "/book/peri":
+      fromSt = 2;
+      break;
+    case "/book/post":
+      fromSt = 3;
+      break;
+    default:
+      break;
+  }
+  // 홈에 대한 예외 처리
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      setNavigatingBookInfo({ reviewId, title, fromUrl: pathname });
+      setNavigatingBookInfo({ reviewId, title, fromUrl: pathname, fromSt });
       navigate(reviewUrl);
     }
   };
