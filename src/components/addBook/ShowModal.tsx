@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
@@ -20,7 +20,7 @@ export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
 
-  const setNavigatingBookInfo = useSetRecoilState(navigatingBookInfoState);
+  const [navigatingBookInfo, setNavigatingBookInfo] = useRecoilState(navigatingBookInfoState);
 
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
@@ -51,7 +51,7 @@ export default function ShowModal(props: ShowModalProps) {
         );
       }
 
-      setNavigatingBookInfo({ reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
+      setNavigatingBookInfo({ ...navigatingBookInfo, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
       navigate("/book-note");
     } catch (err) {
       if (axios.isAxiosError(err)) {

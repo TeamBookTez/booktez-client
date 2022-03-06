@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { ImgExit } from "../../assets/images";
+import { navigatingBookInfoState } from "../../utils/atom";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
 export const StTemp = styled.div`
@@ -16,6 +18,9 @@ interface PopUpExitProps {
 export default function PopUpExit(props: PopUpExitProps) {
   const { onExit } = props;
 
+  const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
+  const { fromUrl } = navigatingBookInfo;
+
   return (
     <StPopUpWrapper>
       <StPopUp>
@@ -27,7 +32,7 @@ export default function PopUpExit(props: PopUpExitProps) {
             취소
           </StBtnCancel>
           <StBtnDelete type="button">
-            <StLink to="/main/bookcase">나가기</StLink>
+            <StLink to={fromUrl}>나가기</StLink>
           </StBtnDelete>
         </StBtnWrapper>
       </StPopUp>

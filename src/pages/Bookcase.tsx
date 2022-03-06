@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Cards, Navigation } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
-import { isLoginState } from "../utils/atom";
+import { isLoginState, navigatingBookInfoState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export interface BookcaseInfo {
@@ -15,7 +15,10 @@ export interface BookcaseInfo {
 }
 
 export default function Bookcase() {
-  const [navIndex, setNavIndex] = useState<number>(0);
+  const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
+  const { fromSt } = navigatingBookInfo;
+
+  const [navIndex, setNavIndex] = useState<number>(fromSt);
   const { isLogin, isLoginLoading } = useCheckLoginState();
   const setIsLogin = useSetRecoilState(isLoginState);
 
