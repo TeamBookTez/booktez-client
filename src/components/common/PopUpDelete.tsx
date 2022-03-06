@@ -46,7 +46,7 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
           <StBtnCancel type="button" onClick={onPopUp}>
             취소
           </StBtnCancel>
-          <StBtnDelete type="button" onClick={handleDelete}>
+          <StBtnDelete type="button" onClick={handleDelete} id="btn_delete">
             삭제
           </StBtnDelete>
         </StBtnWrapper>

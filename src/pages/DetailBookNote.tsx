@@ -83,6 +83,7 @@ export default function DetailBookNote() {
                   setNavigatingBookInfo({ ...navigatingBookInfo, reviewId, title: reviewData?.bookTitle, fromUrl });
                   navigate("/book-note/peri");
                 }}
+                id="btn_update"
               />
             </StBtnWrapper>
             <DetailArticleWrapper title="독서 전 단계">

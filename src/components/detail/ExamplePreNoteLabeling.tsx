@@ -69,7 +69,9 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
             <br />
             어떻게 구체화 되어갈까요?
           </StSignupText>
-          <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
+          <StButton onClick={handleGoSignup} className="btn_signup">
+            회원가입 후 이어보기
+          </StButton>
         </StLinkWrapper>
       )}
       {openModal && (

@@ -36,7 +36,7 @@ export default function SignupNav(props: SignupNavProps) {
           서재에 북노트를 쌓아보세요!
         </StH3>
         <img src={ImgLogin} alt="북테즈 이미지" />
-        <StSignupBtn type="button" onClick={handleGoSignupBtn}>
+        <StSignupBtn type="button" onClick={handleGoSignupBtn} className="btn_signup">
           회원가입
         </StSignupBtn>
       </StArticle>

@@ -189,7 +189,9 @@ export default function PreNote() {
                   <br />
                   앞으로 어떻게 구체화 될까요?
                 </StSignupText>
-                <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
+                <StButton onClick={handleGoSignup} className="btn_signup">
+                  회원가입 후 이어보기
+                </StButton>
               </StLinkWrapper>
             )}
           </StFormWrapper>

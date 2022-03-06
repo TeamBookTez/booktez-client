@@ -15,7 +15,7 @@ export default function LandingOne() {
             독서법을 만들어 갑니다
           </StTitle>
           <Link to="/main">
-            <StButton>북스테어즈 시작</StButton>
+            <StButton id="cta_top">북스테어즈 시작</StButton>
           </Link>
         </StArticle>
         <StImgLanding01 src={ImgLanding01} alt="여긴 어떤 이미지가 들어갈까요?" />

@@ -35,7 +35,9 @@ export default function TopContent(props: TopContentProps) {
     <StWrapper>
       <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
       {isLogin ? (
-        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
+        <StLogoutBtn onClick={handleLogout} id="btn_logout">
+          로그아웃
+        </StLogoutBtn>
       ) : (
         <StLoginButton type="button">
           <StLoginLink to="/login">로그인</StLoginLink>
