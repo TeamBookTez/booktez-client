@@ -50,7 +50,7 @@ export default function PeriNote() {
     title: "",
     translator: [""],
   });
-  const [isPrevented, setIsPrevented] = useState<boolean>(true);
+  const [isPrevented, setIsPrevented] = useState({ addQuestion: true, isCompleted: true });
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openSubmitModal, setOpenSubmitModal] = useState<boolean>(false);
@@ -152,11 +152,20 @@ export default function PeriNote() {
     };
   }, []);
 
+  // 이거 마쟈..?
   useEffect(() => {
+    // 질문이 모두 채워져 있으면 addQuestion의 isPrevented를 false
     if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
-      setIsPrevented(false);
+      // 질문이 모두 채워진 상태에서 답변이 채워지면 모두 false
+      if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
+        setIsPrevented({ addQuestion: false, isCompleted: false });
+      } else {
+        // 답변만 비워있으면 isCompleted만 true
+        setIsPrevented((current) => ({ ...current, isCompleted: true }));
+      }
     } else {
-      setIsPrevented(true);
+      // 질문이 비워져있으면 둘 다 true;
+      setIsPrevented({ addQuestion: true, isCompleted: true });
     }
   }, [data.answerThree]);
 
@@ -194,12 +203,12 @@ export default function PeriNote() {
             ))}
           <StAddChildButton
             type="button"
-            disabled={isPrevented}
+            disabled={isPrevented.addQuestion}
             onClick={() => handleAddChild([], data.answerThree.children.length, true)}>
             질문 리스트 추가
           </StAddChildButton>
           {/* 북노트 정리되면 type submit으로 바꾸기 */}
-          <StSubmitButton type="button" disabled={isPrevented} onClick={submitPeriNote}>
+          <StSubmitButton type="button" disabled={isPrevented.isCompleted} onClick={submitPeriNote}>
             작성 완료
           </StSubmitButton>
         </StNoteForm>
