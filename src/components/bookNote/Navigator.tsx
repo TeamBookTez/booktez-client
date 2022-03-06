@@ -6,7 +6,8 @@ interface NavigatorProps {
   onNav: (idx: number) => void;
   isPrevented: boolean;
   onSetDrawerAsDefault: () => void;
-  onSetIsSaveFalse: () => void;
+  onSetIsSaveFalse: (isTrue: boolean) => void;
+  // onSetIsNavigated: (isTrue: boolean) => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
@@ -15,19 +16,23 @@ export default function Navigator(props: NavigatorProps) {
   const navigate = useNavigate();
 
   const goToPre = () => {
-    onSetIsSaveFalse();
-    navigate("");
-    onNav(0);
-    onSetDrawerAsDefault();
+    if (navIndex) {
+      onSetIsSaveFalse(false);
+      navigate("");
+      onNav(0);
+      onSetDrawerAsDefault();
+    }
   };
 
   const goToPeri = (isPrevented: boolean) => {
-    onSetIsSaveFalse();
-    if (!isPrevented) {
-      navigate("peri");
-      onNav(1);
+    if (!navIndex) {
+      onSetIsSaveFalse(false);
+      if (!isPrevented) {
+        navigate("peri");
+        onNav(1);
+      }
+      onSetDrawerAsDefault();
     }
-    onSetDrawerAsDefault();
   };
 
   return (
