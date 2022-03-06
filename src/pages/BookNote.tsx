@@ -6,6 +6,7 @@ import styled, { css, keyframes } from "styled-components";
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
+import Error404 from "../components/common/Error404";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { isLoginState, navigatingBookInfoState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
@@ -142,43 +143,49 @@ export default function BookNote() {
   }, [initIndex]);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
-      {openExitModal && <PopUpExit onExit={handleExit} />}
-      <StIcCancelWhite onClick={handleExit} />
-      <StBookTitle>{title}</StBookTitle>
-      <StNavWrapper>
-        <Navigator
-          navIndex={navIndex}
-          onNav={handleNav}
-          isPrevented={isPrevented}
-          onSetDrawerAsDefault={handleDrawerDefault}
-          onSetIsSave={handleSetIsSave}
-        />
-        {isSave && (
-          <StSave>
-            <StIcCheckSave />
-            작성한 내용이 저장되었어요.
-          </StSave>
-        )}
-        {isLogin && <StIcSave onClick={() => setIsSave(true)} />}
-      </StNavWrapper>
-      <Outlet
-        context={[
-          reviewId,
-          userToken,
-          navIndex,
-          isSave,
-          handleOpenDrawer,
-          handleCloseDrawer,
-          preventGoBack,
-          saveReview,
-          isPrevented,
-          handlePrevent,
-        ]}
-      />
-      /
-      <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
-    </StNoteModalWrapper>
+    <>
+      {reviewId === "-1" ? (
+        <Error404 />
+      ) : (
+        <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
+          {openExitModal && <PopUpExit onExit={handleExit} />}
+          <StIcCancelWhite onClick={handleExit} />
+          <StBookTitle>{title}</StBookTitle>
+          <StNavWrapper>
+            <Navigator
+              navIndex={navIndex}
+              onNav={handleNav}
+              isPrevented={isPrevented}
+              onSetDrawerAsDefault={handleDrawerDefault}
+              onSetIsSave={handleSetIsSave}
+            />
+            {isSave && (
+              <StSave>
+                <StIcCheckSave />
+                작성한 내용이 저장되었어요.
+              </StSave>
+            )}
+            {isLogin && <StIcSave onClick={() => setIsSave(true)} />}
+          </StNavWrapper>
+          <Outlet
+            context={[
+              reviewId,
+              userToken,
+              navIndex,
+              isSave,
+              handleOpenDrawer,
+              handleCloseDrawer,
+              preventGoBack,
+              saveReview,
+              isPrevented,
+              handlePrevent,
+            ]}
+          />
+          /
+          <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
+        </StNoteModalWrapper>
+      )}
+    </>
   );
 }
 
