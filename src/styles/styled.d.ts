@@ -53,6 +53,8 @@ declare module "styled-components" {
       caption2: string;
       button: string;
       button2: string;
+      button3: string;
+      button4: string;
     };
   }
 }
