@@ -14,40 +14,35 @@ export default function Navigator(props: NavigatorProps) {
 
   const navigate = useNavigate();
 
-  const goToPre = () => {
+  const handleNavigate = () => {
     onSetIsSave(true);
     if (navIndex) {
       setTimeout(() => {
         onSetIsSave(false);
         navigate("");
         onNav(0);
-        onSetDrawerAsDefault();
       }, 0);
     }
-  };
-
-  const goToPeri = () => {
-    onSetIsSave(true);
     if (!navIndex && !isPrevented) {
       setTimeout(() => {
         onSetIsSave(false);
         navigate("peri");
         onNav(1);
-        onSetDrawerAsDefault();
       }, 0);
     }
+    onSetDrawerAsDefault();
   };
 
   return (
     <StNav>
       <StUl>
         <li>
-          <StLink1 onClick={goToPre} index={navIndex}>
+          <StLink1 onClick={handleNavigate} index={navIndex}>
             독서 전
           </StLink1>
         </li>
         <li>
-          <StLink2 onClick={goToPeri} index={navIndex}>
+          <StLink2 onClick={handleNavigate} index={navIndex}>
             독서 중
           </StLink2>
         </li>
