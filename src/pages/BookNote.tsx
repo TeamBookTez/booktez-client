@@ -119,8 +119,8 @@ export default function BookNote() {
     };
   }, []);
 
-  const handleSetIsSaveFalse = () => {
-    setIsSave(false);
+  const handleSetIsSave = (isTrue: boolean) => {
+    setIsSave(isTrue);
   };
 
   useEffect(() => {
@@ -150,7 +150,7 @@ export default function BookNote() {
           onNav={handleNav}
           isPrevented={isPrevented}
           onSetDrawerAsDefault={handleDrawerDefault}
-          onSetIsSaveFalse={handleSetIsSaveFalse}
+          onSetIsSave={handleSetIsSave}
         />
         {isSave && (
           <StSave>
