@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,8 +10,15 @@ import { Loading } from "../common";
 
 export default function RecentBooks() {
   const [isFulFilled, setIsFulFilled] = useState<boolean>(false);
-
   const { bookcaseInfo, isLoading, isError } = useGetBookInfo("/book");
+
+  const isWideDesktopScreen = useMediaQuery({
+    query: "(min-width: 1920px) ",
+  });
+  const isWideWideDesktopScreen = useMediaQuery({
+    query: "(min-width: 2560px) ",
+  });
+  const cntRecentBooks = isWideWideDesktopScreen ? 8 : isWideDesktopScreen ? 6 : 5;
 
   useEffect(() => {
     if (bookcaseInfo && bookcaseInfo.length && !isError) {
@@ -34,7 +42,7 @@ export default function RecentBooks() {
             {isFulFilled ? (
               bookcaseInfo &&
               bookcaseInfo
-                .slice(0, 5)
+                .slice(0, cntRecentBooks)
                 .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} pathKey="/book" />)
             ) : (
               <Empty />
