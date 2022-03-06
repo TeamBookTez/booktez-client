@@ -33,7 +33,7 @@ export default function ExamplePeriNote(props: ExamplePreNoteProps) {
           <React.Fragment key={index}>
             <StFirstQuestion>
               <LabelQuestion bgColor={theme.colors.orange000} />
-              {question.content}
+              {question.content ? question.content : "질문"}
               <StIcToggle onClick={handleToggle} />
             </StFirstQuestion>
             <div>
