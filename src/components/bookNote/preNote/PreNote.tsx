@@ -126,6 +126,8 @@ export default function PreNote() {
   }, []);
 
   useEffect(() => {
+    console.log(data);
+
     if (data.reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
@@ -195,7 +197,7 @@ export default function PreNote() {
           </StFormWrapper>
 
           {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-          <StNextBtn type="button" disabled={!isFilled} onClick={handleOpenModal}>
+          <StNextBtn type="button" disabled={!isFilled || data.questionList.length === 0} onClick={handleOpenModal}>
             다음 계단
           </StNextBtn>
         </StNoteForm>
