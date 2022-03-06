@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -48,10 +47,6 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
         } = await client(token).get(key);
 
         setData(data);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.log(err.response);
-        }
       } finally {
         setIsLoading(false);
       }

@@ -6,6 +6,7 @@ import styled, { css, keyframes } from "styled-components";
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
 import { PopUpExit } from "../components/common";
+import Error404 from "../components/common/Error404";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { isLoginState, navigatingBookInfoState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
@@ -15,6 +16,7 @@ export interface NavigatingBookInfoState {
   reviewId: string;
   title: string;
   fromUrl: string;
+  fromSt: number;
 }
 
 // 시간이 된다면 keyof 꼭 활용해보기
@@ -50,12 +52,13 @@ export default function BookNote() {
   const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
   const { reviewId, title } = navigatingBookInfo;
 
+  // isLogin으로 대체 가능하지 않을까?
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
 
   const [isSave, setIsSave] = useState<boolean>(false);
 
-  const [isPrevented, setIsPrevented] = useState<boolean>(true);
+  const [isPrevented, setIsPrevented] = useState<boolean>(false);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [drawerIdx, setDrawerIdx] = useState(1);
@@ -119,8 +122,8 @@ export default function BookNote() {
     };
   }, []);
 
-  const handleSetIsSaveFalse = () => {
-    setIsSave(false);
+  const handleSetIsSave = (isTrue: boolean) => {
+    setIsSave(isTrue);
   };
 
   useEffect(() => {
@@ -140,43 +143,49 @@ export default function BookNote() {
   }, [initIndex]);
 
   return (
-    <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
-      {openExitModal && <PopUpExit onExit={handleExit} />}
-      <StIcCancelWhite onClick={handleExit} />
-      <StBookTitle>{title}</StBookTitle>
-      <StNavWrapper>
-        <Navigator
-          navIndex={navIndex}
-          onNav={handleNav}
-          isPrevented={isPrevented}
-          onSetDrawerAsDefault={handleDrawerDefault}
-          onSetIsSaveFalse={handleSetIsSaveFalse}
-        />
-        {isSave && (
-          <StSave>
-            <StIcCheckSave />
-            작성한 내용이 저장되었어요.
-          </StSave>
-        )}
-        {isLogin && <StIcSave onClick={() => setIsSave(true)} />}
-      </StNavWrapper>
-      <Outlet
-        context={[
-          reviewId,
-          userToken,
-          navIndex,
-          isSave,
-          handleOpenDrawer,
-          handleCloseDrawer,
-          preventGoBack,
-          saveReview,
-          isPrevented,
-          handlePrevent,
-        ]}
-      />
-      /
-      <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
-    </StNoteModalWrapper>
+    <>
+      {reviewId === "-1" ? (
+        <Error404 />
+      ) : (
+        <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
+          {openExitModal && <PopUpExit onExit={handleExit} />}
+          <StIcCancelWhite onClick={handleExit} />
+          <StBookTitle>{title}</StBookTitle>
+          <StNavWrapper>
+            <Navigator
+              navIndex={navIndex}
+              onNav={handleNav}
+              isPrevented={isPrevented}
+              onSetDrawerAsDefault={handleDrawerDefault}
+              onSetIsSave={handleSetIsSave}
+            />
+            {isSave && (
+              <StSave>
+                <StIcCheckSave />
+                작성한 내용이 저장되었어요.
+              </StSave>
+            )}
+            {isLogin && <StIcSave onClick={() => setIsSave(true)} />}
+          </StNavWrapper>
+          <Outlet
+            context={[
+              reviewId,
+              userToken,
+              navIndex,
+              isSave,
+              handleOpenDrawer,
+              handleCloseDrawer,
+              preventGoBack,
+              saveReview,
+              isPrevented,
+              handlePrevent,
+            ]}
+          />
+          /
+          <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
+        </StNoteModalWrapper>
+      )}
+    </>
   );
 }
 

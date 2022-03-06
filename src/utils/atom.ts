@@ -13,5 +13,6 @@ export const navigatingBookInfoState = atom<NavigatingBookInfoState>({
     reviewId: "-1",
     title: "",
     fromUrl: "",
+    fromSt: 0,
   },
 });
