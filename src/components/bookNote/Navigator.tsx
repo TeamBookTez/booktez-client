@@ -6,26 +6,29 @@ interface NavigatorProps {
   onNav: (idx: number) => void;
   isPrevented: boolean;
   onSetDrawerAsDefault: () => void;
-  onSetIsSaveFalse: () => void;
+  onSetIsSave: (isTrue: boolean) => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isPrevented, onSetDrawerAsDefault, onSetIsSaveFalse } = props;
+  const { navIndex, onNav, isPrevented, onSetDrawerAsDefault, onSetIsSave } = props;
 
   const navigate = useNavigate();
 
-  const goToPre = () => {
-    onSetIsSaveFalse();
-    navigate("");
-    onNav(0);
-    onSetDrawerAsDefault();
-  };
-
-  const goToPeri = (isPrevented: boolean) => {
-    onSetIsSaveFalse();
-    if (!isPrevented) {
-      navigate("peri");
-      onNav(1);
+  const handleNavigate = () => {
+    onSetIsSave(true);
+    if (navIndex) {
+      setTimeout(() => {
+        onSetIsSave(false);
+        navigate("");
+        onNav(0);
+      }, 0);
+    }
+    if (!navIndex && !isPrevented) {
+      setTimeout(() => {
+        onSetIsSave(false);
+        navigate("peri");
+        onNav(1);
+      }, 0);
     }
     onSetDrawerAsDefault();
   };
@@ -34,12 +37,12 @@ export default function Navigator(props: NavigatorProps) {
     <StNav>
       <StUl>
         <li>
-          <StLink1 onClick={() => goToPre()} index={navIndex}>
+          <StLink1 onClick={handleNavigate} index={navIndex}>
             독서 전
           </StLink1>
         </li>
         <li>
-          <StLink2 onClick={() => goToPeri(isPrevented)} index={navIndex}>
+          <StLink2 onClick={handleNavigate} index={navIndex}>
             독서 중
           </StLink2>
         </li>

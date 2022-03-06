@@ -126,7 +126,7 @@ export default function PreNote() {
   }, []);
 
   useEffect(() => {
-    if (reviewSt > 2) {
+    if (data.reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
     } else {
@@ -144,7 +144,7 @@ export default function PreNote() {
     if (!navIndex && isSave) {
       saveReview(data);
     }
-  }, [isSave]);
+  }, [isSave, navIndex]);
 
   if (isLoading) {
     return <Loading />;

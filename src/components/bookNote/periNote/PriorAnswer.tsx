@@ -53,7 +53,6 @@ export default function PriorAnswer(props: PriorAnswerProps) {
 
   useEffect(() => {
     if (textAreaRef.current) {
-      textAreaRef.current.value = "";
       textAreaRef.current.focus();
     }
   }, []);

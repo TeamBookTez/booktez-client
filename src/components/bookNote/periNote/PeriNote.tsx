@@ -164,7 +164,7 @@ export default function PeriNote() {
     if (navIndex && isSave) {
       saveReview(data);
     }
-  }, [isSave]);
+  }, [isSave, navIndex]);
 
   if (isLoading) {
     return <Loading />;

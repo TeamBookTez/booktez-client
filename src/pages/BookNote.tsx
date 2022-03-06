@@ -51,12 +51,13 @@ export default function BookNote() {
   const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
   const { reviewId, title } = navigatingBookInfo;
 
+  // isLogin으로 대체 가능하지 않을까?
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
 
   const [isSave, setIsSave] = useState<boolean>(false);
 
-  const [isPrevented, setIsPrevented] = useState<boolean>(true);
+  const [isPrevented, setIsPrevented] = useState<boolean>(false);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [drawerIdx, setDrawerIdx] = useState(1);
@@ -120,8 +121,8 @@ export default function BookNote() {
     };
   }, []);
 
-  const handleSetIsSaveFalse = () => {
-    setIsSave(false);
+  const handleSetIsSave = (isTrue: boolean) => {
+    setIsSave(isTrue);
   };
 
   useEffect(() => {
@@ -151,7 +152,7 @@ export default function BookNote() {
           onNav={handleNav}
           isPrevented={isPrevented}
           onSetDrawerAsDefault={handleDrawerDefault}
-          onSetIsSaveFalse={handleSetIsSaveFalse}
+          onSetIsSave={handleSetIsSave}
         />
         {isSave && (
           <StSave>
