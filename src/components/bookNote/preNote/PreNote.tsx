@@ -126,8 +126,6 @@ export default function PreNote() {
   }, []);
 
   useEffect(() => {
-    console.log(data);
-
     if (data.reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
