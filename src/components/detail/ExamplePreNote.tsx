@@ -1,9 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
-import { isLoginState } from "../../utils/atom";
 import { Button } from "../common/styled/Button";
 import LabelQuestion from "../common/styled/LabelQuestion";
 
@@ -15,43 +12,27 @@ interface ExamplePreNoteProps {
 
 export default function ExamplePreNote(props: ExamplePreNoteProps) {
   const { answerOne, answerTwo, questionList } = props;
-  const isLogin = useRecoilValue(isLoginState);
-  const navigate = useNavigate();
   const userNickname = localStorage.getItem("booktez-nickname");
-
-  const handleGoSignup = () => {
-    navigate("/signup", { state: "rightpath" });
-  };
 
   return (
     <StExampleWrapper>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {isLogin ? `${userNickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        {userNickname}님은 이 책에 어떤 기대를 하고 계신가요?
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분이{" "}
-        {isLogin ? `${userNickname} 독서가` : "익명의 독서가"}
-        님의 기대를 만족시킬 수 있을까요?
+        {userNickname}님의 기대를 만족시킬 수 있을까요?
       </StFirstQuestion>
       <StAnswer>{answerTwo}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {isLogin ? `${userNickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        {userNickname}님은 이 책에 어떤 기대를 하고 계신가요?
       </StFirstQuestion>
-      {isLogin ? (
-        questionList?.map((question: string, idx: number) => <StAnswer key={idx}>{question}</StAnswer>)
-      ) : (
-        <StLinkWrapper>
-          <StSignupText>
-            독서가들의 기대를 채워줄 책의 내용들은
-            <br />
-            어떻게 구체화 되어갈까요?
-          </StSignupText>
-          <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
-        </StLinkWrapper>
-      )}
+      {questionList?.map((question: string, idx: number) => (
+        <StAnswer key={idx}>{question}</StAnswer>
+      ))}
     </StExampleWrapper>
   );
 }
