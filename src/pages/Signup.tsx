@@ -7,7 +7,6 @@ import { Error404, NavHeader } from "../components/common";
 import theme from "../styles/theme";
 
 interface StMainProps {
-  isrightpath: boolean;
   isAniTime: boolean;
 }
 
@@ -57,7 +56,7 @@ export default function Layout() {
       {state === "rightpath" ? (
         <>
           <NavHeader logocolor={theme.colors.gray100} />
-          <StMain isrightpath={state === "rightpath"} isAniTime={isAniTime}>
+          <StMain isAniTime={isAniTime}>
             <StFormWrapper>
               {imgSrc && <StImage src={imgSrc} alt="회원가입 첫 단계" />}
               <StHeading2>{headerText}</StHeading2>
