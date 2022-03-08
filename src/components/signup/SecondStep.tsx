@@ -36,7 +36,7 @@ export default function SecondStep() {
       setIsNicknameValid(resData.data.isValid);
       setErrorMessage(resData.message);
     } catch (err) {
-      return;
+      // return;
     }
   };
 

@@ -31,7 +31,7 @@ export default function ThirdStep() {
     try {
       await postData("/auth/signup", userData);
     } catch (err) {
-      return;
+      // return;
     }
   };
 
@@ -49,7 +49,7 @@ export default function ThirdStep() {
       localStorage.setItem("booktez-nickname", resData.nickname);
       localStorage.setItem("booktez-email", resData.email);
     } catch (err) {
-      return;
+      // return;
     }
   };
 
