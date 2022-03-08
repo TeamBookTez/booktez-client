@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,7 +10,7 @@ import { Loading } from "../common";
 import { Button } from "../common/styled/Button";
 
 export default function LastStep() {
-  const [userData, setUserData] = useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>]>();
+  const [userData] = useOutletContext<[UserData]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
