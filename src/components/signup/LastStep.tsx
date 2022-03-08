@@ -15,8 +15,6 @@ export default function LastStep() {
 
   const navigate = useNavigate();
 
-  console.log("hello");
-
   const addBookReview = async () => {
     const _token = localStorage.getItem("booktez-token");
     const userToken = _token ? _token : "";

@@ -25,14 +25,14 @@ export default function Layout() {
     <>
       {state === "rightpath" ? (
         <>
-          <AnimatePresence exitBeforeEnter>
-            <NavHeader logocolor={theme.colors.gray100} />
-            <StMain>
-              <StFormWrapper>
+          <NavHeader logocolor={theme.colors.gray100} />
+          <StMain>
+            <StFormWrapper>
+              <AnimatePresence exitBeforeEnter>
                 <Outlet context={[userData, setUserData]} />
-              </StFormWrapper>
-            </StMain>
-          </AnimatePresence>
+              </AnimatePresence>
+            </StFormWrapper>
+          </StMain>
         </>
       ) : (
         <Error404 />
