@@ -1,8 +1,10 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { UserData } from "../../pages/Signup";
+import { ImgSignupFirst } from "../../assets/images";
+import { StHeading2, StImage, StParagraph, UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
 import { getData } from "../../utils/lib/api";
 import { AlertLabel, InputEmail } from "../common";
@@ -10,8 +12,7 @@ import { Button } from "../common/styled/Button";
 import { LabelHidden } from "../common/styled/LabelHidden";
 
 export default function FirstStep() {
-  const [userData, setUserData, handleIsAniTime] =
-    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [userData, setUserData] = useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>]>();
   const [email, setEmail] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
@@ -19,10 +20,6 @@ export default function FirstStep() {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    handleIsAniTime(false);
-  }, []);
 
   useEffect(() => {
     getEmail(userData["email"]);
@@ -46,7 +43,6 @@ export default function FirstStep() {
       return setIsEmailError(true);
     }
 
-    handleIsAniTime(true);
     setTimeout(() => navigate("/signup/2", { state: "rightpath" }), 1000);
   };
 
@@ -65,7 +61,16 @@ export default function FirstStep() {
   };
 
   return (
-    <>
+    <motion.div
+      key="firstSignup"
+      transition={{
+        default: { duration: 1 },
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}>
+      <StImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
+      <StHeading2>나만의 서재를 만드는 중이에요!</StHeading2>
       <StParagraph>당신의 이메일을 입력해 주세요.</StParagraph>
       <StForm onSubmit={handleSubmit}>
         <LabelHidden htmlFor="signupEmail">이메일</LabelHidden>
@@ -83,15 +88,9 @@ export default function FirstStep() {
           다음 계단
         </StNextStepBtn>
       </StForm>
-    </>
+    </motion.div>
   );
 }
-
-const StParagraph = styled.p`
-  margin-bottom: 5.2rem;
-
-  ${({ theme }) => theme.fonts.body0}
-`;
 
 const StForm = styled.form`
   display: flex;
