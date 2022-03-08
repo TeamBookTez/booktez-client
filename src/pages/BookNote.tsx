@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { css, keyframes } from "styled-components";
 
 import { IcCheckSave, IcSave } from "../assets/icons";
 import { DrawerWrapper, Navigator } from "../components/bookNote";
-import { PopUpExit } from "../components/common";
-import Error404 from "../components/common/Error404";
+import { Error404, Loading, PopUpExit } from "../components/common";
 import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { isLoginState, navigatingBookInfoState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { patchBookNote } from "../utils/lib/api";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export interface NavigatingBookInfoState {
   reviewId: string;
@@ -48,11 +48,11 @@ export default function BookNote() {
   const drawerWidthValue = pathname === "/book-note/peri" ? 60 : 39;
   const [navIndex, setNavIndex] = useState<number>(initIndex);
 
-  const isLogin = useRecoilValue(isLoginState);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
+  const setIsLogin = useSetRecoilState(isLoginState);
   const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
   const { reviewId, title } = navigatingBookInfo;
 
-  // isLogin으로 대체 가능하지 않을까?
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
 
@@ -112,6 +112,10 @@ export default function BookNote() {
     e.returnValue = ""; //deprecated
   };
 
+  const handleSetIsSave = (isTrue: boolean) => {
+    setIsSave(isTrue);
+  };
+
   useEffect(() => {
     (() => {
       window.addEventListener("beforeunload", preventClose);
@@ -122,9 +126,13 @@ export default function BookNote() {
     };
   }, []);
 
-  const handleSetIsSave = (isTrue: boolean) => {
-    setIsSave(isTrue);
-  };
+  useEffect(() => {
+    if (isLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
 
   useEffect(() => {
     if (isSave) {
@@ -146,6 +154,8 @@ export default function BookNote() {
     <>
       {reviewId === "-1" ? (
         <Error404 />
+      ) : isLoginLoading ? (
+        <Loading />
       ) : (
         <StNoteModalWrapper isopen={isDrawerOpen} isdefault={isDrawerdefault} width={drawerWidthValue}>
           {openExitModal && <PopUpExit onExit={handleExit} />}
