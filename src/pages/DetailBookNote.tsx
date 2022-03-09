@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcDeleteNote, IcModifyNote } from "../assets/icons";
@@ -7,20 +8,34 @@ import { Loading, PopUpDelete } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { ExamplePeriNote, ExamplePreNote } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
-import { GetBody } from "../utils/dataType";
+import { navigatingBookInfoState } from "../utils/atom";
+import { PeriNoteTreeNode } from "../utils/dataType";
 import { getData } from "../utils/lib/api";
-import { IsLoginState } from "./BookNote";
+
+interface ReviewData {
+  bookTitle: string;
+  answerOne: string;
+  answerTwo: string;
+  answerThree: PeriNoteTreeNode;
+  questionList: string[];
+}
 
 export default function DetailBookNote() {
-  const [reviewData, setReviewData] = useState<GetBody>();
+  const [reviewData, setReviewData] = useState<ReviewData>({
+    bookTitle: "",
+    answerOne: "",
+    answerTwo: "",
+    answerThree: { type: "Root", content: "root", children: [] },
+    questionList: [""],
+  });
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { state } = useLocation();
-  const isLoginState = state as IsLoginState;
-  const { reviewId, isLogin, fromUrl } = isLoginState;
 
-  const tempToken = localStorage.getItem("booktez-token");
-  const token = tempToken ? tempToken : "";
+  const [navigatingBookInfo, setNavigatingBookInfo] = useRecoilState(navigatingBookInfoState);
+  const { reviewId, fromUrl } = navigatingBookInfo;
+
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
   const navigate = useNavigate();
 
@@ -32,26 +47,23 @@ export default function DetailBookNote() {
 
       setReviewData(data);
     } catch (err) {
-      return;
+      // return;
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    getReview(`review/${reviewId}`, token);
+    getReview(`review/${reviewId}`, userToken);
   }, []);
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
-  const handleBookDelete = () => {
-    getReview(`review/${reviewId}`, token); //리렌더링
-  };
-
   return (
     <>
-      {isLogin && isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>
@@ -67,9 +79,11 @@ export default function DetailBookNote() {
             <StBtnWrapper>
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
-                onClick={() =>
-                  navigate("/book-note/peri", { state: { reviewId, fromUrl: "/main/bookcase/post", isLogin } })
-                }
+                onClick={() => {
+                  setNavigatingBookInfo({ ...navigatingBookInfo, reviewId, title: reviewData?.bookTitle, fromUrl });
+                  navigate("/book-note/peri");
+                }}
+                id="btn_update"
               />
             </StBtnWrapper>
             <DetailArticleWrapper title="독서 전 단계">
@@ -77,20 +91,15 @@ export default function DetailBookNote() {
                 answerOne={reviewData?.answerOne}
                 answerTwo={reviewData?.answerTwo}
                 questionList={reviewData?.questionList}
-                isLogin={isLogin}
               />
             </DetailArticleWrapper>
             <StMarginTop>
               <DetailArticleWrapper title="독서 중 단계">
-                <ExamplePeriNote answerThree={reviewData?.answerThree} />
+                {reviewData?.answerThree && <ExamplePeriNote answerThree={reviewData.answerThree} />}
               </DetailArticleWrapper>
             </StMarginTop>
           </StNoteModalWrapper>
-          {isPopUp ? (
-            <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} />
-          ) : (
-            <></>
-          )}
+          {isPopUp ? <PopUpDelete onPopUp={handlePopUp} pathKey="/book" reviewId={reviewId} /> : <></>}
         </>
       )}
     </>

@@ -8,11 +8,11 @@ interface QuestionThreeProps {
   onChangeReview: (key: string, value: string | string[] | number) => void;
   onOpenDrawer: (i: number) => void;
   isPrevented: boolean;
-  ablePatch: boolean;
+  isFilled: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onOpenDrawer, isPrevented, ablePatch } = props;
+  const { questionList, onChangeReview, onOpenDrawer, isPrevented, isFilled } = props;
 
   const [isAdded, setIsAdded] = useState<boolean>(false);
 
@@ -32,30 +32,31 @@ export default function QuestionThree(props: QuestionThreeProps) {
   };
 
   const handleAddInput = () => {
+    if (!isFilled) return;
+
     onChangeReview("questionList", [...questionList, ""]);
     setIsAdded(true);
   };
 
   return (
     <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onOpenDrawer={onOpenDrawer}>
-      {questionList.map((question, idx) => (
-        <InputQuestion
-          key={idx}
-          value={question}
-          idx={idx}
-          onChangeValue={handleChange}
-          onDelete={handleDelete}
-          isPrevented={isPrevented}
-          isAdded={isAdded}
-          onAddInput={handleAddInput}
-        />
-      ))}
-      {!isPrevented ? (
-        <StAddButton type="button" disabled={!ablePatch} onClick={handleAddInput}>
+      {questionList &&
+        questionList.map((question, idx) => (
+          <InputQuestion
+            key={idx}
+            value={question}
+            idx={idx}
+            onChangeValue={handleChange}
+            onDelete={handleDelete}
+            isPrevented={isPrevented}
+            isAdded={isAdded}
+            onAddInput={handleAddInput}
+          />
+        ))}
+      {isPrevented && (
+        <StAddButton type="button" disabled={!isFilled} onClick={handleAddInput}>
           + 질문추가
         </StAddButton>
-      ) : (
-        ""
       )}
     </PreNoteForm>
   );

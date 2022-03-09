@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
 import { ImgBefore21, ImgBefore22, ImgBefore23 } from "../../../assets/images";
-import { before2 } from "../../../utils/mockData";
+import { before2 } from "../../../utils/exampleData";
 import CarouselDots from "./CarouselDots";
 interface StepUpProps {
   onToggleModal: () => void;
@@ -54,7 +54,7 @@ export default function ThreeCaseModal(props: StepUpProps) {
       <StModalIcCancel onClick={onToggleModal} />
       <StLeftWrapper>
         <StImgWrapper>
-          <img src={imgSrc} alt="독서전 캐러셀 이미지" />
+          <img src={imgSrc} alt="캐러셀 이미지" />
         </StImgWrapper>
         <StLifeQuotes>{data.lifeQuote}</StLifeQuotes>
         <StPublic>{data.public}</StPublic>
@@ -96,7 +96,6 @@ const StModalIcCancel = styled(IcCancelBlack)`
 const StLeftWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
   width: 36.9rem;

@@ -13,7 +13,7 @@ export default function LandingFooter() {
           함께 오르실 분들을 기다립니다.{" "}
         </StH1>
         <Link to="/main">
-          <StButton>북스테어즈 시작</StButton>
+          <StButton id="cta_bottom">북스테어즈 시작</StButton>
         </Link>
         <StIcFooter />
       </StFooterWrapper>

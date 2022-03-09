@@ -1,8 +1,10 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import theme from "../../styles/theme";
+import { isLoginState } from "../../utils/atom";
 import { StepUp } from "../bookNote";
 import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
 import OneCaseModal from "../bookNote/stepUp/OneCaseModal";
@@ -14,15 +16,15 @@ interface ExamplePreNoteLabelingProps {
   answerOne: string | undefined;
   answerTwo: string | undefined;
   questionList: string[] | undefined;
-  isLogin: boolean;
 }
 
 export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProps) {
-  const { answerOne, answerTwo, questionList, isLogin } = props;
+  const { answerOne, answerTwo, questionList } = props;
 
   const navigate = useNavigate();
+  const isLogin = useRecoilValue(isLoginState);
 
-  const nickname = localStorage.getItem("booktez-nickname");
+  const userNickname = localStorage.getItem("booktez-nickname");
 
   const handleGoSignup = () => {
     navigate("/signup", { state: "rightpath" });
@@ -43,7 +45,7 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
     <StExampleWrapper>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {isLogin ? `${nickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
+        {isLogin ? `${userNickname} 독서가` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?
         <StepUp onToggleModal={() => handleToggleModal(1)} />
       </StFirstQuestion>
       <StAnswer>{answerOne}</StAnswer>
@@ -67,7 +69,9 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
             <br />
             어떻게 구체화 되어갈까요?
           </StSignupText>
-          <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
+          <StButton onClick={handleGoSignup} className="btn_signup">
+            회원가입 후 이어보기
+          </StButton>
         </StLinkWrapper>
       )}
       {openModal && (

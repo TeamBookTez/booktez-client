@@ -1,59 +1,50 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import { Navigation } from "../components/bookcase";
-import { MainHeader } from "../components/common";
-import { getData } from "../utils/lib/api";
+import { Cards, Navigation } from "../components/bookcase";
+import { Loading, MainHeader } from "../components/common";
+import { isLoginState, navigatingBookInfoState } from "../utils/atom";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export interface BookcaseInfo {
   author: string[];
-  reviewId: number;
-  state?: number;
+  reviewId: string;
+  reviewSt?: number;
   thumbnail: string;
   title: string;
 }
 
 export default function Bookcase() {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
+  const { fromSt } = navigatingBookInfo;
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const localToken = TOKEN ? TOKEN : "";
+  const [navIndex, setNavIndex] = useState<number>(fromSt);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
+  const setIsLogin = useSetRecoilState(isLoginState);
 
-  // const handleBookDelete = () => {
-  //   getBookcase("/book", localToken);
-  // };
-  // 코드 리뷰 후 해당 주석 삭제 예정
-
-  const handleIsLoading = () => {
-    setIsLoading((e) => !e);
+  const handleChangeNavIndex = (idx: number) => {
+    setNavIndex(idx);
   };
 
   useEffect(() => {
-    getLogin("/auth/check", localToken);
-  }, []);
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        setIsLogin(false);
-      }
-    } catch (err) {
-      return;
+    if (isLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
-  };
+  }, [isLogin]);
 
   return (
     <>
-      <MainHeader>서재</MainHeader>
-      <Navigation />
-      <Outlet context={[isLoading, handleIsLoading, isLogin]} />
+      {isLoginLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>서재</MainHeader>
+          <Navigation navIndex={navIndex} onChangeNavIndex={handleChangeNavIndex} />
+          <Cards navIndex={navIndex} />
+        </>
+      )}
     </>
   );
 }

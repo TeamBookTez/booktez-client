@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { UserData } from "../../pages/Signup";
+import { ImgSignupThird } from "../../assets/images";
+import { StHeading2, StImage, StParagraph, UserData } from "../../pages/Signup";
 import { checkPwdType } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { AlertLabel, InputPwd } from "../common";
@@ -10,8 +12,7 @@ import { Button } from "../common/styled/Button";
 import { LabelHidden } from "../common/styled/LabelHidden";
 
 export default function ThirdStep() {
-  const [userData, setUserData, handleIsAniTime] =
-    useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>, (isActive: boolean) => void]>();
+  const [userData, setUserData] = useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>]>();
   const [pwd, setPwd] = useState<string>("");
   const [pwdRe, setPwdRe] = useState<string>("");
   const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
@@ -21,17 +22,13 @@ export default function ThirdStep() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
 
-  const nav = useNavigate();
-
-  useEffect(() => {
-    handleIsAniTime(false);
-  }, []);
+  const navigate = useNavigate();
 
   const postSignup = async () => {
     try {
       await postData("/auth/signup", userData);
     } catch (err) {
-      return;
+      // return;
     }
   };
 
@@ -47,8 +44,9 @@ export default function ThirdStep() {
 
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
+      localStorage.setItem("booktez-email", resData.email);
     } catch (err) {
-      return;
+      // return;
     }
   };
 
@@ -62,8 +60,7 @@ export default function ThirdStep() {
     }
 
     postSignup().then(() => postLogin());
-    handleIsAniTime(true);
-    setTimeout(() => nav("/signup/4", { state: "rightpath" }), 1000);
+    setTimeout(() => navigate("/signup/4", { state: "rightpath" }), 1000);
   };
 
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,11 +93,19 @@ export default function ThirdStep() {
   };
 
   return (
-    <>
+    <motion.div
+      key="thirdSignup"
+      transition={{
+        default: { duration: 1 },
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}>
+      <StImage src={ImgSignupThird} alt="회원가입 첫 단계" />
+      <StHeading2>나만의 서재를 만드는 중이에요!</StHeading2>
       <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
       <StForm onSubmit={handleSubmit}>
         <StEmailFixed>{userData["email"]}</StEmailFixed>
-
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>
         <StInputPwdWrapper>
           <InputPwd
@@ -136,15 +141,9 @@ export default function ThirdStep() {
           다음 계단
         </StNextStepBtn>
       </StForm>
-    </>
+    </motion.div>
   );
 }
-
-const StParagraph = styled.p`
-  margin-bottom: 5.2rem;
-
-  ${({ theme }) => theme.fonts.body0}
-`;
 
 const StForm = styled.form`
   display: flex;

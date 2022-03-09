@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { IcCancelBlack } from "../../../assets/icons";
 import { ImgBefore1, ImgBefore3 } from "../../../assets/images";
-import { before1, before3 } from "../../../utils/mockData";
+import { before1, before3 } from "../../../utils/exampleData";
 
 interface StepUpProps {
   idx: number;

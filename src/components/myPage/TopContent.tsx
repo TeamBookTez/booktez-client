@@ -1,40 +1,45 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { useSWRConfig } from "swr";
 
 import { UserInfo } from "../../pages/MyPage";
+import { isLoginState } from "../../utils/atom";
 import { StLoginLink } from "../common/MainHeader";
 import { Button } from "../common/styled/Button";
 import { TopBanner } from ".";
 
 interface TopContentProps {
   userInfo: UserInfo;
-  isLogin: boolean;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onLogout: () => void;
 }
 
 export default function TopContent(props: TopContentProps) {
   const navigate = useNavigate();
-  const { userInfo, isLogin, onImageChange, onLogout } = props;
+  const { userInfo, onImageChange, onLogout } = props;
 
-  const handleMoveLogin = () => {
-    navigate("/login");
-  };
+  const isLogin = useRecoilValue(isLoginState);
+  const { mutate } = useSWRConfig();
 
   const handleLogout = () => {
     localStorage.removeItem("booktez-token");
     localStorage.removeItem("booktez-nickname");
-    navigate("/main");
+    localStorage.removeItem("booktez-email");
+    mutate("/book");
     onLogout();
+    navigate("/main");
   };
 
   return (
     <StWrapper>
-      <TopBanner isLogin={isLogin} userInfo={userInfo} onImageChange={onImageChange} />
+      <TopBanner userInfo={userInfo} onImageChange={onImageChange} />
       {isLogin ? (
-        <StLogoutBtn onClick={handleLogout}>로그아웃</StLogoutBtn>
+        <StLogoutBtn onClick={handleLogout} id="btn_logout">
+          로그아웃
+        </StLogoutBtn>
       ) : (
-        <StLoginButton type="button" onClick={handleMoveLogin}>
+        <StLoginButton type="button">
           <StLoginLink to="/login">로그인</StLoginLink>
         </StLoginButton>
       )}

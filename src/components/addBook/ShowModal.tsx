@@ -1,8 +1,11 @@
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
 import { BookInfo } from "../../pages/AddBook";
+import { navigatingBookInfoState } from "../../utils/atom";
 import { postData } from "../../utils/lib/api";
 import { Button } from "../common/styled/Button";
 import { PublishDate } from "./BookInfoWrapper";
@@ -17,23 +20,25 @@ export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
 
+  const [navigatingBookInfo, setNavigatingBookInfo] = useRecoilState(navigatingBookInfoState);
+
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
-  const bookData = { ...bookInfo, publicationDate: publicationDt, author: authors, translator: translators };
+  const bookData = { ...bookInfo, publicationDt, author: authors, translator: translators };
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   const postAddBooks = async () => {
     try {
       const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
-        const { isbn, thumbnail, title, authors, translators, publicationDate } = bookData;
+        const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           "booktez-bookData",
           JSON.stringify({
             isbn,
@@ -41,15 +46,17 @@ export default function ShowModal(props: ShowModalProps) {
             title,
             author: authors,
             translator: translators,
-            publicationDate,
+            publicationDt,
           }),
         );
       }
-      const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
+      setNavigatingBookInfo({ ...navigatingBookInfo, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
+      navigate("/book-note");
     } catch (err) {
-      return;
+      if (axios.isAxiosError(err)) {
+        return;
+      }
     }
   };
 
@@ -92,10 +99,10 @@ export default function ShowModal(props: ShowModalProps) {
           </ModalLabel>
         ) : null}
       </ModalLabelWrapper>
-      <ModalDate>
-        {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
-      </ModalDate>
-      <StWriteBtn onClick={postAddBooks}>독서 시작</StWriteBtn>
+      <ModalDate>{publicationDt} 출간</ModalDate>
+      <StWriteBtn onClick={postAddBooks} id="start_reading_book">
+        독서 시작
+      </StWriteBtn>
     </>
   );
 }

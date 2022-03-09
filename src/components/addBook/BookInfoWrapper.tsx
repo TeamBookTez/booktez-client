@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
+import { escapeHtml } from "../../utils/escape";
 import ModalWrapper from "./ModalWrapper";
 import ShowModal from "./ShowModal";
 
@@ -11,7 +12,11 @@ export interface PublishDate {
   date: string;
 }
 
-export default function BookInfoWrapper(props: { book: BookInfo }) {
+interface BookInfoWrapperProps {
+  book: BookInfo;
+}
+
+export default function BookInfoWrapper(props: BookInfoWrapperProps) {
   const { book } = props;
   const { thumbnail, title, authors, datetime, contents } = book;
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -56,7 +61,7 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
             </InfoLabel>
           </InfoLabelWrapper>
-          <InfoSummary>{contents}</InfoSummary>
+          <InfoSummary>{escapeHtml(contents)}</InfoSummary>
         </StInfoWrapper>
       </StArticle>
       {openModal && (

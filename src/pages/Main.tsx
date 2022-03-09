@@ -1,41 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 
-import { MainHeader } from "../components/common";
+import { Loading, MainHeader } from "../components/common";
 import { Banner, RecentBooks } from "../components/main";
-import { getData } from "../utils/lib/api";
+import { isLoginState } from "../utils/atom";
+import { useCheckLoginState } from "../utils/useHooks";
 
 export default function Main() {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-  const TOKEN = localStorage.getItem("booktez-token");
-  const localToken = TOKEN ? TOKEN : "";
-  const authCheckKey = "/auth/check";
-
-  const getLogin = async (key: string, token: string) => {
-    try {
-      const { data } = await getData(key, token);
-      const status = data.status;
-
-      if (!localToken) {
-        return setIsLogin(false);
-      }
-      if (!(status === 200)) {
-        return setIsLogin(false);
-      }
-      setIsLogin(true);
-    } catch (err) {
-      return;
-    }
-  };
+  const { isLogin, isLoginLoading } = useCheckLoginState();
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    getLogin(authCheckKey, localToken);
-  }, []);
+    if (isLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
 
   return (
     <>
-      <MainHeader>메인</MainHeader>
-      <Banner />
-      <RecentBooks isLogin={isLogin} />
+      {isLoginLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <MainHeader>메인</MainHeader>
+          <Banner />
+          <RecentBooks />
+        </>
+      )}
     </>
   );
 }

@@ -1,88 +1,211 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 
-import { PreNoteData } from "../../../pages/BookNote";
+import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { isLoginState } from "../../../utils/atom";
+import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { patchBookNote } from "../../../utils/lib/api";
+import { useFetchNote } from "../../../utils/useHooks";
+import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
-import { PreNoteForm, QuestionThree } from "..";
+import { PopUpPreDone, PreNoteForm, QuestionThree } from "..";
 
 export default function PreNote() {
-  const navigate = useNavigate();
-  const [isLogin, handleOpenDrawer, preNote, handleChangeReview, setOpenModal, isPrevented, ablePatch] =
+  const [
+    reviewId,
+    userToken,
+    navIndex,
+    isSave,
+    handleOpenDrawer,
+    handleCloseDrawer,
+    preventGoBack,
+    saveReview,
+    isPrevented,
+    handlePrevent,
+  ] =
     useOutletContext<
       [
+        string,
+        string,
+        number,
         boolean,
         (i: number) => void,
-        PreNoteData,
-        (key: string, value: string | string[] | number) => void,
-        React.Dispatch<React.SetStateAction<boolean>>,
+        () => void,
+        () => void,
+        (body: PreNoteData | PeriNoteData) => Promise<void>,
         boolean,
-        boolean,
+        (shouldPrevent: boolean) => void,
       ]
     >();
-  const { answerOne, answerTwo, questionList } = preNote;
 
-  const handleSubmit = () => {
+  const { data, setData, isLoading } = useFetchNote<PreNoteData>(userToken, `/review/${reviewId}/pre`, {
+    answerOne: "",
+    answerTwo: "",
+    questionList: [""],
+    reviewSt: 2,
+    finishSt: false,
+  });
+  const { answerOne, answerTwo, questionList, reviewSt } = data;
+
+  const [isFilled, setIsFilled] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const isLogin = useRecoilValue(isLoginState);
+  const navigate = useNavigate();
+
+  const userNickname = localStorage.getItem("booktez-nickname");
+
+  const handleChangeReview = (key: string, value: string | string[] | number): void => {
+    setData((currentNote) => {
+      const newData = { ...currentNote };
+
+      newData[key] = value;
+
+      return newData;
+    });
+  };
+
+  // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
+  const handleSubmit = async () => {
+    if (!data.finishSt) {
+      patchBookNote(userToken, `/review/${reviewId}/pre`, { ...data, reviewSt: 3 });
+    } else {
+      patchBookNote(userToken, `/review/${reviewId}/pre`, data);
+    }
+
+    if (reviewSt === 2) {
+      const questionFromPre: PeriNoteTreeNode[] = [];
+
+      data.questionList.map((content) => {
+        questionFromPre.push({ type: "question", content, children: [{ type: "answer", content: "", children: [] }] });
+      });
+
+      patchBookNote(userToken, `review/${reviewId}/peri`, {
+        answerThree: {
+          type: "Root",
+          content: "root",
+          children: questionFromPre,
+        },
+        reviewSt: 3,
+        finishSt: false,
+      });
+    }
+
+    handlePrevent(false);
+
+    // 현재 모달 닫기
+    setOpenModal(false);
+
+    // peri로 넘어가기
+    navigate("/book-note/peri");
+  };
+
+  const handleOpenModal = () => {
     setOpenModal(true);
   };
 
+  const handleCancelModal = () => {
+    setOpenModal(false);
+  };
+
   const handleGoSignup = () => {
-    localStorage.setItem("booktez-reviewData", JSON.stringify({ answerOne, answerTwo }));
+    sessionStorage.setItem("booktez-reviewData", JSON.stringify({ answerOne, answerTwo }));
     navigate("/signup", { state: "rightpath" });
   };
 
-  const localNick = localStorage.getItem("booktez-nickname");
-  const nickname = isLogin && localNick ? localNick : "익명의 독서가";
+  useEffect(() => {
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
 
-  return (
-    <StNoteForm onSubmit={(e) => e.preventDefault()}>
-      <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
-      <StFormWrapper>
-        <PreNoteForm
-          question={`${nickname}님은 이 책에 어떤 기대를 하고 계신가요?`}
-          idx={1}
-          onOpenDrawer={handleOpenDrawer}>
-          <StTextarea
-            placeholder="답변을 입력해주세요."
-            value={answerOne}
-            onChange={(e) => handleChangeReview("answerOne", e.target.value)}
-          />
-        </PreNoteForm>
-        <PreNoteForm
-          question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
-          idx={2}
-          onOpenDrawer={handleOpenDrawer}>
-          <StTextarea
-            placeholder="답변을 입력해주세요."
-            value={answerTwo}
-            onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
-          />
-        </PreNoteForm>
-        {isLogin ? (
-          <QuestionThree
-            questionList={questionList}
-            onChangeReview={handleChangeReview}
-            onOpenDrawer={handleOpenDrawer}
-            isPrevented={isPrevented}
-            ablePatch={ablePatch}
-          />
-        ) : (
-          <StLinkWrapper>
-            <StSignupText>
-              내 기대를 채워줄 책의 내용들은
-              <br />
-              앞으로 어떻게 구체화 될까요?
-            </StSignupText>
-            <StButton onClick={handleGoSignup}>회원가입 후 이어보기</StButton>
-          </StLinkWrapper>
-        )}
-      </StFormWrapper>
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      handleCloseDrawer();
+    };
+  }, []);
 
-      {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
-      <StNextBtn type="button" disabled={!ablePatch} onClick={handleSubmit}>
-        다음 계단
-      </StNextBtn>
-    </StNoteForm>
-  );
+  useEffect(() => {
+    if (data.reviewSt > 2) {
+      handlePrevent(false);
+      setIsFilled(true);
+    } else {
+      handlePrevent(true);
+    }
+
+    if (answerOne && answerTwo && !questionList.includes("")) {
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!navIndex && isSave) {
+      saveReview(data);
+    }
+  }, [isSave, navIndex]);
+
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <>
+        <StNoteForm onSubmit={(e) => e.preventDefault()}>
+          <StFormHead>책을 넘기기 전 독서전략을 세워보아요.</StFormHead>
+          <StFormWrapper>
+            <PreNoteForm
+              question={`${isLogin ? `${userNickname} ` : "익명의 독서가"}님은 이 책에 어떤 기대를 하고 계신가요?`}
+              idx={1}
+              onOpenDrawer={handleOpenDrawer}>
+              <StTextarea
+                placeholder="답변을 입력해주세요."
+                value={data.answerOne}
+                onChange={(e) => handleChangeReview("answerOne", e.target.value)}
+              />
+            </PreNoteForm>
+            <PreNoteForm
+              question="이 책의 핵심 메시지는 무엇일까요? 그 중 어느 부분들이 기대를 만족시킬 수 있을까요? "
+              idx={2}
+              onOpenDrawer={handleOpenDrawer}>
+              <StTextarea
+                placeholder="답변을 입력해주세요."
+                value={data.answerTwo}
+                onChange={(e) => handleChangeReview("answerTwo", e.target.value)}
+              />
+            </PreNoteForm>
+            {isLogin ? (
+              <QuestionThree
+                questionList={data.questionList}
+                onChangeReview={handleChangeReview}
+                onOpenDrawer={handleOpenDrawer}
+                isPrevented={isPrevented}
+                isFilled={isFilled}
+              />
+            ) : (
+              <StLinkWrapper>
+                <StSignupText>
+                  내 기대를 채워줄 책의 내용들은
+                  <br />
+                  앞으로 어떻게 구체화 될까요?
+                </StSignupText>
+                <StButton onClick={handleGoSignup} className="btn_signup">
+                  회원가입 후 이어보기
+                </StButton>
+              </StLinkWrapper>
+            )}
+          </StFormWrapper>
+
+          {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
+          <StNextBtn type="button" disabled={!isFilled || data.questionList.length === 0} onClick={handleOpenModal}>
+            다음 계단
+          </StNextBtn>
+        </StNoteForm>
+
+        {openModal && <PopUpPreDone onSubmit={handleSubmit} onCancel={handleCancelModal} />}
+      </>
+    );
+  }
 }
 
 const StNoteForm = styled.form`

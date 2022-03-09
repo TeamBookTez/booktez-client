@@ -1,79 +1,57 @@
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { BookcaseInfo } from "../../pages/Bookcase";
-import { getData } from "../../utils/lib/api";
+import { useGetBookInfo } from "../../utils/lib/api";
 import { BookCard } from "../bookcase";
 import Empty from "../bookcase/cardSection/Empty";
 import { Loading } from "../common";
 
-interface RecentProps {
-  isLogin: boolean;
-}
+export default function RecentBooks() {
+  const [isFulFilled, setIsFulFilled] = useState<boolean>(false);
+  const { bookcaseInfo, isLoading, isError } = useGetBookInfo("/book");
 
-export default function RecentBooks(props: RecentProps) {
-  const { isLogin } = props;
-  const [booksRecent, setBooksRecent] = useState<BookcaseInfo[]>([]);
-  const [isDefault, setIsDefault] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const isWideDesktopScreen = useMediaQuery({
+    query: "(min-width: 1920px) ",
+  });
+  const isWideWideDesktopScreen = useMediaQuery({
+    query: "(min-width: 2560px) ",
+  });
+  const cntRecentBooks = isWideWideDesktopScreen ? 8 : isWideDesktopScreen ? 6 : 5;
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
-
-  const getBookRecent = async (key: string, token: string) => {
-    try {
-      const {
-        data: {
-          data: { books },
-        },
-      } = await getData(key, token);
-
-      setBooksRecent(books);
-    } catch (err) {
-      return setIsLoading(false);
+  useEffect(() => {
+    if (bookcaseInfo && bookcaseInfo.length && !isError) {
+      setIsFulFilled(true);
+    } else {
+      setIsFulFilled(false);
     }
-    setIsLoading(false);
-  };
+  }, [bookcaseInfo]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getBookRecent("/book", userToken);
-  }, []);
-
-  const handleBookDelete = () => {
-    getBookRecent("/book", userToken);
-  };
-
-  useEffect(() => {
-    setIsDefault(!(booksRecent.length > 0));
-  }, [booksRecent]);
-
-  return (
-    <section>
-      {isLogin && isLoading ? (
-        <Loading />
-      ) : (
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <section>
         <>
           <StHeader>
             <StHeading3>최근 작성한 북노트</StHeading3>
-            {!isDefault && <StLink to="/main/bookcase">전체보기</StLink>}
+            {isFulFilled && <StLink to="/main/bookcase">전체보기</StLink>}
           </StHeader>
-          <StBookWrapper isdefault={isDefault}>
-            {!isDefault ? (
-              booksRecent
-                .slice(0, 5)
-                .map((tempInfo, idx) => (
-                  <BookCard key={idx} bookcaseInfo={tempInfo} handleBookDelete={handleBookDelete} isLogin={isLogin} />
-                ))
+          <StBookWrapper isdefault={!isFulFilled}>
+            {isFulFilled ? (
+              bookcaseInfo &&
+              bookcaseInfo
+                .slice(0, cntRecentBooks)
+                .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} pathKey="/book" />)
             ) : (
               <Empty />
             )}
           </StBookWrapper>
         </>
-      )}
-    </section>
-  );
+      </section>
+    );
+  }
 }
 
 const StHeader = styled.header`
