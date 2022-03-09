@@ -36,9 +36,13 @@ export default function LastStep() {
 
   const goNextStep = () => {
     setIsLoading(true);
-    addBookReview();
-    sessionStorage.removeItem("booktez-bookData");
-    sessionStorage.removeItem("booktez-reviewData");
+
+    if (sessionStorage.getItem("booktez-bookData")) {
+      addBookReview();
+      sessionStorage.removeItem("booktez-bookData");
+      sessionStorage.removeItem("booktez-reviewData");
+    }
+
     setIsLoading(false);
 
     setTimeout(() => navigate("/main"), 1000);
