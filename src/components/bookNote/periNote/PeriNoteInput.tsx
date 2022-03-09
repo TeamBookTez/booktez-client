@@ -41,6 +41,12 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
   const labelColor = labelColorList[(path.length - 1) % 10];
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
+  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+    if (e.target.value !== "\n") {
+      onSetContent(e.target.value, pathArray);
+    }
+  };
+
   const addChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       // 꼬리질문과 답변은 자신의 아래에 추가하는 것이 아닌 자신의 부모의 children에 추가해야함
@@ -68,7 +74,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             ref={textAreaRef}
             value={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-            onChange={(e) => onSetContent(e.target.value, path)}
+            onChange={(e) => handleChangeSetContent(e, path)}
             onKeyPress={addChildByEnter}
           />
           {isQuestion && (
