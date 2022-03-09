@@ -93,13 +93,12 @@ export default function PreNote() {
       });
     }
 
-    handlePrevent(false);
-
-    // 현재 모달 닫기
-    setOpenModal(false);
-
-    // peri로 넘어가기
-    navigate("/book-note/peri");
+    // call stack이 비워질 때 바로 실행할 수 있도록
+    setTimeout(() => {
+      handlePrevent(false);
+      setOpenModal(false);
+      navigate("/book-note/peri");
+    }, 0);
   };
 
   const handleOpenModal = () => {

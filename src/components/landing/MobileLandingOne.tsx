@@ -2,7 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgLandingMobileBanner } from "../../assets/images";
+import { ImgLandingMobileBanner, ImgLandingTabletBanner } from "../../assets/images";
 import { Button } from "../common/styled/Button";
 
 export default function MobileLandingOne() {
@@ -37,7 +37,7 @@ const StWrapper = styled.section`
   align-items: center;
 
   width: 100%;
-  height: 57.5rem;
+  height: 44.3rem;
 
   margin-top: 6rem;
 
@@ -45,6 +45,11 @@ const StWrapper = styled.section`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  @media (min-width: 641px) {
+    background-image: url(${ImgLandingTabletBanner});
+    height: 45.1rem;
+  }
 `;
 
 const StTitle = styled.h1`

@@ -3,7 +3,7 @@ import { useMediaQuery } from "react-responsive";
 
 const Mobile: React.FC = ({ children }) => {
   const isMobileScreen = useMediaQuery({
-    query: "(max-width: 1440px)",
+    query: "(max-width: 1439px)",
   });
 
   return <React.Fragment>{isMobileScreen && children}</React.Fragment>;
