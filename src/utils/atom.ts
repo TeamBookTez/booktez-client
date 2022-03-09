@@ -1,6 +1,9 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
 import { NavigatingBookInfoState } from "../pages/BookNote";
+
+const { persistAtom } = recoilPersist();
 
 export const isLoginState = atom<boolean>({
   key: "isLoginState",
@@ -15,4 +18,5 @@ export const navigatingBookInfoState = atom<NavigatingBookInfoState>({
     fromUrl: "",
     fromSt: 0,
   },
+  effects_UNSTABLE: [persistAtom],
 });

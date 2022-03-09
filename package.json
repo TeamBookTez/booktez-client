@@ -19,6 +19,7 @@
     "react-scripts": "^5.0.0",
     "react-textarea-autosize": "^8.3.3",
     "recoil": "^0.6.1",
+    "recoil-persist": "^4.0.0",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
     "swr": "^1.2.1",
