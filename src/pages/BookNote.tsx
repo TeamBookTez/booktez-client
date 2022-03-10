@@ -191,7 +191,6 @@ export default function BookNote() {
               handlePrevent,
             ]}
           />
-          /
           <DrawerWrapper idx={drawerIdx} isOpen={isDrawerOpen} onCloseDrawer={handleCloseDrawer} />
         </StNoteModalWrapper>
       )}
