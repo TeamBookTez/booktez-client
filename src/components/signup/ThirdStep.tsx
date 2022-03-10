@@ -25,6 +25,7 @@ export default function ThirdStep() {
   const navigate = useNavigate();
 
   const postSignup = async () => {
+    console.log("post signup called");
     try {
       await postData("/auth/signup", userData);
     } catch (err) {
@@ -48,6 +49,11 @@ export default function ThirdStep() {
     } catch (err) {
       // return;
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    goNextStep();
   };
 
   const goNextStep = () => {
@@ -78,11 +84,6 @@ export default function ThirdStep() {
     setIsPwdReError(false);
     setIsPwdReEmpty(targetValue === "");
     setPwdRe(targetValue);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    goNextStep();
   };
 
   const toggleSightPwd = () => {
@@ -137,7 +138,7 @@ export default function ThirdStep() {
           />
         </StInputPwdReWrapper>
         <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
-        <StNextStepBtn active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError} onClick={goNextStep}>
+        <StNextStepBtn type="submit" active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError}>
           다음 계단
         </StNextStepBtn>
       </StForm>
