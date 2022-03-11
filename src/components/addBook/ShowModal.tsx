@@ -1,9 +1,11 @@
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcCancelBlack } from "../../assets/icons";
-import { ImgNull } from "../../assets/images";
 import { BookInfo } from "../../pages/AddBook";
+import { navigatingBookInfoState } from "../../utils/atom";
 import { postData } from "../../utils/lib/api";
 import { Button } from "../common/styled/Button";
 import { PublishDate } from "./BookInfoWrapper";
@@ -18,23 +20,25 @@ export default function ShowModal(props: ShowModalProps) {
   const { bookInfo, publishDate, onToggleModal } = props;
   const { thumbnail, title, authors, translators } = bookInfo;
 
+  const [navigatingBookInfo, setNavigatingBookInfo] = useRecoilState(navigatingBookInfoState);
+
   const publicationDt = `${publishDate["year"]}년 ${publishDate["month"]}월 ${publishDate["date"]}일`;
 
-  const bookData = { ...bookInfo, publicationDate: publicationDt, author: authors, translator: translators };
+  const bookData = { ...bookInfo, publicationDt, author: authors, translator: translators };
 
-  const TOKEN = localStorage.getItem("booktez-token");
-  const userToken = TOKEN ? TOKEN : "";
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
 
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   const postAddBooks = async () => {
     try {
       const { data } = await postData("/book", bookData, userToken);
 
       if (!userToken) {
-        const { isbn, thumbnail, title, authors, translators, datetime } = bookInfo;
+        const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           "booktez-bookData",
           JSON.stringify({
             isbn,
@@ -42,36 +46,63 @@ export default function ShowModal(props: ShowModalProps) {
             title,
             author: authors,
             translator: translators,
-            publicationDate: datetime,
+            publicationDt,
           }),
         );
       }
-      const stateData = data.data.isLogin ? data.data.isLogin : data.data;
 
-      nav("/book-note", { state: { ...stateData, fromUrl: "/main/add-book" } });
+      setNavigatingBookInfo({ ...navigatingBookInfo, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
+      navigate("/book-note");
     } catch (err) {
-      console.log("err", err);
+      if (axios.isAxiosError(err)) {
+        return;
+      }
     }
   };
 
   return (
     <>
       <StIcCancel onClick={onToggleModal} />
-      {thumbnail ? <ModalThumbnail src={thumbnail} alt="책 표지" /> : <ModalThumbnail src={ImgNull} alt="책 표지" />}
+      {thumbnail ? (
+        <ModalThumbnail src={thumbnail} alt="책 표지" />
+      ) : (
+        <ModalThumbnail
+          src="https://bookstairs-bucket.s3.ap-northeast-2.amazonaws.com/defaultBookImg.png"
+          alt="책 표지"
+        />
+      )}
       <ModalTitle>{title}</ModalTitle>
       <ModalLabelWrapper>
-        <ModalLabel>{authors} 지음</ModalLabel>
-        {translators.length > 0 && (
+        <ModalLabel>
+          {authors.length > 2 ? (
+            <>
+              {authors[0]} 외 {authors.length - 1}명 지음
+            </>
+          ) : (
+            <>
+              {authors[0]} {authors[1]} 지음
+            </>
+          )}
+        </ModalLabel>
+        {translators.length > 0 ? (
           <ModalLabel>
             <DivideLine>|</DivideLine>
-            {translators} 옮김
+            {translators.length > 2 ? (
+              <>
+                {translators[0]} 외 {translators.length - 1}명 옮김
+              </>
+            ) : (
+              <>
+                {translators[0]} {translators[1]} 옮김
+              </>
+            )}
           </ModalLabel>
-        )}
+        ) : null}
       </ModalLabelWrapper>
-      <ModalDate>
-        {publishDate.year}년 {publishDate.month}월 {publishDate.date}일 출간
-      </ModalDate>
-      <StWriteBtn onClick={postAddBooks}>독서 시작</StWriteBtn>
+      <ModalDate>{publicationDt} 출간</ModalDate>
+      <StWriteBtn onClick={postAddBooks} id="start_reading_book">
+        독서 시작
+      </StWriteBtn>
     </>
   );
 }

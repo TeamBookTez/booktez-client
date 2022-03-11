@@ -1,43 +1,48 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { IsLoginState } from "../../pages/BookNote";
-
 interface NavigatorProps {
   navIndex: number;
   onNav: (idx: number) => void;
-  isLoginState: IsLoginState;
   isPrevented: boolean;
-  isPeriEmpty: boolean;
+  onSetDrawerAsDefault: () => void;
+  onSetIsSave: (isTrue: boolean) => void;
 }
 
 export default function Navigator(props: NavigatorProps) {
-  const { navIndex, onNav, isLoginState, isPrevented, isPeriEmpty } = props;
+  const { navIndex, onNav, isPrevented, onSetDrawerAsDefault, onSetIsSave } = props;
 
   const navigate = useNavigate();
 
-  const goToPre = () => {
-    navigate("", { state: isLoginState });
-    onNav(0);
-  };
-
-  const goToPeri = (isPrevented: boolean) => {
-    if (isPrevented && !isPeriEmpty) {
-      navigate("peri", { state: isLoginState });
-      onNav(1);
+  const handleNavigate = () => {
+    onSetIsSave(true);
+    if (navIndex) {
+      setTimeout(() => {
+        onSetIsSave(false);
+        navigate("");
+        onNav(0);
+      }, 0);
     }
+    if (!navIndex && !isPrevented) {
+      setTimeout(() => {
+        onSetIsSave(false);
+        navigate("peri");
+        onNav(1);
+      }, 0);
+    }
+    onSetDrawerAsDefault();
   };
 
   return (
     <StNav>
       <StUl>
         <li>
-          <StLink1 onClick={() => goToPre()} index={navIndex}>
+          <StLink1 onClick={handleNavigate} index={navIndex}>
             독서 전
           </StLink1>
         </li>
         <li>
-          <StLink2 onClick={() => goToPeri(isPrevented)} index={navIndex}>
+          <StLink2 onClick={handleNavigate} index={navIndex}>
             독서 중
           </StLink2>
         </li>

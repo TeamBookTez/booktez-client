@@ -5,7 +5,7 @@ import { ImgAddBooksSearch } from "../../assets/images";
 export default function AddBookDefault() {
   return (
     <StWrapper>
-      <img src={ImgAddBooksSearch} alt="그래픽 이미지입니다" />
+      <StImgAddBookSearch src={ImgAddBooksSearch} alt="그래픽 이미지입니다" />
       <StH3>
         어떤 책을 읽으시나요? <br></br>
         북스테어즈와 독서를 해봐요!
@@ -20,13 +20,16 @@ const StWrapper = styled.section`
   justify-content: center;
   align-items: center;
 
-  height: calc(100% - 23.8rem);
+  height: calc(100vh - 23.8rem);
 
   margin: 0 4rem 0 4rem;
+`;
 
-  & > img {
-    margin-bottom: 6.6rem;
-  }
+const StImgAddBookSearch = styled.img`
+  width: 24.8rem;
+  height: 24.6rem;
+
+  margin-bottom: 6.6rem;
 `;
 
 const StH3 = styled.h3`

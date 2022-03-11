@@ -17,7 +17,7 @@ export default function LandingFour() {
           탄탄한 지식 체계가 머릿속에도 쌓이게 될 거예요.
         </StParagraph>
       </div>
-      <img src={ImgLandingBookNote} alt="북노트 작성 이미지" />
+      <StImgLandingBookNote src={ImgLandingBookNote} alt="북노트 작성 이미지" />
     </StSection>
   );
 }
@@ -28,5 +28,10 @@ const StSection = styled(StWrapper)`
 `;
 
 const StParagraph = styled.p`
-  ${({ theme }) => theme.fonts.body00}
+  ${({ theme }) => theme.fonts.body00};
+`;
+
+const StImgLandingBookNote = styled.img`
+  width: 62.9rem;
+  height: 51.3rem;
 `;

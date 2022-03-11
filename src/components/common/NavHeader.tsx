@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { IcLogo, IcTitleLogo } from "../../assets/icons";
+import { LabelHidden } from "./styled/LabelHidden";
 
 interface NavHeaderProps {
   logocolor: string;
@@ -15,6 +16,7 @@ export default function NavHeader(props: NavHeaderProps) {
       <StLink to="/main">
         <StIcCool />
         <StIcTitleLogo logocolor={logocolor} />
+        <LabelHidden>북스테어즈</LabelHidden>
       </StLink>
     </StHeader>
   );

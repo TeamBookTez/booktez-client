@@ -8,15 +8,31 @@ interface InputQuestionProps {
   onChangeValue: (e: React.ChangeEvent<HTMLInputElement>, idx: number) => void;
   onDelete: (idx: number) => void;
   isPrevented: boolean;
+  isAdded: boolean;
+  onAddInput: () => void;
 }
 
 export default function InputQuestion(props: InputQuestionProps) {
-  const { idx, value, onChangeValue, onDelete, isPrevented } = props;
+  const { idx, value, onChangeValue, onDelete, isPrevented, isAdded, onAddInput } = props;
+
+  const addInputByEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!isPrevented) return;
+
+    if (e.key === "Enter") {
+      onAddInput();
+    }
+  };
 
   return (
     <StWrapper>
-      <StInput placeholder="질문 입력" value={value} onChange={(e) => onChangeValue(e, idx)} />
-      {!isPrevented ? <StIcon onClick={() => onDelete(idx)} /> : ""}
+      <StInput
+        placeholder="질문 입력"
+        value={value}
+        onChange={(e) => onChangeValue(e, idx)}
+        autoFocus={isAdded}
+        onKeyPress={addInputByEnter}
+      />
+      {isPrevented ? <StIcon onClick={() => onDelete(idx)} /> : ""}
     </StWrapper>
   );
 }

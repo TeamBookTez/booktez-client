@@ -4,7 +4,11 @@
   },
   "editor.formatOnSave": true,
   "cSpell.words": [
+    "booktez",
+    "boostwidth",
+    "Drawerdefault",
     "fromlogin",
+    "hasborder",
     "isdisabled",
     "isfilled",
     "isopen",
@@ -16,6 +20,7 @@
     "menuposition",
     "opentoright",
     "Pretendard",
+    "reducewidth",
     "rightpath",
     "signup"
   ],

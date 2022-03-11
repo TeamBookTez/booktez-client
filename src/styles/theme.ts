@@ -20,6 +20,83 @@ const colors = {
 };
 
 const fonts = {
+  h1: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 3rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  h2: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  h3: `
+    font-family: Pretendard;
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  h4: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  h5: `
+    font-family: Pretendard;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  h6: `
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  Body1: `
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    letter-spacing: -0.07rem;
+  `,
+  Body2: `
+    font-family: Pretendard;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    letter-spacing: -0.07rem;
+  `,
+  Body3: `
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  Caption1: `
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.3;
+    letter-spacing: -0.07rem;
+  `,
+  Caption2: `
+    font-family: Pretendard;
+    font-weight: 400;
+    font-size: 1.3rem;
+    line-height: 1.3;
+    letter-spacing: -0.07rem;
+  `,
   header: `
     font-family: Pretendard;
     font-weight: 700;
@@ -165,6 +242,21 @@ const fonts = {
     font-weight: 600;
     font-size: 1.4rem;
     line-height: 1.3;
+    letter-spacing: -0.1rem;
+  `,
+  // 반응형 랜딩페이지 버튼 글꼴 임의 지정
+  button3: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 2.08rem;
+    letter-spacing: -0.1rem;
+  `,
+  button4: `
+    font-family: Pretendard;
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 2.82rem;
     letter-spacing: -0.1rem;
   `,
 };

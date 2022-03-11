@@ -1,45 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
-import { IsLoginState } from "../../../pages/BookNote";
 import { StModalWrapper } from "../../addBook/ModalWrapper";
-import { StIcCancel } from "../../addBook/ShowModal";
 import { Button } from "../../common/styled/Button";
-
-interface BookData {
-  authors: string[];
-  publicationDt: string;
-  thumbnail: string;
-  title: string;
-  translators: string[];
-}
+import { BookData } from "./PeriNote";
 
 interface CompleteProps {
   bookData: BookData;
-  isLoginState: IsLoginState;
 }
 
 export default function Complete(props: CompleteProps) {
   const navigate = useNavigate();
-  const { bookData, isLoginState } = props;
-  const { authors, publicationDt, thumbnail, title, translators } = bookData;
-  const { fromUrl } = isLoginState;
+  const { bookData } = props;
+
+  const { author, publicationDt, thumbnail, title, translator } = bookData;
 
   return (
-    <StModalWrapper>
+    <StCompleteWrapper>
       <StAniWrapper>
-        <StIcCancel onClick={() => navigate(fromUrl)} />
         <StHeader>북노트 작성을 완료했어요!</StHeader>
         <StImgWrapper thumbnail={thumbnail} />
         <StTitle>{title}</StTitle>
         <StSubWrapper>
-          <StAuthor>{authors.join(" ")} 지음</StAuthor>
-          {translators ? (
-            translators.length === 1 ? (
-              <StTranslator>{translators[0]} 옮김</StTranslator>
-            ) : translators.length >= 2 ? (
+          <StAuthor>{author.join(" ")} 지음</StAuthor>
+          {translator ? (
+            translator.length === 1 ? (
+              <StTranslator>{translator[0]} 옮김</StTranslator>
+            ) : translator.length >= 2 ? (
               <StTranslator>
-                {translators[0]} 외 {translators.length - 1}명 옮김
+                {translator[0]} 외 {translator.length - 1}명 옮김
               </StTranslator>
             ) : null
           ) : null}
@@ -49,12 +38,12 @@ export default function Complete(props: CompleteProps) {
           <StMainButton type="button" onClick={() => navigate("/main")}>
             메인으로
           </StMainButton>
-          <StCompleteButton type="button" onClick={() => navigate("/detail-book-note", { state: isLoginState })}>
+          <StCompleteButton type="button" onClick={() => navigate("/detail-book-note")}>
             북노트 확인
           </StCompleteButton>
         </StButtonWrapper>
       </StAniWrapper>
-    </StModalWrapper>
+    </StCompleteWrapper>
   );
 }
 
@@ -67,6 +56,10 @@ const fadein = keyframes`
     }
 `;
 
+export const StCompleteWrapper = styled(StModalWrapper)`
+  z-index: 20;
+`;
+
 const StAniWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -77,6 +70,9 @@ const StAniWrapper = styled.div`
   height: 100%;
 
   animation: ${fadein} 1s ease-in-out;
+  background-color: #555
+
+  z-index: 30;
 `;
 
 const StHeader = styled.h1`

@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useState } from "react";
+import styled, { css } from "styled-components";
 
 import { InputQuestion, PreNoteForm } from "..";
 
 interface QuestionThreeProps {
   questionList: string[];
   onChangeReview: (key: string, value: string | string[] | number) => void;
-  onToggleDrawer: (i: number) => void;
+  onOpenDrawer: (i: number) => void;
   isPrevented: boolean;
+  isFilled: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onToggleDrawer, isPrevented } = props;
-  const [isFilled, setIsFilled] = useState(false);
+  const { questionList, onChangeReview, onOpenDrawer, isPrevented, isFilled } = props;
+
+  const [isAdded, setIsAdded] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+    setIsAdded(true);
     const modified = [...questionList];
 
     modified[idx] = e.target.value;
@@ -28,39 +31,38 @@ export default function QuestionThree(props: QuestionThreeProps) {
     onChangeReview("questionList", newArray);
   };
 
-  const addInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleAddInput = () => {
+    if (!isFilled) return;
+
     onChangeReview("questionList", [...questionList, ""]);
+    setIsAdded(true);
   };
 
-  useEffect(() => {
-    setIsFilled(!questionList.includes(""));
-  }, [questionList]);
-
   return (
-    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onToggleDrawer={onToggleDrawer}>
-      {questionList.map((question, idx) => (
-        <InputQuestion
-          key={idx}
-          value={question}
-          idx={idx}
-          onChangeValue={handleChange}
-          onDelete={handleDelete}
-          isPrevented={isPrevented}
-        />
-      ))}
-      {!isPrevented ? (
-        <StAddButton type="button" disabled={!isFilled} onClick={addInput} isfilled={isFilled}>
+    <PreNoteForm question="가장 관심가는 주제부터 질문 리스트를 만들어보세요!" idx={3} onOpenDrawer={onOpenDrawer}>
+      {questionList &&
+        questionList.map((question, idx) => (
+          <InputQuestion
+            key={idx}
+            value={question}
+            idx={idx}
+            onChangeValue={handleChange}
+            onDelete={handleDelete}
+            isPrevented={isPrevented}
+            isAdded={isAdded}
+            onAddInput={handleAddInput}
+          />
+        ))}
+      {isPrevented && (
+        <StAddButton type="button" disabled={!isFilled} onClick={handleAddInput}>
           + 질문추가
         </StAddButton>
-      ) : (
-        ""
       )}
     </PreNoteForm>
   );
 }
 
-const StAddButton = styled.button<{ isfilled: boolean }>`
+const StAddButton = styled.button<{ disabled: boolean }>`
   margin-right: 9.1rem;
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 0.8rem;
@@ -68,7 +70,13 @@ const StAddButton = styled.button<{ isfilled: boolean }>`
   background-color: ${({ theme }) => theme.colors.white200};
 
   width: calc(100% - 5rem);
-  color: ${({ isfilled, theme }) => (isfilled ? theme.colors.gray100 : theme.colors.white500)};
+  color: ${({ disabled, theme }) => (!disabled ? theme.colors.gray100 : theme.colors.white500)};
   text-align: start;
   ${({ theme }) => theme.fonts.body4}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: default;
+    `}
 `;

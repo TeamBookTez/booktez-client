@@ -1,33 +1,58 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
+import { isLoginState, navigatingBookInfoState } from "../../../utils/atom";
 import { PopUpDelete } from "../../common";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
-  handleBookDelete: () => void;
-  isLogin: boolean;
+  pathKey: string;
 }
 
 export default function BookCard(props: BookCardProps) {
-  const { bookcaseInfo, handleBookDelete, isLogin } = props;
-  const { author, reviewId, thumbnail, title, state } = bookcaseInfo;
-  const [isPopUp, setIsPopUp] = useState(false);
+  const { bookcaseInfo, pathKey } = props;
+  const { author, reviewId, thumbnail, title, reviewSt } = bookcaseInfo;
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const reviewUrl = state === 2 ? "/book-note" : state === 3 ? "/book-note/peri" : "/detail-book-note";
 
+  const [isPopUp, setIsPopUp] = useState(false);
+  const isLogin = useRecoilValue(isLoginState);
+  const setNavigatingBookInfo = useSetRecoilState(navigatingBookInfoState);
+
+  const reviewUrl = reviewSt === 2 ? "/book-note" : reviewSt === 3 ? "/book-note/peri" : "/detail-book-note";
+
+  let fromSt = 0;
+
+  switch (pathKey) {
+    case "/book":
+      fromSt = 0;
+      break;
+    case "/book/pre":
+      fromSt = 1;
+      break;
+    case "/book/peri":
+      fromSt = 2;
+      break;
+    case "/book/post":
+      fromSt = 3;
+      break;
+    default:
+      break;
+  }
+  // 홈에 대한 예외 처리
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
   };
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      navigate(reviewUrl, { state: { isLogin, reviewId, fromUrl: pathname } });
+      setNavigatingBookInfo({ reviewId, title, fromUrl: pathname, fromSt });
+      navigate(reviewUrl);
     }
   };
 
@@ -40,12 +65,22 @@ export default function BookCard(props: BookCardProps) {
         <StTextWrapper>
           <StTitleWrapper>
             <StCardTitle>{title}</StCardTitle>
-            <StCardAuthor>{author}</StCardAuthor>
+            <StCardAuthor>
+              {author.length > 2 ? (
+                <>
+                  {author[0]} 외 {author.length - 1}명
+                </>
+              ) : (
+                <>
+                  {author[0]} {author[1]}
+                </>
+              )}
+            </StCardAuthor>
           </StTitleWrapper>
         </StTextWrapper>
       </StBookCard>
       <StIcBin onClick={handlePopUp} />
-      {isPopUp ? <PopUpDelete onPopUp={handlePopUp} reviewId={reviewId} handleBookDelete={handleBookDelete} /> : <></>}
+      {isPopUp && <PopUpDelete onPopUp={handlePopUp} pathKey={pathKey} reviewId={reviewId} />}
     </StCardWrapper>
   );
 }
@@ -84,6 +119,7 @@ const StImgWrapper = styled.div`
 
   margin-bottom: 1.6rem;
 
+  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
 `;
 
@@ -91,8 +127,9 @@ export const StImg = styled.img`
   width: 100%;
   height: 100%;
 
-  border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
+
+  object-fit: cover;
 `;
 
 const StTextWrapper = styled.div`

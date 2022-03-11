@@ -4,14 +4,14 @@ import { IcRightArrow } from "../../assets/icons";
 
 interface ExButtonProps {
   idx: number;
-  onToggleDrawer: (i: number) => void;
+  onOpenDrawer: (i: number) => void;
 }
 
 export default function ExButton(props: ExButtonProps) {
-  const { idx, onToggleDrawer } = props;
+  const { idx, onOpenDrawer } = props;
 
   return (
-    <StButton type="button" onClick={() => onToggleDrawer(idx)}>
+    <StButton type="button" onClick={() => onOpenDrawer(idx)}>
       예시
       <StIcon />
     </StButton>

@@ -26,7 +26,7 @@ const StTitleWrapper = styled.div`
   align-items: center;
 `;
 
-const StTitle = styled.h3`
+const StTitle = styled.h2`
   margin-left: 1rem;
 
   ${({ theme }) => theme.fonts.header4}

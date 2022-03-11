@@ -21,6 +21,17 @@ declare module "styled-components" {
       red100: string;
     };
     fonts: {
+      h1: string;
+      h2: string;
+      h3: string;
+      h4: string;
+      h5: string;
+      h6: string;
+      Body1: string;
+      Body2: string;
+      Body3: string;
+      Caption1: string;
+      Caption2: string;
       header: string;
       header00: string;
       header001: string;
@@ -42,6 +53,8 @@ declare module "styled-components" {
       caption2: string;
       button: string;
       button2: string;
+      button3: string;
+      button4: string;
     };
   }
 }

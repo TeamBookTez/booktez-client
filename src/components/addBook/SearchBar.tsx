@@ -1,3 +1,5 @@
+import { useViewportScroll } from "framer-motion";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
@@ -5,10 +7,27 @@ import { LabelHidden } from "../common/styled/LabelHidden";
 
 interface SearchBarProps {
   debounceQuery: string;
-  onDebounceQuery: (tempQeury: string) => void;
+  onDebounceQuery: (tempQuery: string) => void;
 }
 export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, onDebounceQuery } = props;
+  const { scrollY } = useViewportScroll();
+  const [isScroll, setIsScroll] = useState<boolean>(false);
+  const MAIN_HEADER_HEIGHT = 109;
+
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > MAIN_HEADER_HEIGHT) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    });
+
+    return () => {
+      scrollY.clearListeners();
+    };
+  }, [scrollY]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
@@ -21,7 +40,7 @@ export default function SearchBar(props: SearchBarProps) {
   };
 
   return (
-    <StWrapper>
+    <StWrapper isscroll={isScroll}>
       <SearchBarWrapper isqueryempty={debounceQuery}>
         <StIcSearch isqueryempty={debounceQuery} />
 
@@ -39,13 +58,23 @@ export default function SearchBar(props: SearchBarProps) {
   );
 }
 
-const StWrapper = styled.section`
+const StWrapper = styled.section<{ isscroll: boolean }>`
   position: sticky;
   top: 0;
 
-  background-color: ${({ theme }) => theme.colors.white};
   padding-top: 3.1rem;
   padding-bottom: 3.5rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+
+  ${({ isscroll }) =>
+    isscroll
+      ? css`
+          box-shadow: 0rem 0.6rem 1rem rgba(0, 0, 0, 0.17);
+        `
+      : css`
+          box-shadow: 0;
+        `}
 `;
 
 const SearchBarWrapper = styled.div<{ isqueryempty: string }>`

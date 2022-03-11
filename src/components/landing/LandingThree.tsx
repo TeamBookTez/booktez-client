@@ -5,7 +5,7 @@ import { ImgLanding02 } from "../../assets/images";
 export default function LandingThree() {
   return (
     <StWrapper>
-      <img src={ImgLanding02} alt="여기는 또 어떤 이미지가 들어갈까요?" />
+      <StImgLanding02 src={ImgLanding02} alt="여기는 또 어떤 이미지가 들어갈까요?" />
       <div>
         <StH2>차별화 된 독서 방법을 제안합니다.</StH2>
         <StParagraph>
@@ -27,8 +27,14 @@ export const StWrapper = styled.section`
   ${({ theme }) => theme.fonts.body00}
 `;
 
+const StImgLanding02 = styled.img`
+  width: 55.6rem;
+  height: 90rem;
+`;
+
 export const StH2 = styled.h2`
   margin-bottom: 4.2rem;
+
   ${({ theme }) => theme.fonts.header00}
   color: ${({ theme }) => theme.colors.gray100};
 `;

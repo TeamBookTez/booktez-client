@@ -9,13 +9,14 @@ import ThreeCaseModal from "../stepUp/ThreeCaseModal";
 interface PreNoteFormProps {
   question: string;
   idx: number;
-  onToggleDrawer: (i: number) => void;
+  onOpenDrawer: (i: number) => void;
   children: React.ReactNode;
 }
 
 export default function PreNoteForm(props: PreNoteFormProps) {
-  const { question, idx, onToggleDrawer, children } = props;
+  const { question, idx, onOpenDrawer, children } = props;
 
+  // periNote의 handlePeriCarousel과 동일
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const onToggleModal = useCallback(() => {
@@ -30,7 +31,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
             {question}
             <StepUp onToggleModal={onToggleModal} />
           </StH3>
-          <ExButton idx={idx} onToggleDrawer={onToggleDrawer} />
+          <ExButton idx={idx} onOpenDrawer={onOpenDrawer} />
         </StHeader>
         <StArticle>{children}</StArticle>
       </StSection>

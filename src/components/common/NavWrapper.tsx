@@ -57,19 +57,23 @@ export default function NavWrapper() {
 }
 
 const StSection = styled.section`
-  position: relative;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
   background-color: ${({ theme }) => theme.colors.gray100};
-  width: 17.5rem;
+  width: 17.5rem; //NAV_WRAPPER_WIDTH
   color: ${({ theme }) => theme.colors.white500};
+
+  z-index: 10;
 `;
 
 const StNav = styled.nav`
-  position: absolute;
   margin-top: 12.3rem;
   padding-left: 2.2rem;
-  font-size: 1.6rem;
-  font-weight: bold;
-  line-height: 1.9rem;
+
+  ${({ theme }) => theme.fonts.body5}
 `;
 
 const StUl = styled.ul`
@@ -99,5 +103,8 @@ const StItem = styled.li<{ color: string }>`
 const StLink = styled(Link)`
   display: flex;
   align-items: center;
+
+  width: 15.3rem;
+
   ${({ theme }) => theme.fonts.body5};
 `;

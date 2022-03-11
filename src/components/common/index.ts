@@ -3,6 +3,7 @@ export { default as CommonLayout } from "./CommonLayout";
 export { default as Error404 } from "./Error404";
 export { default as InputEmail } from "./InputEmail";
 export { default as InputPwd } from "./InputPwd";
+export { default as Loading } from "./Loading";
 export { default as MainHeader } from "./MainHeader";
 export { default as MainLayout } from "./MainLayout";
 export { default as NavHeader } from "./NavHeader";

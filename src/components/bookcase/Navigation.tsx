@@ -1,43 +1,40 @@
+import { useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export default function Navigation() {
-  const location = useLocation();
-  const [navIndex, setNavIndex] = useState<number>(0);
+interface NavigationProps {
+  navIndex: number;
+  onChangeNavIndex: (idx: number) => void;
+}
+
+export default function Navigation(props: NavigationProps) {
+  const { navIndex, onChangeNavIndex } = props;
+
+  const { scrollY } = useViewportScroll();
+  const [isScroll, setIsScroll] = useState<boolean>(false);
+  const MAIN_HEADER_HEIGHT = 109;
 
   useEffect(() => {
-    switch (location.pathname) {
-      case "/main/bookcase":
-        setNavIndex(0);
-        break;
-      case "/main/bookcase/pre":
-        setNavIndex(1);
-        break;
-      case "/main/bookcase/peri":
-        setNavIndex(2);
-        break;
-      case "/main/bookcase/post":
-        setNavIndex(3);
-        break;
-    }
-  }, [location.pathname]);
+    scrollY.onChange(() => {
+      if (scrollY.get() > MAIN_HEADER_HEIGHT) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    });
+
+    return () => {
+      scrollY.clearListeners();
+    };
+  }, [scrollY]);
 
   return (
-    <StNav>
+    <StNav isscroll={isScroll}>
       <StUl>
-        <StList>
-          <StLink to="/main/bookcase">전체</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/pre">독서 전</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/peri">독서 중</StLink>
-        </StList>
-        <StList>
-          <StLink to="/main/bookcase/post">독서 완료</StLink>
-        </StList>
+        <StList onClick={() => onChangeNavIndex(0)}>전체</StList>
+        <StList onClick={() => onChangeNavIndex(1)}>독서 전</StList>
+        <StList onClick={() => onChangeNavIndex(2)}>독서 중</StList>
+        <StList onClick={() => onChangeNavIndex(3)}>독서 완료</StList>
       </StUl>
       <StBottomLine>
         <StOrangLine index={navIndex} />
@@ -46,7 +43,7 @@ export default function Navigation() {
   );
 }
 
-const StNav = styled.nav`
+const StNav = styled.nav<{ isscroll: boolean }>`
   position: sticky;
   top: 0;
 
@@ -57,16 +54,21 @@ const StNav = styled.nav`
 
   background-color: ${({ theme }) => theme.colors.white};
 
-  width: 100%;
+  ${({ isscroll }) =>
+    isscroll
+      ? css`
+          box-shadow: 0rem 0.6rem 1rem rgba(0, 0, 0, 0.17);
+        `
+      : css`
+          box-shadow: 0;
+        `}
 `;
 
 const StUl = styled.ul`
   display: flex;
 `;
 
-const StList = styled.li``;
-
-const StLink = styled(Link)`
+const StList = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,8 +77,11 @@ const StLink = styled(Link)`
   height: 4.8rem;
 
   text-align: center;
+
   ${({ theme }) => theme.fonts.body1}
   color: ${({ theme }) => theme.colors.gray100};
+
+  cursor: pointer;
 `;
 
 const StBottomLine = styled.div`

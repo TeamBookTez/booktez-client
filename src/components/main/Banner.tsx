@@ -6,7 +6,7 @@ import { ImgMainBanner } from "../../assets/images";
 export default function Banner() {
   return (
     <StWrapper ratio="65.7rem">
-      <StTitle>독서북 사용 가이드북</StTitle>
+      <StTitle>독서법 사용 가이드북</StTitle>
       <StContent>
         진짜 독서가들은 어떻게 북스테어즈를 사용하고 있을까요?
         <br />

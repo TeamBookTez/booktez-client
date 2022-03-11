@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-import { ImgNull } from "../../assets/images";
 import { BookInfo } from "../../pages/AddBook";
+import { escapeHtml } from "../../utils/escape";
 import ModalWrapper from "./ModalWrapper";
 import ShowModal from "./ShowModal";
 
@@ -12,7 +12,11 @@ export interface PublishDate {
   date: string;
 }
 
-export default function BookInfoWrapper(props: { book: BookInfo }) {
+interface BookInfoWrapperProps {
+  book: BookInfo;
+}
+
+export default function BookInfoWrapper(props: BookInfoWrapperProps) {
   const { book } = props;
   const { thumbnail, title, authors, datetime, contents } = book;
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -33,18 +37,31 @@ export default function BookInfoWrapper(props: { book: BookInfo }) {
         {thumbnail ? (
           <StThumbnail src={thumbnail} alt="책 표지" />
         ) : (
-          <StThumbnail src={ImgNull} alt="책 표지가 없습니다" />
+          <StThumbnail
+            src="https://bookstairs-bucket.s3.ap-northeast-2.amazonaws.com/defaultBookImg.png"
+            alt="책 표지가 없습니다"
+          />
         )}
         <StInfoWrapper>
           <InfoTitle>{title}</InfoTitle>
           <InfoLabelWrapper>
-            <InfoLabel>{authors}</InfoLabel>
+            <InfoLabel>
+              {authors.length > 2 ? (
+                <>
+                  {authors[0]} 외 {authors.length - 1}명
+                </>
+              ) : (
+                <>
+                  {authors[0]} {authors[1]}
+                </>
+              )}
+            </InfoLabel>
             <DivideLine></DivideLine>
             <InfoLabel>
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
             </InfoLabel>
           </InfoLabelWrapper>
-          <InfoSummary>{contents}</InfoSummary>
+          <InfoSummary>{escapeHtml(contents)}</InfoSummary>
         </StInfoWrapper>
       </StArticle>
       {openModal && (
@@ -71,6 +88,7 @@ const StArticle = styled.article`
 `;
 
 const StThumbnail = styled.img`
+  object-fit: cover;
   width: 12.1rem;
   height: 16.9rem;
 
