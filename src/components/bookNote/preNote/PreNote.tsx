@@ -50,6 +50,7 @@ export default function PreNote() {
   const { answerOne, answerTwo, questionList, reviewSt } = data;
 
   const [isFilled, setIsFilled] = useState<boolean>(false);
+  const [isFilledOnlyThree, setIsFilledOnlyThree] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const isLogin = useRecoilValue(isLoginState);
@@ -128,14 +129,20 @@ export default function PreNote() {
     if (data.reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
+      setIsFilledOnlyThree(true);
     } else {
       handlePrevent(true);
     }
 
     if (answerOne && answerTwo && !questionList.includes("")) {
       setIsFilled(true);
+      setIsFilledOnlyThree(true);
+    } else if (!questionList.includes("")) {
+      setIsFilled(false);
+      setIsFilledOnlyThree(true);
     } else {
       setIsFilled(false);
+      setIsFilledOnlyThree(false);
     }
   }, [data]);
 
@@ -179,7 +186,7 @@ export default function PreNote() {
                 onChangeReview={handleChangeReview}
                 onOpenDrawer={handleOpenDrawer}
                 isPrevented={isPrevented}
-                isFilled={isFilled}
+                isFilledOnlyThree={isFilledOnlyThree}
               />
             ) : (
               <StLinkWrapper>
@@ -195,7 +202,6 @@ export default function PreNote() {
             )}
           </StFormWrapper>
 
-          {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
           <StNextBtn type="button" disabled={!isFilled || data.questionList.length === 0} onClick={handleOpenModal}>
             다음 계단
           </StNextBtn>

@@ -8,11 +8,11 @@ interface QuestionThreeProps {
   onChangeReview: (key: string, value: string | string[] | number) => void;
   onOpenDrawer: (i: number) => void;
   isPrevented: boolean;
-  isFilled: boolean;
+  isFilledOnlyThree: boolean;
 }
 
 export default function QuestionThree(props: QuestionThreeProps) {
-  const { questionList, onChangeReview, onOpenDrawer, isPrevented, isFilled } = props;
+  const { questionList, onChangeReview, onOpenDrawer, isPrevented, isFilledOnlyThree } = props;
 
   const [isAdded, setIsAdded] = useState<boolean>(false);
 
@@ -32,7 +32,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
   };
 
   const handleAddInput = () => {
-    if (!isFilled) return;
+    if (!isFilledOnlyThree) return;
 
     onChangeReview("questionList", [...questionList, ""]);
     setIsAdded(true);
@@ -54,7 +54,7 @@ export default function QuestionThree(props: QuestionThreeProps) {
           />
         ))}
       {isPrevented && (
-        <StAddButton type="button" disabled={!isFilled} onClick={handleAddInput}>
+        <StAddButton type="button" disabled={!isFilledOnlyThree} onClick={handleAddInput}>
           + 질문추가
         </StAddButton>
       )}
