@@ -92,7 +92,9 @@ const StItem = styled.li<{ color: string }>`
   }
 
   &:hover {
-    color: ${({ theme }) => theme.colors.orange100};
+    a {
+      color: ${({ theme }) => theme.colors.orange100};
+    }
 
     svg {
       fill: ${({ theme }) => theme.colors.orange100};
