@@ -1,13 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import {
-  IcLandingIcon01,
-  IcLandingIcon02,
-  IcLandingIcon03,
-  IcLandingMobileIcon01,
-  IcLandingMobileIcon02,
-  IcLandingMobileIcon03,
-} from "../../assets/icons";
+import { IcLandingIcon01, IcLandingIcon02, IcLandingIcon03 } from "../../assets/icons";
 import { LandingCard } from ".";
 
 export default function LandingTwo() {
