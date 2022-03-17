@@ -50,8 +50,10 @@ export default function PreNote() {
   const { answerOne, answerTwo, questionList, reviewSt } = data;
 
   const [isFilled, setIsFilled] = useState<boolean>(false);
+  const [isFilledOnlyThree, setIsFilledOnlyThree] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const [ableGoPeri, setAbleGoPeri] = useState<boolean>(true);
   const isLogin = useRecoilValue(isLoginState);
   const navigate = useNavigate();
 
@@ -69,6 +71,8 @@ export default function PreNote() {
 
   // 독서 중으로 넘어가기 - 모달 내 '다음' 버튼 - 수정 완료
   const handleSubmit = async () => {
+    setAbleGoPeri(true);
+
     if (!data.finishSt) {
       patchBookNote(userToken, `/review/${reviewId}/pre`, { ...data, reviewSt: 3 });
     } else {
@@ -82,7 +86,8 @@ export default function PreNote() {
         questionFromPre.push({ type: "question", content, children: [{ type: "answer", content: "", children: [] }] });
       });
 
-      patchBookNote(userToken, `review/${reviewId}/peri`, {
+      setAbleGoPeri(false);
+      const resData = await patchBookNote(userToken, `review/${reviewId}/peri`, {
         answerThree: {
           type: "Root",
           content: "root",
@@ -91,13 +96,17 @@ export default function PreNote() {
         reviewSt: 3,
         finishSt: false,
       });
+
+      if (resData) {
+        setAbleGoPeri(true);
+      }
     }
 
     // call stack이 비워질 때 바로 실행할 수 있도록
     setTimeout(() => {
       handlePrevent(false);
       setOpenModal(false);
-      navigate("/book-note/peri");
+      if (ableGoPeri) navigate("/book-note/peri");
     }, 0);
   };
 
@@ -128,14 +137,20 @@ export default function PreNote() {
     if (data.reviewSt > 2) {
       handlePrevent(false);
       setIsFilled(true);
+      setIsFilledOnlyThree(true);
     } else {
       handlePrevent(true);
     }
 
     if (answerOne && answerTwo && !questionList.includes("")) {
       setIsFilled(true);
+      setIsFilledOnlyThree(true);
+    } else if (!questionList.includes("")) {
+      setIsFilled(false);
+      setIsFilledOnlyThree(true);
     } else {
       setIsFilled(false);
+      setIsFilledOnlyThree(false);
     }
   }, [data]);
 
@@ -179,7 +194,7 @@ export default function PreNote() {
                 onChangeReview={handleChangeReview}
                 onOpenDrawer={handleOpenDrawer}
                 isPrevented={isPrevented}
-                isFilled={isFilled}
+                isFilledOnlyThree={isFilledOnlyThree}
               />
             ) : (
               <StLinkWrapper>
@@ -195,7 +210,6 @@ export default function PreNote() {
             )}
           </StFormWrapper>
 
-          {/* 모든 내용이 채워졌을 때 버튼이 활성화되도록 하기 */}
           <StNextBtn type="button" disabled={!isFilled || data.questionList.length === 0} onClick={handleOpenModal}>
             다음 계단
           </StNextBtn>

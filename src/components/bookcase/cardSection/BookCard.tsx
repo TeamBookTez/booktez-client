@@ -121,13 +121,16 @@ const StImgWrapper = styled.div`
 
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 1.6rem;
+
+  overflow: hidden;
 `;
 
 export const StImg = styled.img`
   width: 100%;
   height: 100%;
 
-  border-radius: 1.6rem;
+  /* 뷰 이슈로 곡률 완화 */
+  border-radius: 1.4rem;
 
   object-fit: cover;
 `;
