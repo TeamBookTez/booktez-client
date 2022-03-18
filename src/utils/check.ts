@@ -1,8 +1,8 @@
 export function checkEmailType(value: string) {
-  const emailRegax =
+  const emailRegex =
     /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
-  return emailRegax.test(value); // 형식에 맞는 경우 true 리턴
+  return emailRegex.test(value); // 형식에 맞는 경우 true 리턴
 }
 
 export function checkNicknameType(value: string) {
@@ -24,7 +24,8 @@ export function checkNicknameType(value: string) {
   }
 }
 export function checkPwdType(value: string) {
-  const passwordRegax = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!#$%&*+,-./:;<=>?@^_|~(){}[\]])[A-Za-z\d!#$%&*+,-./:;<=>?@^_|~(){}[\]]{8,64}$/;
 
-  return passwordRegax.test(value);
+  return passwordRegex.test(value);
 }
