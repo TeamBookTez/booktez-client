@@ -24,7 +24,7 @@ export function checkNicknameType(value: string) {
   }
 }
 export function checkPwdType(value: string) {
-  const passwordRegex = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*[!@#$%^&*-~])).{8,64}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-])[A-Za-z\d@$!%*#?&-]{8,64}$/;
 
   return passwordRegex.test(value);
 }
