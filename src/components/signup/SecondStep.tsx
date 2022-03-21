@@ -43,7 +43,7 @@ export default function SecondStep() {
       return setIsNicknameError(true);
     }
 
-    setTimeout(() => navigate("/signup/3", { state: "rightpath" }), 1000);
+    navigate("/signup/3", { state: "rightpath" });
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

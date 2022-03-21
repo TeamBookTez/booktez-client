@@ -66,7 +66,7 @@ export default function ThirdStep() {
     }
 
     postSignup().then(() => postLogin());
-    setTimeout(() => navigate("/signup/4", { state: "rightpath" }), 1000);
+    navigate("/signup/4", { state: "rightpath" });
   };
 
   const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
