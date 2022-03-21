@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled, { css } from "styled-components";
 
 import { ImgSignupThird } from "../../assets/images";
 import { StHeading2, StImage, StParagraph, UserData } from "../../pages/Signup";
+import { isLoginState } from "../../utils/atom";
 import { checkPwdType } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { AlertLabel, InputPwd } from "../common";
@@ -22,10 +24,16 @@ export default function ThirdStep() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const [isPwdReSight, setIsPwdReSight] = useState<boolean>(false);
 
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/main");
+    }
+  }, [isLogin]);
+
   const postSignup = async () => {
-    console.log("post signup called");
     try {
       await postData("/auth/signup", userData);
     } catch (err) {
@@ -46,6 +54,8 @@ export default function ThirdStep() {
       localStorage.setItem("booktez-token", resData.token);
       localStorage.setItem("booktez-nickname", resData.nickname);
       localStorage.setItem("booktez-email", resData.email);
+
+      setIsLogin(true);
     } catch (err) {
       // return;
     }
