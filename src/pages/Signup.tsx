@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -12,7 +12,7 @@ export interface UserData {
   nickname: string;
 }
 
-export default function Layout() {
+export default function Signup() {
   const { state } = useLocation();
 
   const [userData, setUserData] = useState<UserData>({
