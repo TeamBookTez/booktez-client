@@ -18,11 +18,13 @@ export default function StepUp(props: StepUpProps) {
 }
 
 const StButton = styled.button`
+  min-width: 9.3rem;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  margin-left: 1.6rem;
+  margin: 0 1.6rem;
   border-radius: 0.8rem;
   padding: 0.5rem 1rem 0.6rem 0.7rem;
   background-color: ${({ theme }) => theme.colors.orange200};
