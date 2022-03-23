@@ -27,7 +27,7 @@ const StButton = styled.button`
   padding: 1.05rem 2.1rem;
   background-color: ${({ theme }) => theme.colors.white300};
 
-  width: 8.7rem;
+  min-width: 8.7rem;
   height: 4.2rem;
 
   ${({ theme }) => theme.fonts.body5}

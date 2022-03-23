@@ -43,7 +43,7 @@ export default function FirstStep() {
       return setIsEmailError(true);
     }
 
-    setTimeout(() => navigate("/signup/2", { state: "rightpath" }), 1000);
+    navigate("/signup/2", { state: "rightpath" });
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

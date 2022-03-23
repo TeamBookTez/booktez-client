@@ -45,7 +45,7 @@ export default function LastStep() {
 
     setIsLoading(false);
 
-    setTimeout(() => navigate("/main"), 1000);
+    navigate("/main");
   };
 
   return (

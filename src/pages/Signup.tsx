@@ -12,7 +12,7 @@ export interface UserData {
   nickname: string;
 }
 
-export default function Layout() {
+export default function Signup() {
   const { state } = useLocation();
 
   const [userData, setUserData] = useState<UserData>({
