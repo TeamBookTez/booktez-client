@@ -27,7 +27,7 @@ export default function ExamplePreNote(props: ExamplePreNoteProps) {
       <StAnswer>{answerTwo}</StAnswer>
       <StFirstQuestion>
         <LabelQuestion bgColor={theme.colors.orange100} />
-        {userNickname}님은 이 책에 어떤 기대를 하고 계신가요?
+        가장 관심가는 주제부터 질문 리스트를 만들어보세요!
       </StFirstQuestion>
       {questionList?.map((question: string, idx: number) => (
         <StAnswer key={idx}>{question}</StAnswer>
