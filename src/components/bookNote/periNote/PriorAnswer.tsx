@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
-import { UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { PeriNoteInput } from "..";
-import { FormData } from "./PeriNote";
+import { FormController } from "./PeriNote";
 import { StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PriorAnswerProps {
@@ -16,12 +15,11 @@ interface PriorAnswerProps {
   onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
   onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
-  register: UseFormRegister<FormData>;
-  setFocus: UseFormSetFocus<FormData>;
+  formController: FormController;
 }
 
 export default function PriorAnswer(props: PriorAnswerProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild, register, setFocus } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -94,8 +92,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onAddChild={(p, i, isQ) => handleClickAddChild(p, i, isQ)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddChildByEnter={(e, p, i, isQ) => handleKeyPress(e, p, i, isQ)}
-            register={register}
-            setFocus={setFocus}
+            formController={formController}
           />
         ))}
     </StFieldset>

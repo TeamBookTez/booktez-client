@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
-import { FormData } from "./PeriNote";
+import { FormController } from "./PeriNote";
 import { StAddAnswerButton, StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PeriNoteInputProps {
@@ -20,8 +19,7 @@ interface PeriNoteInputProps {
     index: number,
     isQuestion: boolean,
   ) => void;
-  register: UseFormRegister<FormData>;
-  setFocus: UseFormSetFocus<FormData>;
+  formController: FormController;
 }
 
 export const labelColorList = [
@@ -38,7 +36,8 @@ export const labelColorList = [
 ];
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, register, setFocus } = props;
+  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, formController } = props;
+  const { register, setFocus } = formController;
   const isQuestion = node.type === "question";
   const inputKey = `${path.join(",")}`;
   const labelColor = labelColorList[(path.length - 1) % 10];
@@ -102,8 +101,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
               onDeleteChild={(p) => onDeleteChild(p)}
               onAddChildByEnter={(e, p, i, isQ) => onAddChildByEnter(e, p, i, isQ)}
-              register={register}
-              setFocus={setFocus}
+              formController={formController}
             />
           ))}
       </StFieldWrapper>

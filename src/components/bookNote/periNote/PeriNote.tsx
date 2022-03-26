@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -22,6 +22,11 @@ export interface BookData {
 
 export interface FormData {
   [key: string]: string;
+}
+
+export interface FormController {
+  register: UseFormRegister<FormData>;
+  setFocus: UseFormSetFocus<FormData>;
 }
 
 export default function PeriNote() {
@@ -220,8 +225,7 @@ export default function PeriNote() {
                   onAddChild={handleAddChild}
                   onSetContent={handleSetContent}
                   onDeleteChild={handleDeleteChild}
-                  register={register}
-                  setFocus={setFocus}
+                  formController={{ register, setFocus }}
                 />
               </StArticle>
             ))}
