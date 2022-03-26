@@ -39,7 +39,7 @@ export default function PeriNote() {
       ]
     >();
 
-  const { getValues, register } = useForm<FormData>();
+  const { getValues, register, setFocus } = useForm<FormData>();
 
   const { data, setData, isLoading } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
     answerThree: {
@@ -161,7 +161,6 @@ export default function PeriNote() {
 
   // 이거 마쟈..?
   useEffect(() => {
-    console.log("isChanged");
     // 질문이 모두 채워져 있으면 addQuestion의 isPrevented를 false
     if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
       // 질문이 모두 채워진 상태에서 답변이 채워지면 모두 false
@@ -222,6 +221,7 @@ export default function PeriNote() {
                   onSetContent={handleSetContent}
                   onDeleteChild={handleDeleteChild}
                   register={register}
+                  setFocus={setFocus}
                 />
               </StArticle>
             ))}

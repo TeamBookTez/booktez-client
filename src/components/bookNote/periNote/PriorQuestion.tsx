@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
@@ -17,10 +17,11 @@ interface PriorQuestionProps {
   onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
   register: UseFormRegister<FormData>;
+  setFocus: UseFormSetFocus<FormData>;
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild, register } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild, register, setFocus } = props;
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
 
@@ -34,9 +35,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      if (!e.shiftKey) {
-        onAddChild(pathArray, node.children.length - 1, isQuestion);
-      }
+      onAddChild(pathArray, node.children.length - 1, isQuestion);
     }
   };
 
@@ -80,6 +79,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
             onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
             register={register}
+            setFocus={setFocus}
           />
         ))}
     </>

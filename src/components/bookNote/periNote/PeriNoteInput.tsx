@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useForm, UseFormRegister } from "react-hook-form";
+import { useEffect } from "react";
+import { UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
@@ -21,6 +21,7 @@ interface PeriNoteInputProps {
     isQuestion: boolean,
   ) => void;
   register: UseFormRegister<FormData>;
+  setFocus: UseFormSetFocus<FormData>;
 }
 
 export const labelColorList = [
@@ -37,26 +38,22 @@ export const labelColorList = [
 ];
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, register } = props;
+  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, register, setFocus } = props;
   const isQuestion = node.type === "question";
-
+  const inputKey = `${path.join(",")}`;
   const labelColor = labelColorList[(path.length - 1) % 10];
-  // const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  // const textAreaRef = register(`${path.join(",")}`, { shouldUnregister: true });
 
   const addChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
       // 꼬리질문과 답변은 자신의 아래에 추가하는 것이 아닌 자신의 부모의 children에 추가해야함
       onAddChild(path.slice(0, -1), index, isQuestion);
     }
   };
 
-  // useEffect(() => {
-  //   if (textAreaRef.current) {
-  //     textAreaRef.current.focus();
-  //   }
-  // }, []);
+  useEffect(() => {
+    setFocus(inputKey);
+  }, [setFocus]);
 
   return (
     <>
@@ -69,7 +66,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         )}
         <StInputWrapper isanswer={!isQuestion}>
           <StInput
-            {...register(`${path.join(",")}`, {
+            {...register(inputKey, {
               shouldUnregister: true,
             })}
             defaultValue={node.content}
@@ -106,6 +103,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               onDeleteChild={(p) => onDeleteChild(p)}
               onAddChildByEnter={(e, p, i, isQ) => onAddChildByEnter(e, p, i, isQ)}
               register={register}
+              setFocus={setFocus}
             />
           ))}
       </StFieldWrapper>
