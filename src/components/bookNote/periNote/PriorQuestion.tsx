@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { UseFormRegister } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
@@ -6,6 +7,7 @@ import { IcMore, IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
 import { PriorAnswer } from "..";
+import { FormData } from "./PeriNote";
 
 interface PriorQuestionProps {
   path: number[];
@@ -14,10 +16,11 @@ interface PriorQuestionProps {
   onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
   onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
+  register: UseFormRegister<FormData>;
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild, register } = props;
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
 
@@ -76,6 +79,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
             onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
             onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
+            register={register}
           />
         ))}
     </>
