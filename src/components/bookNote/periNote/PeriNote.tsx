@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useForm, UseFormRegister, UseFormSetFocus } from "react-hook-form";
 import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -19,6 +20,15 @@ export interface BookData {
   translator: string[];
 }
 
+export interface FormData {
+  [key: string]: string;
+}
+
+export interface FormController {
+  register: UseFormRegister<FormData>;
+  setFocus: UseFormSetFocus<FormData>;
+}
+
 export default function PeriNote() {
   const [reviewId, userToken, navIndex, isSave, handleOpenDrawer, handleCloseDrawer, preventGoBack, saveReview] =
     useOutletContext<
@@ -33,6 +43,8 @@ export default function PeriNote() {
         (body: PreNoteData | PeriNoteData) => Promise<void>,
       ]
     >();
+
+  const { getValues, register, setFocus } = useForm<FormData>();
 
   const { data, setData, isLoading } = useFetchNote<PeriNoteData>(userToken, `/review/${reviewId}/peri`, {
     answerThree: {
@@ -171,7 +183,22 @@ export default function PeriNote() {
 
   useEffect(() => {
     if (navIndex && isSave) {
-      saveReview(data);
+      const obj = getValues();
+      const keys = Object.keys(obj);
+      const newRoot = deepCopyTree(data.answerThree);
+
+      keys.map((key) => {
+        const value = obj[key];
+        const pathKey = key.split(",").map((k) => parseInt(k));
+
+        const current = getNodeByPath(newRoot, pathKey);
+
+        current.content = value;
+      });
+
+      setTimeout(() => {
+        saveReview({ ...data, answerThree: newRoot });
+      }, 0);
     }
   }, [isSave, navIndex]);
 
@@ -198,6 +225,7 @@ export default function PeriNote() {
                   onAddChild={handleAddChild}
                   onSetContent={handleSetContent}
                   onDeleteChild={handleDeleteChild}
+                  formController={{ register, setFocus }}
                 />
               </StArticle>
             ))}

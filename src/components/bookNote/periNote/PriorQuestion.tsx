@@ -6,6 +6,7 @@ import { IcMore, IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { Button } from "../../common/styled/Button";
 import { PriorAnswer } from "..";
+import { FormController } from "./PeriNote";
 
 interface PriorQuestionProps {
   path: number[];
@@ -14,10 +15,11 @@ interface PriorQuestionProps {
   onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
   onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
+  formController: FormController;
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
 
@@ -31,9 +33,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      if (!e.shiftKey) {
-        onAddChild(pathArray, node.children.length - 1, isQuestion);
-      }
+      onAddChild(pathArray, node.children.length - 1, isQuestion);
     }
   };
 
@@ -76,6 +76,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
             onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
             onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
+            formController={formController}
           />
         ))}
     </>

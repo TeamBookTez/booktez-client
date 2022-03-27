@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { IcPeriAnswer } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
 import { PeriNoteInput } from "..";
+import { FormController } from "./PeriNote";
 import { StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PriorAnswerProps {
@@ -14,10 +15,11 @@ interface PriorAnswerProps {
   onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
   onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
+  formController: FormController;
 }
 
 export default function PriorAnswer(props: PriorAnswerProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild } = props;
+  const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -88,9 +90,9 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             index={i}
             node={node}
             onAddChild={(p, i, isQ) => handleClickAddChild(p, i, isQ)}
-            onSetContent={(v, p) => onSetContent(v, p)}
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddChildByEnter={(e, p, i, isQ) => handleKeyPress(e, p, i, isQ)}
+            formController={formController}
           />
         ))}
     </StFieldset>
