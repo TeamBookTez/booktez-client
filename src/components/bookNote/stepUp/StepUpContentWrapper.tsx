@@ -20,7 +20,7 @@ export default function StepUpContentWrapper(props: StepUpContentWrapperProps) {
       </StLeftWrapper>
       <StRightWrapper>
         <StHeader>{content.header}</StHeader>
-        {content && content.desc.map((comment) => <StDesc key={comment}>{comment}</StDesc>)}
+        {content && <StDesc>{content.desc}</StDesc>}
       </StRightWrapper>
     </>
   );
@@ -72,6 +72,7 @@ const StHeader = styled.h3`
 `;
 
 const StDesc = styled.p`
+  white-space: pre-wrap;
   ${({ theme }) => theme.fonts.body4};
   color: ${({ theme }) => theme.colors.gray100};
 `;
