@@ -1,3 +1,14 @@
+import { ImgAfter11, ImgAfter12, ImgAfter13 } from "../assets/images";
+
+export interface StepUpContent {
+  id: number;
+  lifeQuote: string;
+  public: string;
+  header: string;
+  desc: string[];
+  imgUrl: string;
+}
+
 export const before1 = {
   id: 1,
   lifeQuote: "“책은 그것을 적절히 선택할 수 있는 독자에게 갖가지의 즐거움을 안겨준다.”",
@@ -75,6 +86,7 @@ export const after1 = [
       "지금부터 독서 전 단계에서 설정한 방향을 따라",
       "독서를 해 나갈 거예요.",
     ],
+    imgUrl: ImgAfter11,
   },
   {
     id: 2,
@@ -86,6 +98,7 @@ export const after1 = [
       "이렇게 만든 질문들에 답하다 보면",
       "지식이 구조화되어 머릿속에 저장 될 거예요.",
     ],
+    imgUrl: ImgAfter12,
   },
   {
     id: 3,
@@ -98,6 +111,7 @@ export const after1 = [
       "호기심을 느낀다면 언제든,",
       "꼬리 질문들을 만들어 보세요.",
     ],
+    imgUrl: ImgAfter13,
   },
 ];
 
