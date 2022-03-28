@@ -15,8 +15,5 @@ export { default as PreNoteForm } from "./preNote/PreNoteForm";
 export { default as QuestionThree } from "./preNote/QuestionThree";
 export { default as StepUp } from "./StepUp";
 export { default as CarouselDots } from "./stepUp/CarouselDots";
-export { default as OneCaseModal } from "./stepUp/OneCaseModal";
-export { default as PeriModal } from "./stepUp/PeriModal";
 export { default as StepUpContentWrapper } from "./stepUp/StepUpContentWrapper";
 export { default as StepUpLayout } from "./stepUp/StepUpLayout";
-export { default as ThreeCaseModal } from "./stepUp/ThreeCaseModal";

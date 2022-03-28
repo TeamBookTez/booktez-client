@@ -3,12 +3,13 @@ import { useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { PeriNoteData, PreNoteData } from "../../../pages/BookNote";
+import { after1 } from "../../../utils/exampleData";
 import { patchBookNote } from "../../../utils/lib/api";
 import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { useFetchNote } from "../../../utils/useHooks";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
-import { Complete, ExButton, PeriModal, PriorQuestion, StepUp } from "..";
+import { Complete, ExButton, PriorQuestion, StepUp, StepUpLayout } from "..";
 import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export interface BookData {
@@ -219,7 +220,7 @@ export default function PeriNote() {
 
         {openModal && (
           <StStepModalWrapper>
-            <PeriModal onToggleModal={handlePeriCarousel} />
+            <StepUpLayout onToggleModal={handlePeriCarousel} stepUpContent={after1} />
           </StStepModalWrapper>
         )}
         {openSubmitModal && <Complete bookData={bookData} />}

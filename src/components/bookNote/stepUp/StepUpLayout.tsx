@@ -40,10 +40,13 @@ export default function PeriModal(props: StepUpProps) {
     <StModalBox>
       <StModalIcCancel onClick={onToggleModal} />
       <StepUpContentWrapper content={stepUpContent[contentIndex]} />
-      <StPrevBtn onClick={prevSlide}>이전</StPrevBtn>
-      <StNextBtn onClick={nextSlide}>다음</StNextBtn>
+
       {stepUpContent.length > 1 && (
-        <CarouselDots maxIndex={maxIndex} contentIndex={contentIndex} onSetContentIndex={handleSetContentIndex} />
+        <>
+          <StPrevBtn onClick={prevSlide}>이전</StPrevBtn>
+          <StNextBtn onClick={nextSlide}>다음</StNextBtn>
+          <CarouselDots maxIndex={maxIndex} contentIndex={contentIndex} onSetContentIndex={handleSetContentIndex} />
+        </>
       )}
     </StModalBox>
   );
