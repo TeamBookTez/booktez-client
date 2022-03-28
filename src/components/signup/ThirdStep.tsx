@@ -34,11 +34,7 @@ export default function ThirdStep() {
   }, [isLogin]);
 
   const postSignup = async () => {
-    try {
-      await postData("/auth/signup", userData);
-    } catch (err) {
-      // return;
-    }
+    await postData("/auth/signup", userData);
   };
 
   const postLogin = async () => {
@@ -47,18 +43,14 @@ export default function ThirdStep() {
       password: pwd,
     };
 
-    try {
-      const res = await postData("/auth/login", loginBody);
-      const resData = res.data.data;
+    const res = await postData("/auth/login", loginBody);
+    const resData = res.data.data;
 
-      localStorage.setItem("booktez-token", resData.token);
-      localStorage.setItem("booktez-nickname", resData.nickname);
-      localStorage.setItem("booktez-email", resData.email);
+    localStorage.setItem("booktez-token", resData.token);
+    localStorage.setItem("booktez-nickname", resData.nickname);
+    localStorage.setItem("booktez-email", resData.email);
 
-      setIsLogin(true);
-    } catch (err) {
-      // return;
-    }
+    setIsLogin(true);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

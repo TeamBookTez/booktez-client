@@ -28,15 +28,9 @@ export const patchData = (token: string, key: string, patchBody: PatchBody | For
 };
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
-  try {
-    const { data } = await client(token).patch(key, body);
+  const { data } = await client(token).patch(key, body);
 
-    return data.data;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      return err.response;
-    }
-  }
+  return data.data;
 };
 
 export const deleteData = (key: string, token: string | null) => {

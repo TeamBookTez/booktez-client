@@ -32,32 +32,26 @@ export default function ShowModal(props: ShowModalProps) {
   const navigate = useNavigate();
 
   const postAddBooks = async () => {
-    try {
-      const { data } = await postData("/book", bookData, userToken);
+    const { data } = await postData("/book", bookData, userToken);
 
-      if (!userToken) {
-        const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
+    if (!userToken) {
+      const { isbn, thumbnail, title, authors, translators, publicationDt } = bookData;
 
-        sessionStorage.setItem(
-          "booktez-bookData",
-          JSON.stringify({
-            isbn,
-            thumbnail,
-            title,
-            author: authors,
-            translator: translators,
-            publicationDt,
-          }),
-        );
-      }
-
-      setNavigatingBookInfo({ ...navigatingBookInfo, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
-      navigate("/book-note");
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        return;
-      }
+      sessionStorage.setItem(
+        "booktez-bookData",
+        JSON.stringify({
+          isbn,
+          thumbnail,
+          title,
+          author: authors,
+          translator: translators,
+          publicationDt,
+        }),
+      );
     }
+
+    setNavigatingBookInfo({ ...navigatingBookInfo, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
+    navigate("/book-note");
   };
 
   return (

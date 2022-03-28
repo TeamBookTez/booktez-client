@@ -26,15 +26,11 @@ export default function SecondStep() {
   }, [userData]);
 
   const getNickname = async (nicknameData: string) => {
-    try {
-      const res = await getData(`/auth/nickname?nickname=${nicknameData}`);
-      const resData = res.data;
+    const res = await getData(`/auth/nickname?nickname=${nicknameData}`);
+    const resData = res.data;
 
-      setIsNicknameValid(resData.data.isValid);
-      setErrorMessage(resData.message);
-    } catch (err) {
-      // return;
-    }
+    setIsNicknameValid(resData.data.isValid);
+    setErrorMessage(resData.message);
   };
 
   const goNextStep = () => {

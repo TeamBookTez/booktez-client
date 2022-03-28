@@ -71,15 +71,11 @@ export default function MyPage() {
 
     formData.append("img", imgFile);
 
-    try {
-      const { data } = await patchData(userToken, "/user/img", formData);
+    const { data } = await patchData(userToken, "/user/img", formData);
 
-      if (data.success) {
-        setTempImg(data.img);
-        setUserInfo((current) => ({ ...current, img: data.img }));
-      }
-    } catch (err) {
-      return;
+    if (data.success) {
+      setTempImg(data.img);
+      setUserInfo((current) => ({ ...current, img: data.img }));
     }
   };
 

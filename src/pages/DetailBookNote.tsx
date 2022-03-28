@@ -39,23 +39,18 @@ export default function DetailBookNote() {
 
   const navigate = useNavigate();
 
-  const getReview = async (key: string, token: string) => {
-    try {
-      const {
-        data: { data },
-      } = await getData(key, token);
-
-      setReviewData(data);
-    } catch (err) {
-      // return;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     getReview(`review/${reviewId}`, userToken);
   }, []);
+
+  const getReview = async (key: string, token: string) => {
+    const {
+      data: { data },
+    } = await getData(key, token);
+
+    setReviewData(data);
+    setIsLoading(false);
+  };
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
