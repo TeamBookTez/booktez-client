@@ -1,12 +1,12 @@
 import {
-  ImgAfter11,
-  ImgAfter12,
-  ImgAfter13,
-  ImgBefore1,
-  ImgBefore3,
-  ImgBefore21,
-  ImgBefore22,
-  ImgBefore23,
+  ImgPeriNoteStepUp1,
+  ImgPeriNoteStepUp2,
+  ImgPeriNoteStepUp3,
+  ImgPreNoteStepUp1,
+  ImgPreNoteStepUp3,
+  ImgPreNoteStepUp21,
+  ImgPreNoteStepUp22,
+  ImgPreNoteStepUp23,
 } from "../assets/images";
 
 export interface StepUpContent {
@@ -18,7 +18,7 @@ export interface StepUpContent {
   imgUrl: string;
 }
 
-const before1 = [
+const preNoteStepUp1 = [
   {
     id: 1,
     lifeQuote: "“책은 그것을 적절히 선택할 수 있는 독자에게 갖가지의 즐거움을 안겨준다.”",
@@ -29,11 +29,11 @@ const before1 = [
       "이 책에 갖는 기대를 설정함으로써 자신만의",
       "방향성을 가지고 책을 읽어 나갈 수 있을 거예요.",
     ],
-    imgUrl: ImgBefore1,
+    imgUrl: ImgPreNoteStepUp1,
   },
 ];
 
-const before2 = [
+const preNoteStepUp2 = [
   {
     id: 1,
     lifeQuote: "“생각하지 않고 읽는 것은 잘 씹지 않고 먹는 것과 같다.”",
@@ -44,7 +44,7 @@ const before2 = [
       "자신의 기대를 채우기 위한 전략을 세워 보아요.",
       "이때는 책의 제목, 서론, 목차를 보는 게 좋아요.",
     ],
-    imgUrl: ImgBefore21,
+    imgUrl: ImgPreNoteStepUp21,
   },
   {
     id: 2,
@@ -57,7 +57,7 @@ const before2 = [
       "책과 나의 방향성이 다르면 기대감을 조정하거나,",
       "새로운 책을 선택할 수 있어요.",
     ],
-    imgUrl: ImgBefore22,
+    imgUrl: ImgPreNoteStepUp22,
   },
   {
     id: 3,
@@ -70,11 +70,11 @@ const before2 = [
       "핵심 메시지를 전달하는 흐름 속에서 내 기대를",
       "채워줄 부분들을 가려낼 수 있을 거예요.",
     ],
-    imgUrl: ImgBefore23,
+    imgUrl: ImgPreNoteStepUp23,
   },
 ];
 
-const before3 = [
+const preNoteStepUp3 = [
   {
     id: 1,
     lifeQuote: "“내가 세계를 알게 된 것은 책에 의해서였다.”",
@@ -86,13 +86,13 @@ const before3 = [
       "이 단계에서 만든 질문들은 다음 단계를 거쳐",
       "더 깊고 넓은 질문과 사색으로 이어질 거예요.",
     ],
-    imgUrl: ImgBefore3,
+    imgUrl: ImgPreNoteStepUp3,
   },
 ];
 
-export const beforeArray: StepUpContent[][] = [before1, before2, before3];
+export const stepUpContentArray: StepUpContent[][] = [preNoteStepUp1, preNoteStepUp2, preNoteStepUp3];
 
-export const after1 = [
+export const periNoteStepUp = [
   {
     id: 1,
     lifeQuote: "",
@@ -103,7 +103,7 @@ export const after1 = [
       "지금부터 독서 전 단계에서 설정한 방향을 따라",
       "독서를 해 나갈 거예요.",
     ],
-    imgUrl: ImgAfter11,
+    imgUrl: ImgPeriNoteStepUp1,
   },
   {
     id: 2,
@@ -115,7 +115,7 @@ export const after1 = [
       "이렇게 만든 질문들에 답하다 보면",
       "지식이 구조화되어 머릿속에 저장 될 거예요.",
     ],
-    imgUrl: ImgAfter12,
+    imgUrl: ImgPeriNoteStepUp2,
   },
   {
     id: 3,
@@ -128,7 +128,7 @@ export const after1 = [
       "호기심을 느낀다면 언제든,",
       "꼬리 질문들을 만들어 보세요.",
     ],
-    imgUrl: ImgAfter13,
+    imgUrl: ImgPeriNoteStepUp3,
   },
 ];
 

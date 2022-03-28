@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-import { beforeArray } from "../../../utils/exampleData";
+import { stepUpContentArray } from "../../../utils/exampleData";
 import { StModalWrapper } from "../../addBook/ModalWrapper";
 import { ExButton, StepUp, StepUpLayout } from "..";
 
@@ -36,7 +36,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
       </StSection>
       {openModal && (
         <StStepModalWrapper>
-          <StepUpLayout onToggleModal={onToggleModal} stepUpContent={beforeArray[idx - 1]} />
+          <StepUpLayout onToggleModal={onToggleModal} stepUpContent={stepUpContentArray[idx - 1]} />
         </StStepModalWrapper>
       )}
     </>

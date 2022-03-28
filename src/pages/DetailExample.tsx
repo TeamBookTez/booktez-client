@@ -10,7 +10,7 @@ import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/
 import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { isLoginState } from "../utils/atom";
-import { after1, reviewData } from "../utils/exampleData";
+import { periNoteStepUp, reviewData } from "../utils/exampleData";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export default function DetailExample() {
@@ -56,7 +56,7 @@ export default function DetailExample() {
             )}
             {isPeriModal && (
               <StStepModalWrapper>
-                <StepUpLayout onToggleModal={handlePeriCarousel} stepUpContent={after1} />
+                <StepUpLayout onToggleModal={handlePeriCarousel} stepUpContent={periNoteStepUp} />
               </StStepModalWrapper>
             )}
           </StNoteModalWrapper>

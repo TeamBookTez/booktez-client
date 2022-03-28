@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import theme from "../../styles/theme";
 import { isLoginState } from "../../utils/atom";
-import { beforeArray } from "../../utils/exampleData";
+import { stepUpContentArray } from "../../utils/exampleData";
 import { StepUp, StepUpLayout } from "../bookNote";
 import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
 import { Button } from "../common/styled/Button";
@@ -75,7 +75,7 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
       )}
       {openModal && (
         <StStepModalWrapper>
-          <StepUpLayout onToggleModal={() => setOpenModal(!openModal)} stepUpContent={beforeArray[idx - 1]} />
+          <StepUpLayout onToggleModal={() => setOpenModal(!openModal)} stepUpContent={stepUpContentArray[idx - 1]} />
         </StStepModalWrapper>
       )}
     </StExampleWrapper>
