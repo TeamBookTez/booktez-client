@@ -22,7 +22,7 @@ const preNoteStepUp1 = [
   {
     id: 1,
     lifeQuote: "“책은 그것을 적절히 선택할 수 있는 독자에게 갖가지의 즐거움을 안겨준다.”",
-    public: "- 몽키스테외 -",
+    public: "몽키스테외",
     header: "방향성을 찾아보세요.",
     desc: "어떤 부분에서의 성장을 기대하시나요?\n이 책에 갖는 기대를 설정함으로써 자신만의\n방향성을 가지고 책을 읽어 나갈 수 있을 거예요.",
     imgUrl: ImgPreNoteStepUp1,
@@ -33,7 +33,7 @@ const preNoteStepUp2 = [
   {
     id: 1,
     lifeQuote: "“생각하지 않고 읽는 것은 잘 씹지 않고 먹는 것과 같다.”",
-    public: "- 에드먼드 버크 -",
+    public: "에드먼드 버크",
     header: "전략을 세워 보세요.",
     desc: "책장을 넘기기 전,\n자신의 기대를 채우기 위한 전략을 세워 보아요.\n이때는 책의 제목, 서론, 목차를 보는 게 좋아요.\n",
     imgUrl: ImgPreNoteStepUp21,
@@ -60,7 +60,7 @@ const preNoteStepUp3 = [
   {
     id: 1,
     lifeQuote: "“내가 세계를 알게 된 것은 책에 의해서였다.”",
-    public: "- 사르트르 -",
+    public: "사르트르",
     header: "스스로에게 질문을 던져 보세요.",
     desc: "제목, 서론, 목차를 살펴보며 호기심이 생긴 것들\n에 대해 스스로에게 질문들을 던져 보세요.\n이 단계에서 만든 질문들은 다음 단계를 거쳐\n더 깊고 넓은 질문과 사색으로 이어질 거예요.",
     imgUrl: ImgPreNoteStepUp3,

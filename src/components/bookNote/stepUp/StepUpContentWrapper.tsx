@@ -16,7 +16,7 @@ export default function StepUpContentWrapper(props: StepUpContentWrapperProps) {
           <img src={content.imgUrl} alt="독서중 캐러셀 이미지" />
         </StImgWrapper>
         <StLifeQuotes>{content.lifeQuote}</StLifeQuotes>
-        <StPublic>{content.public}</StPublic>
+        {content.public && <StPublic>- {content.public} -</StPublic>}
       </StLeftWrapper>
       <StRightWrapper>
         <StHeader>{content.header}</StHeader>
