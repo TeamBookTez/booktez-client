@@ -49,7 +49,14 @@ export default function ShowModal(props: ShowModalProps) {
       );
     }
 
-    setNavigatingBookInfo({ ...navigatingBookInfo, reviewId: data.data.reviewId, title, fromUrl: "/main/add-book" });
+    const tempNavigatingBookInfo = {
+      ...navigatingBookInfo,
+      reviewId: data.data.reviewId,
+      title,
+      fromUrl: "/main/add-book",
+    };
+
+    setNavigatingBookInfo(tempNavigatingBookInfo);
     navigate("/book-note");
   };
 

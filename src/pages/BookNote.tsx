@@ -53,6 +53,8 @@ export default function BookNote() {
   const navigatingBookInfo = useRecoilValue(navigatingBookInfoState);
   const { reviewId, title } = navigatingBookInfo;
 
+  console.log(title);
+
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
 

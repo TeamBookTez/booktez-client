@@ -75,7 +75,14 @@ export default function DetailBookNote() {
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
                 onClick={() => {
-                  setNavigatingBookInfo({ ...navigatingBookInfo, reviewId, title: reviewData?.bookTitle, fromUrl });
+                  const tempNavigatingBookInfo = {
+                    ...navigatingBookInfo,
+                    reviewId,
+                    title: reviewData?.bookTitle,
+                    fromUrl,
+                  };
+
+                  setNavigatingBookInfo(tempNavigatingBookInfo);
                   navigate("/book-note/peri");
                 }}
                 id="btn_update"
