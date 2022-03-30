@@ -44,12 +44,15 @@ export default function DetailBookNote() {
   }, []);
 
   const getReview = async (key: string, token: string) => {
-    const {
-      data: { data },
-    } = await getData(key, token);
+    try {
+      const {
+        data: { data },
+      } = await getData(key, token);
 
-    setReviewData(data);
-    setIsLoading(false);
+      setReviewData(data);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePopUp = () => {
