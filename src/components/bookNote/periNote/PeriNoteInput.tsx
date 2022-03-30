@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { FormController } from "./PeriNote";
 import { StAddAnswerButton, StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PeriNoteInputProps {
@@ -11,7 +12,6 @@ interface PeriNoteInputProps {
   index: number;
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], index: number, isQuestion: boolean) => void;
-  onSetContent: (value: string, path: number[]) => void;
   onDeleteChild: (path: number[]) => void;
   onAddChildByEnter: (
     e: React.KeyboardEvent<HTMLTextAreaElement>,
@@ -19,6 +19,7 @@ interface PeriNoteInputProps {
     index: number,
     isQuestion: boolean,
   ) => void;
+  formController: FormController;
 }
 
 export const labelColorList = [
@@ -35,30 +36,23 @@ export const labelColorList = [
 ];
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild, onAddChildByEnter } = props;
+  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, formController } = props;
+  const { register, setFocus } = formController;
   const isQuestion = node.type === "question";
-
+  const inputKey = `${path.join(",")}`;
   const labelColor = labelColorList[(path.length - 1) % 10];
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
-    if (e.target.value !== "\n") {
-      onSetContent(e.target.value, pathArray);
-    }
-  };
 
   const addChildByEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
       // 꼬리질문과 답변은 자신의 아래에 추가하는 것이 아닌 자신의 부모의 children에 추가해야함
       onAddChild(path.slice(0, -1), index, isQuestion);
     }
   };
 
   useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.focus();
-    }
-  }, []);
+    setFocus(inputKey);
+  }, [setFocus]);
 
   return (
     <>
@@ -71,10 +65,11 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         )}
         <StInputWrapper isanswer={!isQuestion}>
           <StInput
-            ref={textAreaRef}
-            value={node.content}
+            {...register(inputKey, {
+              shouldUnregister: true,
+            })}
+            defaultValue={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
-            onChange={(e) => handleChangeSetContent(e, path)}
             onKeyPress={addChildByEnter}
           />
           {isQuestion && (
@@ -104,9 +99,9 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               index={i}
               node={node}
               onAddChild={(p, i, isQ) => onAddChild(p, i, isQ)}
-              onSetContent={(v, p) => onSetContent(v, p)}
               onDeleteChild={(p) => onDeleteChild(p)}
               onAddChildByEnter={(e, p, i, isQ) => onAddChildByEnter(e, p, i, isQ)}
+              formController={formController}
             />
           ))}
       </StFieldWrapper>

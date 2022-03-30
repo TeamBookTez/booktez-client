@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
+import { StepUpLayout } from "../components/bookNote";
 import { StStepModalWrapper } from "../components/bookNote/preNote/PreNoteForm";
-import PeriModal from "../components/bookNote/stepUp/PeriModal";
 import { Loading } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
 import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { isLoginState } from "../utils/atom";
-import { reviewData } from "../utils/exampleData";
+import { periNoteStepUp, reviewData } from "../utils/exampleData";
 import { useCheckLoginState } from "../utils/useHooks";
 
 export default function DetailExample() {
@@ -54,10 +54,9 @@ export default function DetailExample() {
                 </DetailArticleWrapperLabeling>
               </StMarginTop>
             )}
-            {/* 모달창 하다가 중지 */}
             {isPeriModal && (
               <StStepModalWrapper>
-                <PeriModal onToggleModal={handlePeriCarousel} />
+                <StepUpLayout onToggleModal={handlePeriCarousel} stepUpContent={periNoteStepUp} />
               </StStepModalWrapper>
             )}
           </StNoteModalWrapper>

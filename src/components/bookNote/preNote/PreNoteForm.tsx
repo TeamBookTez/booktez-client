@@ -1,10 +1,9 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
+import { stepUpContentArray } from "../../../utils/exampleData";
 import { StModalWrapper } from "../../addBook/ModalWrapper";
-import { ExButton, StepUp } from "..";
-import OneCaseModal from "../stepUp/OneCaseModal";
-import ThreeCaseModal from "../stepUp/ThreeCaseModal";
+import { ExButton, StepUp, StepUpLayout } from "..";
 
 interface PreNoteFormProps {
   question: string;
@@ -37,11 +36,7 @@ export default function PreNoteForm(props: PreNoteFormProps) {
       </StSection>
       {openModal && (
         <StStepModalWrapper>
-          {idx === 2 ? (
-            <ThreeCaseModal onToggleModal={onToggleModal} />
-          ) : (
-            <OneCaseModal idx={idx} onToggleModal={onToggleModal} />
-          )}
+          <StepUpLayout onToggleModal={onToggleModal} stepUpContent={stepUpContentArray[idx - 1]} />
         </StStepModalWrapper>
       )}
     </>
