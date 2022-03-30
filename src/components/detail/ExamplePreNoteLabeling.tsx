@@ -5,10 +5,9 @@ import styled from "styled-components";
 
 import theme from "../../styles/theme";
 import { isLoginState } from "../../utils/atom";
-import { StepUp } from "../bookNote";
+import { stepUpContentArray } from "../../utils/exampleData";
+import { StepUp, StepUpLayout } from "../bookNote";
 import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
-import OneCaseModal from "../bookNote/stepUp/OneCaseModal";
-import ThreeCaseModal from "../bookNote/stepUp/ThreeCaseModal";
 import { Button } from "../common/styled/Button";
 import LabelQuestion from "../common/styled/LabelQuestion";
 
@@ -76,11 +75,7 @@ export default function ExamplePreNoteLabeling(props: ExamplePreNoteLabelingProp
       )}
       {openModal && (
         <StStepModalWrapper>
-          {idx === 2 ? (
-            <ThreeCaseModal onToggleModal={() => setOpenModal(!openModal)} />
-          ) : (
-            <OneCaseModal idx={idx} onToggleModal={() => setOpenModal(!openModal)} />
-          )}
+          <StepUpLayout onToggleModal={() => setOpenModal(!openModal)} stepUpContent={stepUpContentArray[idx - 1]} />
         </StStepModalWrapper>
       )}
     </StExampleWrapper>

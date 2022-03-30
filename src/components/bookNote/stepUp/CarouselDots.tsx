@@ -1,22 +1,22 @@
-import React from "react";
 import styled, { css } from "styled-components";
 
 interface CarouselProps {
-  slideIndex: number;
-  setSlideIndex: React.Dispatch<React.SetStateAction<number>>;
+  maxIndex: number;
+  contentIndex: number;
+  onSetContentIndex: (idx: number) => void;
 }
 
 export default function CarouselDots(props: CarouselProps) {
-  const { slideIndex, setSlideIndex } = props;
-
-  const moveDot = (index: number) => {
-    setSlideIndex(index);
-  };
+  const { maxIndex, contentIndex, onSetContentIndex } = props;
 
   return (
     <StContainerDots>
-      {Array.from({ length: 3 }).map((item: any, index: number) => (
-        <StDiv key={item} onClick={() => moveDot(index + 1)} isActive={slideIndex === index + 1} />
+      {Array.from({ length: maxIndex + 1 }, (value: number, index: number) => (
+        <StDiv
+          key={`carouselDots-${index}`}
+          isActive={contentIndex === index}
+          onClick={() => onSetContentIndex(value)}
+        />
       ))}
     </StContainerDots>
   );
@@ -44,9 +44,8 @@ const StDiv = styled.div<{ isActive: boolean }>`
   background: ${({ theme }) => theme.colors.white300};
 
   ${({ isActive }) =>
-    isActive
-      ? css`
-          background: ${({ theme }) => theme.colors.orange300};
-        `
-      : css``}
+    isActive &&
+    css`
+      background: ${({ theme }) => theme.colors.orange300};
+    `}
 `;
