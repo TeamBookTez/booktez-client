@@ -39,23 +39,18 @@ export default function DetailBookNote() {
 
   const navigate = useNavigate();
 
-  const getReview = async (key: string, token: string) => {
-    try {
-      const {
-        data: { data },
-      } = await getData(key, token);
-
-      setReviewData(data);
-    } catch (err) {
-      // return;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     getReview(`review/${reviewId}`, userToken);
   }, []);
+
+  const getReview = async (key: string, token: string) => {
+    const {
+      data: { data },
+    } = await getData(key, token);
+
+    setReviewData(data);
+    setIsLoading(false);
+  };
 
   const handlePopUp = () => {
     setIsPopUp((isPopUp) => !isPopUp);
@@ -80,7 +75,14 @@ export default function DetailBookNote() {
               <IcDeleteNote onClick={handlePopUp} />
               <IcModifyNote
                 onClick={() => {
-                  setNavigatingBookInfo({ ...navigatingBookInfo, reviewId, title: reviewData?.bookTitle, fromUrl });
+                  const tempNavigatingBookInfo = {
+                    ...navigatingBookInfo,
+                    reviewId,
+                    title: reviewData?.bookTitle,
+                    fromUrl,
+                  };
+
+                  setNavigatingBookInfo(tempNavigatingBookInfo);
                   navigate("/book-note/peri");
                 }}
                 id="btn_update"

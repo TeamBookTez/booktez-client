@@ -26,15 +26,11 @@ export default function FirstStep() {
   }, [userData]);
 
   const getEmail = async (emailData: string) => {
-    try {
-      const res = await getData(`/auth/email?email=${emailData}`);
-      const resData = res.data;
+    const res = await getData(`/auth/email?email=${emailData}`);
+    const resData = res.data;
 
-      setIsEmailValid(resData.data.isValid);
-      setErrorMessage(resData.message);
-    } catch (err) {
-      // return;
-    }
+    setIsEmailValid(resData.data.isValid);
+    setErrorMessage(resData.message);
   };
 
   const goNextStep = () => {

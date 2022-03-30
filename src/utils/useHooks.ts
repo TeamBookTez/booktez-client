@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -42,19 +41,12 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
 
   useEffect(() => {
     (async function () {
-      try {
-        const {
-          data: { data },
-        } = await client(token).get(key);
+      const {
+        data: { data },
+      } = await client(token).get(key);
 
-        setData(data);
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          console.log(err.response);
-        }
-      } finally {
-        setIsLoading(false);
-      }
+      setData(data);
+      setIsLoading(false);
     })();
   }, []);
 

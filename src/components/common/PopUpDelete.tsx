@@ -24,15 +24,13 @@ export default function PopUpDelete(props: PopUpDeleteProps) {
   const userToken = _token ? _token : "";
 
   const handleDelete = async () => {
-    try {
-      await deleteData(`/review/${reviewId}`, userToken);
-      onPopUp();
-      mutate(pathKey);
-      if (pathname === "/detail-book-note") {
-        navigate("/main/bookcase");
-      }
-    } catch (err) {
-      return;
+    await deleteData(`/review/${reviewId}`, userToken);
+
+    onPopUp();
+    mutate(pathKey);
+
+    if (pathname === "/detail-book-note") {
+      navigate("/main/bookcase");
     }
   };
 

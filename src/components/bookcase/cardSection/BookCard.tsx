@@ -51,7 +51,9 @@ export default function BookCard(props: BookCardProps) {
 
   const moveBookNoteHandler = () => {
     if (isLogin) {
-      setNavigatingBookInfo({ reviewId, title, fromUrl: pathname, fromSt });
+      const tempNavigatingBookInfo = { reviewId, title, fromUrl: pathname, fromSt };
+
+      setNavigatingBookInfo(tempNavigatingBookInfo);
       navigate(reviewUrl);
     }
   };
