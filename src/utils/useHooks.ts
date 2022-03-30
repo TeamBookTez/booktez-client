@@ -41,12 +41,15 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
 
   useEffect(() => {
     (async function () {
-      const {
-        data: { data },
-      } = await client(token).get(key);
+      try {
+        const {
+          data: { data },
+        } = await client(token).get(key);
 
-      setData(data);
-      setIsLoading(false);
+        setData(data);
+      } finally {
+        setIsLoading(false);
+      }
     })();
   }, []);
 
