@@ -5,13 +5,14 @@ import { useRecoilState } from "recoil";
 import styled, { css } from "styled-components";
 
 import { ImgSignupThird } from "../../assets/images";
-import { StHeading2, StImage, StParagraph, UserData } from "../../pages/Signup";
+import { UserData } from "../../pages/Signup";
 import { isLoginState } from "../../utils/atom";
 import { checkPwdType } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { AlertLabel, InputPwd } from "../common";
 import { Button } from "../common/styled/Button";
 import { LabelHidden } from "../common/styled/LabelHidden";
+import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../common/styled/Signup";
 
 export default function ThirdStep() {
   const [userData, setUserData] = useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>]>();
@@ -104,9 +105,9 @@ export default function ThirdStep() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
-      <StImage src={ImgSignupThird} alt="회원가입 첫 단계" />
-      <StHeading2>나만의 서재를 만드는 중이에요!</StHeading2>
-      <StParagraph>비밀번호를 설정해 주세요.</StParagraph>
+      <StSignupImage src={ImgSignupThird} alt="회원가입 첫 단계" />
+      <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
+      <StSignupParagraph>비밀번호를 설정해 주세요.</StSignupParagraph>
       <StForm onSubmit={handleSubmit}>
         <StEmailFixed>{userData["email"]}</StEmailFixed>
         <LabelHidden htmlFor="signupPwd">비밀번호</LabelHidden>

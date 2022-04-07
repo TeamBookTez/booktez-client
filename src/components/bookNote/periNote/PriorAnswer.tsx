@@ -4,9 +4,11 @@ import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { StMenuBtn } from "../../common/styled/Button";
+import { StMoreIcon } from "../../common/styled/Icon";
+import { StMenuWrapper } from "../../common/styled/MenuWrapper";
 import { PeriNoteInput } from "..";
 import { FormController } from "./PeriNote";
-import { StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PriorAnswerProps {
   path: number[];
@@ -73,14 +75,14 @@ export default function PriorAnswer(props: PriorAnswerProps) {
           onKeyPress={(e) => handleKeyPress(e, path, index, isQuestion)}
         />
         <StMore className="icn_more" />
-        <StMenu menuposition={"isPriQ"}>
+        <StMenuWrapper menuposition={"isPriQ"}>
           <StMenuBtn type="button" onClick={() => handleClickAddChild(path, index, !isQuestion)}>
             꼬리질문 추가
           </StMenuBtn>
           <StMenuBtn type="button" onClick={() => handleClickDeleteChild(path)}>
             삭제
           </StMenuBtn>
-        </StMenu>
+        </StMenuWrapper>
       </StAnswerWrapper>
       {node.children &&
         node.children.map((node, i) => (

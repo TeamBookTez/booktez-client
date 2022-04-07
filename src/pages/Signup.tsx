@@ -54,28 +54,3 @@ const StFormWrapper = styled.article`
   flex-direction: column;
   align-items: center;
 `;
-
-export const StImage = styled.img`
-  width: 24.1rem;
-  height: 4.3rem;
-
-  display: block;
-
-  margin: 0 auto 5.8rem;
-`;
-
-export const StHeading2 = styled.h2`
-  margin-bottom: 2.4rem;
-
-  white-space: pre-wrap;
-  text-align: center;
-  ${({ theme }) => theme.fonts.header0}
-`;
-
-export const StParagraph = styled.p`
-  margin-bottom: 5.2rem;
-
-  text-align: center;
-
-  ${({ theme }) => theme.fonts.body0}
-`;

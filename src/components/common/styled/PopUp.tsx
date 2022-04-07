@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { StModalWrapper } from "../../addBook/ModalWrapper";
+import { StBookModalWrapper } from "./BookModalWrqpper";
 import { Button } from "./Button";
 
-export const StPopUpWrapper = styled(StModalWrapper)`
+export const StPopUpWrapper = styled(StBookModalWrapper)`
   background-color: rgba(55, 56, 62, 0.9);
 `;
 

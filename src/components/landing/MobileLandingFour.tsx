@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { IcLandingMobileFour01 } from "../../assets/icons";
-import { StMobileMain } from "../../pages/Landing";
+import { StBackgroundFour, StMobileBg, StMobileMain, StWrapperFour } from "../common/styled/MobileLanding";
 
 export default function MobileLandingFour() {
   return (
@@ -25,24 +25,6 @@ export default function MobileLandingFour() {
     </StMobileBg>
   );
 }
-
-export const StMobileBg = styled.div`
-  background-color: ${({ theme }) => theme.colors.white200};
-`;
-
-export const StBackgroundFour = styled.section`
-  display: flex;
-  justify-content: center;
-
-  width: 100%;
-  height: 43rem;
-`;
-
-export const StWrapperFour = styled.article`
-  width: 32rem;
-
-  padding: 4.2rem 2rem 3.3rem 2rem;
-`;
 
 export const StH2Four = styled.h2`
   margin-left: 0.4rem;
