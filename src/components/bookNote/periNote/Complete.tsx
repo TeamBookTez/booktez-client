@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
-import { StBookModalWrapper } from "../../common/styled/BookModalWrqpper";
+import { StBookModalWrapper } from "../../common/styled/BookModalWrapper";
 import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 

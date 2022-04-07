@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StBookModalWrapper } from "../common/styled/BookModalWrqpper";
+import { StBookModalWrapper } from "../common/styled/BookModalWrapper";
 
 interface ModalWrapperProps {
   children: React.ReactNode;

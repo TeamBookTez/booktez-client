@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { StBookModalWrapper } from "./BookModalWrqpper";
+import { StBookModalWrapper } from "./BookModalWrapper";
 import { Button } from "./Button";
 
 export const StPopUpWrapper = styled(StBookModalWrapper)`
