@@ -48,7 +48,7 @@ const StIcon = styled(IcDelete)`
   margin-left: 2.5rem;
 `;
 
-export const StInput = styled.input`
+const StInput = styled.input`
   margin-bottom: 1rem;
   border: 0.2rem solid ${({ theme }) => theme.colors.white400};
   border-radius: 0.8rem;

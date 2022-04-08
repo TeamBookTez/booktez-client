@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { ImgAddBooks } from "../../../assets/images";
 import { Button } from "../../common/styled/Button";
-import { StImg } from "./BookCard";
+import { StBookCardImg } from "../../common/styled/Img";
 
 export default function AddBookCard() {
   return (
@@ -11,7 +11,7 @@ export default function AddBookCard() {
       <StAddCard>
         <StContent>
           <StImgWrapper>
-            <StImg src={ImgAddBooks} alt="다음 책을 쌓아볼까요?" />
+            <StBookCardImg src={ImgAddBooks} alt="다음 책을 쌓아볼까요?" />
           </StImgWrapper>
           <StCardHeader>다음 책을 읽어볼까요?</StCardHeader>
           <StCardDesc>또 하나의 지혜를 쌓아보세요.</StCardDesc>

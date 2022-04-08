@@ -1,6 +1,6 @@
 import { IcLandingMobileFour02 } from "../../assets/icons";
-import { StMobileMain } from "../../pages/Landing";
-import { StBackgroundFour, StH2Four, StMobileBg, StParagraphFour, StWrapperFour } from "./MobileLandingFour";
+import { StBackgroundFour, StMobileBg, StMobileMain, StWrapperFour } from "../common/styled/MobileLanding";
+import { StH2Four, StParagraphFour } from "./MobileLandingFour";
 
 export default function MobileLandingFive() {
   return (

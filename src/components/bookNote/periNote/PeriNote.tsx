@@ -10,8 +10,8 @@ import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { useFetchNote } from "../../../utils/useHooks";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
+import { StStepModalWrapper } from "../../common/styled/StepModalWrapper";
 import { Complete, ExButton, PriorQuestion, StepUp, StepUpLayout } from "..";
-import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export interface BookData {
   author: string[];

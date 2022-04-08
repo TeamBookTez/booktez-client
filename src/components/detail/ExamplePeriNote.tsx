@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IcToggle } from "../../assets/icons";
 import theme from "../../styles/theme";
 import { PeriNoteTreeNode } from "../../utils/dataType";
-import LabelQuestion from "../common/styled/LabelQuestion";
+import LabelQuestion from "../common/LabelQuestion";
+import { StQuestion } from "../common/styled/Question";
+import { StIcToggle } from "../common/styled/Toggle";
 import { ExamplePeriQuestion } from ".";
 
 interface ExamplePreNoteProps {
@@ -62,29 +63,10 @@ const StExampleWrapper = styled.article`
   }
 `;
 
-export const StQuestion = styled.h3`
-  display: flex;
-  align-items: center;
-
-  margin-top: 2.3rem;
-
-  ${({ theme }) => theme.fonts.body2};
-  line-height: 2.6rem;
-  color: ${({ theme }) => theme.colors.gray200};
-`;
-
 const StFirstQuestion = styled(StQuestion)`
   margin-top: 4.6rem;
 
   &:first-child {
     margin-top: 0;
-  }
-`;
-
-export const StIcToggle = styled(IcToggle)`
-  min-width: 2.6rem;
-  margin-left: 1.6rem;
-  &:hover {
-    cursor: pointer;
   }
 `;

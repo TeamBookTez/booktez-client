@@ -1,9 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { isLoginState } from "../../utils/atom";
 import { Button } from "./styled/Button";
+import { StLoginLink } from "./styled/Link";
 
 interface MainHeaderProps {
   children: string;
@@ -64,13 +65,4 @@ const StLoginBtn = styled(Button)<{ isMypage: string }>`
   // 임의 색
   ${({ theme }) => theme.fonts.button}
   color: ${({ theme }) => theme.colors.white};
-`;
-
-export const StLoginLink = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
 `;

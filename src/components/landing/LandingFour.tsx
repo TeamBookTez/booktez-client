@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 import { ImgLandingBookNote } from "../../assets/images";
-import { StH2, StWrapper } from "./LandingThree";
+import { StLandingSectionH2, StLandingSectionWrapper } from "../common/styled/Landing";
 
 export default function LandingFour() {
   return (
     <StSection>
       <div>
-        <StH2>
+        <StLandingSectionH2>
           머릿속에도 깔끔하게 정리되는 <br />
           특별한 북노트를 작성해 보세요.
-        </StH2>
+        </StLandingSectionH2>
         <StParagraph>
           뻔한 메모 방식 대신, 색다른 방법으로 정리해보세요.
           <br />
@@ -22,7 +22,7 @@ export default function LandingFour() {
   );
 }
 
-const StSection = styled(StWrapper)`
+const StSection = styled(StLandingSectionWrapper)`
   padding-top: 11.1rem;
   padding-bottom: 12.4rem;
 `;

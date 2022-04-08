@@ -11,7 +11,7 @@ export default function StepUpOnExample() {
   );
 }
 
-export const StBtnStepUp = styled.button`
+const StBtnStepUp = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,7 +28,7 @@ export const StBtnStepUp = styled.button`
   color: ${({ theme }) => theme.colors.orange100};
 `;
 
-export const StIcStepUp = styled(IcCheck)`
+const StIcStepUp = styled(IcCheck)`
   width: 2rem;
   height: 2rem;
 `;
