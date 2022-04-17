@@ -95,6 +95,7 @@ export default function PriorAnswer(props: PriorAnswerProps) {
             onDeleteChild={(p) => onDeleteChild(p)}
             onAddChildByEnter={(e, p, i, isQ) => handleKeyPress(e, p, i, isQ)}
             formController={formController}
+            onSetContent={onSetContent}
           />
         ))}
     </StFieldset>
