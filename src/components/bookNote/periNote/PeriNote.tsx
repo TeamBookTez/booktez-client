@@ -147,12 +147,37 @@ export default function PeriNote() {
       miniMenu.classList.remove("open");
     }
   }
+  const getFormData = () => {
+    const obj = getValues();
 
-  const submitPeriNote = async () => {
-    patchBookNote(userToken, `/review/${reviewId}/peri`, { answerThree: data.answerThree, reviewSt: 4 }).then((res) =>
-      setBookData(res.bookData),
-    );
-    setOpenSubmitModal(true);
+    const keys = Object.keys(obj);
+    const newRoot = deepCopyTree(data.answerThree);
+
+    keys.map((key) => {
+      const value = obj[key];
+      const pathKey = key.split(",").map((k) => parseInt(k));
+
+      const current = getNodeByPath(newRoot, pathKey);
+
+      current.content = value;
+    });
+
+    // data state에도 저장
+    setData((current) => ({ ...current, answerThree: newRoot }));
+
+    return newRoot;
+  };
+
+  const submitPeriNote = () => {
+    const dataToPatch = getFormData();
+
+    patchBookNote(userToken, `/review/${reviewId}/peri`, {
+      answerThree: dataToPatch,
+      reviewSt: 4,
+    }).then((res) => {
+      setBookData(res.bookData);
+      setOpenSubmitModal(true);
+    });
   };
 
   useEffect(() => {
@@ -184,22 +209,9 @@ export default function PeriNote() {
 
   useEffect(() => {
     if (navIndex && isSave) {
-      const obj = getValues();
-      const keys = Object.keys(obj);
-      const newRoot = deepCopyTree(data.answerThree);
+      const dataToPatch = getFormData();
 
-      keys.map((key) => {
-        const value = obj[key];
-        const pathKey = key.split(",").map((k) => parseInt(k));
-
-        const current = getNodeByPath(newRoot, pathKey);
-
-        current.content = value;
-      });
-
-      setTimeout(() => {
-        saveReview({ ...data, answerThree: newRoot });
-      }, 0);
+      saveReview({ ...data, answerThree: dataToPatch });
     }
   }, [isSave, navIndex]);
 
