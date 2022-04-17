@@ -190,20 +190,24 @@ export default function PeriNote() {
     };
   }, []);
 
-  // 이거 마쟈..?
   useEffect(() => {
-    // 질문이 모두 채워져 있으면 addQuestion의 isPrevented를 false
-    if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
-      // 질문이 모두 채워진 상태에서 답변이 채워지면 모두 false
-      if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
-        setIsPrevented({ addQuestion: false, isCompleted: false });
-      } else {
-        // 답변만 비워있으면 isCompleted만 true
-        setIsPrevented({ addQuestion: false, isCompleted: true });
-      }
+    // 모든 질문 리스트가 지워졌을 경우에는 질문 리스트 추가만 가능하게 하고, 작성완료는 불가하게 함
+    if (!data.answerThree.children.length) {
+      setIsPrevented({ addQuestion: false, isCompleted: true });
     } else {
-      // 질문이 비워져있으면 둘 다 true;
-      setIsPrevented({ addQuestion: true, isCompleted: true });
+      // 질문이 모두 채워져 있으면 addQuestion의 isPrevented를 false
+      if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
+        // 질문이 모두 채워진 상태에서 답변이 채워지면 모두 false
+        if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
+          setIsPrevented({ addQuestion: false, isCompleted: false });
+        } else {
+          // 답변만 비워있으면 isCompleted만 true
+          setIsPrevented({ addQuestion: false, isCompleted: true });
+        }
+      } else {
+        // 질문이 비워져있으면 둘 다 true;
+        setIsPrevented({ addQuestion: true, isCompleted: true });
+      }
     }
   }, [data.answerThree]);
 
