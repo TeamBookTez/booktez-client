@@ -49,8 +49,6 @@ const StHeader = styled.header<StHeaderProps>`
 
 const StHeading2 = styled.h2`
   ${({ theme }) => theme.fonts.header0};
-
-  z-index: 10;
 `;
 
 const StLoginBtn = styled(Button)<{ isMypage: string }>`

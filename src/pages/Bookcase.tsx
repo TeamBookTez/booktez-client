@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import { Cards, Navigation } from "../components/bookcase";
+import { Cards, Navigation, StickyHeader } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
 import { isLoginState, navigatingBookInfoState } from "../utils/atom";
 import { useCheckLoginState } from "../utils/useHooks";
@@ -40,8 +40,10 @@ export default function Bookcase() {
         <Loading />
       ) : (
         <>
-          <MainHeader>서재</MainHeader>
-          <Navigation navIndex={navIndex} onChangeNavIndex={handleChangeNavIndex} />
+          <StickyHeader>
+            <MainHeader>서재</MainHeader>
+            <Navigation navIndex={navIndex} onChangeNavIndex={handleChangeNavIndex} />
+          </StickyHeader>
           <Cards navIndex={navIndex} />
         </>
       )}
