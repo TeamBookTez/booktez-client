@@ -82,12 +82,11 @@ export default function FirstStep() {
           isError={isEmailError}
           handleOnChange={handleOnChange}
         />
-        <input id="signupAgree" type="checkbox" />
+        <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
           {isAgreeCondition ? <IcSignupChecking /> : <IcSignupNoChecking />}
           <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
         </StAgreeConditionBox>
-        <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
@@ -109,7 +108,7 @@ const StAgreeConditionBox = styled.label`
   display: flex;
   align-items: center;
 
-  margin: 1.6rem 0 0 -0.4rem;
+  margin: 1.7rem 0 0 0;
 
   ${({ theme }) => theme.fonts.body6}
 
@@ -122,7 +121,7 @@ const StNextStepBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
-  margin-top: 3.3rem;
+  margin-top: 3.9rem;
 
   border-radius: 1rem;
 
