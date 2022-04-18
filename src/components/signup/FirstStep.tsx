@@ -121,7 +121,7 @@ const StNextStepBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
-  margin-top: 5rem;
+  margin-top: 3.3rem;
 
   border-radius: 1rem;
 
