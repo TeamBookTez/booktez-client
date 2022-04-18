@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { IcSignupNoChecking } from "../../assets/icons";
 import { ImgSignupFirst } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
@@ -80,6 +81,11 @@ export default function FirstStep() {
           isError={isEmailError}
           handleOnChange={handleOnChange}
         />
+        <input id="signupAgree" type="checkbox" />
+        <StInputAgree htmlFor="signupAgree">
+          <IcSignupNoChecking />
+          <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
+        </StInputAgree>
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StNextStepBtn active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
           다음 계단
@@ -93,6 +99,22 @@ const StForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const StInputAgree = styled.label`
+  width: 100%;
+  height: 2.1rem;
+
+  display: flex;
+  align-items: center;
+
+  margin: 1.6rem 0 0 -0.4rem;
+
+  ${({ theme }) => theme.fonts.body6}
+
+  & > svg {
+    margin-right: 0.2rem;
+  }
 `;
 
 const StNextStepBtn = styled(Button)<{ active: boolean }>`
