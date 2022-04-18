@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { IcSignupNoChecking } from "../../assets/icons";
+import { IcSignupChecking, IcSignupNoChecking } from "../../assets/icons";
 import { ImgSignupFirst } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
@@ -18,6 +18,7 @@ export default function FirstStep() {
   const [email, setEmail] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [isAgreeCondition, setIsAgreeCondition] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
@@ -82,12 +83,12 @@ export default function FirstStep() {
           handleOnChange={handleOnChange}
         />
         <input id="signupAgree" type="checkbox" />
-        <StInputAgree htmlFor="signupAgree">
-          <IcSignupNoChecking />
+        <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
+          {isAgreeCondition ? <IcSignupChecking /> : <IcSignupNoChecking />}
           <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
-        </StInputAgree>
+        </StAgreeConditionBox>
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
-        <StNextStepBtn active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
+        <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
@@ -101,7 +102,7 @@ const StForm = styled.form`
   align-items: center;
 `;
 
-const StInputAgree = styled.label`
+const StAgreeConditionBox = styled.label`
   width: 100%;
   height: 2.1rem;
 
