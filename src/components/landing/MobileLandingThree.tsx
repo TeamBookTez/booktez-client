@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { IcLandingMobileThree } from "../../assets/icons";
-import { StMobileMain } from "../../pages/Landing";
+import { StMobileMain } from "../common/styled/MobileLanding";
 
 export default function MobileLandingThree() {
   return (

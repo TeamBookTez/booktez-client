@@ -4,9 +4,9 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { StepUpLayout } from "../components/bookNote";
-import { StStepModalWrapper } from "../components/bookNote/preNote/PreNoteForm";
 import { Loading } from "../components/common";
 import { StBookTitle, StIcCancelWhite, StNoteModalWrapper } from "../components/common/styled/NoteModalWrapper";
+import { StStepModalWrapper } from "../components/common/styled/StepModalWrapper";
 import { DetailArticleWrapperLabeling, ExamplePeriNote, ExamplePreNoteLabeling } from "../components/detail";
 import DetailArticleWrapper from "../components/detail/DetailArticleWrapper";
 import { isLoginState } from "../utils/atom";

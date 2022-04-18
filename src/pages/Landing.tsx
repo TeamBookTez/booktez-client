@@ -72,17 +72,6 @@ export default function Landing() {
   );
 }
 
-export const StMobileMain = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  min-width: 32rem;
-  max-width: 41.4rem;
-
-  margin: 0 auto;
-`;
-
 const StMain = styled.main`
   display: flex;
   flex-direction: column;

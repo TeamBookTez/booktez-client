@@ -2,9 +2,11 @@ import { useEffect, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
-import { IcMore, IcPeriQuestion } from "../../../assets/icons";
+import { IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
-import { Button } from "../../common/styled/Button";
+import { StAddAnswerButton, StMenuBtn } from "../../common/styled/Button";
+import { StMoreIcon } from "../../common/styled/Icon";
+import { StMenuWrapper } from "../../common/styled/MenuWrapper";
 import { PriorAnswer } from "..";
 import { FormController } from "./PeriNote";
 
@@ -60,11 +62,11 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           답변
         </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
-        <StMenu menuposition={"isPriQ"}>
+        <StMenuWrapper menuposition={"isPriQ"}>
           <StMenuBtn type="button" onClick={() => onDeleteChild(path)}>
             삭제
           </StMenuBtn>
-        </StMenu>
+        </StMenuWrapper>
       </StFieldset>
       {node.children &&
         node.children.map((node, i) => (
@@ -116,48 +118,5 @@ const StInput = styled(TextareaAutosize)`
 
   &::-webkit-scrollbar {
     display: none;
-  }
-`;
-
-export const StAddAnswerButton = styled.button`
-  width: 6.6rem;
-  height: 3.4rem;
-
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.gray400};
-`;
-
-export const StMoreIcon = styled(IcMore)`
-  margin-right: 1.6rem;
-
-  &:hover {
-    fill: #efefef;
-  }
-`;
-
-export const StMenu = styled.div<{ menuposition?: string }>`
-  display: none;
-
-  position: absolute;
-  top: ${({ menuposition }) => (menuposition === "isPriQ" ? "6rem" : menuposition === "isPriA" ? "2.9rem" : "4.3rem")};
-  right: ${({ menuposition }) => (menuposition === "isPriQ" ? "4.4rem" : "1.6rem")};
-  z-index: 10;
-
-  border: 0.1rem solid ${({ theme }) => theme.colors.gray200};
-  border-radius: 0.8rem;
-  padding: 0.4rem;
-  background-color: ${({ theme }) => theme.colors.white};
-`;
-
-export const StMenuBtn = styled(Button)`
-  border-radius: 0.8rem;
-  background-color: transparent;
-  width: 9.5rem;
-  height: 3.8rem;
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.gray200};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.white300};
   }
 `;

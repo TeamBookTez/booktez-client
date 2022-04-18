@@ -6,11 +6,6 @@ import { ImgExit } from "../../assets/images";
 import { navigatingBookInfoState } from "../../utils/atom";
 import { StBtnCancel, StBtnDelete, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "./styled/PopUp";
 
-export const StTemp = styled.div`
-  width: 100%;
-  height: 16.1rem;
-`;
-
 interface PopUpExitProps {
   onExit: () => void;
 }

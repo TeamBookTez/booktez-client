@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 
 import { IcLandingMobileIcon01, IcLandingMobileIcon02, IcLandingMobileIcon03 } from "../../assets/icons";
-import { StMobileMain } from "../../pages/Landing";
+import { StMobileMain } from "../common/styled/MobileLanding";
 import MobileLandingCard from "./MobileLandingCard";
 
 export default function MobileLandingTwo() {

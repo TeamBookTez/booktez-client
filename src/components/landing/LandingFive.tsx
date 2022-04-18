@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 import { ImgLandingBookcase } from "../../assets/images";
-import { StH2, StWrapper } from "./LandingThree";
+import { StLandingSectionH2, StLandingSectionWrapper } from "../common/styled/Landing";
 
 export default function LandingFive() {
   return (
     <StSection>
       <div>
-        <StH2>
+        <StLandingSectionH2>
           읽을수록 쌓여가는 <br />
           성장의 만족감을 느껴보세요.
-        </StH2>
+        </StLandingSectionH2>
         <StParagraph>
           나만의 북노트를 모아보고 내용을 재확인하며,
           <br />
@@ -22,7 +22,7 @@ export default function LandingFive() {
   );
 }
 
-const StSection = styled(StWrapper)`
+const StSection = styled(StLandingSectionWrapper)`
   padding: 11.7rem 0;
 `;
 

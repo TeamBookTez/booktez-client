@@ -4,12 +4,13 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { ImgSignupSecond } from "../../assets/images";
-import { StHeading2, StImage, StParagraph, UserData } from "../../pages/Signup";
+import { UserData } from "../../pages/Signup";
 import { checkNicknameType } from "../../utils/check";
 import { getData } from "../../utils/lib/api";
 import { AlertLabel, InputEmail } from "../common";
 import { Button } from "../common/styled/Button";
 import { LabelHidden } from "../common/styled/LabelHidden";
+import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../common/styled/Signup";
 
 export default function SecondStep() {
   const [userData, setUserData] = useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>]>();
@@ -65,9 +66,9 @@ export default function SecondStep() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
-      <StImage src={ImgSignupSecond} alt="회원가입 첫 단계" />
-      <StHeading2>나만의 서재를 만드는 중이에요!</StHeading2>
-      <StParagraph>제가 여러분을 어떻게 부르면 될까요?</StParagraph>
+      <StSignupImage src={ImgSignupSecond} alt="회원가입 첫 단계" />
+      <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
+      <StSignupParagraph>제가 여러분을 어떻게 부르면 될까요?</StSignupParagraph>
       <StForm onSubmit={handleSubmit}>
         <LabelHidden htmlFor="signupnickname">닉네임</LabelHidden>
         <InputEmail
