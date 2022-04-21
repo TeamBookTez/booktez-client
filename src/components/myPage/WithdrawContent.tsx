@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
+import WithdrawContentComplete from "./WithdrawContentComplete";
 import WithdrawContentConfirm from "./WithdrawContentConfirm";
 
 export default function WithdrawContent() {
   return (
     <>
       <StWithdrawText type="button">계정 탈퇴하기</StWithdrawText>
-      <WithdrawContentConfirm />
+      {/* <WithdrawContentConfirm /> */}
+      <WithdrawContentComplete />
     </>
   );
 }
