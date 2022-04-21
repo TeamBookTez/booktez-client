@@ -14,6 +14,14 @@ export default function WithdrawContent() {
     setIsConfirmPopupActive(false);
   };
 
+  const openErrorPopupActive = () => {
+    setIsErrorPopupActive(true);
+  };
+
+  const closeErrorPopupActive = () => {
+    setIsErrorPopupActive(false);
+  };
+
   const openCompletePopupActive = () => {
     setIsCompletePopupActive(true);
   };
@@ -26,11 +34,12 @@ export default function WithdrawContent() {
       {isConfirmPopupActive && (
         <WithdrawContentConfirm
           closeConfirmPopupActive={closeConfirmPopupActive}
+          openErrorPopupActive={openErrorPopupActive}
           openCompletePopupActive={openCompletePopupActive}
         />
       )}
-      {isCompletePopupActive && <WithdrawContentComplete />}
       {isErrorPopupActive && <WithdrawContentError />}
+      {isCompletePopupActive && <WithdrawContentComplete />}
     </>
   );
 }

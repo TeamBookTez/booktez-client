@@ -14,11 +14,12 @@ import {
 
 interface WithdrawContentConfirmProps {
   closeConfirmPopupActive: () => void;
+  openErrorPopupActive: () => void;
   openCompletePopupActive: () => void;
 }
 
 export default function WithdrawContentConfirm(props: WithdrawContentConfirmProps) {
-  const { closeConfirmPopupActive, openCompletePopupActive } = props;
+  const { closeConfirmPopupActive, openErrorPopupActive, openCompletePopupActive } = props;
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
@@ -29,16 +30,7 @@ export default function WithdrawContentConfirm(props: WithdrawContentConfirmProp
 
       openCompletePopupActive();
     } catch (err) {
-      // 기디팀에서 에러 처리 따로 안 한다면 코드 삭제
-      if (axios.isAxiosError(err)) {
-        const status = err.response?.data.status;
-
-        if (status === 400) {
-          window.alert("이미 탈퇴된 회원입니다.");
-        } else {
-          window.alert("회원 탈퇴에 실패하였습니다.");
-        }
-      }
+      openErrorPopupActive();
     } finally {
       closeConfirmPopupActive();
     }
@@ -48,7 +40,7 @@ export default function WithdrawContentConfirm(props: WithdrawContentConfirmProp
     <StPopUpWrapper>
       <StPopUpBox>
         <StQuestion>탈퇴하기 전에 확인해주세요</StQuestion>
-        <StPopupDetail>• 저장 된 북노트 기록이 모두 사라져요</StPopupDetail>
+        <StPopupDetail>• 저장 된 북노트 기록이 모 사라져요</StPopupDetail>
         <StBtnWrapper>
           <StBtnCancel type="button" onClick={closeConfirmPopupActive}>
             닫기
