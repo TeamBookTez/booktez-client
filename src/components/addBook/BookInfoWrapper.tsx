@@ -1,11 +1,8 @@
-import axios from "axios";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
 import { escapeHtml } from "../../utils/escape";
-import { client } from "../../utils/lib";
-import AlertToast from "./AlertToast";
 import ModalWrapper from "./ModalWrapper";
 import ShowModal from "./ShowModal";
 
@@ -17,25 +14,14 @@ export interface PublishDate {
 
 interface BookInfoWrapperProps {
   book: BookInfo;
-}
-
-interface Response<T> {
-  data: T;
-  message: string;
-  status: number;
-  success: boolean;
-}
-
-interface IsExistData {
-  isError: boolean | string;
-  isExist: boolean;
+  isModalOpen: boolean;
+  onToggleModal: () => void;
+  onClickBookCard: (isbn: string) => void;
 }
 
 export default function BookInfoWrapper(props: BookInfoWrapperProps) {
-  const { book } = props;
+  const { book, isModalOpen, onToggleModal, onClickBookCard } = props;
   const { thumbnail, title, authors, datetime, contents } = book;
-  const [alertToastOpen, setAlertToastOpen] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const publishDate: PublishDate = {
     year: datetime.toString().slice(0, 4),
@@ -43,48 +29,9 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
     date: datetime.toString().slice(8, 10),
   };
 
-  // api 나오면 여기 함수 따로 분리하기ㅣ
-  // error code에 맞춰서 에러 토스트 메시지 달리하기
-  const checkIsExist = async (isbn: string) => {
-    const _token = localStorage.getItem("booktez-token");
-    const userToken = _token ? _token : "";
-
-    try {
-      const { success, data }: Response<IsExistData> = await client(userToken).get(`/book/exist/${isbn}`);
-
-      if (success) {
-        return { isError: false, isExist: data.isExist };
-      } else {
-        console.log("[ERROR RETURNED]", data);
-
-        return { isError: true, isExist: false };
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
-      }
-
-      return { isError: true, isExist: false };
-    }
-  };
-
-  const onToggleModal = useCallback(() => {
-    setOpenModal(!openModal);
-    // checkIsExist(book.isbn).then((result) => {
-    //   if (result.isError) {
-    //     // 에러 토스트 띄우기
-    //     return;
-    //   } else if (result.isExist) {
-    //     setOpenModal(!openModal);
-    //   } else {
-    //     setAlertToastOpen(true);
-    //   }
-    // });
-  }, [openModal]);
-
   return (
     <>
-      <StArticle onClick={onToggleModal}>
+      <StArticle onClick={() => onClickBookCard(book.isbn)}>
         {thumbnail ? (
           <StThumbnail src={thumbnail} alt="책 표지" />
         ) : (
@@ -107,14 +54,11 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
           <InfoSummary>{escapeHtml(contents)}</InfoSummary>
         </StInfoWrapper>
       </StArticle>
-      {alertToastOpen ? (
-        <AlertToast />
-      ) : openModal ? (
+
+      {isModalOpen && (
         <ModalWrapper>
           <ShowModal onToggleModal={onToggleModal} bookInfo={book} publishDate={publishDate} />
         </ModalWrapper>
-      ) : (
-        <></>
       )}
     </>
   );
