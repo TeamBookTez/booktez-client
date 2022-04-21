@@ -121,6 +121,7 @@ const StLoginBtn = styled(Button)<{ disabled: boolean }>`
     `}
 `;
 
+// 아래 내용들 동일 - common/styled/input과 동일 - 중복 제거 필요
 export const StInputEmail = styled.input`
   width: 100%;
   height: 5.4rem;
