@@ -26,6 +26,10 @@ export const patchData = (token: string, key: string, patchBody: PatchBody | For
   return client(token).patch(key, patchBody);
 };
 
+export const patchUserWithdraw = (token: string, key: string) => {
+  return client(token).patch(key);
+};
+
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
   const { data } = await client(token).patch(key, body);
 

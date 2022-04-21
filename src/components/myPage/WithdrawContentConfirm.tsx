@@ -1,5 +1,7 @@
+import axios from "axios";
 import styled from "styled-components";
 
+import { patchUserWithdraw } from "../../utils/lib/api";
 import {
   StBtnCancel,
   StBtnDelete,
@@ -18,10 +20,28 @@ interface WithdrawContentConfirmProps {
 export default function WithdrawContentConfirm(props: WithdrawContentConfirmProps) {
   const { closeConfirmPopupActive, openCompletePopupActive } = props;
 
-  const withdrawUserNInformation = () => {
-    // API 요청 확인 받고
-    closeConfirmPopupActive();
-    openCompletePopupActive();
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
+
+  const withdrawUserNInformation = async () => {
+    try {
+      await patchUserWithdraw(userToken, "/auth/withdraw");
+
+      openCompletePopupActive();
+    } catch (err) {
+      // 기디팀에서 에러 처리 따로 안 한다면 코드 삭제
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.data.status;
+
+        if (status === 400) {
+          window.alert("이미 탈퇴된 회원입니다.");
+        } else {
+          window.alert("회원 탈퇴에 실패하였습니다.");
+        }
+      }
+    } finally {
+      closeConfirmPopupActive();
+    }
   };
 
   return (
