@@ -22,7 +22,6 @@ interface PeriNoteInputProps {
     isQuestion: boolean,
   ) => void;
   formController: FormController;
-  onSetContent: (value: string, path: number[]) => void;
 }
 
 export const labelColorList = [
@@ -39,7 +38,7 @@ export const labelColorList = [
 ];
 
 export default function PeriNoteInput(props: PeriNoteInputProps) {
-  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, formController, onSetContent } = props;
+  const { path, index, node, onAddChild, onDeleteChild, onAddChildByEnter, formController } = props;
   const { register, setFocus } = formController;
   const isQuestion = node.type === "question";
   const inputKey = `${path.join(",")}`;
@@ -74,7 +73,6 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             defaultValue={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
             onKeyPress={addChildByEnter}
-            onChange={(e) => onSetContent(e.target.value, path)}
           />
           {isQuestion && (
             <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, !isQuestion)}>
@@ -106,7 +104,6 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
               onDeleteChild={(p) => onDeleteChild(p)}
               onAddChildByEnter={(e, p, i, isQ) => onAddChildByEnter(e, p, i, isQ)}
               formController={formController}
-              onSetContent={onSetContent}
             />
           ))}
       </StFieldWrapper>

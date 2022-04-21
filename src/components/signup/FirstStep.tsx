@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { IcSignupChecking, IcSignupNoChecking } from "../../assets/icons";
+import { IcSignupChecking } from "../../assets/icons";
 import { ImgSignupFirst } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
@@ -84,7 +84,7 @@ export default function FirstStep() {
         />
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
-          {isAgreeCondition ? <IcSignupChecking /> : <IcSignupNoChecking />}
+          <StIcSignupChecking isagree={isAgreeCondition} />
           <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
         </StAgreeConditionBox>
         <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
@@ -111,10 +111,12 @@ const StAgreeConditionBox = styled.label`
   margin: 1.7rem 0 0 0;
 
   ${({ theme }) => theme.fonts.body6}
+`;
 
-  & > svg {
-    margin-right: 0.2rem;
-  }
+const StIcSignupChecking = styled(IcSignupChecking)<{ isagree: boolean }>`
+  margin-right: 0.2rem;
+
+  fill: ${({ theme, isagree }) => (isagree ? theme.colors.orange100 : theme.colors.white400)};
 `;
 
 const StNextStepBtn = styled(Button)<{ active: boolean }>`
