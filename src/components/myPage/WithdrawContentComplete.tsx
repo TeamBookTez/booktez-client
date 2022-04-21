@@ -1,15 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import {
-  StBtnCancel,
-  StBtnDelete,
-  StBtnWrapper,
-  StDetail,
-  StPopUp,
-  StPopUpWrapper,
-  StQuestion,
-} from "../common/styled/PopUp";
+import { StBtnCancel, StBtnWrapper, StDetail, StPopUp, StPopUpWrapper, StQuestion } from "../common/styled/PopUp";
 
 export default function WithdrawContentComplete() {
   const navigation = useNavigate();
