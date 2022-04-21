@@ -1,4 +1,3 @@
-import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
