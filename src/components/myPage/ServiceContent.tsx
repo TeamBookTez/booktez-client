@@ -6,11 +6,11 @@ import { UserInfo } from "../../pages/MyPage";
 import { isLoginState } from "../../utils/atom";
 import { BookComment } from ".";
 
-interface BottomContentProps {
+interface ServiceContentProps {
   userInfo: UserInfo;
 }
 
-export default function BottomContent(props: BottomContentProps) {
+export default function ServiceContent(props: ServiceContentProps) {
   const { userInfo } = props;
   const { reviewCount } = userInfo;
 
@@ -66,6 +66,7 @@ export default function BottomContent(props: BottomContentProps) {
             <StInfoDesc>북스테어즈를 만들어가는 팀원들을 소개할게요.</StInfoDesc>
           </a>
         </StServiceInfo>
+        sad
       </StServiceWrapper>
     </StWrapper>
   );
