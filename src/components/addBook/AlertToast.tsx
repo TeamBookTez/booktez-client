@@ -3,7 +3,13 @@ import styled from "styled-components";
 import { IcToastAlert } from "../../assets/icons";
 import { StIcCancelWhite } from "../common/styled/NoteModalWrapper";
 
-export default function AlertToast() {
+interface AlertToastProps {
+  onCloseAlertToast: () => void;
+}
+
+export default function AlertToast(props: AlertToastProps) {
+  const { onCloseAlertToast } = props;
+
   return (
     <StSaveWrapper>
       <StIconTextWrapper>
@@ -13,7 +19,7 @@ export default function AlertToast() {
           <StToastSpan>다른 책을 추가해주세요</StToastSpan>
         </div>
       </StIconTextWrapper>
-      <StIcCancel />
+      <StIcCancel onClick={onCloseAlertToast} />
     </StSaveWrapper>
   );
 }
@@ -30,6 +36,7 @@ const StSaveWrapper = styled.div`
 
   // shadow가 피그마대로 하면 너무 진함
   box-shadow: 0.05rem 0.15rem 0.45rem 0.15rem #dddddd0c;
+
   border-radius: 0.8rem;
   padding: 1.3rem 1.9rem;
   background-color: ${({ theme }) => theme.colors.white};

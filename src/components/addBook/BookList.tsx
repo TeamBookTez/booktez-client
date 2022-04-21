@@ -91,7 +91,7 @@ export default function BookList(props: BookListProps) {
           onToggleModal={toggleModal}
         />
       ))}
-      {alertToastOpen ? <AlertToast /> : null}
+      {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} /> : null}
     </StListWrapper>
   );
 }
