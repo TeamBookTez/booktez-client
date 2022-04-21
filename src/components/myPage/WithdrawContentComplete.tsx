@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import {
@@ -11,13 +12,15 @@ import {
 } from "../common/styled/PopUp";
 
 export default function WithdrawContentComplete() {
+  const navigation = useNavigate();
+
   return (
     <StPopUpWrapper>
       <StPopUpBox>
         <StQuestion>탈퇴 완료</StQuestion>
         <StPopupDetail>탈퇴 처리가 완료되었습니다.</StPopupDetail>
         <StBtnWrapper>
-          <StBtnCancel type="button" onClick={() => console.log("취소")}>
+          <StBtnCancel type="button" onClick={() => navigation("/main")}>
             닫기
           </StBtnCancel>
         </StBtnWrapper>

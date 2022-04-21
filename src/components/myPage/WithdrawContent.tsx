@@ -1,14 +1,33 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import WithdrawContentComplete from "./WithdrawContentComplete";
 import WithdrawContentConfirm from "./WithdrawContentConfirm";
 
 export default function WithdrawContent() {
+  const [isConfirmPopupActive, setIsConfirmPopupActive] = useState<boolean>(false);
+  const [isCompletePopupActive, setIsCompletePopupActive] = useState<boolean>(false);
+
+  const closeConfirmPopupActive = () => {
+    setIsConfirmPopupActive(false);
+  };
+
+  const openCompletePopupActive = () => {
+    setIsCompletePopupActive(true);
+  };
+
   return (
     <>
-      <StWithdrawText type="button">계정 탈퇴하기</StWithdrawText>
-      {/* <WithdrawContentConfirm /> */}
-      <WithdrawContentComplete />
+      <StWithdrawText type="button" onClick={() => setIsConfirmPopupActive(true)}>
+        계정 탈퇴하기
+      </StWithdrawText>
+      {isConfirmPopupActive && (
+        <WithdrawContentConfirm
+          closeConfirmPopupActive={closeConfirmPopupActive}
+          openCompletePopupActive={openCompletePopupActive}
+        />
+      )}
+      {isCompletePopupActive && <WithdrawContentComplete />}
     </>
   );
 }
