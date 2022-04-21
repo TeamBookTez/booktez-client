@@ -19,9 +19,8 @@ export default function WithdrawContentConfirm(props: WithdrawContentConfirmProp
   const { closeConfirmPopupActive, openCompletePopupActive } = props;
 
   const withdrawUserNInformation = () => {
-    closeConfirmPopupActive();
-
     // API 요청 확인 받고
+    closeConfirmPopupActive();
     openCompletePopupActive();
   };
 

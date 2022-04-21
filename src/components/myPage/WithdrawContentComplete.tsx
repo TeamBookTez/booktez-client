@@ -37,6 +37,3 @@ const StPopUpBox = styled(StPopUp)`
 const StPopupDetail = styled(StDetail)`
   margin-top: 3.2rem;
 `;
-const StPopupBtnDelete = styled(StBtnDelete)`
-  width: 10.8rem;
-`;
