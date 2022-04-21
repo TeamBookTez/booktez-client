@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 import { IcCancel, IcSearch } from "../../assets/icons";
 import { LabelHidden } from "../common/styled/LabelHidden";
-import AlertToast from "./AlertToast";
 
 interface SearchBarProps {
   debounceQuery: string;
@@ -35,7 +34,6 @@ export default function SearchBar(props: SearchBarProps) {
           placeholder="책 제목 또는 지은이를 입력해주세요."
         />
         <StIcCancel onClick={handleCancel} isqueryempty={debounceQuery} />
-        <AlertToast />
       </SearchBarWrapper>
     </StWrapper>
   );
