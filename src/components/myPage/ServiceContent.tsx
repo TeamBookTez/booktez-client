@@ -1,3 +1,4 @@
+import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
@@ -8,10 +9,11 @@ import { BookComment } from ".";
 
 interface ServiceContentProps {
   userInfo: UserInfo;
+  children: React.ReactNode;
 }
 
 export default function ServiceContent(props: ServiceContentProps) {
-  const { userInfo } = props;
+  const { userInfo, children } = props;
   const { reviewCount } = userInfo;
 
   const isLogin = useRecoilValue(isLoginState);
@@ -66,8 +68,8 @@ export default function ServiceContent(props: ServiceContentProps) {
             <StInfoDesc>북스테어즈를 만들어가는 팀원들을 소개할게요.</StInfoDesc>
           </a>
         </StServiceInfo>
-        sad
       </StServiceWrapper>
+      {children}
     </StWrapper>
   );
 }
