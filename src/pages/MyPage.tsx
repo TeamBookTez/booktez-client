@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
-import { BottomContent, TopContent } from "../components/myPage";
+import { BottomContent, UserContent } from "../components/myPage";
 import { isLoginState } from "../utils/atom";
 import { getData, patchData } from "../utils/lib/api";
 import { useCheckLoginState } from "../utils/useHooks";
@@ -86,7 +86,7 @@ export default function MyPage() {
       ) : (
         <>
           <MainHeader>마이페이지</MainHeader>
-          <TopContent userInfo={userInfo} onImageChange={handleImageChange} onLogout={handleLogout} />
+          <UserContent userInfo={userInfo} onImageChange={handleImageChange} onLogout={handleLogout} />
           <BottomContent userInfo={userInfo} />
         </>
       )}

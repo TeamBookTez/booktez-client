@@ -9,13 +9,13 @@ import { Button } from "../common/styled/Button";
 import { StLoginLink } from "../common/styled/Link";
 import { TopBanner } from ".";
 
-interface TopContentProps {
+interface UserContentProps {
   userInfo: UserInfo;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onLogout: () => void;
 }
 
-export default function TopContent(props: TopContentProps) {
+export default function UserContent(props: UserContentProps) {
   const navigate = useNavigate();
   const { userInfo, onImageChange, onLogout } = props;
 
