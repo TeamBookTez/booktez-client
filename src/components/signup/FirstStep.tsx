@@ -85,7 +85,14 @@ export default function FirstStep() {
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
           <StIcSignupChecking isagree={isAgreeCondition} />
-          <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
+          <p>
+            <StAConditionLink
+              href="https://rose-prepared-583.notion.site/6e6807cf2fff4effbd108057e611d5b9"
+              target="_blank">
+              개인정보 수집 및 이용 약관
+            </StAConditionLink>
+            에 동의합니다.
+          </p>
         </StAgreeConditionBox>
         <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
           다음 계단
@@ -117,6 +124,10 @@ const StIcSignupChecking = styled(IcSignupChecking)<{ isagree: boolean }>`
   margin-right: 0.2rem;
 
   fill: ${({ theme, isagree }) => (isagree ? theme.colors.orange100 : theme.colors.white400)};
+`;
+
+const StAConditionLink = styled.a`
+  text-decoration: underline;
 `;
 
 const StNextStepBtn = styled(Button)<{ active: boolean }>`
