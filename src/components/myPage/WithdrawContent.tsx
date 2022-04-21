@@ -3,23 +3,13 @@ import styled from "styled-components";
 
 import WithdrawContentComplete from "./WithdrawContentComplete";
 import WithdrawContentConfirm from "./WithdrawContentConfirm";
-import WithdrawContentError from "./WithdrawContentError";
 
 export default function WithdrawContent() {
   const [isConfirmPopupActive, setIsConfirmPopupActive] = useState<boolean>(false);
   const [isCompletePopupActive, setIsCompletePopupActive] = useState<boolean>(false);
-  const [isErrorPopupActive, setIsErrorPopupActive] = useState<boolean>(false);
 
   const closeConfirmPopupActive = () => {
     setIsConfirmPopupActive(false);
-  };
-
-  const openErrorPopupActive = () => {
-    setIsErrorPopupActive(true);
-  };
-
-  const closeErrorPopupActive = () => {
-    setIsErrorPopupActive(false);
   };
 
   const openCompletePopupActive = () => {
@@ -34,11 +24,9 @@ export default function WithdrawContent() {
       {isConfirmPopupActive && (
         <WithdrawContentConfirm
           closeConfirmPopupActive={closeConfirmPopupActive}
-          openErrorPopupActive={openErrorPopupActive}
           openCompletePopupActive={openCompletePopupActive}
         />
       )}
-      {isErrorPopupActive && <WithdrawContentError />}
       {isCompletePopupActive && <WithdrawContentComplete />}
     </>
   );
