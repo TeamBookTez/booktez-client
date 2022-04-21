@@ -75,6 +75,8 @@ export default function ServiceContent(props: ServiceContentProps) {
 }
 
 const StWrapper = styled.section`
+  position: relative;
+
   display: flex;
 
   width: 100%;
