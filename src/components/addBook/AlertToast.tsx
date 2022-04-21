@@ -20,15 +20,16 @@ export default function AlertToast() {
 
 const StSaveWrapper = styled.div`
   position: absolute;
-  top: -4rem;
-  right: 0;
+  top: 6.9rem;
+  right: 4rem;
   z-index: 5;
 
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 
-  box-shadow: 0.1rem 0.3rem 0.9rem 0.3rem #0000001c;
+  // shadow가 피그마대로 하면 너무 진함
+  box-shadow: 0.05rem 0.15rem 0.45rem 0.15rem #dddddd0c;
   border-radius: 0.8rem;
   padding: 1.3rem 1.9rem;
   background-color: ${({ theme }) => theme.colors.white};
