@@ -32,7 +32,7 @@ export default function StickyHeader(props: StickyHeaderProps) {
 const StWrapper = styled.div<{ isscroll: boolean }>`
   position: sticky;
   top: 0rem;
-  z-index: 20;
+  z-index: 5;
 
   border-radius: 2rem 0 0 0;
   background-color: ${({ theme }) => theme.colors.white};
