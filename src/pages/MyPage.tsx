@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
-import { ServiceContent, UserContent } from "../components/myPage";
-import WithdrawContent from "../components/myPage/WithdrawContent";
+import { ServiceContent, UserContent, WithdrawContent } from "../components/myPage";
 import { isLoginState } from "../utils/atom";
 import { getData, patchData } from "../utils/lib/api";
 import { useCheckLoginState } from "../utils/useHooks";
