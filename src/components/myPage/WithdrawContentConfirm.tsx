@@ -29,6 +29,9 @@ export default function WithdrawContentConfirm(props: WithdrawContentConfirmProp
     try {
       await patchUserWithdraw(userToken, "/auth/withdraw");
 
+      localStorage.removeItem("booktez-token");
+      localStorage.removeItem("booktez-nickname");
+      localStorage.removeItem("booktez-email");
       openCompletePopupActive();
       closeConfirmPopupActive();
     } catch (err) {
