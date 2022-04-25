@@ -59,6 +59,8 @@ export default function FirstStep() {
     goNextStep();
   };
 
+  const isSubmitActive = !isEmailEmpty && !isEmailError && isAgreeCondition;
+
   return (
     <motion.div
       key="firstSignup"
@@ -94,7 +96,7 @@ export default function FirstStep() {
             에 동의합니다.
           </p>
         </StAgreeConditionBox>
-        <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
+        <StNextStepBtn disabled={isSubmitActive} active={isSubmitActive} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
