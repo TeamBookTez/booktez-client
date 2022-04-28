@@ -30,12 +30,44 @@ export function checkPwdType(value: string) {
   return passwordRegex.test(value);
 }
 
-export const EMAIL_REGEX =
+const EMAIL_REGEX =
   /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
-export const INVALID_PWD_CHAR_LIST: { [key: string]: string } = {
+const INVALID_PWD_CHAR_LIST: { [key: string]: string } = {
   ",": "반점(,)",
   '"': '쌍따옴표(")',
-  "'": "작은 따옴표(')",
+  "'": "홑따옴표(')",
   "`": "백틱(`)",
+};
+
+export const emailErrorPatterns = {
+  required: { value: true, message: "이메일을 입력해주세요." },
+  pattern: {
+    value: EMAIL_REGEX,
+    message: "이메일 형식을 지켜주시기 바랍니다.",
+  },
+};
+
+export const passwordErrorPatterns = {
+  required: {
+    value: true,
+    message: "비밀번호를 입력해주세요.",
+  },
+  validate: (value: string) => {
+    if (value.match(/[,"'`]/)) {
+      const invalidChar = /[,"']/.exec(value);
+
+      if (invalidChar !== null) {
+        return `${INVALID_PWD_CHAR_LIST[invalidChar[0]]}을 포함할 수 없습니다.`;
+      }
+    } else return true;
+  },
+  minLength: {
+    value: 8,
+    message: "비밀번호는 8자 이상 입력해주시기 바랍니다.",
+  },
+  maxLength: {
+    value: 64,
+    message: "비밀번호는 64자 이하 입력해주시기 바랍니다.",
+  },
 };
