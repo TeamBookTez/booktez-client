@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
@@ -28,8 +28,9 @@ export default function BookList(props: BookListProps) {
   const { books } = props;
 
   // default is false
-  const [alertToastOpen, setAlertToastOpen] = useState<boolean>(true);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [alertToastOpen, setAlertToastOpen] = useState<boolean>(false);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedBookIsbn, setSelectedBookIsbn] = useState<string>("");
 
   const closeAlertToast = () => {
     setAlertToastOpen(false);
@@ -42,16 +43,18 @@ export default function BookList(props: BookListProps) {
     const userToken = _token ? _token : "";
 
     try {
-      const { success, data }: Response<IsExistData> = await client(userToken).get(`/book/exist/${isbn}`);
+      const { data } = await client(userToken).get(`/book/exist/${isbn}`);
 
-      if (success) {
-        return { isError: false, isExist: data.isExist };
+      if (data.success) {
+        return { isError: false, isExist: data.data.isExist };
       } else {
+        // 통신에는 성공했으나 에러가 난 경우
         console.log("[ERROR RETURNED]", data);
 
         return { isError: true, isExist: false };
       }
     } catch (err) {
+      // 통신에 실패한 경우
       if (axios.isAxiosError(err)) {
         console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
       }
@@ -60,22 +63,19 @@ export default function BookList(props: BookListProps) {
     }
   };
 
-  const toggleModal = useCallback(() => {
-    setIsModalOpen(!isModalOpen);
-  }, [isModalOpen]);
-
-  const handleBookModal = (isbn: string) => {
-    console.log(isbn);
-    // checkIsExist(isbn).then((result) => {
-    //   if (result.isError) {
-    //     // 에러 토스트 띄우기
-    //     return;
-    //   } else if (result.isExist) {
-    //     setIsModalOpen(!isModalOpen);
-    //   } else {
-    //     setAlertToastOpen(true);
-    //   }
-    // });
+  const handleClickBookCard = (isbn: string) => {
+    checkIsExist(isbn).then((result) => {
+      if (result.isError) {
+        // 에러 토스트 띄우기 - 모종의 이유로 실패한 경우
+        return;
+      } else if (result.isExist) {
+        // 통신에 성공 - 책이 중복된 경우
+        setAlertToastOpen(true);
+      } else {
+        // 모든 상황을 통과
+        setSelectedBookIsbn(isbn);
+      }
+    });
   };
 
   if (books.length === 0) return <BookEmpty />;
@@ -86,9 +86,8 @@ export default function BookList(props: BookListProps) {
         <BookInfoWrapper
           key={idx}
           book={book}
-          isModalOpen={isModalOpen}
-          onClickBookCard={handleBookModal}
-          onToggleModal={toggleModal}
+          selectedBookIsbn={selectedBookIsbn}
+          onClickBookCard={handleClickBookCard}
         />
       ))}
       {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} /> : null}

@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
@@ -13,14 +14,15 @@ export interface PublishDate {
 
 interface BookInfoWrapperProps {
   book: BookInfo;
-  isModalOpen: boolean;
-  onToggleModal: () => void;
+  selectedBookIsbn: string;
   onClickBookCard: (isbn: string) => void;
 }
 
 export default function BookInfoWrapper(props: BookInfoWrapperProps) {
-  const { book, isModalOpen, onToggleModal, onClickBookCard } = props;
-  const { thumbnail, title, authors, datetime, contents } = book;
+  const { book, selectedBookIsbn, onClickBookCard } = props;
+  const { isbn, thumbnail, title, authors, datetime, contents } = book;
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const publishDate: PublishDate = {
     year: datetime.toString().slice(0, 4),
@@ -28,9 +30,23 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
     date: datetime.toString().slice(8, 10),
   };
 
+  const toggleModal = useCallback(() => {
+    setIsModalOpen(!isModalOpen);
+  }, [isModalOpen]);
+
+  const clickBookCard = () => {
+    onClickBookCard(book.isbn);
+  };
+
+  useEffect(() => {
+    if (selectedBookIsbn === isbn) {
+      toggleModal();
+    }
+  }, [selectedBookIsbn]);
+
   return (
     <>
-      <StArticle onClick={() => onClickBookCard(book.isbn)}>
+      <StArticle onClick={clickBookCard}>
         {thumbnail ? (
           <StThumbnail src={thumbnail} alt="책 표지" />
         ) : (
@@ -56,7 +72,7 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
 
       {isModalOpen && (
         <ModalWrapper>
-          <ShowModal onToggleModal={onToggleModal} bookInfo={book} publishDate={publishDate} />
+          <ShowModal onToggleModal={toggleModal} bookInfo={book} publishDate={publishDate} />
         </ModalWrapper>
       )}
     </>
