@@ -80,7 +80,7 @@ export default function SecondStep() {
           isError={isNicknameError}
           handleOnChange={handleOnChange}
         />
-        <AlertLabel isError={isNicknameError}>{errorMessage}</AlertLabel>
+        {/* <AlertLabel isError={isNicknameError}>{errorMessage}</AlertLabel> */}
         <StNextStepBtn active={!isNicknameEmpty && !isNicknameError} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
