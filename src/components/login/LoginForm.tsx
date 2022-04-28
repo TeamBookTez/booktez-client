@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { EMAIL_REGEX, PASSWORD_REGEX } from "../../utils/check";
+import { EMAIL_REGEX, INVALID_PWD_CHAR_LIST } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { FormData } from "../bookNote/periNote/PeriNote";
 import { AlertLabel } from "../common";
@@ -82,18 +82,11 @@ export default function LoginForm() {
               message: "비밀번호를 입력해주세요.",
             },
             validate: (value: string) => {
-              const invalidPwdChar: FormData = {
-                ",": "반점(,)",
-                '"': '쌍따옴표(")',
-                "'": "작은 따옴표(')",
-                "`": "백틱(`)",
-              };
-
               if (value.match(/[,"'`]/)) {
                 const invalidChar = /[,"']/.exec(value);
 
                 if (invalidChar !== null) {
-                  return `${invalidPwdChar[invalidChar[0]]}을 포함할 수 없습니다.`;
+                  return `${INVALID_PWD_CHAR_LIST[invalidChar[0]]}을 포함할 수 없습니다.`;
                 }
               } else return true;
             },

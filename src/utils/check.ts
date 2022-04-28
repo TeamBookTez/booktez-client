@@ -32,4 +32,10 @@ export function checkPwdType(value: string) {
 
 export const EMAIL_REGEX =
   /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+export const INVALID_PWD_CHAR_LIST: { [key: string]: string } = {
+  ",": "반점(,)",
+  '"': '쌍따옴표(")',
+  "'": "작은 따옴표(')",
+  "`": "백틱(`)",
+};
