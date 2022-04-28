@@ -59,7 +59,9 @@ export default function FirstStep() {
     goNextStep();
   };
 
-  const isSubmitActive = !isEmailEmpty && !isEmailError && isAgreeCondition;
+  const isSubmitDisabled = isEmailEmpty || isEmailError || !isAgreeCondition;
+
+  console.log(isEmailEmpty, isEmailError, isAgreeCondition);
 
   return (
     <motion.div
@@ -96,7 +98,7 @@ export default function FirstStep() {
             에 동의합니다.
           </p>
         </StAgreeConditionBox>
-        <StNextStepBtn disabled={isSubmitActive} active={isSubmitActive} onClick={goNextStep}>
+        <StNextStepBtn disabled={isSubmitDisabled} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
@@ -132,7 +134,7 @@ const StAConditionLink = styled.a`
   text-decoration: underline;
 `;
 
-const StNextStepBtn = styled(Button)<{ active: boolean }>`
+const StNextStepBtn = styled(Button)<{ disabled: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
@@ -142,14 +144,13 @@ const StNextStepBtn = styled(Button)<{ active: boolean }>`
 
   ${({ theme }) => theme.fonts.button}
 
-  ${({ active }) =>
-    active
-      ? ""
-      : css`
-          background-color: ${({ theme }) => theme.colors.white400}; // inactive
-          color: ${({ theme }) => theme.colors.gray300}; // inactive
-          &:hover {
-            cursor: default;
-          }
-        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white400}; // inactive
+      color: ${({ theme }) => theme.colors.gray300}; // inactive
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;
