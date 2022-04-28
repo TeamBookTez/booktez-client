@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
-interface LabelQuestionProps {
-  bgColor: string;
-}
+export const StQuestion = styled.h3`
+  display: flex;
+  align-items: center;
 
-export default function LabelQuestion(props: LabelQuestionProps) {
-  const { bgColor } = props;
+  margin-top: 2.3rem;
 
-  return <StLabelQuestion bgcolor={bgColor}>질문</StLabelQuestion>;
-}
+  ${({ theme }) => theme.fonts.body2};
+  line-height: 2.6rem;
+  color: ${({ theme }) => theme.colors.gray200};
+`;
 
-const StLabelQuestion = styled.mark<{ bgcolor: string }>`
+export const StLabelQuestion = styled.mark<{ bgcolor: string }>`
   display: inline-flex;
   justify-content: center;
   align-items: center;

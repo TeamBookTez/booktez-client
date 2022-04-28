@@ -7,9 +7,9 @@ import theme from "../../styles/theme";
 import { isLoginState } from "../../utils/atom";
 import { stepUpContentArray } from "../../utils/exampleData";
 import { StepUp, StepUpLayout } from "../bookNote";
-import { StStepModalWrapper } from "../bookNote/preNote/PreNoteForm";
+import LabelQuestion from "../common/LabelQuestion";
 import { Button } from "../common/styled/Button";
-import LabelQuestion from "../common/styled/LabelQuestion";
+import { StStepModalWrapper } from "../common/styled/StepModalWrapper";
 
 interface ExamplePreNoteLabelingProps {
   answerOne: string | undefined;

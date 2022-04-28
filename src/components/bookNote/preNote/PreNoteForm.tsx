@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { stepUpContentArray } from "../../../utils/exampleData";
-import { StModalWrapper } from "../../addBook/ModalWrapper";
+import { StStepModalWrapper } from "../../common/styled/StepModalWrapper";
 import { ExButton, StepUp, StepUpLayout } from "..";
 
 interface PreNoteFormProps {
@@ -72,13 +72,4 @@ const StH3 = styled.h3`
 
 const StArticle = styled.article`
   padding: 2.6rem 1.4rem;
-`;
-
-export const StStepModalWrapper = styled(StModalWrapper)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-
-  background-color: rgba(55, 56, 62, 0.8);
 `;

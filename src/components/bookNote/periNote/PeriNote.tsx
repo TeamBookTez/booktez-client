@@ -10,8 +10,8 @@ import { deepCopyTree, getNodeByPath } from "../../../utils/tree";
 import { useFetchNote } from "../../../utils/useHooks";
 import { Loading } from "../../common";
 import { Button } from "../../common/styled/Button";
+import { StStepModalWrapper } from "../../common/styled/StepModalWrapper";
 import { Complete, ExButton, PriorQuestion, StepUp, StepUpLayout } from "..";
-import { StStepModalWrapper } from "../preNote/PreNoteForm";
 
 export interface BookData {
   author: string[];
@@ -147,12 +147,37 @@ export default function PeriNote() {
       miniMenu.classList.remove("open");
     }
   }
+  const getFormData = () => {
+    const obj = getValues();
 
-  const submitPeriNote = async () => {
-    patchBookNote(userToken, `/review/${reviewId}/peri`, { answerThree: data.answerThree, reviewSt: 4 }).then((res) =>
-      setBookData(res.bookData),
-    );
-    setOpenSubmitModal(true);
+    const keys = Object.keys(obj);
+    const newRoot = deepCopyTree(data.answerThree);
+
+    keys.map((key) => {
+      const value = obj[key];
+      const pathKey = key.split(",").map((k) => parseInt(k));
+
+      const current = getNodeByPath(newRoot, pathKey);
+
+      current.content = value;
+    });
+
+    // data state에도 저장
+    setData((current) => ({ ...current, answerThree: newRoot }));
+
+    return newRoot;
+  };
+
+  const submitPeriNote = () => {
+    const dataToPatch = getFormData();
+
+    patchBookNote(userToken, `/review/${reviewId}/peri`, {
+      answerThree: dataToPatch,
+      reviewSt: 4,
+    }).then((res) => {
+      setBookData(res.bookData);
+      setOpenSubmitModal(true);
+    });
   };
 
   useEffect(() => {
@@ -165,41 +190,32 @@ export default function PeriNote() {
     };
   }, []);
 
-  // 이거 마쟈..?
   useEffect(() => {
-    // 질문이 모두 채워져 있으면 addQuestion의 isPrevented를 false
-    if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
-      // 질문이 모두 채워진 상태에서 답변이 채워지면 모두 false
-      if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
-        setIsPrevented({ addQuestion: false, isCompleted: false });
-      } else {
-        // 답변만 비워있으면 isCompleted만 true
-        setIsPrevented({ addQuestion: false, isCompleted: true });
-      }
+    // 모든 질문 리스트가 지워졌을 경우에는 질문 리스트 추가만 가능하게 하고, 작성완료는 불가하게 함
+    if (!data.answerThree.children.length) {
+      setIsPrevented({ addQuestion: false, isCompleted: true });
     } else {
-      // 질문이 비워져있으면 둘 다 true;
-      setIsPrevented({ addQuestion: true, isCompleted: true });
+      // 질문이 모두 채워져 있으면 addQuestion의 isPrevented를 false
+      if (data.answerThree.children.every((nodeList) => nodeList.content !== "")) {
+        // 질문이 모두 채워진 상태에서 답변이 채워지면 모두 false
+        if (data.answerThree.children.every((nodeList) => nodeList.children.every((node) => node.content !== ""))) {
+          setIsPrevented({ addQuestion: false, isCompleted: false });
+        } else {
+          // 답변만 비워있으면 isCompleted만 true
+          setIsPrevented({ addQuestion: false, isCompleted: true });
+        }
+      } else {
+        // 질문이 비워져있으면 둘 다 true;
+        setIsPrevented({ addQuestion: true, isCompleted: true });
+      }
     }
   }, [data.answerThree]);
 
   useEffect(() => {
     if (navIndex && isSave) {
-      const obj = getValues();
-      const keys = Object.keys(obj);
-      const newRoot = deepCopyTree(data.answerThree);
+      const dataToPatch = getFormData();
 
-      keys.map((key) => {
-        const value = obj[key];
-        const pathKey = key.split(",").map((k) => parseInt(k));
-
-        const current = getNodeByPath(newRoot, pathKey);
-
-        current.content = value;
-      });
-
-      setTimeout(() => {
-        saveReview({ ...data, answerThree: newRoot });
-      }, 0);
+      saveReview({ ...data, answerThree: dataToPatch });
     }
   }, [isSave, navIndex]);
 

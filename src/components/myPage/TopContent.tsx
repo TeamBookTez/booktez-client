@@ -5,8 +5,8 @@ import { useSWRConfig } from "swr";
 
 import { UserInfo } from "../../pages/MyPage";
 import { isLoginState } from "../../utils/atom";
-import { StLoginLink } from "../common/MainHeader";
 import { Button } from "../common/styled/Button";
+import { StLoginLink } from "../common/styled/Link";
 import { TopBanner } from ".";
 
 interface TopContentProps {

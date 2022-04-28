@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 import { PeriNoteTreeNode } from "../../utils/dataType";
 import { labelColorList } from "../bookNote/periNote/PeriNoteInput";
-import LabelQuestion from "../common/styled/LabelQuestion";
-import { StIcToggle, StQuestion } from "./ExamplePeriNote";
+import LabelQuestion from "../common/LabelQuestion";
+import { StQuestion } from "../common/styled/Question";
+import { StIcToggle } from "../common/styled/Toggle";
 
 interface ExamplePeriQuestionProps {
   node: PeriNoteTreeNode;

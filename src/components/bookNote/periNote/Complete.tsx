@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
-import { StModalWrapper } from "../../addBook/ModalWrapper";
+import { StBookModalWrapper } from "../../common/styled/BookModalWrapper";
 import { Button } from "../../common/styled/Button";
 import { BookData } from "./PeriNote";
 
@@ -56,7 +56,7 @@ const fadein = keyframes`
     }
 `;
 
-export const StCompleteWrapper = styled(StModalWrapper)`
+const StCompleteWrapper = styled(StBookModalWrapper)`
   z-index: 20;
 `;
 

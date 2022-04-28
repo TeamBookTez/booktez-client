@@ -7,6 +7,7 @@ import { IcBin } from "../../../assets/icons";
 import { BookcaseInfo } from "../../../pages/Bookcase";
 import { isLoginState, navigatingBookInfoState } from "../../../utils/atom";
 import { PopUpDelete } from "../../common";
+import { StBookCardImg } from "../../common/styled/Img";
 
 interface BookCardProps {
   bookcaseInfo: BookcaseInfo;
@@ -62,7 +63,7 @@ export default function BookCard(props: BookCardProps) {
     <StCardWrapper>
       <StBookCard onClick={moveBookNoteHandler}>
         <StImgWrapper>
-          <StImg src={thumbnail} alt={`도서 ${title}의 이미지`} />
+          <StBookCardImg src={thumbnail} alt={`도서 ${title}의 이미지`} />
         </StImgWrapper>
         <StTextWrapper>
           <StTitleWrapper>
@@ -125,16 +126,6 @@ const StImgWrapper = styled.div`
   border-radius: 1.6rem;
 
   overflow: hidden;
-`;
-
-export const StImg = styled.img`
-  width: 100%;
-  height: 100%;
-
-  /* 뷰 이슈로 곡률 완화 */
-  border-radius: 1.4rem;
-
-  object-fit: cover;
 `;
 
 const StTextWrapper = styled.div`

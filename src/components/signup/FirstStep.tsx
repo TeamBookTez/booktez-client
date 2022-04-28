@@ -3,19 +3,22 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { IcSignupChecking } from "../../assets/icons";
 import { ImgSignupFirst } from "../../assets/images";
-import { StHeading2, StImage, StParagraph, UserData } from "../../pages/Signup";
+import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
 import { getData } from "../../utils/lib/api";
 import { AlertLabel, InputEmail } from "../common";
 import { Button } from "../common/styled/Button";
 import { LabelHidden } from "../common/styled/LabelHidden";
+import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../common/styled/Signup";
 
 export default function FirstStep() {
   const [userData, setUserData] = useOutletContext<[UserData, React.Dispatch<React.SetStateAction<UserData>>]>();
   const [email, setEmail] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [isAgreeCondition, setIsAgreeCondition] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
@@ -65,9 +68,9 @@ export default function FirstStep() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
-      <StImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
-      <StHeading2>나만의 서재를 만드는 중이에요!</StHeading2>
-      <StParagraph>당신의 이메일을 입력해 주세요.</StParagraph>
+      <StSignupImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
+      <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
+      <StSignupParagraph>당신의 이메일을 입력해 주세요.</StSignupParagraph>
       <StForm onSubmit={handleSubmit}>
         <LabelHidden htmlFor="signupEmail">이메일</LabelHidden>
         <InputEmail
@@ -80,7 +83,11 @@ export default function FirstStep() {
           handleOnChange={handleOnChange}
         />
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
-        <StNextStepBtn active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
+        <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
+          <StIcSignupChecking isagree={isAgreeCondition} />
+          <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
+        </StAgreeConditionBox>
+        <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
@@ -94,11 +101,29 @@ const StForm = styled.form`
   align-items: center;
 `;
 
+const StAgreeConditionBox = styled.label`
+  width: 100%;
+  height: 2.1rem;
+
+  display: flex;
+  align-items: center;
+
+  margin: 1.7rem 0 0 0;
+
+  ${({ theme }) => theme.fonts.body6}
+`;
+
+const StIcSignupChecking = styled(IcSignupChecking)<{ isagree: boolean }>`
+  margin-right: 0.2rem;
+
+  fill: ${({ theme, isagree }) => (isagree ? theme.colors.orange100 : theme.colors.white400)};
+`;
+
 const StNextStepBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
-  margin-top: 5rem;
+  margin-top: 3.9rem;
 
   border-radius: 1rem;
 

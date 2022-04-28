@@ -4,8 +4,10 @@ import styled, { css } from "styled-components";
 
 import theme from "../../../styles/theme";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { StAddAnswerButton, StMenuBtn } from "../../common/styled/Button";
+import { StMoreIcon } from "../../common/styled/Icon";
+import { StMenuWrapper } from "../../common/styled/MenuWrapper";
 import { FormController } from "./PeriNote";
-import { StAddAnswerButton, StMenu, StMenuBtn, StMoreIcon } from "./PriorQuestion";
 
 interface PeriNoteInputProps {
   path: number[];
@@ -76,7 +78,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             </StAddAnswerButton>
           )}
           <StMore className="icn_more" />
-          <StMenu>
+          <StMenuWrapper>
             {!isQuestion && (
               <StMenuBtn type="button" onClick={() => onAddChild(path, index, !isQuestion)}>
                 꼬리질문 추가
@@ -85,7 +87,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
             <StMenuBtn type="button" onClick={() => onDeleteChild(path)}>
               삭제
             </StMenuBtn>
-          </StMenu>
+          </StMenuWrapper>
         </StInputWrapper>
       </StFieldset>
       <StFieldWrapper isanswer={!isQuestion}>
