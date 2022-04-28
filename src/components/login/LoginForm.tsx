@@ -77,11 +77,25 @@ export default function LoginForm() {
       <StInputPwdWrapper>
         <StInputPwd
           {...register("password", {
-            required: { value: true, message: "비밀번호를 입력해주세요." },
-            pattern: {
-              value: PASSWORD_REGEX,
-              // 이 부분 다시 확인 필요
-              message: "비밀번호 형식이 잘못되었습니다.",
+            required: {
+              value: true,
+              message: "비밀번호를 입력해주세요.",
+            },
+            validate: (value: string) => {
+              const invalidPwdChar: FormData = {
+                ",": "반점(,)",
+                '"': '쌍따옴표(")',
+                "'": "작은 따옴표(')",
+                "`": "백틱(`)",
+              };
+
+              if (value.match(/[,"'`]/)) {
+                const invalidChar = /[,"']/.exec(value);
+
+                if (invalidChar !== null) {
+                  return `${invalidPwdChar[invalidChar[0]]}을 포함할 수 없습니다.`;
+                }
+              } else return true;
             },
             minLength: {
               value: 8,
