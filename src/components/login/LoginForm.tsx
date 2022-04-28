@@ -9,6 +9,7 @@ import { postData } from "../../utils/lib/api";
 import { FormData } from "../bookNote/periNote/PeriNote";
 import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
+import { PwdSightIcon } from ".";
 
 interface ErrorResponse {
   status: number;
@@ -27,8 +28,6 @@ export default function LoginForm() {
   } = useForm<FormData>();
 
   const submitForm = async (loginFormData: FormData) => {
-    console.log(loginFormData, errors);
-
     try {
       const { data: data } = await postData("/auth/login", loginFormData);
 
@@ -53,8 +52,8 @@ export default function LoginForm() {
     }
   };
 
-  const toggleSightPwd = () => {
-    setIsPwdSight((isPwdSight) => !isPwdSight);
+  const toggleSightPwd = (isSight: boolean) => {
+    setIsPwdSight(isSight);
   };
 
   return (
@@ -73,26 +72,29 @@ export default function LoginForm() {
       {errors.email?.message && <AlertLabel>{errors.email.message}</AlertLabel>}
 
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
-      <StInputPwd
-        {...register("password", {
-          required: { value: true, message: "비밀번호를 입력해주세요." },
-          pattern: {
-            value: PASSWORD_REGEX,
-            // 이 부분 다시 확인 필요
-            message: "비밀번호 형식이 잘못되었습니다.",
-          },
-          minLength: {
-            value: 8,
-            message: "비밀번호는 8자 이상 입력해주시기 바랍니다.",
-          },
-          maxLength: {
-            value: 64,
-            message: "비밀번호는 64자 이하 입력해주시기 바랍니다.",
-          },
-        })}
-        placeholder="비밀번호를 입력해 주세요"
-        type="password"
-      />
+      <StInputPwdWrapper>
+        <StInputPwd
+          {...register("password", {
+            required: { value: true, message: "비밀번호를 입력해주세요." },
+            pattern: {
+              value: PASSWORD_REGEX,
+              // 이 부분 다시 확인 필요
+              message: "비밀번호 형식이 잘못되었습니다.",
+            },
+            minLength: {
+              value: 8,
+              message: "비밀번호는 8자 이상 입력해주시기 바랍니다.",
+            },
+            maxLength: {
+              value: 64,
+              message: "비밀번호는 64자 이하 입력해주시기 바랍니다.",
+            },
+          })}
+          placeholder="비밀번호를 입력해 주세요"
+          type={isPwdSight ? "text" : "password"}
+        />
+        <PwdSightIcon isPwdSight={isPwdSight} onToggleSightPwd={toggleSightPwd} />
+      </StInputPwdWrapper>
       {errors.password?.message && <AlertLabel>{errors.password.message}</AlertLabel>}
 
       <StLoginBtn active={true} type="submit">
@@ -157,6 +159,10 @@ const StInputEmail = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray400};
   }
+`;
+
+const StInputPwdWrapper = styled.div`
+  position: relative;
 `;
 
 const StInputPwd = styled.input`
