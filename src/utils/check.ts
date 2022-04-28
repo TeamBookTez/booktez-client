@@ -33,7 +33,6 @@ export function checkPwdType(value: string) {
 const EMAIL_REGEX =
   /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
-<<<<<<< HEAD
 const INVALID_PWD_CHAR_LIST: { [key: string]: string } = {
   ",": "반점(,)",
   '"': '쌍따옴표(")',
@@ -100,11 +99,3 @@ export const errorPatterns: { [key: string]: ErrorCondition } = {
   nickname: nicknameErrorPatterns,
   password: passwordErrorPatterns,
 };
-=======
-export const INVALID_PWD_CHAR_LIST: { [key: string]: string } = {
-  ",": "반점(,)",
-  '"': '쌍따옴표(")',
-  "'": "작은 따옴표(')",
-  "`": "백틱(`)",
-};
->>>>>>> c3e026f (refactor: regex 파일 분리)
