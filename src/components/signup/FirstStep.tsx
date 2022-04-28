@@ -82,7 +82,7 @@ export default function FirstStep() {
           isError={isEmailError}
           handleOnChange={handleOnChange}
         />
-        <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
+        {/* <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel> */}
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
           <StIcSignupChecking isagree={isAgreeCondition} />
           <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
