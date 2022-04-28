@@ -12,14 +12,16 @@ import { Button } from "../common/styled/Button";
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [pwd, setPwd] = useState<string>("");
-  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
-  const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
-  const [isEmailError, setIsEmailError] = useState<boolean>(false);
-  const [isPwdError, setIsPwdError] = useState<boolean>(false);
+
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const nav = useNavigate();
 
-  const { getValues, register, formState: { errors } } = useForm<FormData>();
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
   const postLogin = async () => {
     // if (isEmailEmpty || isPwdEmpty) return;
@@ -45,34 +47,18 @@ export default function LoginForm() {
       if (axios.isAxiosError(err)) {
         const status = err.response?.data.status;
 
-        if (status === 404) {
-          setIsEmailError(true);
-        } else {
-          setIsPwdError(true);
-        }
+        // if (status === 404) {
+        //   setIsEmailError(true);
+        // } else {
+        //   setIsPwdError(true);
+        // }
       }
     }
   };
 
-  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-
-    setIsEmailError(false);
-    setIsEmailEmpty(targetValue === "");
-    setEmail(targetValue);
-  };
-
-  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-
-    setIsPwdError(false);
-    setIsPwdEmpty(targetValue === "");
-    setPwd(targetValue);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    postLogin();
+  const submitForm = (data: FormData) => {
+    console.log(data, errors);
+    // postLogin();
   };
 
   const toggleSightPwd = () => {
@@ -80,21 +66,52 @@ export default function LoginForm() {
   };
 
   return (
-    <StForm onSubmit={handleSubmit}>
-
+    <StForm onSubmit={handleSubmit(submitForm)}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
-      <StInputEmail {...register("email", {
-        required: true,
-        pattern: /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
-      })} placeholder="이메일을 입력해 주세요" />
-      {errors.email && <AlertLabel isError={true}>존재하지 않는 이메일 입니다.</AlertLabel>}
+      <StInputEmail
+        {...register("email", {
+          required: true,
+          pattern: {
+            value:
+              /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+            message: "이메일 형식을 지켜주시기 바랍니다.",
+          },
+        })}
+        placeholder="이메일을 입력해 주세요"
+      />
+      {errors.email?.type === "required" && <AlertLabel isError={true}>이메일을 입력해주세요.</AlertLabel>}
+      {errors.email?.type === "pattern" && errors.email.message && (
+        <AlertLabel isError={true}>{errors.email.message}</AlertLabel>
+      )}
 
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
-      <StInputPwd {...register("password", {
-        required: true,
-        pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      })} placeholder="비밀번호를 입력해 주세요" />
-      {errors.password && <AlertLabel isError={true}>비밀번호가 일치하지 않습니다.</AlertLabel>}
+      <StInputPwd
+        {...register("password", {
+          required: true,
+          pattern: {
+            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            // 이 부분 다시 확인 필요
+            message: "비밀번호 형식이 잘못되었습니다.",
+          },
+          minLength: {
+            value: 8,
+            message: "비밀번호는 8자 이상 입력해주시기 바랍니다.",
+          },
+          maxLength: {
+            value: 64,
+            message: "비밀번호는 64자 이하 입력해주시기 바랍니다.",
+          },
+        })}
+        placeholder="비밀번호를 입력해 주세요"
+      />
+      {/* {errors.password && <AlertLabel isError={true}>비밀번호가 일치하지 않습니다.</AlertLabel>} */}
+      {errors.password?.type === "required" && <AlertLabel isError={true}>비밀번호를 입력해주세요.</AlertLabel>}
+      {errors.password?.type === "minLength" && errors.password.message && (
+        <AlertLabel isError={true}>{errors.password.message}</AlertLabel>
+      )}
+      {errors.password?.type === "pattern" && errors.password.message && (
+        <AlertLabel isError={true}>{errors.password.message}</AlertLabel>
+      )}
 
       <StLoginBtn active={true} type="submit">
         로그인
@@ -120,7 +137,7 @@ const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
 `;
 
-const StLoginBtn = styled(Button) <{ active: boolean }>`
+const StLoginBtn = styled(Button)<{ active: boolean }>`
   width: 46.4rem;
   height: 5.6rem;
 
