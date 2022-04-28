@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
@@ -40,6 +40,18 @@ export default function BookList(props: BookListProps) {
       }
     });
   };
+
+  useEffect(() => {
+    if (alertToastOpen) {
+      const saveToast = setTimeout(() => {
+        setAlertToastOpen(false);
+      }, 2000);
+
+      return () => {
+        clearTimeout(saveToast);
+      };
+    }
+  }, [alertToastOpen]);
 
   if (books.length === 0) return <BookEmpty />;
 
