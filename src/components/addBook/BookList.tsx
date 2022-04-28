@@ -22,6 +22,10 @@ export default function BookList(props: BookListProps) {
     setAlertToastOpen(false);
   };
 
+  const resetSelectedBookIsbn = () => {
+    setSelectedBookIsbn("");
+  };
+
   const handleClickBookCard = (isbn: string) => {
     checkIsBookExist(isbn).then((result) => {
       if (result.isError) {
@@ -47,6 +51,7 @@ export default function BookList(props: BookListProps) {
           book={book}
           selectedBookIsbn={selectedBookIsbn}
           onClickBookCard={handleClickBookCard}
+          onResetSelectedBookIsbn={resetSelectedBookIsbn}
         />
       ))}
       {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} /> : null}

@@ -16,10 +16,11 @@ interface BookInfoWrapperProps {
   book: BookInfo;
   selectedBookIsbn: string;
   onClickBookCard: (isbn: string) => void;
+  onResetSelectedBookIsbn: () => void;
 }
 
 export default function BookInfoWrapper(props: BookInfoWrapperProps) {
-  const { book, selectedBookIsbn, onClickBookCard } = props;
+  const { book, selectedBookIsbn, onClickBookCard, onResetSelectedBookIsbn } = props;
   const { isbn, thumbnail, title, authors, datetime, contents } = book;
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -39,8 +40,9 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
   };
 
   useEffect(() => {
-    if (selectedBookIsbn === isbn) {
+    if (selectedBookIsbn !== "" && selectedBookIsbn === isbn) {
       toggleModal();
+      onResetSelectedBookIsbn();
     }
   }, [selectedBookIsbn]);
 
