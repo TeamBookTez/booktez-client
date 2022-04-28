@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { EMAIL_REGEX, PASSWORD_REGEX } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
 import { FormData } from "../bookNote/periNote/PeriNote";
 import { AlertLabel, InputEmail, InputPwd } from "../common";
@@ -72,8 +73,7 @@ export default function LoginForm() {
         {...register("email", {
           required: true,
           pattern: {
-            value:
-              /^(([^<>()\].,;:\s@"]+(\.[^<>()\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+            value: EMAIL_REGEX,
             message: "이메일 형식을 지켜주시기 바랍니다.",
           },
         })}
@@ -89,7 +89,7 @@ export default function LoginForm() {
         {...register("password", {
           required: true,
           pattern: {
-            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            value: PASSWORD_REGEX,
             // 이 부분 다시 확인 필요
             message: "비밀번호 형식이 잘못되었습니다.",
           },
