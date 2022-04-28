@@ -10,6 +10,11 @@ import { FormData } from "../bookNote/periNote/PeriNote";
 import { AlertLabel, InputEmail, InputPwd } from "../common";
 import { Button } from "../common/styled/Button";
 
+interface ErrorResponse {
+  status: number;
+  message: string;
+}
+
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [pwd, setPwd] = useState<string>("");
@@ -18,27 +23,19 @@ export default function LoginForm() {
   const nav = useNavigate();
 
   const {
-    getValues,
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<FormData>();
 
-  const postLogin = async () => {
-    // if (isEmailEmpty || isPwdEmpty) return;
-
-    const loginBody = {
-      email,
-      password: pwd,
-    };
-
+  const postLogin = async (loginFormData: FormData) => {
     try {
-      const res = await postData("/auth/login", loginBody);
-      const resData = res.data.data;
+      const { data: data } = await postData("/auth/login", loginFormData);
 
-      localStorage.setItem("booktez-token", resData.token);
-      localStorage.setItem("booktez-nickname", resData.nickname);
-      localStorage.setItem("booktez-email", resData.email);
+      localStorage.setItem("booktez-token", data.token);
+      localStorage.setItem("booktez-nickname", data.nickname);
+      localStorage.setItem("booktez-email", data.email);
 
       nav("/main");
       // 메인에서 로그인 온 경우에는 메인으로,
@@ -46,7 +43,8 @@ export default function LoginForm() {
       // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const status = err.response?.data.status;
+        console.log(err.response);
+        // const status = err.response?.data.status;
 
         // if (status === 404) {
         //   setIsEmailError(true);
@@ -57,9 +55,31 @@ export default function LoginForm() {
     }
   };
 
-  const submitForm = (data: FormData) => {
-    console.log(data, errors);
-    // postLogin();
+  const submitForm = async (loginFormData: FormData) => {
+    console.log(loginFormData, errors);
+
+    try {
+      const { data: data } = await postData("/auth/login", loginFormData);
+
+      localStorage.setItem("booktez-token", data.token);
+      localStorage.setItem("booktez-nickname", data.nickname);
+      localStorage.setItem("booktez-email", data.email);
+
+      nav("/main");
+      // 메인에서 로그인 온 경우에는 메인으로,
+
+      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const errorResponse: ErrorResponse = err.response?.data;
+        const errorField = errorResponse.status === 400 ? "password" : errorResponse.status === 404 ? "email" : "";
+
+        setError(errorField, {
+          type: "server",
+          message: errorResponse.message,
+        });
+      }
+    }
   };
 
   const toggleSightPwd = () => {
@@ -81,6 +101,9 @@ export default function LoginForm() {
       />
       {errors.email?.type === "required" && <AlertLabel isError={true}>이메일을 입력해주세요.</AlertLabel>}
       {errors.email?.type === "pattern" && errors.email.message && (
+        <AlertLabel isError={true}>{errors.email.message}</AlertLabel>
+      )}
+      {errors.email?.type === "server" && errors.email.message && (
         <AlertLabel isError={true}>{errors.email.message}</AlertLabel>
       )}
 
@@ -110,6 +133,9 @@ export default function LoginForm() {
         <AlertLabel isError={true}>{errors.password.message}</AlertLabel>
       )}
       {errors.password?.type === "pattern" && errors.password.message && (
+        <AlertLabel isError={true}>{errors.password.message}</AlertLabel>
+      )}
+      {errors.password?.type === "server" && errors.password.message && (
         <AlertLabel isError={true}>{errors.password.message}</AlertLabel>
       )}
 
