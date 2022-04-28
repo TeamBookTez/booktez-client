@@ -26,7 +26,7 @@ export default function LoginForm() {
     setError,
     formState: { errors, isValid },
   } = useForm<FormData>({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   const submitForm = async (loginFormData: FormData) => {
