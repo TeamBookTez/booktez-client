@@ -24,8 +24,10 @@ export default function LoginForm() {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
-  } = useForm<FormData>();
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    mode: "onChange",
+  });
 
   const submitForm = async (loginFormData: FormData) => {
     try {
@@ -97,7 +99,7 @@ export default function LoginForm() {
       </StInputPwdWrapper>
       {errors.password?.message && <AlertLabel>{errors.password.message}</AlertLabel>}
 
-      <StLoginBtn active={true} type="submit">
+      <StLoginBtn disabled={!isValid} type="submit">
         로그인
       </StLoginBtn>
     </StForm>
@@ -121,7 +123,7 @@ const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
 `;
 
-const StLoginBtn = styled(Button)<{ active: boolean }>`
+const StLoginBtn = styled(Button)<{ disabled: boolean }>`
   width: 46.4rem;
   height: 5.6rem;
 
@@ -131,16 +133,16 @@ const StLoginBtn = styled(Button)<{ active: boolean }>`
 
   ${({ theme }) => theme.fonts.button}
 
-  ${({ active }) =>
-    active
-      ? ""
-      : css`
-          background-color: ${({ theme }) => theme.colors.white400}; // inactive
-          color: ${({ theme }) => theme.colors.gray300}; // inactive
-          &:hover {
-            cursor: default;
-          }
-        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white400}; // inactive
+      color: ${({ theme }) => theme.colors.gray300}; // inactive
+
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;
 
 const StInputEmail = styled.input`
