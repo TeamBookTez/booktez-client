@@ -61,8 +61,6 @@ export default function FirstStep() {
 
   const isSubmitDisabled = isEmailEmpty || isEmailError || !isAgreeCondition;
 
-  console.log(isEmailEmpty, isEmailError, isAgreeCondition);
-
   return (
     <motion.div
       key="firstSignup"
