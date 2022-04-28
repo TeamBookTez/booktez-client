@@ -84,7 +84,7 @@ export default function FirstStep() {
           isError={isEmailError}
           handleOnChange={handleOnChange}
         />
-        <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
+        {/* <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel> */}
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
           <StIcSignupChecking isagree={isAgreeCondition} />
           <p>
