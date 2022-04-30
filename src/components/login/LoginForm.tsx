@@ -121,7 +121,7 @@ const StLoginBtn = styled(Button)<{ disabled: boolean }>`
     `}
 `;
 
-const StInputEmail = styled.input`
+export const StInputEmail = styled.input`
   width: 100%;
   height: 5.4rem;
   padding-left: 2rem;
