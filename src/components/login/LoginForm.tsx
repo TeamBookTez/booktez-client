@@ -62,7 +62,7 @@ export default function LoginForm() {
     <StForm onSubmit={handleSubmit(submitForm)}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
       <StInputEmail {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
-      {errors.email?.message && <AlertLabel>{errors.email.message}</AlertLabel>}
+      {errors.email?.message && <AlertLabel message={errors.email.message} />}
 
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <StInputPwdWrapper>
@@ -73,7 +73,7 @@ export default function LoginForm() {
         />
         <PwdSightIcon isPwdSight={isPwdSight} onToggleSightPwd={toggleSightPwd} />
       </StInputPwdWrapper>
-      {errors.password?.message && <AlertLabel>{errors.password.message}</AlertLabel>}
+      {errors.password?.message && <AlertLabel message={errors.password.message} />}
 
       <StLoginBtn disabled={!isValid} type="submit">
         로그인
