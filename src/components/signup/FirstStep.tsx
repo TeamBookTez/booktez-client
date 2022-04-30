@@ -81,7 +81,7 @@ export default function FirstStep() {
       <StForm onSubmit={handleSubmit(submitForm)}>
         <LabelHidden htmlFor="signupEmail">이메일</LabelHidden>
         <StInputEmail {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
-        {errors.email?.message && <AlertLabel>{errors.email.message}</AlertLabel>}
+        {errors.email?.message && <AlertLabel message={errors.email.message} />}
 
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
           <StIcSignupChecking isagree={isAgreeCondition} />
