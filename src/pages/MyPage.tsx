@@ -15,6 +15,9 @@ export interface UserInfo {
 }
 
 export default function MyPage() {
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
+
   const setIsLogin = useSetRecoilState(isLoginState);
   const { isLogin, isLoginLoading } = useCheckLoginState();
 
@@ -24,11 +27,7 @@ export default function MyPage() {
     nickname: "",
     reviewCount: 0,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
-
-  const _token = localStorage.getItem("booktez-token");
-  const userToken = _token ? _token : "";
+  const [isInfoLoading, setIsInfoLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setIsLogin(isLogin);
@@ -36,23 +35,22 @@ export default function MyPage() {
 
   useEffect(() => {
     getInfo("/user/myInfo", userToken);
-  }, [tempImg]);
+  }, []);
 
   const getInfo = async (key: string, token: string) => {
-    if (token) {
-      try {
-        const { data } = await getData(key, token);
+    try {
+      const { data } = await getData(key, token);
 
-        if (data.success) {
-          setUserInfo(data.data);
-        } else {
-          setIsLogin(false);
-        }
-      } catch (err) {
+      if (data.success) {
+        setUserInfo(data.data);
+      } else {
         setIsLogin(false);
       }
+    } catch (err) {
+      setIsLogin(false);
+    } finally {
+      setIsInfoLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,14 +65,13 @@ export default function MyPage() {
     const { data } = await patchData(userToken, "/user/img", formData);
 
     if (data.success) {
-      setTempImg(data.img);
-      setUserInfo((current) => ({ ...current, img: data.img }));
+      getInfo("/user/myInfo", userToken);
     }
   };
 
   return (
     <>
-      {isLoading && isLoginLoading ? (
+      {isInfoLoading && isLoginLoading ? (
         <Loading />
       ) : (
         <>
