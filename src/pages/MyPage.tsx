@@ -15,6 +15,9 @@ export interface UserInfo {
 }
 
 export default function MyPage() {
+  const setIsLogin = useSetRecoilState(isLoginState);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
+
   const [userInfo, setUserInfo] = useState<UserInfo>({
     email: "",
     img: "",
@@ -23,27 +26,17 @@ export default function MyPage() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
-  const setIsLogin = useSetRecoilState(isLoginState);
-  const { isLogin, isLoginLoading } = useCheckLoginState();
 
   const _token = localStorage.getItem("booktez-token");
   const userToken = _token ? _token : "";
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   useEffect(() => {
     getInfo("/user/myInfo", userToken);
   }, [tempImg]);
-
-  const handleLogout = () => {
-    setIsLogin(false);
-  };
 
   const getInfo = async (key: string, token: string) => {
     if (token) {
@@ -86,7 +79,7 @@ export default function MyPage() {
       ) : (
         <>
           <MainHeader>마이페이지</MainHeader>
-          <UserContent userInfo={userInfo} onImageChange={handleImageChange} onLogout={handleLogout} />
+          <UserContent userInfo={userInfo} onImageChange={handleImageChange} />
           <ServiceContent userInfo={userInfo}>
             <WithdrawContent />
           </ServiceContent>

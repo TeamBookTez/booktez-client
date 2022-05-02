@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { useSWRConfig } from "swr";
 
@@ -12,14 +12,13 @@ import { TopBanner } from ".";
 interface UserContentProps {
   userInfo: UserInfo;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onLogout: () => void;
 }
 
 export default function UserContent(props: UserContentProps) {
   const navigate = useNavigate();
-  const { userInfo, onImageChange, onLogout } = props;
+  const { userInfo, onImageChange } = props;
 
-  const isLogin = useRecoilValue(isLoginState);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const { mutate } = useSWRConfig();
 
   const handleLogout = () => {
@@ -27,7 +26,7 @@ export default function UserContent(props: UserContentProps) {
     localStorage.removeItem("booktez-nickname");
     localStorage.removeItem("booktez-email");
     mutate("/book");
-    onLogout();
+    setIsLogin(false);
     navigate("/main");
   };
 
