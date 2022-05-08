@@ -2,18 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import { IcSignupChecking } from "../assets/icons";
 import { ImgSignupFirst } from "../assets/images";
 import { FormData } from "../components/bookNote/periNote/PeriNote";
-import { AlertLabel, Error404, NavHeader } from "../components/common";
-import { Button } from "../components/common/styled/Button";
-import { LabelHidden } from "../components/common/styled/LabelHidden";
+import { Error404, NavHeader } from "../components/common";
 import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../components/common/styled/Signup";
-import { StInputEmail } from "../components/login/LoginForm";
+import { SignupForm } from "../components/signup";
 import theme from "../styles/theme";
-import { errorPatterns } from "../utils/check";
 import { getData } from "../utils/lib/api";
 
 export interface UserData {
@@ -41,8 +37,9 @@ export default function Signup() {
     register,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<UserData>({
     mode: "onSubmit",
   });
 
@@ -110,7 +107,17 @@ export default function Signup() {
 
         return "submit";
       });
+
+      setValue(formDataKeyIndex, "");
     }
+  };
+
+  const handleSetIsFilled = (filled: boolean) => {
+    setIsFilled(filled);
+  };
+
+  const handleToggleIsAgreeCondition = () => {
+    setIsAgreeCondition(!isAgreeCondition);
   };
 
   return (
@@ -123,35 +130,17 @@ export default function Signup() {
               <StSignupImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
               <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
               <StSignupParagraph>당신의 {formDataKeyData[formDataKeyIndex]}을 입력해 주세요.</StSignupParagraph>
-
               <StForm onSubmit={handleSubmit(submitForm)}>
-                <LabelHidden htmlFor={formDataKeyIndex}>{formDataKeyData[formDataKeyIndex]}</LabelHidden>
-                <StInputEmail
-                  {...register(formDataKeyIndex, errorPatterns[formDataKeyIndex])}
-                  placeholder={`${formDataKeyData[formDataKeyIndex]}을 입력해 주세요`}
-                  onChange={(e) => {
-                    if (e.target.value !== "") setIsFilled(true);
-                    else setIsFilled(false);
-                  }}
+                <SignupForm
+                  register={register}
+                  errors={errors}
+                  keyData={formDataKeyData}
+                  keyIndex={formDataKeyIndex}
+                  isAgree={isAgreeCondition}
+                  isFilled={isFilled}
+                  onSetIsFilled={handleSetIsFilled}
+                  onToggleIsAgreeCondition={handleToggleIsAgreeCondition}
                 />
-                {formDataKeyIndex === "password" && (
-                  <StInputEmail
-                    {...register("password2", errorPatterns.password)}
-                    placeholder="비밀번호를 확인해 주세요"
-                  />
-                )}
-                {errors[formDataKeyIndex]?.message && <AlertLabel message={errors[formDataKeyIndex].message} />}
-
-                {formDataKeyIndex === "email" && (
-                  <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
-                    <StIcSignupChecking isagree={isAgreeCondition} />
-                    <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
-                  </StAgreeConditionBox>
-                )}
-
-                <StNextStepBtn disabled={!isAgreeCondition && !isFilled} type="submit">
-                  다음 계단
-                </StNextStepBtn>
               </StForm>
             </StFormWrapper>
           </StMain>
@@ -181,43 +170,4 @@ const StForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const StAgreeConditionBox = styled.label`
-  width: 100%;
-  height: 2.1rem;
-
-  display: flex;
-  align-items: center;
-
-  margin: 1.7rem 0 0 0;
-
-  ${({ theme }) => theme.fonts.body6}
-`;
-
-const StIcSignupChecking = styled(IcSignupChecking)<{ isagree: boolean }>`
-  margin-right: 0.2rem;
-
-  fill: ${({ theme, isagree }) => (isagree ? theme.colors.orange100 : theme.colors.white400)};
-`;
-
-const StNextStepBtn = styled(Button)<{ disabled: boolean }>`
-  width: 46.4rem;
-  height: 5.4rem;
-
-  margin-top: 3.9rem;
-
-  border-radius: 1rem;
-
-  ${({ theme }) => theme.fonts.button}
-
-  ${({ disabled, theme }) =>
-    disabled &&
-    css`
-      background-color: ${theme.colors.white400};
-      color: ${theme.colors.gray300};
-      &:hover {
-        cursor: default;
-      }
-    `}
 `;
