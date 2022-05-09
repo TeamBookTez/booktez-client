@@ -12,7 +12,6 @@ const StWrapper = styled.main`
   position: relative;
   width: calc(100% - 17.5rem); //NAV_WRAPPER_WIDTH
   height: 100vh;
-  overflow-y: scroll;
 
   margin-left: 17.5rem; //NAV_WRAPPER_WIDTH
 
