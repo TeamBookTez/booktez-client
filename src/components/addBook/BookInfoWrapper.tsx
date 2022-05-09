@@ -60,10 +60,14 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
         <StInfoWrapper>
           <InfoTitle>{title}</InfoTitle>
           <InfoLabelWrapper>
-            <InfoLabel>
-              {authors.length > 2 ? `${authors[0]} 외 ${authors.length - 1}명` : `${authors[0]} ${authors[1]}`}
-            </InfoLabel>
-            <DivideLine></DivideLine>
+            {authors.length > 0 && (
+              <>
+                <InfoLabel>
+                  {authors.length > 2 ? `${authors[0]} 외 ${authors.length - 1}명` : `${authors[0]}`}
+                </InfoLabel>
+                <DivideLine />
+              </>
+            )}
             <InfoLabel>
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
             </InfoLabel>
