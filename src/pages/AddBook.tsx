@@ -28,11 +28,7 @@ export default function AddBook() {
   const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   useEffect(() => {
