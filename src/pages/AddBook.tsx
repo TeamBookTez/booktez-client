@@ -76,7 +76,7 @@ export default function AddBook() {
             <MainHeader>책 추가</MainHeader>
             <SearchBar debounceQuery={debounceQuery} onDebounceQuery={handleDebounceQuery} />
           </StickyHeader>
-          {debounceQuery ? <BookList books={books} /> : <AddBookDefault />}
+          {debounceQuery ? <BookList isLogin={isLogin} books={books} /> : <AddBookDefault />}
         </>
       )}
     </>
