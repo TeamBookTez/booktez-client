@@ -59,6 +59,8 @@ export default function FirstStep() {
     goNextStep();
   };
 
+  const isSubmitDisabled = isEmailEmpty || isEmailError || !isAgreeCondition;
+
   return (
     <motion.div
       key="firstSignup"
@@ -85,9 +87,16 @@ export default function FirstStep() {
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
         <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
           <StIcSignupChecking isagree={isAgreeCondition} />
-          <p>개인정보 수집 및 이용 약관에 동의합니다.</p>
+          <p>
+            <StAConditionLink
+              href="https://rose-prepared-583.notion.site/6e6807cf2fff4effbd108057e611d5b9"
+              target="_blank">
+              개인정보 수집 및 이용 약관
+            </StAConditionLink>
+            에 동의합니다.
+          </p>
         </StAgreeConditionBox>
-        <StNextStepBtn active={!isEmailEmpty && !isEmailError && isAgreeCondition} onClick={goNextStep}>
+        <StNextStepBtn disabled={isSubmitDisabled} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
@@ -119,7 +128,11 @@ const StIcSignupChecking = styled(IcSignupChecking)<{ isagree: boolean }>`
   fill: ${({ theme, isagree }) => (isagree ? theme.colors.orange100 : theme.colors.white400)};
 `;
 
-const StNextStepBtn = styled(Button)<{ active: boolean }>`
+const StAConditionLink = styled.a`
+  text-decoration: underline;
+`;
+
+const StNextStepBtn = styled(Button)<{ disabled: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
@@ -129,14 +142,13 @@ const StNextStepBtn = styled(Button)<{ active: boolean }>`
 
   ${({ theme }) => theme.fonts.button}
 
-  ${({ active }) =>
-    active
-      ? ""
-      : css`
-          background-color: ${({ theme }) => theme.colors.white400}; // inactive
-          color: ${({ theme }) => theme.colors.gray300}; // inactive
-          &:hover {
-            cursor: default;
-          }
-        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white400}; // inactive
+      color: ${({ theme }) => theme.colors.gray300}; // inactive
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;
