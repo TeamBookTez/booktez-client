@@ -30,11 +30,7 @@ export default function MyPage() {
   const userToken = _token ? _token : "";
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   useEffect(() => {

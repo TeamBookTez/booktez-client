@@ -27,11 +27,7 @@ export default function Bookcase() {
   };
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   return (

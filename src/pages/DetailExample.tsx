@@ -20,11 +20,7 @@ export default function DetailExample() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   const handlePeriCarousel = () => {
