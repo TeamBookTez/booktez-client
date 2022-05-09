@@ -1,4 +1,7 @@
 export { default as BookComment } from "./BookComment";
-export { default as BottomContent } from "./BottomContent";
+export { default as ServiceContent } from "./ServiceContent";
 export { default as TopBanner } from "./TopBanner";
-export { default as TopContent } from "./TopContent";
+export { default as UserContent } from "./UserContent";
+export { default as WithdrawContent } from "./WithdrawContent";
+export { default as WithdrawContentComplete } from "./WithdrawContentComplete";
+export { default as WithdrawContentConfirm } from "./WithdrawContentConfirm";
