@@ -127,11 +127,7 @@ export default function BookNote() {
   }, []);
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   useEffect(() => {

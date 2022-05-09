@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import AddBookDefault from "../components/addBook/AddBookDefault";
 import BookList from "../components/addBook/BookList";
 import SearchBar from "../components/addBook/SearchBar";
+import { StickyHeader } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
 import { isLoginState } from "../utils/atom";
 import { searchBook } from "../utils/lib/api";
@@ -27,11 +28,7 @@ export default function AddBook() {
   const setIsLogin = useSetRecoilState(isLoginState);
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   useEffect(() => {
@@ -75,9 +72,11 @@ export default function AddBook() {
         <Loading />
       ) : (
         <>
-          <MainHeader>책 추가</MainHeader>
-          <SearchBar debounceQuery={debounceQuery} onDebounceQuery={handleDebounceQuery} />
-          {debounceQuery ? <BookList books={books} /> : <AddBookDefault />}
+          <StickyHeader headerHeight={109}>
+            <MainHeader>책 추가</MainHeader>
+            <SearchBar debounceQuery={debounceQuery} onDebounceQuery={handleDebounceQuery} />
+          </StickyHeader>
+          {debounceQuery ? <BookList isLogin={isLogin} books={books} /> : <AddBookDefault />}
         </>
       )}
     </>

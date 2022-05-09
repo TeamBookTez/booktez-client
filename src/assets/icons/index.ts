@@ -41,5 +41,6 @@ export { ReactComponent as IcSearch } from "./searchIcon.svg";
 export { ReactComponent as IcSight } from "./sightIcon.svg";
 export { ReactComponent as IcSignupChecking } from "./signupCheckingIcon.svg";
 export { ReactComponent as IcTitleLogo } from "./titleLogoIcon.svg";
+export { ReactComponent as IcToastAlert } from "./toastAlertIcon.svg";
 export { ReactComponent as IcToBe } from "./toBeIcon.svg";
 export { ReactComponent as IcToggle } from "./toggleIcon.svg";
