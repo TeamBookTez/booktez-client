@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 interface StickyHeaderProps {
+  headerHeight: number;
   children: React.ReactNode;
 }
 export default function StickyHeader(props: StickyHeaderProps) {
-  const { children } = props;
+  const { headerHeight, children } = props;
 
   const { scrollY } = useViewportScroll();
   const [isScroll, setIsScroll] = useState<boolean>(false);
-  const MAIN_HEADER_HEIGHT = 109;
+  const MAIN_HEADER_HEIGHT = headerHeight;
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -31,7 +32,7 @@ export default function StickyHeader(props: StickyHeaderProps) {
 
 const StWrapper = styled.div<{ isscroll: boolean }>`
   position: sticky;
-  top: 0rem;
+  top: 0;
   z-index: 5;
 
   border-radius: 2rem 0 0 0;
@@ -40,7 +41,7 @@ const StWrapper = styled.div<{ isscroll: boolean }>`
   ${({ isscroll }) =>
     isscroll
       ? css`
-          box-shadow: 0rem 0.6rem 1rem rgba(0, 0, 0, 0.17);
+          box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.17);
         `
       : css`
           box-shadow: none;

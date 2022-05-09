@@ -36,7 +36,7 @@ export default function Bookcase() {
         <Loading />
       ) : (
         <>
-          <StickyHeader>
+          <StickyHeader headerHeight={0}>
             <MainHeader>서재</MainHeader>
             <Navigation navIndex={navIndex} onChangeNavIndex={handleChangeNavIndex} />
           </StickyHeader>

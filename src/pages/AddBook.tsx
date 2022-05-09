@@ -71,13 +71,13 @@ export default function AddBook() {
       {isLoginLoading ? (
         <Loading />
       ) : (
-        <div>
-          <StickyHeader>
+        <>
+          <StickyHeader headerHeight={109}>
             <MainHeader>책 추가</MainHeader>
             <SearchBar debounceQuery={debounceQuery} onDebounceQuery={handleDebounceQuery} />
           </StickyHeader>
           {debounceQuery ? <BookList isLogin={isLogin} books={books} /> : <AddBookDefault />}
-        </div>
+        </>
       )}
     </>
   );
