@@ -77,9 +77,7 @@ export default function MyPage() {
         <>
           <MainHeader>마이페이지</MainHeader>
           <UserContent userInfo={userInfo} onImageChange={handleImageChange} />
-          <ServiceContent userInfo={userInfo}>
-            <WithdrawContent />
-          </ServiceContent>
+          <ServiceContent userInfo={userInfo}>{isLogin && <WithdrawContent />}</ServiceContent>
         </>
       )}
     </>
