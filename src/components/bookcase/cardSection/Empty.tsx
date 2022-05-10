@@ -1,3 +1,13 @@
+/*
+마지막 편집자: 22-05-10 joohaem
+변경사항 및 참고:
+  - component/main/RecentBooks 컴포넌트에서도 쓰이는 Empty 컴포넌트라서,
+    `navIndex` 라는 변수명이 조금 걸리네요! 하하
+    
+고민점:
+  - 
+*/
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 

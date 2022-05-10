@@ -45,7 +45,7 @@ export default function RecentBooks() {
                 .slice(0, cntRecentBooks)
                 .map((tempInfo, idx) => <BookCard key={idx} bookcaseInfo={tempInfo} pathKey="/book" />)
             ) : (
-              <Empty />
+              <Empty navIndex={0} />
             )}
           </StBookWrapper>
         </>
