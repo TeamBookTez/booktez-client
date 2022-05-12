@@ -237,7 +237,6 @@ export default function PeriNote() {
               <StArticle key={`input-${idx}`}>
                 <PriorQuestion
                   path={[idx]}
-                  index={idx}
                   node={node}
                   onAddChild={handleAddChild}
                   onSetContent={handleSetContent}
