@@ -18,6 +18,7 @@ export default function BookList(props: BookListProps) {
   // default is false
   const [alertToastOpen, setAlertToastOpen] = useState<boolean>(false);
   const [selectedBookIsbn, setSelectedBookIsbn] = useState<string>("");
+  const [serverError, setServerError] = useState<boolean>(false);
 
   const closeAlertToast = () => {
     setAlertToastOpen(false);
@@ -34,7 +35,8 @@ export default function BookList(props: BookListProps) {
       checkIsBookExist(isbn).then((result) => {
         if (result.isError) {
           // 에러 토스트 띄우기 - 모종의 이유로 실패한 경우
-          return;
+          setAlertToastOpen(true);
+          setServerError(true);
         } else if (result.isExist) {
           // 통신에 성공 - 책이 중복된 경우
           setAlertToastOpen(true);
@@ -50,6 +52,7 @@ export default function BookList(props: BookListProps) {
     if (alertToastOpen) {
       const saveToast = setTimeout(() => {
         setAlertToastOpen(false);
+        setServerError(false);
       }, 2000);
 
       return () => {
@@ -71,7 +74,7 @@ export default function BookList(props: BookListProps) {
           onResetSelectedBookIsbn={resetSelectedBookIsbn}
         />
       ))}
-      {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} /> : null}
+      {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} isServerError={serverError} /> : null}
     </StListWrapper>
   );
 }
