@@ -89,7 +89,7 @@ export default function PeriNote() {
   };
 
   const addAnswer = (path: number[], currentIndex: number) => {
-    const newRoot = getFormData();
+    const newRoot = saveStatelessPeriNoteData();
     const current = getNodeByPath(newRoot, path);
 
     current.children.splice(currentIndex + 1, 0, {
@@ -159,7 +159,7 @@ export default function PeriNote() {
     }
   }
 
-  const getFormData = () => {
+  const saveStatelessPeriNoteData = () => {
     const obj = getValues();
 
     const keys = Object.keys(obj);
@@ -181,7 +181,7 @@ export default function PeriNote() {
   };
 
   const submitPeriNote = () => {
-    const dataToPatch = getFormData();
+    const dataToPatch = saveStatelessPeriNoteData();
 
     patchBookNote(userToken, `/review/${reviewId}/peri`, {
       answerThree: dataToPatch,
@@ -225,7 +225,7 @@ export default function PeriNote() {
 
   useEffect(() => {
     if (navIndex && isSave) {
-      const dataToPatch = getFormData();
+      const dataToPatch = saveStatelessPeriNoteData();
 
       saveReview({ ...data, answerThree: dataToPatch });
     }
