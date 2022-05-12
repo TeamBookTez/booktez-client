@@ -68,34 +68,45 @@ export default function PeriNote() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openSubmitModal, setOpenSubmitModal] = useState<boolean>(false);
 
-  const handleAddChild = (path: number[], currentIndex: number, isQuestion: boolean) => {
+  const addQuestion = (path: number[]) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 
-    if (isQuestion) {
-      // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
-      // 꼬리 질문은 무조건 마지막에 추가되면 됨
-      current.children.push({
-        type: "question",
-        content: "",
-        children: [
-          {
-            type: "answer",
-            content: "",
-            children: [],
-          },
-        ],
-      });
-    } else {
-      current.children.splice(currentIndex + 1, 0, {
-        type: "answer",
-        content: "",
-        children: [],
-      });
-    }
+    current.children.push({
+      type: "question",
+      content: "",
+      children: [
+        {
+          type: "answer",
+          content: "",
+          children: [],
+        },
+      ],
+    });
 
     setData({ ...data, answerThree: newRoot });
+  };
+
+  const addAnswer = (path: number[], currentIndex: number) => {
+    const newRoot = getFormData();
+    const current = getNodeByPath(newRoot, path);
+
+    current.children.splice(currentIndex + 1, 0, {
+      type: "answer",
+      content: "",
+      children: [],
+    });
+
+    setData({ ...data, answerThree: newRoot });
+  };
+
+  const handleAddChild = (path: number[], currentIndex: number, isQuestion: boolean) => {
+    if (isQuestion) {
+      addQuestion(path);
+    } else {
+      addAnswer(path, currentIndex);
+    }
   };
 
   const handleSetContent = (value: string, path: number[]) => {
@@ -147,6 +158,7 @@ export default function PeriNote() {
       miniMenu.classList.remove("open");
     }
   }
+
   const getFormData = () => {
     const obj = getValues();
 
