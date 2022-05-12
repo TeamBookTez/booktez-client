@@ -236,7 +236,7 @@ export default function PeriNote() {
   } else {
     return (
       <>
-        <StNoteForm onSubmit={submitPeriNote} onClick={toggleMenu}>
+        <StNoteForm onClick={toggleMenu}>
           <StLabelWrapper>
             <StLabelContainer>
               <StLabel>질문 리스트를 구조화하며 책을 읽어보세요.</StLabel>
@@ -263,8 +263,12 @@ export default function PeriNote() {
             onClick={() => handleAddChild([], data.answerThree.children.length, true)}>
             질문 리스트 추가
           </StAddChildButton>
-          {/* 북노트 정리되면 type submit으로 바꾸기 */}
-          <StSubmitButton type="submit" disabled={isPrevented.isCompleted} id="btn_complete_reading">
+          {/* type을 submit으로 변경하면 페이지를 이동하는 것에 초점을 둬서 제대로 작동하지 않음  */}
+          <StSubmitButton
+            type="button"
+            onClick={submitPeriNote}
+            disabled={isPrevented.isCompleted}
+            id="btn_complete_reading">
             작성 완료
           </StSubmitButton>
         </StNoteForm>
