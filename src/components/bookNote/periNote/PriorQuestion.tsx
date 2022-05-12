@@ -12,7 +12,6 @@ import { FormController } from "./PeriNote";
 
 interface PriorQuestionProps {
   path: number[];
-  index: number;
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
   onSetContent: (value: string, path: number[]) => void;
@@ -21,7 +20,7 @@ interface PriorQuestionProps {
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
+  const { path, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
 
@@ -58,7 +57,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           onChange={(e) => handleContent(e, path)}
           onKeyPress={(e) => handleKeyPress(e, path)}
         />
-        <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, isQuestion)}>
+        <StAddAnswerButton type="button" onClick={() => onAddChild(path, node.children.length - 1, isQuestion)}>
           답변
         </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
