@@ -19,7 +19,7 @@ export default function BookList(props: BookListProps) {
   // default is false
   const [alertToastOpen, setAlertToastOpen] = useState<boolean>(false);
   const [selectedBookIsbn, setSelectedBookIsbn] = useState<string>("");
-  const [serverError, setServerError] = useState<boolean>(false);
+  const [isServerError, setIsServerError] = useState<boolean>(false);
 
   const closeAlertToast = () => {
     setAlertToastOpen(false);
@@ -30,22 +30,24 @@ export default function BookList(props: BookListProps) {
   };
 
   const handleClickBookCard = (isbn: string) => {
-    if (!isLogin) {
-      setSelectedBookIsbn(isbn);
+    if (!isLogin) return setSelectedBookIsbn(isbn);
+
+    checkIsBookExist(isbn).then((result) => {
+      categorizeToast(result.isError, result.isExist, isbn);
+    });
+  };
+
+  const categorizeToast = (isError: boolean, isExist: boolean, isbn: string) => {
+    if (isError) {
+      // 에러 토스트 띄우기 - 모종의 이유로 실패한 경우
+      setAlertToastOpen(true);
+      setIsServerError(true);
+    } else if (isExist) {
+      // 통신에 성공 - 책이 중복된 경우
+      setAlertToastOpen(true);
     } else {
-      checkIsBookExist(isbn).then((result) => {
-        if (result.isError) {
-          // 에러 토스트 띄우기 - 모종의 이유로 실패한 경우
-          setAlertToastOpen(true);
-          setServerError(true);
-        } else if (result.isExist) {
-          // 통신에 성공 - 책이 중복된 경우
-          setAlertToastOpen(true);
-        } else {
-          // 모든 상황을 통과
-          setSelectedBookIsbn(isbn);
-        }
-      });
+      // 모든 상황을 통과
+      setSelectedBookIsbn(isbn);
     }
   };
 
@@ -66,7 +68,7 @@ export default function BookList(props: BookListProps) {
           onResetSelectedBookIsbn={resetSelectedBookIsbn}
         />
       ))}
-      {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} isServerError={serverError} /> : null}
+      {alertToastOpen ? <AlertToast onCloseAlertToast={closeAlertToast} isServerError={isServerError} /> : null}
     </StListWrapper>
   );
 }
