@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
 import { checkIsBookExist } from "../../utils/lib/api";
+import { useAlertToast } from "../../utils/useHooks";
 import AlertToast from "./AlertToast";
 import BookEmpty from "./BookEmpty";
 import BookInfoWrapper from "./BookInfoWrapper";
@@ -48,18 +49,9 @@ export default function BookList(props: BookListProps) {
     }
   };
 
-  useEffect(() => {
-    if (alertToastOpen) {
-      const saveToast = setTimeout(() => {
-        setAlertToastOpen(false);
-        setServerError(false);
-      }, 2000);
 
-      return () => {
-        clearTimeout(saveToast);
-      };
-    }
-  }, [alertToastOpen]);
+  useAlertToast(alertToastOpen, () => setAlertToastOpen(false));
+
 
   if (books.length === 0) return <BookEmpty />;
 
