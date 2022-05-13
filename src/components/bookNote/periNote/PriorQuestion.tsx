@@ -12,7 +12,6 @@ import { FormController } from "./PeriNote";
 
 interface PriorQuestionProps {
   path: number[];
-  index: number;
   node: PeriNoteTreeNode;
   onAddChild: (path: number[], currentIndex: number, isQuestion: boolean) => void;
   onSetContent: (value: string, path: number[]) => void;
@@ -21,9 +20,11 @@ interface PriorQuestionProps {
 }
 
 export default function PriorQuestion(props: PriorQuestionProps) {
-  const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
+  const { path, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
+  // 큰 답변 추가시 사용되는 index는 현재 큰질문의 index가 아닌 답변의 개수
+  const currentIndex = node.children.length - 1;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -35,7 +36,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, pathArray: number[]) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      onAddChild(pathArray, node.children.length - 1, isQuestion);
+      onAddChild(pathArray, currentIndex, isQuestion);
     }
   };
 
@@ -58,7 +59,7 @@ export default function PriorQuestion(props: PriorQuestionProps) {
           onChange={(e) => handleContent(e, path)}
           onKeyPress={(e) => handleKeyPress(e, path)}
         />
-        <StAddAnswerButton type="button" onClick={() => onAddChild(path, index, isQuestion)}>
+        <StAddAnswerButton type="button" onClick={() => onAddChild(path, currentIndex, isQuestion)}>
           답변
         </StAddAnswerButton>
         <StMoreIcon className="icn_more" />
