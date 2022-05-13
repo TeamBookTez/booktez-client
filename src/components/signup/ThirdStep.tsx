@@ -35,9 +35,7 @@ export default function ThirdStep() {
   }, [isLogin]);
 
   const postSignup = async () => {
-    const res = await postData("/auth/signup", userData);
-
-    console.log(res);
+    await postData("/auth/signup", userData);
   };
 
   const postLogin = async () => {

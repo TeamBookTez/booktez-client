@@ -1,4 +1,3 @@
-import axios from "axios";
 import useSWR from "swr";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
@@ -73,15 +72,16 @@ export const checkIsBookExist = async (isbn: string) => {
       return { isError: false, isExist: data.data.isExist };
     } else {
       // 통신에는 성공했으나 에러가 난 경우
-      console.log("[ERROR RETURNED]", data);
+      // 에러 메시지 받아서 토스트 띄울 수 있도록 추후 변경 예정
+      // console.log("[ERROR RETURNED]", data);
 
       return { isError: true, isExist: false };
     }
   } catch (err) {
     // 통신에 실패한 경우
-    if (axios.isAxiosError(err)) {
-      console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
-    }
+    // if (axios.isAxiosError(err)) {
+    //   console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
+    // }
 
     return { isError: true, isExist: false };
   }
