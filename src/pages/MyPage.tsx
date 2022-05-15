@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 import { Loading, MainHeader } from "../components/common";
-import { BottomContent, TopContent } from "../components/myPage";
+import { ServiceContent, UserContent, WithdrawContent } from "../components/myPage";
 import { isLoginState } from "../utils/atom";
 import { getData, patchData } from "../utils/lib/api";
 import { useCheckLoginState } from "../utils/useHooks";
@@ -15,51 +15,42 @@ export interface UserInfo {
 }
 
 export default function MyPage() {
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
+
+  const setIsLogin = useSetRecoilState(isLoginState);
+  const { isLogin, isLoginLoading } = useCheckLoginState();
+
   const [userInfo, setUserInfo] = useState<UserInfo>({
     email: "",
     img: "",
     nickname: "",
     reviewCount: 0,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [tempImg, setTempImg] = useState<string>(""); //patch 렌더링 문제 해결 state
-  const setIsLogin = useSetRecoilState(isLoginState);
-  const { isLogin, isLoginLoading } = useCheckLoginState();
-
-  const _token = localStorage.getItem("booktez-token");
-  const userToken = _token ? _token : "";
+  const [isInfoLoading, setIsInfoLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
   useEffect(() => {
     getInfo("/user/myInfo", userToken);
-  }, [tempImg]);
-
-  const handleLogout = () => {
-    setIsLogin(false);
-  };
+  }, []);
 
   const getInfo = async (key: string, token: string) => {
-    if (token) {
-      try {
-        const { data } = await getData(key, token);
+    try {
+      const { data } = await getData(key, token);
 
-        if (data.success) {
-          setUserInfo(data.data);
-        } else {
-          setIsLogin(false);
-        }
-      } catch (err) {
+      if (data.success) {
+        setUserInfo(data.data);
+      } else {
         setIsLogin(false);
       }
+    } catch (err) {
+      setIsLogin(false);
+    } finally {
+      setIsInfoLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,20 +65,19 @@ export default function MyPage() {
     const { data } = await patchData(userToken, "/user/img", formData);
 
     if (data.success) {
-      setTempImg(data.img);
-      setUserInfo((current) => ({ ...current, img: data.img }));
+      getInfo("/user/myInfo", userToken);
     }
   };
 
   return (
     <>
-      {isLoading && isLoginLoading ? (
+      {isInfoLoading && isLoginLoading ? (
         <Loading />
       ) : (
         <>
           <MainHeader>마이페이지</MainHeader>
-          <TopContent userInfo={userInfo} onImageChange={handleImageChange} onLogout={handleLogout} />
-          <BottomContent userInfo={userInfo} />
+          <UserContent userInfo={userInfo} onImageChange={handleImageChange} />
+          <ServiceContent userInfo={userInfo}>{isLogin && <WithdrawContent />}</ServiceContent>
         </>
       )}
     </>

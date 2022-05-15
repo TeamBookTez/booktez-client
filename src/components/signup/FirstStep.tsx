@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { IcSignupChecking } from "../../assets/icons";
 import { ImgSignupFirst } from "../../assets/images";
 import { UserData } from "../../pages/Signup";
 import { checkEmailType } from "../../utils/check";
@@ -17,6 +18,7 @@ export default function FirstStep() {
   const [email, setEmail] = useState<string>("");
   const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
   const [isEmailError, setIsEmailError] = useState<boolean>(false);
+  const [isAgreeCondition, setIsAgreeCondition] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
@@ -57,6 +59,8 @@ export default function FirstStep() {
     goNextStep();
   };
 
+  const isSubmitDisabled = isEmailEmpty || isEmailError || !isAgreeCondition;
+
   return (
     <motion.div
       key="firstSignup"
@@ -81,7 +85,18 @@ export default function FirstStep() {
           handleOnChange={handleOnChange}
         />
         <AlertLabel isError={isEmailError}>{errorMessage}</AlertLabel>
-        <StNextStepBtn active={!isEmailEmpty && !isEmailError} onClick={goNextStep}>
+        <StAgreeConditionBox htmlFor="signupAgree" onClick={() => setIsAgreeCondition((prev) => !prev)}>
+          <StIcSignupChecking isagree={isAgreeCondition} />
+          <p>
+            <StAConditionLink
+              href="https://rose-prepared-583.notion.site/6e6807cf2fff4effbd108057e611d5b9"
+              target="_blank">
+              개인정보 수집 및 이용 약관
+            </StAConditionLink>
+            에 동의합니다.
+          </p>
+        </StAgreeConditionBox>
+        <StNextStepBtn disabled={isSubmitDisabled} onClick={goNextStep}>
           다음 계단
         </StNextStepBtn>
       </StForm>
@@ -95,24 +110,45 @@ const StForm = styled.form`
   align-items: center;
 `;
 
-const StNextStepBtn = styled(Button)<{ active: boolean }>`
+const StAgreeConditionBox = styled.label`
+  width: 100%;
+  height: 2.1rem;
+
+  display: flex;
+  align-items: center;
+
+  margin: 1.7rem 0 0 0;
+
+  ${({ theme }) => theme.fonts.body6}
+`;
+
+const StIcSignupChecking = styled(IcSignupChecking)<{ isagree: boolean }>`
+  margin-right: 0.2rem;
+
+  fill: ${({ theme, isagree }) => (isagree ? theme.colors.orange100 : theme.colors.white400)};
+`;
+
+const StAConditionLink = styled.a`
+  text-decoration: underline;
+`;
+
+const StNextStepBtn = styled(Button)<{ disabled: boolean }>`
   width: 46.4rem;
   height: 5.4rem;
 
-  margin-top: 5rem;
+  margin-top: 3.9rem;
 
   border-radius: 1rem;
 
   ${({ theme }) => theme.fonts.button}
 
-  ${({ active }) =>
-    active
-      ? ""
-      : css`
-          background-color: ${({ theme }) => theme.colors.white400}; // inactive
-          color: ${({ theme }) => theme.colors.gray300}; // inactive
-          &:hover {
-            cursor: default;
-          }
-        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white400}; // inactive
+      color: ${({ theme }) => theme.colors.gray300}; // inactive
+      &:hover {
+        cursor: default;
+      }
+    `}
 `;

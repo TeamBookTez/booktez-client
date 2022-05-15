@@ -68,34 +68,45 @@ export default function PeriNote() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openSubmitModal, setOpenSubmitModal] = useState<boolean>(false);
 
-  const handleAddChild = (path: number[], currentIndex: number, isQuestion: boolean) => {
+  const addQuestion = (path: number[]) => {
     // 깊은 복사 후 위치를 찾아 새로운 node를 추가하고 root를 set에 넘김
     const newRoot = deepCopyTree(data.answerThree);
     const current = getNodeByPath(newRoot, path);
 
-    if (isQuestion) {
-      // 꼬리 질문 추가 시에는 답변이 함께 생성되어야 함
-      // 꼬리 질문은 무조건 마지막에 추가되면 됨
-      current.children.push({
-        type: "question",
-        content: "",
-        children: [
-          {
-            type: "answer",
-            content: "",
-            children: [],
-          },
-        ],
-      });
-    } else {
-      current.children.splice(currentIndex + 1, 0, {
-        type: "answer",
-        content: "",
-        children: [],
-      });
-    }
+    current.children.push({
+      type: "question",
+      content: "",
+      children: [
+        {
+          type: "answer",
+          content: "",
+          children: [],
+        },
+      ],
+    });
 
     setData({ ...data, answerThree: newRoot });
+  };
+
+  const addAnswer = (path: number[], currentIndex: number) => {
+    const newRoot = saveStatelessPeriNoteData();
+    const current = getNodeByPath(newRoot, path);
+
+    current.children.splice(currentIndex + 1, 0, {
+      type: "answer",
+      content: "",
+      children: [],
+    });
+
+    setData({ ...data, answerThree: newRoot });
+  };
+
+  const handleAddChild = (path: number[], currentIndex: number, isQuestion: boolean) => {
+    if (isQuestion) {
+      addQuestion(path);
+    } else {
+      addAnswer(path, currentIndex);
+    }
   };
 
   const handleSetContent = (value: string, path: number[]) => {
@@ -147,7 +158,8 @@ export default function PeriNote() {
       miniMenu.classList.remove("open");
     }
   }
-  const getFormData = () => {
+
+  const saveStatelessPeriNoteData = () => {
     const obj = getValues();
 
     const keys = Object.keys(obj);
@@ -169,7 +181,7 @@ export default function PeriNote() {
   };
 
   const submitPeriNote = () => {
-    const dataToPatch = getFormData();
+    const dataToPatch = saveStatelessPeriNoteData();
 
     patchBookNote(userToken, `/review/${reviewId}/peri`, {
       answerThree: dataToPatch,
@@ -213,7 +225,7 @@ export default function PeriNote() {
 
   useEffect(() => {
     if (navIndex && isSave) {
-      const dataToPatch = getFormData();
+      const dataToPatch = saveStatelessPeriNoteData();
 
       saveReview({ ...data, answerThree: dataToPatch });
     }
@@ -237,7 +249,6 @@ export default function PeriNote() {
               <StArticle key={`input-${idx}`}>
                 <PriorQuestion
                   path={[idx]}
-                  index={idx}
                   node={node}
                   onAddChild={handleAddChild}
                   onSetContent={handleSetContent}
@@ -252,11 +263,11 @@ export default function PeriNote() {
             onClick={() => handleAddChild([], data.answerThree.children.length, true)}>
             질문 리스트 추가
           </StAddChildButton>
-          {/* 북노트 정리되면 type submit으로 바꾸기 */}
+          {/* type을 submit으로 변경하면 페이지를 이동하는 것에 초점을 둬서 제대로 작동하지 않음  */}
           <StSubmitButton
             type="button"
-            disabled={isPrevented.isCompleted}
             onClick={submitPeriNote}
+            disabled={isPrevented.isCompleted}
             id="btn_complete_reading">
             작성 완료
           </StSubmitButton>
@@ -267,6 +278,7 @@ export default function PeriNote() {
             <StepUpLayout onToggleModal={handlePeriCarousel} stepUpContent={periNoteStepUp} />
           </StStepModalWrapper>
         )}
+
         {openSubmitModal && <Complete bookData={bookData} />}
       </>
     );

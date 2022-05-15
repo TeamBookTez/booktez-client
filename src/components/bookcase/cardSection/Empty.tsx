@@ -1,28 +1,42 @@
-import { Link, useLocation } from "react-router-dom";
+/*
+마지막 편집자: 22-05-10 joohaem
+변경사항 및 참고:
+  - component/main/RecentBooks 컴포넌트에서도 쓰이는 Empty 컴포넌트라서,
+    `navIndex` 라는 변수명이 조금 걸리네요! 하하
+    
+고민점:
+  - 
+*/
+
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgEmptyBook } from "../../../assets/images";
 import { Button } from "../../common/styled/Button";
 
-export default function Empty() {
-  const { pathname } = useLocation();
+interface EmptyProps {
+  navIndex: number;
+}
+
+export default function Empty(props: EmptyProps) {
+  const { navIndex } = props;
+
+  const allOrPre = navIndex <= 1;
 
   return (
     <StArticle>
       <StImg src={ImgEmptyBook} alt="빈 폴더 이미지" />
-      <StH3>
-        {pathname === "/main/bookcase" || pathname === "/main" ? "아직 읽은 책이 없어요." : "이 단계의 책이 없어요."}
-      </StH3>
+      <StH3>{allOrPre ? "아직 읽은 책이 없어요." : "이 단계의 책이 없어요."}</StH3>
 
       <StParagraph>
         북스테어즈만의 독서법을 통해
         <br /> 지식을 얻고 독서의 매력을 느껴보세요
       </StParagraph>
-      {pathname === "/main/bookcase" || pathname === "/main" ? (
+      {allOrPre && (
         <StAddBookBtn>
           <StLink to="/main/add-book">+ 책 추가</StLink>
         </StAddBookBtn>
-      ) : null}
+      )}
     </StArticle>
   );
 }

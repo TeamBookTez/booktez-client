@@ -8,11 +8,6 @@ export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
 };
 
-// headers에 들어갈 내용의 예시
-// "Content-Type": "application/json",
-// "Content-Type": "multipart/form-data"
-// "Authorization": "토큰"
-
 export const getData = (key: string, token?: string) => {
   return client(token).get(key);
 };
@@ -24,6 +19,10 @@ export const postData = (key: string, postBody: PostBody, token?: string) => {
 
 export const patchData = (token: string, key: string, patchBody: PatchBody | FormData) => {
   return client(token).patch(key, patchBody);
+};
+
+export const patchUserWithdraw = (token: string, key: string) => {
+  return client(token).patch(key);
 };
 
 export const patchBookNote = async (token: string, key: string, body: PreNoteData | PeriNoteData) => {
@@ -61,3 +60,29 @@ export function useGetBookInfo(key: string) {
     isError: error,
   };
 }
+
+export const checkIsBookExist = async (isbn: string) => {
+  const _token = localStorage.getItem("booktez-token");
+  const userToken = _token ? _token : "";
+
+  try {
+    const { data } = await client(userToken).get(`/book/exist/${isbn}`);
+
+    if (data.success) {
+      return { isError: false, isExist: data.data.isExist };
+    } else {
+      // 통신에는 성공했으나 에러가 난 경우
+      // 에러 메시지 받아서 토스트 띄울 수 있도록 추후 변경 예정
+      // console.log("[ERROR RETURNED]", data);
+
+      return { isError: true, isExist: false };
+    }
+  } catch (err) {
+    // 통신에 실패한 경우
+    // if (axios.isAxiosError(err)) {
+    //   console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
+    // }
+
+    return { isError: true, isExist: false };
+  }
+};

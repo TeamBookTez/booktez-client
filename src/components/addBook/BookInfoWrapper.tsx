@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { BookInfo } from "../../pages/AddBook";
@@ -14,12 +14,16 @@ export interface PublishDate {
 
 interface BookInfoWrapperProps {
   book: BookInfo;
+  selectedBookIsbn: string;
+  onClickBookCard: (isbn: string) => void;
+  onResetSelectedBookIsbn: () => void;
 }
 
 export default function BookInfoWrapper(props: BookInfoWrapperProps) {
-  const { book } = props;
-  const { thumbnail, title, authors, datetime, contents } = book;
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const { book, selectedBookIsbn, onClickBookCard, onResetSelectedBookIsbn } = props;
+  const { isbn, thumbnail, title, authors, datetime, contents } = book;
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const publishDate: PublishDate = {
     year: datetime.toString().slice(0, 4),
@@ -27,13 +31,24 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
     date: datetime.toString().slice(8, 10),
   };
 
-  const onToggleModal = useCallback(() => {
-    setOpenModal(!openModal);
-  }, [openModal]);
+  const toggleModal = useCallback(() => {
+    setIsModalOpen(!isModalOpen);
+  }, [isModalOpen]);
+
+  const clickBookCard = () => {
+    onClickBookCard(book.isbn);
+  };
+
+  useEffect(() => {
+    if (selectedBookIsbn !== "" && selectedBookIsbn === isbn) {
+      toggleModal();
+      onResetSelectedBookIsbn();
+    }
+  }, [selectedBookIsbn]);
 
   return (
     <>
-      <StArticle onClick={onToggleModal}>
+      <StArticle onClick={clickBookCard}>
         {thumbnail ? (
           <StThumbnail src={thumbnail} alt="책 표지" />
         ) : (
@@ -45,18 +60,14 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
         <StInfoWrapper>
           <InfoTitle>{title}</InfoTitle>
           <InfoLabelWrapper>
-            <InfoLabel>
-              {authors.length > 2 ? (
-                <>
-                  {authors[0]} 외 {authors.length - 1}명
-                </>
-              ) : (
-                <>
-                  {authors[0]} {authors[1]}
-                </>
-              )}
-            </InfoLabel>
-            <DivideLine></DivideLine>
+            {authors.length > 0 && (
+              <>
+                <InfoLabel>
+                  {authors.length > 2 ? `${authors[0]} 외 ${authors.length - 1}명` : `${authors[0]}`}
+                </InfoLabel>
+                <DivideLine />
+              </>
+            )}
             <InfoLabel>
               {publishDate.year}년 {publishDate.month}월 {publishDate.date}일
             </InfoLabel>
@@ -64,9 +75,10 @@ export default function BookInfoWrapper(props: BookInfoWrapperProps) {
           <InfoSummary>{escapeHtml(contents)}</InfoSummary>
         </StInfoWrapper>
       </StArticle>
-      {openModal && (
+
+      {isModalOpen && (
         <ModalWrapper>
-          <ShowModal onToggleModal={onToggleModal} bookInfo={book} publishDate={publishDate} />
+          <ShowModal onToggleModal={toggleModal} bookInfo={book} publishDate={publishDate} />
         </ModalWrapper>
       )}
     </>

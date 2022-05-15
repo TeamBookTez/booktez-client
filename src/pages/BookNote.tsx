@@ -10,16 +10,8 @@ import { StIcCancelWhite } from "../components/common/styled/NoteModalWrapper";
 import { isLoginState, navigatingBookInfoState } from "../utils/atom";
 import { PeriNoteTreeNode } from "../utils/dataType";
 import { patchBookNote } from "../utils/lib/api";
-import { useCheckLoginState } from "../utils/useHooks";
+import { useAlertToast, useCheckLoginState } from "../utils/useHooks";
 
-export interface NavigatingBookInfoState {
-  reviewId: string;
-  title: string;
-  fromUrl: string;
-  fromSt: number;
-}
-
-// 시간이 된다면 keyof 꼭 활용해보기
 export interface ObjKey {
   [key: string]: string | string[] | number | boolean;
 }
@@ -127,24 +119,10 @@ export default function BookNote() {
   }, []);
 
   useEffect(() => {
-    if (isLogin) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    setIsLogin(isLogin);
   }, [isLogin]);
 
-  useEffect(() => {
-    if (isSave) {
-      const saveToast = setTimeout(() => {
-        setIsSave(false);
-      }, 2000);
-
-      return () => {
-        clearTimeout(saveToast);
-      };
-    }
-  }, [isSave]);
+  useAlertToast(isSave, () => setIsSave(false));
 
   useEffect(() => {
     setNavIndex(initIndex);

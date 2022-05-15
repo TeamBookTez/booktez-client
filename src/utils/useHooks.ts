@@ -55,3 +55,17 @@ export function useFetchNote<T>(token: string, key: string, initialState: T) {
 
   return { data, setData, isLoading };
 }
+
+export function useAlertToast(isToastAlertTrue: boolean, setIsToastAlertTrue: () => void) {
+  useEffect(() => {
+    if (isToastAlertTrue) {
+      const alertToastTimeout = setTimeout(() => {
+        setIsToastAlertTrue();
+      }, 2000);
+
+      return () => {
+        clearTimeout(alertToastTimeout);
+      };
+    }
+  }, [isToastAlertTrue]);
+}

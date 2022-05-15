@@ -38,7 +38,7 @@ export default function Cards(props: CardsProps) {
   } else if (!bookcaseInfo || isError || bookcaseInfo.length === 0) {
     return (
       <StDefaultSection>
-        <Empty />
+        <Empty navIndex={navIndex} />
       </StDefaultSection>
     );
   } else {
