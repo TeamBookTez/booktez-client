@@ -5,19 +5,20 @@ import { StIcCancelWhite } from "../common/styled/NoteModalWrapper";
 
 interface AlertToastProps {
   onCloseAlertToast: () => void;
-  isServerError: boolean;
+  isServerError: any;
 }
 
 export default function AlertToast(props: AlertToastProps) {
   const { onCloseAlertToast, isServerError } = props;
+  const { error, exist, message } = isServerError;
 
   return (
     <StSaveWrapper>
-      <StIconTextWrapper isError={isServerError}>
+      <StIconTextWrapper isError={error}>
         <IcToastAlert />
         <div>
-          <StToastH1>{isServerError ? "저장에 실패했습니다" : "이미 추가된 책입니다."}</StToastH1>
-          <StToastSpan>{isServerError ? "네트워크 연결을 확인해주세요" : "다른 책을 추가해주세요"}</StToastSpan>
+          <StToastH1>{error ? "저장에 실패했습니다" : exist ? message : null}</StToastH1>
+          <StToastSpan>{error ? "네트워크를 확인해주세요" : exist ? "다른 책을 추가해주세요" : null}</StToastSpan>
         </div>
       </StIconTextWrapper>
       <StIcCancel onClick={onCloseAlertToast} />
