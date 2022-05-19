@@ -18,7 +18,7 @@ export default function AlertToast(props: AlertToastProps) {
         <IcToastAlert />
         <div>
           <StToastH1>{error ? "저장에 실패했습니다" : exist ? message : null}</StToastH1>
-          <StToastSpan>{error ? "네트워크를 확인해주세요" : exist ? "다른 책을 추가해주세요" : null}</StToastSpan>
+          <StToastSpan>{error ? message : exist ? "다른 책을 추가해주세요" : null}</StToastSpan>
         </div>
       </StIconTextWrapper>
       <StIcCancel onClick={onCloseAlertToast} />

@@ -41,24 +41,23 @@ export default function BookList(props: BookListProps) {
 
   const handleClickBookCard = (isbn: string) => {
     if (!isLogin) return setSelectedBookIsbn(isbn);
-    else {
-      checkIsBookExist(isbn).then((result) => {
-        const { isError, isExist, message } = result;
 
-        setIsServerError((prev) => {
-          return { ...prev, error: isError, exist: isExist, message };
-        });
+    checkIsBookExist(isbn).then((result) => {
+      const { isError, isExist, message } = result;
 
-        if (isError || isExist) {
-          // 에러가 존재할 경우
-          // 에러 토스트 띄우기 - 모종의 이유로 실패한 경우
-          setAlertToastOpen(true);
-        } else {
-          // 모든 상황을 통과
-          setSelectedBookIsbn(isbn);
-        }
+      setIsServerError((prev) => {
+        return { ...prev, error: isError, exist: isExist, message };
       });
-    }
+
+      if (isError || isExist) {
+        // 에러가 존재할 경우
+        // 에러 토스트 띄우기 - 모종의 이유로 실패한 경우
+        setAlertToastOpen(true);
+      } else {
+        // 모든 상황을 통과
+        setSelectedBookIsbn(isbn);
+      }
+    });
   };
 
   useAlertToast(alertToastOpen, () => setAlertToastOpen(false));
