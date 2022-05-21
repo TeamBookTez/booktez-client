@@ -85,8 +85,7 @@ export const checkIsBookExist = async (isbn: string) => {
     }
   } catch (err) {
     // 통신에 실패한 경우
-    console.log(err);
 
-    return { isError: true, isExist: false, message: "df" };
+    return { isError: true, isExist: false, message: "네트워크를 확인해주세요" };
   }
 };
