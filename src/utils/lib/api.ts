@@ -75,7 +75,6 @@ export const checkIsBookExist = async (isbn: string) => {
   try {
     const { data } = await client(userToken).get(`/book/exist/${isbn}`);
 
-    console.log(data);
     if (data.success) {
       return { isError: false, isExist: data.data.isExist, message: data.message };
     } else {
