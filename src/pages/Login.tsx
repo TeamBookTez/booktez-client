@@ -120,4 +120,9 @@ const StContact = styled.p`
 
   ${({ theme }) => theme.fonts.body6}
   color: ${({ theme }) => theme.colors.gray100};
+
+  &:hover {
+    cursor: pointer;
+    text-decoration-line: underline;
+  }
 `;
