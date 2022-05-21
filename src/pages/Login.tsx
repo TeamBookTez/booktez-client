@@ -44,7 +44,7 @@ export default function Login() {
                   서재에서 독서를 이어가세요.
                 </StH3>
                 <LoginForm />
-                <StContact>이메일/비밀번호를 잊어버리셨다면?</StContact>
+                <StContact href="mailto:bookstairs.official@gmail.com">이메일/비밀번호를 잊어버리셨다면?</StContact>
               </StArticle>
             </StMainWrapper>
           </StPageWrapper>
@@ -113,7 +113,7 @@ const StH3 = styled.h3`
   color: ${({ theme }) => theme.colors.gray300};
 `;
 
-const StContact = styled.p`
+const StContact = styled.a`
   margin-top: 1.7rem;
 
   text-align: center;
