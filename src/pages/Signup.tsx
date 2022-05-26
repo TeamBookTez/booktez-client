@@ -1,7 +1,8 @@
 import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgSignupFirst } from "../assets/images";
@@ -18,6 +19,7 @@ export interface UserData {
 
 export default function Signup() {
   const { state } = useLocation();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState<UserData>({
     email: "",
@@ -86,12 +88,28 @@ export default function Signup() {
     const key = loginFormData[formDataKeyIndex];
 
     if (formDataKeyIndex === "password") {
-      try {
-        console.log(loginFormData);
-        const { data } = await postData("/auth/signup", userData);
+      if (loginFormData["password"] === loginFormData["password2"]) {
+        try {
+          const res = await postData("/auth/signup", { ...userData, password: key });
 
-      } catch (error) {
-        console.log(error);
+          if (res.status === 201) {
+            const {
+              data: { data },
+            } = await postData("/auth/login", { email: userData.email, password: key });
+
+            localStorage.setItem("booktez-token", data.token);
+            localStorage.setItem("booktez-nickname", data.nickname);
+            localStorage.setItem("booktez-email", data.email);
+
+            navigate("/welcome", { state: "rightpath" });
+          } else {
+            setError("password", { type: "server", message: "비밀번호가 일치하지 않습니다." });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setError("password", { type: "password", message: "죄송합니다. 잠시 후 다시 시도해주시기 바랍니다." });
       }
     } else {
       const formDataValid = await checkIsValid(formDataKeyIndex, key);
@@ -102,7 +120,7 @@ export default function Signup() {
         setUserData((current) => {
           const formData = { ...current };
 
-          formData[key] = key;
+          formData[formDataKeyIndex] = key;
 
           return formData;
         });
@@ -136,23 +154,34 @@ export default function Signup() {
         <>
           <NavHeader logocolor={theme.colors.gray100} />
           <StMain>
-            <StFormWrapper>
-              <StSignupImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
-              <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
-              <StSignupParagraph>당신의 {formDataKeyData[formDataKeyIndex]}을 입력해 주세요.</StSignupParagraph>
-              <StForm onSubmit={handleSubmit(submitForm)}>
-                <SignupForm
-                  register={register}
-                  errors={errors}
-                  keyData={formDataKeyData}
-                  keyIndex={formDataKeyIndex}
-                  isAgree={isAgreeCondition}
-                  isFilled={isFilled}
-                  onSetIsFilled={handleSetIsFilled}
-                  onToggleIsAgreeCondition={handleToggleIsAgreeCondition}
-                />
-              </StForm>
-            </StFormWrapper>
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                key={formDataKeyIndex}
+                transition={{
+                  default: { duration: 1 },
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}>
+                <StFormWrapper>
+                  <StSignupImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
+                  <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
+                  <StSignupParagraph>당신의 {formDataKeyData[formDataKeyIndex]}을 입력해 주세요.</StSignupParagraph>
+                  <StForm onSubmit={handleSubmit(submitForm)}>
+                    <SignupForm
+                      register={register}
+                      errors={errors}
+                      keyData={formDataKeyData}
+                      keyIndex={formDataKeyIndex}
+                      isAgree={isAgreeCondition}
+                      isFilled={isFilled}
+                      onSetIsFilled={handleSetIsFilled}
+                      onToggleIsAgreeCondition={handleToggleIsAgreeCondition}
+                    />
+                  </StForm>
+                </StFormWrapper>
+              </motion.div>
+            </AnimatePresence>
           </StMain>
         </>
       ) : (
