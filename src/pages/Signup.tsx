@@ -10,7 +10,7 @@ import { Error404, NavHeader } from "../components/common";
 import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../components/common/styled/Signup";
 import { SignupForm } from "../components/signup";
 import theme from "../styles/theme";
-import { getData } from "../utils/lib/api";
+import { getData, postData } from "../utils/lib/api";
 
 export interface UserData {
   [key: string]: string;
@@ -85,30 +85,40 @@ export default function Signup() {
   const submitForm = async (loginFormData: FormData) => {
     const key = loginFormData[formDataKeyIndex];
 
-    const formDataValid = await checkIsValid(formDataKeyIndex, key);
+    if (formDataKeyIndex === "password") {
+      try {
+        console.log(loginFormData);
+        const { data } = await postData("/auth/signup", userData);
 
-    const isError = checkIsFormErrors(formDataValid);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      const formDataValid = await checkIsValid(formDataKeyIndex, key);
 
-    if (!isError) {
-      setUserData((current) => {
-        const formData = { ...current };
+      const isError = checkIsFormErrors(formDataValid);
 
-        formData[key] = key;
+      if (!isError) {
+        setUserData((current) => {
+          const formData = { ...current };
 
-        return formData;
-      });
+          formData[key] = key;
 
-      setFormDataKeyIndex((current) => {
-        if (current === "email") {
-          return "nickname";
-        } else if (current === "nickname") {
-          return "password";
-        }
+          return formData;
+        });
 
-        return "submit";
-      });
+        setFormDataKeyIndex((current) => {
+          if (current === "email") {
+            return "nickname";
+          } else if (current === "nickname") {
+            return "password";
+          }
 
-      setValue(formDataKeyIndex, "");
+          return "submit";
+        });
+
+        setValue(formDataKeyIndex, "");
+      }
     }
   };
 
