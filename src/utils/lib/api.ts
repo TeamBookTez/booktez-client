@@ -1,8 +1,15 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { KAKAOParams, PatchBody, PeriNoteData, PostBody, PreNoteData } from "../dataType";
 import { client, KAKAO } from ".";
+
+interface ServerError {
+  error: boolean;
+  exist: boolean;
+  message: string;
+}
 
 export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
@@ -69,20 +76,15 @@ export const checkIsBookExist = async (isbn: string) => {
     const { data } = await client(userToken).get(`/book/exist/${isbn}`);
 
     if (data.success) {
-      return { isError: false, isExist: data.data.isExist };
+      return { isError: false, isExist: data.data.isExist, message: data.message };
     } else {
       // 통신에는 성공했으나 에러가 난 경우
       // 에러 메시지 받아서 토스트 띄울 수 있도록 추후 변경 예정
-      // console.log("[ERROR RETURNED]", data);
-
-      return { isError: true, isExist: false };
+      return { isError: true, isExist: false, message: data.message };
     }
   } catch (err) {
     // 통신에 실패한 경우
-    // if (axios.isAxiosError(err)) {
-    //   console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
-    // }
 
-    return { isError: true, isExist: false };
+    return { isError: true, isExist: false, message: "네트워크를 확인해주세요" };
   }
 };
