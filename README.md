@@ -152,11 +152,6 @@
 
 ## 👨‍👩‍👦‍👦 팀원
 
-| [김소령](https://github.com/soryeongk) | [이주함](https://github.com/joohaem) | [김규민](https://github.com/q-bit-junior) | [석상언](https://github.com/sharpcoder312)|
+| [김소령(soryeongk)](https://github.com/soryeongk) | [이주함(joohaem)](https://github.com/joohaem) | [김규민(q-bit-junior)](https://github.com/q-bit-junior) | [석상언(sharpcoder312)](https://github.com/sharpcoder312)|
 | :----------------------------------------: | :---------------------------------: | :---------------------------------: | :---------------------------------: |
 | <img src="https://avatars.githubusercontent.com/u/40630964?v=4" width="300px"> | <img src="https://avatars.githubusercontent.com/u/47105088?v=4" width="300px"> | <img src="https://avatars.githubusercontent.com/u/87220517?v=4" width="300px"> | <img src="https://avatars.githubusercontent.com/u/73876068?v=4" width="300px"> |
-
-- [👧 김소령](https://github.com/soryeongk)
-- [🧑 이주함](https://github.com/joohaem)
-- [👱‍♂️ 석상언](https://github.com/sharpcoder312)
-- [🤴 김규민](https://github.com/q-bit-junior)
