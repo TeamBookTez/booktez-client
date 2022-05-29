@@ -71,80 +71,79 @@ export default function Signup() {
     return result;
   };
 
-  const checkIsFormErrors = (formDataValid: { isValid: boolean; message: string }) => {
-    let errorState = { type: "server", message: "" };
+  const autoLogin = async (key: string) => {
+    try {
+      const res = await postData("/auth/signup", { ...userData, password: key });
 
-    if (formDataKeyIndex === "email" && !isAgreeCondition) {
-      errorState = {
-        ...errorState,
-        type: "agreeCondition",
-        message: "개인정보 수집 및 이용 약관에 동의해주시기 바랍니다.",
-      };
-    } else if (!formDataValid.isValid) {
-      errorState = { ...errorState, message: formDataValid.message };
-    }
+      if (res.status === 201) {
+        const {
+          data: { data },
+        } = await postData("/auth/login", { email: userData.email, password: key });
 
-    if (errorState.message) {
-      setError(formDataKeyIndex, errorState);
+        localStorage.setItem("booktez-token", data.token);
+        localStorage.setItem("booktez-nickname", data.nickname);
+        localStorage.setItem("booktez-email", data.email);
 
-      return true;
-    }
-
-    return false;
-  };
-
-  const submitForm = async (loginFormData: FormData) => {
-    const key = loginFormData[formDataKeyIndex];
-
-    if (formDataKeyIndex === "password") {
-      if (loginFormData["password"] === loginFormData["password2"]) {
-        try {
-          const res = await postData("/auth/signup", { ...userData, password: key });
-
-          if (res.status === 201) {
-            const {
-              data: { data },
-            } = await postData("/auth/login", { email: userData.email, password: key });
-
-            localStorage.setItem("booktez-token", data.token);
-            localStorage.setItem("booktez-nickname", data.nickname);
-            localStorage.setItem("booktez-email", data.email);
-
-            navigate("/welcome", { state: "rightpath" });
-          } else {
-            setError("password", { type: "server", message: "비밀번호가 일치하지 않습니다." });
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        navigate("/welcome", { state: "rightpath" });
       } else {
         setError("password", { type: "password", message: "죄송합니다. 잠시 후 다시 시도해주시기 바랍니다." });
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 다음 단계로 이동하는 함수
+  const setNextStep = (key: string) => {
+    setUserData((current) => {
+      const formData = { ...current };
+
+      formData[formDataKeyIndex] = key;
+
+      return formData;
+    });
+
+    setFormDataKeyIndex((current) => {
+      if (current === "email") {
+        return "nickname";
+      } else if (current === "nickname") {
+        return "password";
+      }
+
+      return "submit";
+    });
+
+    setValue(formDataKeyIndex, "");
+  };
+
+  // 폼 제출 에러가 없는지 확인
+  const submitForm = async (loginFormData: FormData) => {
+    const key = loginFormData[formDataKeyIndex];
+
+    // 비밀번호 입력까지 마치면 자동 로그인
+    if (formDataKeyIndex === "password") {
+      if (loginFormData["password"] === loginFormData["password2"]) {
+        autoLogin(key);
+      } else {
+        setError("password", { type: "server", message: "비밀번호가 일치하지 않습니다." });
+      }
     } else {
-      const formDataValid = await checkIsValid(formDataKeyIndex, key);
-
-      const isError = checkIsFormErrors(formDataValid);
-
-      if (!isError) {
-        setUserData((current) => {
-          const formData = { ...current };
-
-          formData[formDataKeyIndex] = key;
-
-          return formData;
+      // 이메일 입력시 개인정보 취급 방침 동의를 먼저 유도
+      if (formDataKeyIndex === "email" && !isAgreeCondition) {
+        setError(formDataKeyIndex, {
+          type: "agreeCondition",
+          message: "개인정보 수집 및 이용 약관에 동의해주시기 바랍니다.",
         });
+      } else {
+        // 서버로 데이터를 보내서 유효성 검사
+        // return: 유효한지(isValid) && 에러 메시지(message)
+        const { isValid, message } = await checkIsValid(formDataKeyIndex, key);
 
-        setFormDataKeyIndex((current) => {
-          if (current === "email") {
-            return "nickname";
-          } else if (current === "nickname") {
-            return "password";
-          }
-
-          return "submit";
-        });
-
-        setValue(formDataKeyIndex, "");
+        if (isValid) {
+          setNextStep(key);
+        } else {
+          setError(formDataKeyIndex, { type: "server", message });
+        }
       }
     }
   };
