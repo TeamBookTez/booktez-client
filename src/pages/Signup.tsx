@@ -20,10 +20,10 @@ import { Error404, NavHeader } from "../components/common";
 import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../components/common/styled/Signup";
 import { SignupForm } from "../components/signup";
 import theme from "../styles/theme";
-import { getData, postData } from "../utils/lib/api";
+import { getData, login, postData } from "../utils/lib/api";
 
 export interface UserData {
-  [key: string]: string;
+  [x: string]: string;
 }
 
 export default function Signup() {
@@ -76,17 +76,11 @@ export default function Signup() {
       const res = await postData("/auth/signup", { ...userData, password: key });
 
       if (res.status === 201) {
-        const {
-          data: { data },
-        } = await postData("/auth/login", { email: userData.email, password: key });
+        const errorData = await login({ email: userData.email, password: key }, setError);
 
-        localStorage.setItem("booktez-token", data.token);
-        localStorage.setItem("booktez-nickname", data.nickname);
-        localStorage.setItem("booktez-email", data.email);
-
-        navigate("/welcome", { state: "rightpath" });
-      } else {
-        setError("password", { type: "password", message: "죄송합니다. 잠시 후 다시 시도해주시기 바랍니다." });
+        if (errorData === null) {
+          navigate("/welcome", { state: "rightpath" });
+        }
       }
     } catch (error) {
       console.log(error);
