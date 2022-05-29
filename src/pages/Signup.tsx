@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImgSignupFirst } from "../assets/images";
+import { ImgSignupFirst, ImgSignupSecond, ImgSignupThird } from "../assets/images";
 import { FormData } from "../components/bookNote/periNote/PeriNote";
 import { Error404, NavHeader } from "../components/common";
 import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../components/common/styled/Signup";
@@ -41,6 +41,12 @@ export default function Signup() {
     email: "이메일",
     nickname: "닉네임",
     password: "비밀번호",
+  };
+
+  const imgList: UserData = {
+    email: ImgSignupFirst,
+    nickname: ImgSignupSecond,
+    password: ImgSignupThird,
   };
 
   const {
@@ -171,7 +177,7 @@ export default function Signup() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}>
                 <StFormWrapper>
-                  <StSignupImage src={ImgSignupFirst} alt="회원가입 첫 단계" />
+                  <StSignupImage src={imgList[formDataKeyIndex]} alt="회원가입 첫 단계" />
                   <StSignupHeading2>나만의 서재를 만드는 중이에요!</StSignupHeading2>
                   <StSignupParagraph>당신의 {formDataKeyData[formDataKeyIndex]}을 입력해 주세요.</StSignupParagraph>
                   <StForm onSubmit={handleSubmit(submitForm)}>
