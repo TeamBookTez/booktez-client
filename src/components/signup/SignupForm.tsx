@@ -16,17 +16,11 @@ interface SignupFormProps {
   keyData: UserData;
   keyIndex: string;
   isAgree: boolean;
-  isFilled: boolean;
-  onSetIsFilled: (filled: boolean) => void;
   onToggleIsAgreeCondition: () => void;
 }
 
 export default function SignupForm(props: SignupFormProps) {
-  const { register, errors, keyData, keyIndex, isAgree, isFilled, onSetIsFilled, onToggleIsAgreeCondition } = props;
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSetIsFilled(e.target.value !== "");
-  };
+  const { register, errors, keyData, keyIndex, isAgree, onToggleIsAgreeCondition } = props;
 
   return (
     <>
@@ -42,7 +36,6 @@ export default function SignupForm(props: SignupFormProps) {
         <StInputEmail
           {...register(keyIndex, errorPatterns[keyIndex])}
           placeholder={`${keyData[keyIndex]}을 입력해 주세요`}
-          onChange={handleChange}
         />
       )}
       {errors[keyIndex]?.message && <AlertLabel message={errors[keyIndex].message} />}
@@ -54,7 +47,7 @@ export default function SignupForm(props: SignupFormProps) {
         </StAgreeConditionBox>
       )}
 
-      <StNextStepBtn disabled={!isFilled} type="submit">
+      <StNextStepBtn disabled={false} type="submit">
         다음 계단
       </StNextStepBtn>
     </>
