@@ -87,7 +87,9 @@ export const checkIsBookExist = async (isbn: string) => {
 
 export const login = async (loginFormData: UserData, setError: UseFormSetError<UserData>) => {
   try {
-    const { data: data } = await postData("/auth/login", loginFormData);
+    const {
+      data: { data },
+    } = await postData("/auth/login", loginFormData);
 
     localStorage.setItem("booktez-token", data.token);
     localStorage.setItem("booktez-nickname", data.nickname);
