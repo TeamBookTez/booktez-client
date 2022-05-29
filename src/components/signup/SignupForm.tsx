@@ -16,11 +16,12 @@ interface SignupFormProps {
   keyData: UserData;
   keyIndex: string;
   isAgree: boolean;
+  isDirty: boolean;
   onToggleIsAgreeCondition: () => void;
 }
 
 export default function SignupForm(props: SignupFormProps) {
-  const { register, errors, keyData, keyIndex, isAgree, onToggleIsAgreeCondition } = props;
+  const { register, errors, keyData, keyIndex, isAgree, isDirty, onToggleIsAgreeCondition } = props;
 
   return (
     <>
@@ -36,6 +37,7 @@ export default function SignupForm(props: SignupFormProps) {
         <StInputEmail
           {...register(keyIndex, errorPatterns[keyIndex])}
           placeholder={`${keyData[keyIndex]}을 입력해 주세요`}
+          // onChange={handleChange}
         />
       )}
       {errors[keyIndex]?.message && <AlertLabel message={errors[keyIndex].message} />}
@@ -47,7 +49,7 @@ export default function SignupForm(props: SignupFormProps) {
         </StAgreeConditionBox>
       )}
 
-      <StNextStepBtn disabled={false} type="submit">
+      <StNextStepBtn disabled={!isDirty} type="submit">
         다음 계단
       </StNextStepBtn>
     </>
