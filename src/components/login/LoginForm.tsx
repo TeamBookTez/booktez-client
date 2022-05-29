@@ -1,20 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
 import { emailErrorPatterns, passwordErrorPatterns } from "../../utils/check";
-import { postData } from "../../utils/lib/api";
-import { FormData } from "../bookNote/periNote/PeriNote";
+import { login } from "../../utils/lib/api";
 import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
 import { PwdSightIcon } from ".";
-
-interface ErrorResponse {
-  status: number;
-  message: string;
-}
 
 export default function LoginForm() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
@@ -25,32 +19,15 @@ export default function LoginForm() {
     handleSubmit,
     setError,
     formState: { errors, isValid },
-  } = useForm<FormData>({
+  } = useForm<UserData>({
     mode: "onSubmit",
   });
 
-  const submitForm = async (loginFormData: FormData) => {
-    try {
-      const { data: data } = await postData("/auth/login", loginFormData);
+  const submitForm = async (loginFormData: UserData) => {
+    const errorData = await login(loginFormData, setError);
 
-      localStorage.setItem("booktez-token", data.token);
-      localStorage.setItem("booktez-nickname", data.nickname);
-      localStorage.setItem("booktez-email", data.email);
-
+    if (errorData === null) {
       nav("/main");
-      // 메인에서 로그인 온 경우에는 메인으로,
-
-      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const errorResponse: ErrorResponse = err.response?.data;
-        const errorField = errorResponse.status === 400 ? "password" : errorResponse.status === 404 ? "email" : "";
-
-        setError(errorField, {
-          type: "server",
-          message: errorResponse.message,
-        });
-      }
     }
   };
 
