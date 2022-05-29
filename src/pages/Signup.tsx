@@ -129,6 +129,9 @@ export default function Signup() {
   const submitForm = async (loginFormData: FormData) => {
     const key = loginFormData[formDataKeyIndex];
 
+    console.log("loginFormData", loginFormData);
+    console.log("key", key);
+
     // 비밀번호 입력까지 마치면 자동 로그인
     if (formDataKeyIndex === "password") {
       if (loginFormData["password"] === loginFormData["password2"]) {
@@ -144,10 +147,13 @@ export default function Signup() {
           message: "개인정보 수집 및 이용 약관에 동의해주시기 바랍니다.",
         });
       } else {
+        // console.log("hey", loginFormData);
         // 서버로 데이터를 보내서 유효성 검사
         // return: 유효한지(isValid) && 에러 메시지(message)
+        console.log("isCalled");
         const { isValid, message } = await checkIsValid(formDataKeyIndex, key);
 
+        console.log("isValid, message", isValid, message);
         if (isValid) {
           setNextStep(key);
         } else {
