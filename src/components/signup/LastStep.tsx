@@ -1,3 +1,13 @@
+/*
+마지막 편집자: 22-05-29 soryeongk
+변경사항 및 참고:
+  - react router dom을 사용하지 않는 넥제를 대비해 Outlet을 사용하지 않는 방향으로 바꾸었습니다.
+  - 이에 따라 Router.tsx 파일도 변경되었습니다!
+    
+고민점:
+  - 별도의 타입 가드없이 nickname이 string | null로 되도록 해두었는데,
+    Next.js로 옮길 때 nickname이 null인 경우에는 메인으로 리디렉션하는 것 넣으면 좋을 듯합니다.
+*/
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
