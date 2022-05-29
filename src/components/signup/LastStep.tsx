@@ -1,20 +1,19 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgSignUpFinish } from "../../assets/images";
-import { UserData } from "../../pages/Signup";
 import { patchData, postData } from "../../utils/lib/api";
 import { Loading } from "../common";
 import { Button } from "../common/styled/Button";
 import { StSignupHeading2 } from "../common/styled/Signup";
 
 export default function LastStep() {
-  const [userData] = useOutletContext<[UserData]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const nickname = localStorage.getItem("booktez-nickname");
 
   const addBookReview = async () => {
     const _token = localStorage.getItem("booktez-token");
@@ -54,16 +53,9 @@ export default function LastStep() {
       {isLoading ? (
         <Loading />
       ) : (
-        <motion.div
-          key="lastSignup"
-          transition={{
-            default: { duration: 1 },
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}>
+        <>
           <StSignupHeading2>
-            {userData["nickname"]}님!
+            {nickname}님!
             <br />
             나만의 서재가 완성됐어요!
           </StSignupHeading2>
@@ -72,7 +64,7 @@ export default function LastStep() {
           <StHomeBtn type="button" onClick={goNextStep}>
             홈 바로가기
           </StHomeBtn>
-        </motion.div>
+        </>
       )}
     </StArticle>
   );
