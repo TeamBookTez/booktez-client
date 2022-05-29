@@ -1,3 +1,12 @@
+/*
+마지막 편집자: 22-05-29 soryeongk
+변경사항 및 참고:
+  - 회원가입 폼을 useForm으로 운영하는 것으로 변경했습니다.
+  - 중복되는 코드와 파일이 너무 많아서 컴포넌트만 변경되는 방식으로 변경했습니다.
+    
+고민점:
+  - 마운트 애니메이션을 레이아웃으로 빼볼까?
+*/
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
