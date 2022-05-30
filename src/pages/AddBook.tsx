@@ -8,7 +8,7 @@ import { StickyHeader } from "../components/bookcase";
 import { Loading, MainHeader } from "../components/common";
 import { isLoginState } from "../utils/atom";
 import { searchBook } from "../utils/lib/api";
-import { useCheckLoginState } from "../utils/useHooks";
+import { useCheckLoginState, useDebounce } from "../utils/useHooks";
 
 export interface BookInfo {
   thumbnail: string;
@@ -21,9 +21,10 @@ export interface BookInfo {
 }
 
 export default function AddBook() {
+  const { query, debounceQuery, setDebounceQuery } = useDebounce();
+
   const [books, setBooks] = useState<BookInfo[]>([]);
-  const [query, setQuery] = useState<string>("");
-  const [debounceQuery, setDebounceQuery] = useState<string>("");
+
   const { isLogin, isLoginLoading } = useCheckLoginState();
   const setIsLogin = useSetRecoilState(isLoginState);
 
@@ -36,14 +37,6 @@ export default function AddBook() {
       handleSearchBook(query, true); // 컴포넌트 마운트 후에, 함수를 호출한다.
     }
   }, [query]);
-
-  useEffect(() => {
-    const debounce = setTimeout(() => {
-      return setQuery(debounceQuery);
-    }, 200);
-
-    return () => clearTimeout(debounce);
-  }, [debounceQuery]);
 
   const handleSearchBook = async (query: string, reset: boolean) => {
     const paramsAPI = {
