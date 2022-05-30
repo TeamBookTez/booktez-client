@@ -2,10 +2,11 @@ import styled, { css } from "styled-components";
 
 import { IcToastAlert } from "../../assets/icons";
 import { StIcCancelWhite } from "../common/styled/NoteModalWrapper";
+import { ServerError } from "./BookList";
 
 interface AlertToastProps {
   onCloseAlertToast: () => void;
-  isServerError: any;
+  isServerError: ServerError;
 }
 
 export default function AlertToast(props: AlertToastProps) {
