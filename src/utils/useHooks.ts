@@ -23,7 +23,7 @@ export function useCheckLoginState() {
       const status = data.status;
 
       if (status === 200) {
-        data.data.isLogin === true ? setIsLogin(true) : setIsLogin(false);
+        setIsLogin(data.data.isLogin);
       }
     } catch (err) {
       setIsLogin(false);
