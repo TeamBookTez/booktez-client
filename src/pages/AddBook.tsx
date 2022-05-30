@@ -21,7 +21,7 @@ export interface BookInfo {
 }
 
 export default function AddBook() {
-  const { query, debounceQuery, setDebounceQuery } = useDebounce();
+  const { query, debounceQuery, setDebounceQuery } = useDebounce<string>("");
 
   const [books, setBooks] = useState<BookInfo[]>([]);
 
