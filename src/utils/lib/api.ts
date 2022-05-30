@@ -1,15 +1,8 @@
-import { useState } from "react";
 import useSWR from "swr";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
 import { KAKAOParams, PatchBody, PeriNoteData, PostBody, PreNoteData } from "../dataType";
 import { client, KAKAO } from ".";
-
-interface ServerError {
-  error: boolean;
-  exist: boolean;
-  message: string;
-}
 
 export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
