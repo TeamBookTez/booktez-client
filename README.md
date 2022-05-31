@@ -41,7 +41,7 @@
 "typescript": "^4.5.4"
 ```
 
-현재 저희는 **더 좋은 유저 경험과 확장성, 그리고 우리의 성장**을 위해 **Next.js**로의 마이그레이션을 진행하고 있습니다.
+현재 저희는 **더 좋은 유저 경험과 확장성, 그리고 우리의 성장**을 위해 [**🔗 Next.js 버전(클릭)**](https://github.com/TeamBookTez/nextjs-book-stairs)로의 마이그레이션을 진행하고 있습니다.
 
 우리 서비스에 적합하고, 공부할 가치가 있는 기술을 사용해보고, 틀에 갇힌 코드를 작성하지 않도록 **🎉[Discussions(클릭)](https://github.com/TeamBookTez/nextjs-book-stairs/discussions)를 오픈했습니다🎉**
 
