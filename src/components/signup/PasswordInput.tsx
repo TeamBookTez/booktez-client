@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import { UserData } from "../../pages/Signup";
 import { passwordErrorPatterns } from "../../utils/check";
+import { Input } from "../common/styled/Input";
 import { PwdSightIcon } from "../login";
-import { StInputEmail } from "../login/LoginForm";
 
 interface PasswordInputProps {
   register: UseFormRegister<UserData>;
@@ -21,7 +21,7 @@ export default function PasswordInput(props: PasswordInputProps) {
 
   return (
     <StInputPwdWrapper>
-      <StInputEmail
+      <Input
         {...register(keyIndex, passwordErrorPatterns)}
         placeholder="비밀번호를 입력해 주세요"
         type={isPwdSight ? "text" : "password"}

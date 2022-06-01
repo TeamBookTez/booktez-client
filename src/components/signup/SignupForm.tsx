@@ -6,8 +6,8 @@ import { UserData } from "../../pages/Signup";
 import { errorPatterns } from "../../utils/check";
 import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
+import { Input } from "../common/styled/Input";
 import { LabelHidden } from "../common/styled/LabelHidden";
-import { StInputEmail } from "../login/LoginForm";
 import PasswordInput from "./PasswordInput";
 
 interface SignupFormProps {
@@ -34,7 +34,7 @@ export default function SignupForm(props: SignupFormProps) {
           </StPassword2Input>
         </>
       ) : (
-        <StInputEmail
+        <Input
           {...register(keyIndex, errorPatterns[keyIndex])}
           placeholder={`${keyData[keyIndex]}을 입력해 주세요`}
           // onChange={handleChange}
