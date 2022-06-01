@@ -8,6 +8,7 @@ import { emailErrorPatterns, passwordErrorPatterns } from "../../utils/check";
 import { login } from "../../utils/lib/api";
 import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
+import { Input } from "../common/styled/Input";
 import { PwdSightIcon } from ".";
 
 export default function LoginForm() {
@@ -38,12 +39,12 @@ export default function LoginForm() {
   return (
     <StForm onSubmit={handleSubmit(submitForm)}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
-      <StInputEmail {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
+      <Input {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
       {errors.email?.message && <AlertLabel message={errors.email.message} />}
 
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <StInputPwdWrapper>
-        <StInputPwd
+        <Input
           {...register("password", passwordErrorPatterns)}
           placeholder="비밀번호를 입력해 주세요"
           type={isPwdSight ? "text" : "password"}
@@ -98,43 +99,6 @@ const StLoginBtn = styled(Button)<{ disabled: boolean }>`
     `}
 `;
 
-// 아래 내용들 동일 - common/styled/input과 동일 - 중복 제거 필요
-export const StInputEmail = styled.input`
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-
-  ${({ theme }) => theme.fonts.body3}
-  color: ${({ theme }) => theme.colors.gray100};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray400};
-  }
-`;
-
 const StInputPwdWrapper = styled.div`
   position: relative;
-`;
-
-const StInputPwd = styled.input`
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-
-  ${({ theme }) => theme.fonts.body3}
-  color: ${({ theme }) => theme.colors.gray100};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray400};
-  }
 `;
