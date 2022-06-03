@@ -1,37 +1,41 @@
 import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { emailErrorPatterns, passwordErrorPatterns } from "../../utils/check";
 import { postData } from "../../utils/lib/api";
-import { AlertLabel, InputEmail, InputPwd } from "../common";
+import { FormData } from "../bookNote/periNote/PeriNote";
+import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
+import { PwdSightIcon } from ".";
+
+interface ErrorResponse {
+  status: number;
+  message: string;
+}
 
 export default function LoginForm() {
-  const [email, setEmail] = useState<string>("");
-  const [pwd, setPwd] = useState<string>("");
-  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
-  const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
-  const [isEmailError, setIsEmailError] = useState<boolean>(false);
-  const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const nav = useNavigate();
 
-  const postLogin = async () => {
-    if (isEmailEmpty || isPwdEmpty) return;
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    mode: "onChange",
+  });
 
-    const loginBody = {
-      email,
-      password: pwd,
-    };
-
+  const submitForm = async (loginFormData: FormData) => {
     try {
-      const res = await postData("/auth/login", loginBody);
-      const resData = res.data.data;
+      const { data: data } = await postData("/auth/login", loginFormData);
 
-      localStorage.setItem("booktez-token", resData.token);
-      localStorage.setItem("booktez-nickname", resData.nickname);
-      localStorage.setItem("booktez-email", resData.email);
+      localStorage.setItem("booktez-token", data.token);
+      localStorage.setItem("booktez-nickname", data.nickname);
+      localStorage.setItem("booktez-email", data.email);
 
       nav("/main");
       // 메인에서 로그인 온 경우에는 메인으로,
@@ -39,69 +43,39 @@ export default function LoginForm() {
       // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const status = err.response?.data.status;
+        const errorResponse: ErrorResponse = err.response?.data;
+        const errorField = errorResponse.status === 400 ? "password" : errorResponse.status === 404 ? "email" : "";
 
-        if (status === 404) {
-          setIsEmailError(true);
-        } else {
-          setIsPwdError(true);
-        }
+        setError(errorField, {
+          type: "server",
+          message: errorResponse.message,
+        });
       }
     }
   };
 
-  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-
-    setIsEmailError(false);
-    setIsEmailEmpty(targetValue === "");
-    setEmail(targetValue);
-  };
-
-  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-
-    setIsPwdError(false);
-    setIsPwdEmpty(targetValue === "");
-    setPwd(targetValue);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    postLogin();
-  };
-
-  const toggleSightPwd = () => {
-    setIsPwdSight((isPwdSight) => !isPwdSight);
+  const toggleSightPwd = (isSight: boolean) => {
+    setIsPwdSight(isSight);
   };
 
   return (
-    <StForm onSubmit={handleSubmit}>
+    <StForm onSubmit={handleSubmit(submitForm)}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
-      <InputEmail
-        whatPlaceholder="이메일을 입력해 주세요"
-        whatType="text"
-        whatId="loginEmail"
-        whatValue={email}
-        isEmpty={isEmailEmpty}
-        isError={isEmailError}
-        handleOnChange={handleOnChangeEmail}
-      />
-      <AlertLabel isError={isEmailError}>존재하지 않는 이메일 입니다.</AlertLabel>
+      <StInputEmail {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
+      {errors.email?.message && <AlertLabel>{errors.email.message}</AlertLabel>}
+
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
-      <InputPwd
-        whatPlaceholder="비밀번호를 입력해 주세요"
-        whatType={isPwdSight ? "text" : "password"}
-        whatId="loginPwd"
-        whatValue={pwd}
-        isEmpty={isPwdEmpty}
-        isError={isPwdError}
-        isPwdSight={isPwdSight}
-        toggleSightPwd={toggleSightPwd}
-        handleOnChange={handleOnChangePwd}
-      />
-      <AlertLabel isError={isPwdError}>비밀번호가 일치하지 않습니다.</AlertLabel>
-      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty} onClick={postLogin}>
+      <StInputPwdWrapper>
+        <StInputPwd
+          {...register("password", passwordErrorPatterns)}
+          placeholder="비밀번호를 입력해 주세요"
+          type={isPwdSight ? "text" : "password"}
+        />
+        <PwdSightIcon isPwdSight={isPwdSight} onToggleSightPwd={toggleSightPwd} />
+      </StInputPwdWrapper>
+      {errors.password?.message && <AlertLabel>{errors.password.message}</AlertLabel>}
+
+      <StLoginBtn disabled={!isValid} type="submit">
         로그인
       </StLoginBtn>
     </StForm>
@@ -125,7 +99,7 @@ const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
 `;
 
-const StLoginBtn = styled(Button)<{ active: boolean }>`
+const StLoginBtn = styled(Button)<{ disabled: boolean }>`
   width: 46.4rem;
   height: 5.6rem;
 
@@ -135,14 +109,54 @@ const StLoginBtn = styled(Button)<{ active: boolean }>`
 
   ${({ theme }) => theme.fonts.button}
 
-  ${({ active }) =>
-    active
-      ? ""
-      : css`
-          background-color: ${({ theme }) => theme.colors.white400}; // inactive
-          color: ${({ theme }) => theme.colors.gray300}; // inactive
-          &:hover {
-            cursor: default;
-          }
-        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white400}; // inactive
+      color: ${({ theme }) => theme.colors.gray300}; // inactive
+
+      &:hover {
+        cursor: default;
+      }
+    `}
+`;
+
+const StInputEmail = styled.input`
+  width: 100%;
+  height: 5.4rem;
+  padding-left: 2rem;
+
+  background-color: ${({ theme }) => theme.colors.white200};
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.body3}
+  color: ${({ theme }) => theme.colors.gray100};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray400};
+  }
+`;
+
+const StInputPwdWrapper = styled.div`
+  position: relative;
+`;
+
+const StInputPwd = styled.input`
+  width: 100%;
+  height: 5.4rem;
+  padding-left: 2rem;
+
+  background-color: ${({ theme }) => theme.colors.white200};
+
+  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
+  border-radius: 1rem;
+
+  ${({ theme }) => theme.fonts.body3}
+  color: ${({ theme }) => theme.colors.gray100};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray400};
+  }
 `;

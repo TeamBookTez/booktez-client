@@ -124,7 +124,7 @@ export default function ThirdStep() {
             handleOnChange={handleOnChangePwd}
           />
         </StInputPwdWrapper>
-        <AlertLabel isError={isPwdError}>영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요.</AlertLabel>
+        {/* <AlertLabel isError={isPwdError}>영문, 숫자, 특수문자를 조합해 8자 이상 입력해 주세요.</AlertLabel> */}
 
         <LabelHidden htmlFor="signupPwdRe">비밀번호 확인</LabelHidden>
         <StInputPwdReWrapper>
@@ -140,7 +140,7 @@ export default function ThirdStep() {
             handleOnChange={handleOnChangePwdRe}
           />
         </StInputPwdReWrapper>
-        <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel>
+        {/* <AlertLabel isError={isPwdReError}>비밀번호가 다릅니다.</AlertLabel> */}
         <StNextStepBtn type="submit" active={!isPwdEmpty && !isPwdReEmpty && !isPwdError && !isPwdReError}>
           다음 계단
         </StNextStepBtn>

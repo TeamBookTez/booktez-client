@@ -4,26 +4,26 @@ import { IcAlert } from "../../assets/icons";
 
 interface AlertLabelProps {
   children: string;
-  isError: boolean;
 }
 
 export default function AlertLabel(props: AlertLabelProps) {
-  const { children, isError } = props;
+  const { children } = props;
 
   return (
-    <StLabelWrapper isError={isError}>
+    <StLabelWrapper>
       <StAlert />
       <StStrong>{children}</StStrong>
     </StLabelWrapper>
   );
 }
 
-const StLabelWrapper = styled.p<{ isError: boolean }>`
+const StLabelWrapper = styled.p`
+  display: flex;
+  align-items: center;
+
   width: 100%;
   height: 2.4rem;
   margin: 1.3rem 0 0 0.4rem;
-
-  ${({ isError }) => (isError ? "display: flex;" : "display: none;")};
 `;
 
 const StAlert = styled(IcAlert)`
