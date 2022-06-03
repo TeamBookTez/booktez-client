@@ -13,7 +13,7 @@ interface BookListProps {
   books: BookInfo[];
 }
 
-interface ServerError {
+export interface ServerError {
   error: boolean;
   exist: boolean;
   message: string;
