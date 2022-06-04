@@ -81,7 +81,7 @@ export default function Signup() {
     return result;
   };
 
-  const autoLogin = async (key: string) => {
+  const autoLoginAfterSignup = async (key: string) => {
     try {
       const res = await postData("/auth/signup", { ...userData, password: key });
 
@@ -132,7 +132,7 @@ export default function Signup() {
     // 비밀번호 입력까지 마치면 자동 로그인
     if (formDataKeyIndex === "password") {
       if (loginFormData["password"] === loginFormData["password2"]) {
-        autoLogin(key);
+        autoLoginAfterSignup(key);
       } else {
         setError("password", { type: "server", message: "비밀번호가 일치하지 않습니다." });
       }
