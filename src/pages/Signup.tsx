@@ -20,7 +20,8 @@ import { Error404, NavHeader } from "../components/common";
 import { StSignupHeading2, StSignupImage, StSignupParagraph } from "../components/common/styled/Signup";
 import { SignupForm } from "../components/signup";
 import theme from "../styles/theme";
-import { getData, login, postData } from "../utils/lib/api";
+import { login, postData } from "../utils/lib/api";
+import { checkIsValid } from "../utils/signup";
 
 export interface UserData {
   [x: string]: string;
@@ -64,23 +65,7 @@ export default function Signup() {
     },
   });
 
-  const checkIsValid = async (index: string, key: string) => {
-    const urlPath = `/auth/${index}?${index}=${key}`;
-    let result = { isValid: false, message: "" };
-
-    try {
-      const { data } = await getData(urlPath);
-
-      result = { isValid: data.data.isValid, message: data.message };
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        result = { ...result, message: err.response?.data.message };
-      }
-    }
-
-    return result;
-  };
-
+  // 넥제 옮기면서 로그인도 함수로 빼내기 - error 처리만 각각 달리할 수 있도록
   const autoLoginAfterSignup = async (key: string) => {
     try {
       const res = await postData("/auth/signup", { ...userData, password: key });
