@@ -1,20 +1,15 @@
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { UserData } from "../../pages/Signup";
 import { emailErrorPatterns, passwordErrorPatterns } from "../../utils/check";
-import { postData } from "../../utils/lib/api";
-import { FormData } from "../bookNote/periNote/PeriNote";
+import { login } from "../../utils/lib/api";
 import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
+import { Input } from "../common/styled/Input";
 import { PwdSightIcon } from ".";
-
-interface ErrorResponse {
-  status: number;
-  message: string;
-}
 
 export default function LoginForm() {
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
@@ -25,32 +20,15 @@ export default function LoginForm() {
     handleSubmit,
     setError,
     formState: { errors, isValid },
-  } = useForm<FormData>({
-    mode: "onChange",
+  } = useForm<UserData>({
+    mode: "onSubmit",
   });
 
-  const submitForm = async (loginFormData: FormData) => {
-    try {
-      const { data: data } = await postData("/auth/login", loginFormData);
+  const submitForm = async (loginFormData: UserData) => {
+    const errorData = await login(loginFormData, setError);
 
-      localStorage.setItem("booktez-token", data.token);
-      localStorage.setItem("booktez-nickname", data.nickname);
-      localStorage.setItem("booktez-email", data.email);
-
+    if (errorData === null) {
       nav("/main");
-      // 메인에서 로그인 온 경우에는 메인으로,
-
-      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const errorResponse: ErrorResponse = err.response?.data;
-        const errorField = errorResponse.status === 400 ? "password" : errorResponse.status === 404 ? "email" : "";
-
-        setError(errorField, {
-          type: "server",
-          message: errorResponse.message,
-        });
-      }
     }
   };
 
@@ -61,19 +39,19 @@ export default function LoginForm() {
   return (
     <StForm onSubmit={handleSubmit(submitForm)}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
-      <StInputEmail {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
-      {errors.email?.message && <AlertLabel>{errors.email.message}</AlertLabel>}
+      <Input {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
+      {errors.email?.message && <AlertLabel message={errors.email.message} />}
 
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
       <StInputPwdWrapper>
-        <StInputPwd
+        <Input
           {...register("password", passwordErrorPatterns)}
           placeholder="비밀번호를 입력해 주세요"
           type={isPwdSight ? "text" : "password"}
         />
         <PwdSightIcon isPwdSight={isPwdSight} onToggleSightPwd={toggleSightPwd} />
       </StInputPwdWrapper>
-      {errors.password?.message && <AlertLabel>{errors.password.message}</AlertLabel>}
+      {errors.password?.message && <AlertLabel message={errors.password.message} />}
 
       <StLoginBtn disabled={!isValid} type="submit">
         로그인
@@ -121,42 +99,6 @@ const StLoginBtn = styled(Button)<{ disabled: boolean }>`
     `}
 `;
 
-const StInputEmail = styled.input`
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-
-  ${({ theme }) => theme.fonts.body3}
-  color: ${({ theme }) => theme.colors.gray100};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray400};
-  }
-`;
-
 const StInputPwdWrapper = styled.div`
   position: relative;
-`;
-
-const StInputPwd = styled.input`
-  width: 100%;
-  height: 5.4rem;
-  padding-left: 2rem;
-
-  background-color: ${({ theme }) => theme.colors.white200};
-
-  border: 0.2rem solid ${({ theme }) => theme.colors.white200};
-  border-radius: 1rem;
-
-  ${({ theme }) => theme.fonts.body3}
-  color: ${({ theme }) => theme.colors.gray100};
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray400};
-  }
 `;

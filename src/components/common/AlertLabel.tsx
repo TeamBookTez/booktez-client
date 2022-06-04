@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { IcAlert } from "../../assets/icons";
 
 interface AlertLabelProps {
-  children: string;
+  message: string | undefined;
 }
 
 export default function AlertLabel(props: AlertLabelProps) {
-  const { children } = props;
+  const { message } = props;
 
   return (
     <StLabelWrapper>
       <StAlert />
-      <StStrong>{children}</StStrong>
+      <StStrong>{message}</StStrong>
     </StLabelWrapper>
   );
 }

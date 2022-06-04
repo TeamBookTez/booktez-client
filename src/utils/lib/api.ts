@@ -1,15 +1,11 @@
-import { useState } from "react";
+import axios from "axios";
+import { UseFormSetError } from "react-hook-form";
 import useSWR from "swr";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
+import { UserData } from "../../pages/Signup";
 import { KAKAOParams, PatchBody, PeriNoteData, PostBody, PreNoteData } from "../dataType";
 import { client, KAKAO } from ".";
-
-interface ServerError {
-  error: boolean;
-  exist: boolean;
-  message: string;
-}
 
 export const searchBook = (params: KAKAOParams) => {
   return KAKAO.get("/v3/search/book", { params });
@@ -87,4 +83,29 @@ export const checkIsBookExist = async (isbn: string) => {
 
     return { isError: true, isExist: false, message: "네트워크를 확인해주세요" };
   }
+};
+
+export const login = async (loginFormData: UserData, setError: UseFormSetError<UserData>) => {
+  try {
+    const {
+      data: { data },
+    } = await postData("/auth/login", loginFormData);
+
+    localStorage.setItem("booktez-token", data.token);
+    localStorage.setItem("booktez-nickname", data.nickname);
+    localStorage.setItem("booktez-email", data.email);
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const errorData = err.response?.data;
+
+      const errorField = errorData.status === 404 ? "email" : "password";
+
+      setError(errorField, {
+        type: "server",
+        message: errorData.message,
+      });
+    }
+  }
+
+  return null;
 };
