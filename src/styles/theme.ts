@@ -30,31 +30,23 @@ interface TempFont extends Omit<Font, "height"> {
   height: number;
 }
 
-const getFontheight = (height: Font["height"]): 1.3 | 1.5 => {
-  switch (height) {
-    case "default":
-      return 1.3;
-    case "long":
-      return 1.5;
-  }
-};
+const fontHeight =  {
+  default: 1.3,
+  long: 1.5,
+} as const;
 
-const getFontSpaceing = (spacing: Font["spacing"]): -0.1 | -0.07 => {
-  switch (spacing) {
-    case "default":
-      return -0.1;
-    case "close":
-      return -0.07;
-  }
-};
+const fontSpacing =  {
+  default: -0.1,
+  close: -0.07,
+} as const;
 
 function FONT({ weight, size, height, spacing }: Font | TempFont) {
   return css`
     font-family: Pretendard;
     font-weight: ${weight};
     font-size: ${size}rem;
-    line-height: ${typeof height === "number" ? height : getFontheight(height)};
-    letter-spacing: ${getFontSpaceing(spacing)}rem;
+    line-height: ${typeof height === "number" ? height : fontHeight[height]};
+    letter-spacing: ${fontSpacing[spacing]}rem;
   `;
 }
 
