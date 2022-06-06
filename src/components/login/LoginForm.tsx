@@ -19,9 +19,13 @@ export default function LoginForm() {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isValid },
+    formState: { errors, isDirty },
   } = useForm<UserData>({
     mode: "onSubmit",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const submitForm = async (loginFormData: UserData) => {
@@ -53,7 +57,7 @@ export default function LoginForm() {
       </StInputPwdWrapper>
       {errors.password?.message && <AlertLabel message={errors.password.message} />}
 
-      <StLoginBtn disabled={!isValid} type="submit">
+      <StLoginBtn disabled={!isDirty} type="submit">
         로그인
       </StLoginBtn>
     </StForm>
