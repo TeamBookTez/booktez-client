@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
@@ -22,6 +22,9 @@ interface PriorAnswerProps {
 
 export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
+  const [urgentQuery, setUrgentQuery] = useState<string>(node.content);
+  const deferredQuery = useDeferredValue<string>(urgentQuery);
+
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -30,9 +33,14 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     onAddChild(pathArray, idx, isQuestionChecked);
   };
 
-  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+  // const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+  //   if (e.target.value !== "\n") {
+  //     onSetContent(e.target.value, pathArray);
+  //   }
+  // };
+  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value !== "\n") {
-      onSetContent(e.target.value, pathArray);
+      setUrgentQuery(e.target.value);
     }
   };
 
@@ -61,6 +69,10 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     }
   }, []);
 
+  useEffect(() => {
+    onSetContent(deferredQuery, path);
+  }, [deferredQuery]);
+
   return (
     <StFieldset>
       <StAnswerWrapper hasborder={node.children.length > 0}>
@@ -69,9 +81,9 @@ export default function PriorAnswer(props: PriorAnswerProps) {
         </legend>
         <StInput
           ref={textAreaRef}
-          value={node.content}
+          value={urgentQuery}
           placeholder={"답변을 입력해주세요."}
-          onChange={(e) => handleChangeSetContent(e, path)}
+          onChange={handleChangeSetContent}
           onKeyPress={(e) => handleKeyPress(e, path, index, isQuestion)}
         />
         <StMore className="icn_more" />

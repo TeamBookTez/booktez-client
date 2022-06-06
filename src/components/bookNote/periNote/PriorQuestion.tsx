@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
@@ -21,6 +21,9 @@ interface PriorQuestionProps {
 
 export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
+  const [urgentQuery, setUrgentQuery] = useState<string>(node.content);
+  const deferredQuery = useDeferredValue<string>(urgentQuery);
+
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
   // 큰 답변 추가시 사용되는 index는 현재 큰질문의 index가 아닌 답변의 개수
@@ -28,9 +31,9 @@ export default function PriorQuestion(props: PriorQuestionProps) {
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value !== "\n") {
-      onSetContent(e.target.value, pathArray);
+      setUrgentQuery(e.target.value);
     }
   };
 
@@ -46,6 +49,11 @@ export default function PriorQuestion(props: PriorQuestionProps) {
     }
   }, []);
 
+  // react가 바쁘지 않은 시점에 path를 찾아 urgentQuery에 모인 내용을 periNote로 업데이트
+  useEffect(() => {
+    onSetContent(deferredQuery, path);
+  }, [deferredQuery]);
+
   return (
     <>
       <StFieldset>
@@ -54,9 +62,9 @@ export default function PriorQuestion(props: PriorQuestionProps) {
         </legend>
         <StInput
           ref={textAreaRef}
-          value={node.content}
+          value={urgentQuery}
           placeholder={"질문을 입력해주세요."}
-          onChange={(e) => handleContent(e, path)}
+          onChange={handleContent}
           onKeyPress={(e) => handleKeyPress(e, path)}
         />
         <StAddAnswerButton type="button" onClick={() => onAddChild(path, currentIndex, isQuestion)}>
