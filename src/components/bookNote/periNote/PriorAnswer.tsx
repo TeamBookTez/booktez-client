@@ -1,9 +1,10 @@
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { useUpdatePeriNote } from "../../../utils/useHooks";
 import { StMenuBtn } from "../../common/styled/Button";
 import { StMoreIcon } from "../../common/styled/Icon";
 import { StMenuWrapper } from "../../common/styled/MenuWrapper";
@@ -22,8 +23,7 @@ interface PriorAnswerProps {
 
 export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
-  const [urgentQuery, setUrgentQuery] = useState<string>(node.content);
-  const deferredQuery = useDeferredValue<string>(urgentQuery);
+  const { urgentQuery, setUrgentQuery } = useUpdatePeriNote(node.content, path, onSetContent);
 
   const isQuestion = false;
 
@@ -33,11 +33,6 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     onAddChild(pathArray, idx, isQuestionChecked);
   };
 
-  // const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
-  //   if (e.target.value !== "\n") {
-  //     onSetContent(e.target.value, pathArray);
-  //   }
-  // };
   const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value !== "\n") {
       setUrgentQuery(e.target.value);
@@ -68,10 +63,6 @@ export default function PriorAnswer(props: PriorAnswerProps) {
       textAreaRef.current.focus();
     }
   }, []);
-
-  useEffect(() => {
-    onSetContent(deferredQuery, path);
-  }, [deferredQuery]);
 
   return (
     <StFieldset>

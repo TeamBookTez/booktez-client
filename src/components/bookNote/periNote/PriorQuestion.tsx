@@ -1,9 +1,10 @@
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
 import { IcPeriQuestion } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { useUpdatePeriNote } from "../../../utils/useHooks";
 import { StAddAnswerButton, StMenuBtn } from "../../common/styled/Button";
 import { StMoreIcon } from "../../common/styled/Icon";
 import { StMenuWrapper } from "../../common/styled/MenuWrapper";
@@ -21,8 +22,7 @@ interface PriorQuestionProps {
 
 export default function PriorQuestion(props: PriorQuestionProps) {
   const { path, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
-  const [urgentQuery, setUrgentQuery] = useState<string>(node.content);
-  const deferredQuery = useDeferredValue<string>(urgentQuery);
+  const { urgentQuery, setUrgentQuery } = useUpdatePeriNote(node.content, path, onSetContent);
 
   // 답변 추가 시 사용되는 변수라서 isQuestion false인 것
   const isQuestion = false;
@@ -48,11 +48,6 @@ export default function PriorQuestion(props: PriorQuestionProps) {
       textAreaRef.current.focus();
     }
   }, []);
-
-  // react가 바쁘지 않은 시점에 path를 찾아 urgentQuery에 모인 내용을 periNote로 업데이트
-  useEffect(() => {
-    onSetContent(deferredQuery, path);
-  }, [deferredQuery]);
 
   return (
     <>
