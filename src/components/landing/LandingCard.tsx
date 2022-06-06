@@ -3,7 +3,7 @@ import styled from "styled-components";
 export interface LandingCardProps {
   title: string;
   subTitle: string;
-  children: React.SVGProps<SVGSVGElement>;
+  children: React.ReactNode;
 }
 
 export default function LandingCard(props: LandingCardProps) {
