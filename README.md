@@ -17,9 +17,9 @@
 
 ## 👨‍👩‍👦‍👦 누가 만들었나요?
 
-| [김소령(soryeongk)](https://github.com/soryeongk) | [이주함(joohaem)](https://github.com/joohaem) | [김규민(q-bit-junior)](https://github.com/q-bit-junior) | [석상언(sharpcoder312)](https://github.com/sharpcoder312)|
+| [김소령(soryeongk)](https://github.com/soryeongk) | [이주함(joohaem)](https://github.com/joohaem) | [김규민(Gyuminn)](https://github.com/Gyuminn) | [석상언(sharpcoder312)](https://github.com/sharpcoder312)|
 | :----------------------------------------: | :---------------------------------: | :---------------------------------: | :---------------------------------: |
-| <a href="https://github.com/soryeongk"><img src="https://avatars.githubusercontent.com/u/40630964?v=4" width="300px"></a> | <a href="https://github.com/joohaem"><img src="https://avatars.githubusercontent.com/u/47105088?v=4" width="300px"></a> | <a href="https://github.com/q-bit-junior"><img src="https://avatars.githubusercontent.com/u/87220517?v=4" width="300px"></a> | <a href="https://github.com/sharpcoder312"><img src="https://avatars.githubusercontent.com/u/73876068?v=4" width="300px"></a> |
+| <a href="https://github.com/soryeongk"><img src="https://avatars.githubusercontent.com/u/40630964?v=4" width="300px"></a> | <a href="https://github.com/joohaem"><img src="https://avatars.githubusercontent.com/u/47105088?v=4" width="300px"></a> | <a href="https://github.com/Gyuminn"><img src="https://avatars.githubusercontent.com/u/87220517?v=4" width="300px"></a> | <a href="https://github.com/sharpcoder312"><img src="https://avatars.githubusercontent.com/u/73876068?v=4" width="300px"></a> |
 
 <br />
 
