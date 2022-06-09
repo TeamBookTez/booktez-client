@@ -15,6 +15,53 @@
 <br />
 <br />
 
+## 👨‍👩‍👦‍👦 누가 만들었나요?
+
+| [김소령(soryeongk)](https://github.com/soryeongk) | [이주함(joohaem)](https://github.com/joohaem) | [김규민(Gyuminn)](https://github.com/Gyuminn) | [석상언(sharpcoder312)](https://github.com/sharpcoder312)|
+| :----------------------------------------: | :---------------------------------: | :---------------------------------: | :---------------------------------: |
+| <a href="https://github.com/soryeongk"><img src="https://avatars.githubusercontent.com/u/40630964?v=4" width="300px"></a> | <a href="https://github.com/joohaem"><img src="https://avatars.githubusercontent.com/u/47105088?v=4" width="300px"></a> | <a href="https://github.com/Gyuminn"><img src="https://avatars.githubusercontent.com/u/87220517?v=4" width="300px"></a> | <a href="https://github.com/sharpcoder312"><img src="https://avatars.githubusercontent.com/u/73876068?v=4" width="300px"></a> |
+
+<br />
+
+## 🛠 기술 스택
+
+뚝딱뚝딱 마이그레이션 진행 중
+
+```json
+"axios": "^0.24.0",
+"framer-motion": "^6.2.3",
+"react-hook-form": "^7.28.1",
+"react-responsive": "^9.0.0-beta.6",
+"react-textarea-autosize": "^8.3.3",
+"recoil": "^0.6.1",
+"recoil-persist": "^4.0.0",
+"styled-components": "^5.3.3",
+"styled-reset": "^4.3.4",
+"swr": "^1.2.1",
+"typescript": "^4.5.4"
+```
+
+현재 저희는 **더 좋은 유저 경험과 확장성, 그리고 우리의 성장**을 위해 [**🔗 Next.js 버전(클릭)**](https://github.com/TeamBookTez/nextjs-book-stairs)로의 마이그레이션을 진행하고 있습니다.
+
+우리 서비스에 적합하고, 공부할 가치가 있는 기술을 사용해보고, 틀에 갇힌 코드를 작성하지 않도록 **🎉[Discussions(클릭)](https://github.com/TeamBookTez/nextjs-book-stairs/discussions)를 오픈했습니다🎉**
+
+**북스테어즈 팀원이 아닌 분들도 자유롭게 의견을 내주시고, 새로운 지식을 알려주시면 감사하겠습니다 :))**
+
+<br />
+
+## ✉ 커밋 컨벤션
+
+| 제목     | 내용                                   |
+| -------- | -------------------------------------- |
+| init     | 작업 세팅 커밋 (패키지 설치 등)        |
+| feat     | 기능 추가 및 변경 (화면 영향 o)        |
+| design   | only css 변경                          |
+| fix      | 기존의 버그 수정                       |
+| refactor | 더 좋은 코드 개선 (화면 영향 x)        |
+| etc      | 문서 작성 or 그 외 커밋(주석, 개행 등) |
+
+<br />
+
 ## 💻 프로젝트 뷰
 
 ### 1. 랜딩 페이지
@@ -119,40 +166,3 @@
 <br />
 <br />
 
-## 🛠 기술 스택
-
-```json
-"axios": "^0.24.0",
-"framer-motion": "^6.2.3",
-"react-hook-form": "^7.28.1",
-"react-responsive": "^9.0.0-beta.6",
-"react-textarea-autosize": "^8.3.3",
-"recoil": "^0.6.1",
-"recoil-persist": "^4.0.0",
-"styled-components": "^5.3.3",
-"styled-reset": "^4.3.4",
-"swr": "^1.2.1",
-"typescript": "^4.5.4"
-```
-
-<br />
-
-## ✉ 커밋 컨벤션
-
-| 제목     | 내용                                   |
-| -------- | -------------------------------------- |
-| init     | 작업 세팅 커밋 (패키지 설치 등)        |
-| feat     | 기능 추가 및 변경 (화면 영향 o)        |
-| design   | only css 변경                          |
-| fix      | 기존의 버그 수정                       |
-| refactor | 더 좋은 코드 개선 (화면 영향 x)        |
-| etc      | 문서 작성 or 그 외 커밋(주석, 개행 등) |
-
-<br />
-
-## 👨‍💻👩‍💻 팀원
-
-- [👧 김소령](https://github.com/soryeongk)
-- [🧑 이주함](https://github.com/joohaem)
-- [👱‍♂️ 석상언](https://github.com/sharpcoder312)
-- [🤴 김규민](https://github.com/q-bit-junior)

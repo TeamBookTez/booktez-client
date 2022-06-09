@@ -1,7 +1,12 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
-const Mobile: React.FC = ({ children }) => {
+interface Children {
+  children: React.ReactNode;
+}
+
+const Mobile = (props: Children) => {
+  const { children } = props;
   const isMobileScreen = useMediaQuery({
     query: "(max-width: 1439px)",
   });
@@ -9,7 +14,8 @@ const Mobile: React.FC = ({ children }) => {
   return <React.Fragment>{isMobileScreen && children}</React.Fragment>;
 };
 
-const Desktop: React.FC = ({ children }) => {
+const Desktop = (props: Children) => {
+  const { children } = props;
   const isDesktopScreen = useMediaQuery({
     query: "(min-width: 1440px) ",
   });

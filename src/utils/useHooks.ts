@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import { isLoginState } from "./atom";
@@ -23,7 +23,7 @@ export function useCheckLoginState() {
       const status = data.status;
 
       if (status === 200) {
-        data.data.isLogin === true ? setIsLogin(true) : setIsLogin(false);
+        setIsLogin(data.data.isLogin);
       }
     } catch (err) {
       setIsLogin(false);
@@ -68,4 +68,37 @@ export function useAlertToast(isToastAlertTrue: boolean, setIsToastAlertTrue: ()
       };
     }
   }, [isToastAlertTrue]);
+}
+
+export function useDebounce<T>(defaultValue: T) {
+  // query: 200ms 동안 모인 글자, 최종적으로 사용될 변수
+  const [query, setQuery] = useState<T>(defaultValue);
+  // debounceQuery: input value로 사용되면서 변화가 감지될 state
+  const [debounceQuery, setDebounceQuery] = useState<T>(defaultValue);
+
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      return setQuery(debounceQuery);
+    }, 200);
+
+    return () => clearTimeout(debounceTimeout);
+  }, [debounceQuery]);
+
+  return { query, debounceQuery, setDebounceQuery };
+}
+
+export function useUpdatePeriNote(
+  defaultValue: string,
+  path: number[],
+  updateContent: (value: string, path: number[]) => void,
+) {
+  const [urgentQuery, setUrgentQuery] = useState<string>(defaultValue);
+  const deferredQuery = useDeferredValue<string>(urgentQuery);
+
+  // react가 바쁘지 않은 시점에 path를 찾아 urgentQuery에 모인 내용을 periNote로 업데이트
+  useEffect(() => {
+    updateContent(deferredQuery, path);
+  }, [deferredQuery]);
+
+  return { urgentQuery, setUrgentQuery };
 }

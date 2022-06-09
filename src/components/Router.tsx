@@ -11,11 +11,11 @@ import {
   MyPage,
   Signup,
   ToBe,
+  Welcome,
 } from "../pages";
 import Landing from "../pages/Landing";
 import { PeriNote, PreNote } from "./bookNote";
 import { CommonLayout, Error404 } from "./common";
-import { FirstStep, LastStep, SecondStep, ThirdStep } from "./signup";
 
 export default function Router() {
   return (
@@ -43,13 +43,8 @@ export default function Router() {
         <Route path="/detail-example" element={<DetailExample />} />
         <Route path="/login" element={<Login />} />
         {/* 회원가입 1,2,3 나눔 */}
-        <Route path="/signup/*" element={<Signup />}>
-          <Route path="" element={<FirstStep />} />
-          <Route path="2" element={<SecondStep />} />
-          <Route path="3" element={<ThirdStep />} />
-          <Route path="4" element={<LastStep />} />
-          <Route path="*" element={<Navigate to="" />} />
-        </Route>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>

@@ -67,9 +67,7 @@ export default function PeriNoteInput(props: PeriNoteInputProps) {
         )}
         <StInputWrapper isanswer={!isQuestion}>
           <StInput
-            {...register(inputKey, {
-              shouldUnregister: true,
-            })}
+            {...register(inputKey)}
             defaultValue={node.content}
             placeholder={`${isQuestion ? "질문" : "답변"}을 입력해주세요.`}
             onKeyPress={addChildByEnter}

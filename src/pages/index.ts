@@ -9,3 +9,4 @@ export { default as Main } from "./Main";
 export { default as MyPage } from "./MyPage";
 export { default as Signup } from "./Signup";
 export { default as ToBe } from "./ToBe";
+export { default as Welcome } from "./Welcome";
