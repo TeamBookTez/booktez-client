@@ -1,3 +1,11 @@
+현재 저희는 **더 좋은 유저 경험과 확장성, 그리고 우리의 성장**을 위해 [**🔗 Next.js 버전(클릭)**](https://github.com/TeamBookTez/nextjs-book-stairs)로의 마이그레이션을 진행하고 있습니다.
+
+우리 서비스에 적합하고, 공부할 가치가 있는 기술을 사용해보고, 틀에 갇힌 코드를 작성하지 않도록 **🎉[Discussions(클릭)](https://github.com/TeamBookTez/nextjs-book-stairs/discussions)를 오픈했습니다🎉**
+
+**북스테어즈 팀원이 아닌 분들도 자유롭게 의견을 내주시고, 새로운 지식을 알려주시면 감사하겠습니다 :))**
+
+---
+
 ![image](https://bookstairs-bucket.s3.ap-northeast-2.amazonaws.com/bookstairs_og_img_2.png)
 
 ## 📚 `북스테어즈`는 어떤 서비스인가요?
@@ -25,7 +33,7 @@
 
 ## 🛠 기술 스택
 
-뚝딱뚝딱 마이그레이션 진행 중
+뚝딱뚝딱 마이그레이션 진행 중 ...
 
 ```json
 "axios": "^0.24.0",
@@ -40,12 +48,6 @@
 "swr": "^1.2.1",
 "typescript": "^4.5.4"
 ```
-
-현재 저희는 **더 좋은 유저 경험과 확장성, 그리고 우리의 성장**을 위해 [**🔗 Next.js 버전(클릭)**](https://github.com/TeamBookTez/nextjs-book-stairs)로의 마이그레이션을 진행하고 있습니다.
-
-우리 서비스에 적합하고, 공부할 가치가 있는 기술을 사용해보고, 틀에 갇힌 코드를 작성하지 않도록 **🎉[Discussions(클릭)](https://github.com/TeamBookTez/nextjs-book-stairs/discussions)를 오픈했습니다🎉**
-
-**북스테어즈 팀원이 아닌 분들도 자유롭게 의견을 내주시고, 새로운 지식을 알려주시면 감사하겠습니다 :))**
 
 <br />
 
