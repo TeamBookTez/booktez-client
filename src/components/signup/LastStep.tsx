@@ -1,20 +1,29 @@
-import { motion } from "framer-motion";
+/*
+마지막 편집자: 22-05-29 soryeongk
+변경사항 및 참고:
+  - react router dom을 사용하지 않는 넥제를 대비해 Outlet을 사용하지 않는 방향으로 바꾸었습니다.
+  - 이에 따라 Router.tsx 파일도 변경되었습니다!
+    
+고민점:
+  - 별도의 타입 가드없이 nickname이 string | null로 되도록 해두었는데,
+    Next.js로 옮길 때 nickname이 null인 경우에는 메인으로 리디렉션하는 것 넣으면 좋을 듯합니다.
+*/
 import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ImgSignUpFinish } from "../../assets/images";
-import { UserData } from "../../pages/Signup";
 import { patchData, postData } from "../../utils/lib/api";
 import { Loading } from "../common";
 import { Button } from "../common/styled/Button";
 import { StSignupHeading2 } from "../common/styled/Signup";
 
 export default function LastStep() {
-  const [userData] = useOutletContext<[UserData]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const nickname = localStorage.getItem("booktez-nickname");
 
   const addBookReview = async () => {
     const _token = localStorage.getItem("booktez-token");
@@ -54,16 +63,9 @@ export default function LastStep() {
       {isLoading ? (
         <Loading />
       ) : (
-        <motion.div
-          key="lastSignup"
-          transition={{
-            default: { duration: 1 },
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}>
+        <>
           <StSignupHeading2>
-            {userData["nickname"]}님!
+            {nickname}님!
             <br />
             나만의 서재가 완성됐어요!
           </StSignupHeading2>
@@ -72,7 +74,7 @@ export default function LastStep() {
           <StHomeBtn type="button" onClick={goNextStep}>
             홈 바로가기
           </StHomeBtn>
-        </motion.div>
+        </>
       )}
     </StArticle>
   );

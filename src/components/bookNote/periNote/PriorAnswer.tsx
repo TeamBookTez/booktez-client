@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 
 import { IcPeriAnswer } from "../../../assets/icons";
 import { PeriNoteTreeNode } from "../../../utils/dataType";
+import { useUpdatePeriNote } from "../../../utils/useHooks";
 import { StMenuBtn } from "../../common/styled/Button";
 import { StMoreIcon } from "../../common/styled/Icon";
 import { StMenuWrapper } from "../../common/styled/MenuWrapper";
@@ -22,6 +23,8 @@ interface PriorAnswerProps {
 
 export default function PriorAnswer(props: PriorAnswerProps) {
   const { path, index, node, onAddChild, onSetContent, onDeleteChild, formController } = props;
+  const { urgentQuery, setUrgentQuery } = useUpdatePeriNote(node.content, path, onSetContent);
+
   const isQuestion = false;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -30,9 +33,9 @@ export default function PriorAnswer(props: PriorAnswerProps) {
     onAddChild(pathArray, idx, isQuestionChecked);
   };
 
-  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>, pathArray: number[]) => {
+  const handleChangeSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value !== "\n") {
-      onSetContent(e.target.value, pathArray);
+      setUrgentQuery(e.target.value);
     }
   };
 
@@ -69,9 +72,9 @@ export default function PriorAnswer(props: PriorAnswerProps) {
         </legend>
         <StInput
           ref={textAreaRef}
-          value={node.content}
+          value={urgentQuery}
           placeholder={"답변을 입력해주세요."}
-          onChange={(e) => handleChangeSetContent(e, path)}
+          onChange={handleChangeSetContent}
           onKeyPress={(e) => handleKeyPress(e, path, index, isQuestion)}
         />
         <StMore className="icn_more" />

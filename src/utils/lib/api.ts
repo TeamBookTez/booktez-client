@@ -1,6 +1,9 @@
+import axios from "axios";
+import { UseFormSetError } from "react-hook-form";
 import useSWR from "swr";
 
 import { BookcaseInfo } from "../../pages/Bookcase";
+import { UserData } from "../../pages/Signup";
 import { KAKAOParams, PatchBody, PeriNoteData, PostBody, PreNoteData } from "../dataType";
 import { client, KAKAO } from ".";
 
@@ -69,20 +72,40 @@ export const checkIsBookExist = async (isbn: string) => {
     const { data } = await client(userToken).get(`/book/exist/${isbn}`);
 
     if (data.success) {
-      return { isError: false, isExist: data.data.isExist };
+      return { isError: false, isExist: data.data.isExist, message: data.message };
     } else {
       // 통신에는 성공했으나 에러가 난 경우
       // 에러 메시지 받아서 토스트 띄울 수 있도록 추후 변경 예정
-      // console.log("[ERROR RETURNED]", data);
-
-      return { isError: true, isExist: false };
+      return { isError: true, isExist: false, message: data.message };
     }
   } catch (err) {
     // 통신에 실패한 경우
-    // if (axios.isAxiosError(err)) {
-    //   console.log("[ERROR CATCHED] statusCode: ", err.response?.status, err.message);
-    // }
 
-    return { isError: true, isExist: false };
+    return { isError: true, isExist: false, message: "네트워크를 확인해주세요" };
   }
+};
+
+export const login = async (loginFormData: UserData, setError: UseFormSetError<UserData>) => {
+  try {
+    const {
+      data: { data },
+    } = await postData("/auth/login", loginFormData);
+
+    localStorage.setItem("booktez-token", data.token);
+    localStorage.setItem("booktez-nickname", data.nickname);
+    localStorage.setItem("booktez-email", data.email);
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const errorData = err.response?.data;
+
+      const errorField = errorData.status === 404 ? "email" : "password";
+
+      setError(errorField, {
+        type: "server",
+        message: errorData.message,
+      });
+    }
+  }
+
+  return null;
 };

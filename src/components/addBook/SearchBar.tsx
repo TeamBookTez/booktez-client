@@ -7,6 +7,7 @@ interface SearchBarProps {
   debounceQuery: string;
   onDebounceQuery: (tempQuery: string) => void;
 }
+
 export default function SearchBar(props: SearchBarProps) {
   const { debounceQuery, onDebounceQuery } = props;
 

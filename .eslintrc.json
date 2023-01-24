@@ -29,7 +29,7 @@
     ],
     "rules": {                                          // 0: off 1: warn 2: error 로 표기 가능
         "indent": ["error", 2, { "SwitchCase": 1 }],    // 들여쓰기 몇 칸? 기본 2칸으로 하되, switch문에서는 1칸으로 지정
-        "quotes": ["error", "double"],                  // 쌍따옴표가 아닌 홑따옴표를 사용
+        "quotes": ["error", "double", { "avoidEscape": true }],                  // 홑따옴표가 아닌 쌍따옴표를 사용
         "semi": ["error", "always"],                    // semi colon을 강제함
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
         "comma-dangle": ["error", "always-multiline"],  // 두 줄 이상의 경우에는 후행 쉼표를 항상 사용, 한 개 일 때는 사용하지 않음

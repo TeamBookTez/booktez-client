@@ -1,107 +1,63 @@
-import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { postData } from "../../utils/lib/api";
-import { AlertLabel, InputEmail, InputPwd } from "../common";
+import { UserData } from "../../pages/Signup";
+import { emailErrorPatterns, passwordErrorPatterns } from "../../utils/check";
+import { login } from "../../utils/lib/api";
+import { AlertLabel } from "../common";
 import { Button } from "../common/styled/Button";
+import { Input } from "../common/styled/Input";
+import { PwdSightIcon } from ".";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState<string>("");
-  const [pwd, setPwd] = useState<string>("");
-  const [isEmailEmpty, setIsEmailEmpty] = useState<boolean>(true);
-  const [isPwdEmpty, setIsPwdEmpty] = useState<boolean>(true);
-  const [isEmailError, setIsEmailError] = useState<boolean>(false);
-  const [isPwdError, setIsPwdError] = useState<boolean>(false);
   const [isPwdSight, setIsPwdSight] = useState<boolean>(false);
   const nav = useNavigate();
 
-  const postLogin = async () => {
-    if (isEmailEmpty || isPwdEmpty) return;
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isDirty },
+  } = useForm<UserData>({
+    mode: "onSubmit",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    const loginBody = {
-      email,
-      password: pwd,
-    };
+  const submitForm = async (loginFormData: UserData) => {
+    const errorData = await login(loginFormData, setError);
 
-    try {
-      const res = await postData("/auth/login", loginBody);
-      const resData = res.data.data;
-
-      localStorage.setItem("booktez-token", resData.token);
-      localStorage.setItem("booktez-nickname", resData.nickname);
-      localStorage.setItem("booktez-email", resData.email);
-
+    if (errorData === null) {
       nav("/main");
-      // 메인에서 로그인 온 경우에는 메인으로,
-
-      // 책 추가하다가 로그인 온 경우에는 책 추가 페이지로 Navigate
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const status = err.response?.data.status;
-
-        if (status === 404) {
-          setIsEmailError(true);
-        } else {
-          setIsPwdError(true);
-        }
-      }
     }
   };
 
-  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-
-    setIsEmailError(false);
-    setIsEmailEmpty(targetValue === "");
-    setEmail(targetValue);
-  };
-
-  const handleOnChangePwd = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-
-    setIsPwdError(false);
-    setIsPwdEmpty(targetValue === "");
-    setPwd(targetValue);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    postLogin();
-  };
-
-  const toggleSightPwd = () => {
-    setIsPwdSight((isPwdSight) => !isPwdSight);
+  const toggleSightPwd = (isSight: boolean) => {
+    setIsPwdSight(isSight);
   };
 
   return (
-    <StForm onSubmit={handleSubmit}>
+    <StForm onSubmit={handleSubmit(submitForm)}>
       <StLabel htmlFor="loginEmail">이메일</StLabel>
-      <InputEmail
-        whatPlaceholder="이메일을 입력해 주세요"
-        whatType="text"
-        whatId="loginEmail"
-        whatValue={email}
-        isEmpty={isEmailEmpty}
-        isError={isEmailError}
-        handleOnChange={handleOnChangeEmail}
-      />
-      <AlertLabel isError={isEmailError}>존재하지 않는 이메일 입니다.</AlertLabel>
+      <Input {...register("email", emailErrorPatterns)} placeholder="이메일을 입력해 주세요" />
+      {errors.email?.message && <AlertLabel message={errors.email.message} />}
+
       <StLabelPwd htmlFor="loginPwd">비밀번호</StLabelPwd>
-      <InputPwd
-        whatPlaceholder="비밀번호를 입력해 주세요"
-        whatType={isPwdSight ? "text" : "password"}
-        whatId="loginPwd"
-        whatValue={pwd}
-        isEmpty={isPwdEmpty}
-        isError={isPwdError}
-        isPwdSight={isPwdSight}
-        toggleSightPwd={toggleSightPwd}
-        handleOnChange={handleOnChangePwd}
-      />
-      <AlertLabel isError={isPwdError}>비밀번호가 일치하지 않습니다.</AlertLabel>
-      <StLoginBtn active={!isEmailEmpty && !isPwdEmpty} onClick={postLogin}>
+      <StInputPwdWrapper>
+        <Input
+          {...register("password", passwordErrorPatterns)}
+          placeholder="비밀번호를 입력해 주세요"
+          type={isPwdSight ? "text" : "password"}
+        />
+        <PwdSightIcon isPwdSight={isPwdSight} onToggleSightPwd={toggleSightPwd} />
+      </StInputPwdWrapper>
+      {errors.password?.message && <AlertLabel message={errors.password.message} />}
+
+      <StLoginBtn disabled={!isDirty} type="submit">
         로그인
       </StLoginBtn>
     </StForm>
@@ -125,7 +81,7 @@ const StLabelPwd = styled(StLabel)`
   margin: 3.2rem 0 1.2rem;
 `;
 
-const StLoginBtn = styled(Button)<{ active: boolean }>`
+const StLoginBtn = styled(Button)<{ disabled: boolean }>`
   width: 46.4rem;
   height: 5.6rem;
 
@@ -135,14 +91,18 @@ const StLoginBtn = styled(Button)<{ active: boolean }>`
 
   ${({ theme }) => theme.fonts.button}
 
-  ${({ active }) =>
-    active
-      ? ""
-      : css`
-          background-color: ${({ theme }) => theme.colors.white400}; // inactive
-          color: ${({ theme }) => theme.colors.gray300}; // inactive
-          &:hover {
-            cursor: default;
-          }
-        `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white400}; // inactive
+      color: ${({ theme }) => theme.colors.gray300}; // inactive
+
+      &:hover {
+        cursor: default;
+      }
+    `}
+`;
+
+const StInputPwdWrapper = styled.div`
+  position: relative;
 `;

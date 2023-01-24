@@ -10,11 +10,13 @@ export default function WithdrawContentComplete() {
     <StPopUpWrapper>
       <StPopUpBox>
         <StQuestion>탈퇴 완료</StQuestion>
-        <StPopupDetail>탈퇴 처리가 완료되었습니다.</StPopupDetail>
+        <StPopupDetail>
+          {"탈퇴 처리가 완료되었습니다.\n복구를 원하시면 북스테어즈로 문의하시길 바랍니다."}
+        </StPopupDetail>
         <StBtnWrapper>
-          <StBtnCancel type="button" onClick={() => navigation("/main")}>
+          <StSoloBtnCancel type="button" onClick={() => navigation("/main")}>
             닫기
-          </StBtnCancel>
+          </StSoloBtnCancel>
         </StBtnWrapper>
       </StPopUpBox>
     </StPopUpWrapper>
@@ -26,6 +28,14 @@ const StPopUpBox = styled(StPopUp)`
 
   align-items: start;
 `;
+
 const StPopupDetail = styled(StDetail)`
-  margin-top: 3.2rem;
+  margin-top: 2.6rem;
+
+  white-space: pre-wrap;
+  line-height: 2.5rem;
+`;
+
+const StSoloBtnCancel = styled(StBtnCancel)`
+  margin-right: 0;
 `;
